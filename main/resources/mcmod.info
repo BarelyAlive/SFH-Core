@@ -1,0 +1,16 @@
+[
+{
+  "modid": "SFHCore",
+  "name": "SFHCore",
+  "description": "Shared Classes for NTM and Chaust",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["SpaceFoxhound"],
+  "credits": "Gaprosys",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
