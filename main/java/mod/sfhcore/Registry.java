@@ -14,8 +14,8 @@ public class Registry {
         	block.setUnlocalizedName(name);
             block.setRegistryName(name);
         
-        GameRegistry.register(block);
-        GameRegistry.register(new ItemBlock(block).setRegistryName(name));
+        block.registerBlocks();
+        block.setRegistryName(name);
         SFHCoreClientProxy.tryHandleBlockModel(block, name, 0, modid);
         
         return block;
@@ -29,8 +29,8 @@ public class Registry {
         	block.setUnlocalizedName(name);
             block.setRegistryName(name);
 
-            GameRegistry.register(block);
-            GameRegistry.register(itemBlock.setRegistryName(name));
+            block.registerBlocks();
+            itemBlock.registerItems();
             SFHCoreClientProxy.tryHandleBlockModel(block, name, no, modid);
 
         return block;
@@ -41,7 +41,7 @@ public class Registry {
         if (item.getRegistryName() == null)
         	item.setUnlocalizedName(name);
             item.setRegistryName(name);
-        GameRegistry.register(item);
+        item.registerItems();
         SFHCoreClientProxy.tryHandleItemModel(item, name, 0, modid);
             
         return item;
@@ -52,7 +52,7 @@ public class Registry {
         if (item.getRegistryName() == null)
         	item.setUnlocalizedName(name);
             item.setRegistryName(name);
-        GameRegistry.register(item);
+            item.registerItems();
         SFHCoreClientProxy.tryHandleItemModel(item, name, no, modid);
             
         return item;
