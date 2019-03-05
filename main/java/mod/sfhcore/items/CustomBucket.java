@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import mod.sfhcore.BucketLoader;
 import mod.sfhcore.proxy.IVariantProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -35,51 +34,169 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 
+class BucketItem {
+	public Block block;
+	public Fluid fluid;
+	public ItemStack result;
+}
+
 public class CustomBucket extends Item implements IFluidHandler, IVariantProvider{
 	
 	/** field for checking if the bucket has been filled. */
     private Block containedBlock;
     
     /** List of accepted Fluids */
-    private List<Block> acceptedBlocks;
-    private List<Fluid> acceptedFluids;
+    private List<BucketItem> bucketList;
+
+	private ItemStack empty;
 	
-	public CustomBucket(Block containedBlockIn, String unlocalizedName, CreativeTabs tab){
-		this.acceptedBlocks = new ArrayList<Block>();
+	public CustomBucket(Block containedBlockIn, String unlocalizedName, ItemStack empty){
+		this.bucketList = new ArrayList<BucketItem>();
 		this.maxStackSize = 1;
         this.containedBlock = containedBlockIn;
-        this.setCreativeTab(tab);
+        this.empty = empty;
 	}
 	
-	public void addAcceptedFluid(Block b, Fluid f)
-	{
-		this.acceptedBlocks.add(b);
-		this.acceptedFluids.add(f);
-	}
-	
-	public boolean hasAcceptedFluid()
-	{
-		return false;
-	}
-	
-	public boolean hasAcceptedFluidBlock()
-	{
-		return false;
-	}
-	
-	public void removeAcceptedFluid()
-	{
+	public ItemStack getBucketForBlock(Block b) {
+		int bucketListSize = this.bucketList.size();
+		BucketItem bl;
 		
+		for(int i = 0; i < bucketListSize; i++)
+		{
+			bl = this.bucketList.get(i);
+			if(bl.block.equals(b))
+			{
+				return bl.result;
+			}
+		}
+		
+		return empty;
 	}
 	
-	public Block getAcceptedFluid()
-	{
-		return null;
+	public ItemStack getBucketForFluid(Fluid f) {
+		int bucketListSize = this.bucketList.size();
+		BucketItem bl;
+		
+		for(int i = 0; i < bucketListSize; i++)
+		{
+			bl = this.bucketList.get(i);
+			if(bl.fluid.equals(f))
+			{
+				return bl.result;
+			}
+		}
+		
+		return empty;
+	}
+
+	public ItemStack getBucketForBlockAndFluid(Block b, Fluid f) {
+		int bucketListSize = this.bucketList.size();
+		BucketItem bl;
+		
+		for(int i = 0; i < bucketListSize; i++)
+		{
+			bl = this.bucketList.get(i);
+			if(!(bl.block.equals(b)))
+			{
+				continue;
+			}
+			if(!(bl.fluid.equals(f)))
+			{
+				continue;
+			}
+			return bl.result;
+		}
+		
+		return empty;
 	}
 	
-	public List<Block> getAcceptedFluids()
+	public void addBucket(Block b, Fluid f, ItemStack result)
 	{
-		return this.acceptedBlocks;
+		BucketItem bl = new BucketItem();
+		bl.block = b;
+		bl.fluid = f;
+		bl.result = result;
+		this.bucketList.add(bl);
+	}
+	
+	public boolean hasAcceptedFluid(Fluid f)
+	{
+		if ((this.getBucketForFluid(f)).equals(this.empty))
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean hasAcceptedBlock(Block b)
+	{
+		if ((this.getBucketForBlock(b)).equals(this.empty))
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean hasAcceptedFluidAndBlock(Block b, Fluid f)
+	{
+		if ((this.getBucketForBlockAndFluid(b, f)).equals(this.empty))
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	public void removeAcceptedFluids(Fluid f)
+	{
+		int bucketListSize = this.bucketList.size();
+		BucketItem bl;
+		
+		for(int i = 0; i < bucketListSize; i++)
+		{
+			bl = this.bucketList.get(i);
+			if(bl.fluid.equals(f))
+			{
+				this.bucketList.remove(i);
+				i--;
+			}
+		}
+	}
+	
+	public void removeAcceptedBlocks(Block b)
+	{
+		int bucketListSize = this.bucketList.size();
+		BucketItem bl;
+		
+		for(int i = 0; i < bucketListSize; i++)
+		{
+			bl = this.bucketList.get(i);
+			if(bl.block.equals(b))
+			{
+				this.bucketList.remove(i);
+				i--;
+			}
+		}
+	}
+	
+	public void removeAcceptedBlocksAndFluids(Block b, Fluid f)
+	{
+		int bucketListSize = this.bucketList.size();
+		BucketItem bl;
+		
+		for(int i = 0; i < bucketListSize; i++)
+		{
+			bl = this.bucketList.get(i);
+			if(bl.block.equals(b) && bl.fluid.equals(f))
+			{
+				this.bucketList.remove(i);
+				i--;
+			}
+		}
+	}
+	
+	public List<BucketItem> getAcceptedFluids()
+	{
+		return this.bucketList;
 	}
 
     /**
@@ -121,28 +238,27 @@ public class CustomBucket extends Item implements IFluidHandler, IVariantProvide
                     Material material = iblockstate.getMaterial();
                     Block b2 = iblockstate.getBlock();
 
-                    for(Block b : acceptedBlocks){
-                    	if(((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0) {
-		                    if (b == acceptedBlocks)
-		                    {
-		                        worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 11);
-		                        playerIn.addStat(StatList.getObjectUseStats(this));
-		                        if(b == Blocks.FLOWING_LAVA)
-		                        	playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 1.0F, 1.0F);
-		                        	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(itemstack, playerIn, BucketLoader.bucketStoneWater));
-		                    	}
-		                        else {
-		                        	playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-		                        	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(itemstack, playerIn, BucketLoader.bucketStoneWater));
-		                    
-		                        }
-		                    }
-		                    else
-		                    {
-		                        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
-		                    }
-                    	}
-                    }
+                	if(((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0)
+                	{
+                		if(this.hasAcceptedBlock(b2))
+                		{
+	                        worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 11);
+	                        playerIn.addStat(StatList.getObjectUseStats(this));
+	                        if(b2 == Blocks.FLOWING_LAVA)
+	                        	playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 1.0F, 1.0F);
+	                        	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(itemstack, playerIn, (this.getBucketForBlock(b2)).getItem()));
+	                    	}
+	                        else {
+	                        	playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+	                        	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(itemstack, playerIn, (this.getBucketForBlock(b2)).getItem()));
+	                    
+	                        }
+                		}
+	                    else
+	                    {
+	                        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
+	                    }
+                	}
                 }
             else
             {
@@ -161,7 +277,7 @@ public class CustomBucket extends Item implements IFluidHandler, IVariantProvide
                     }
 
                     playerIn.addStat(StatList.getObjectUseStats(this));
-                    return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(BucketLoader.bucketStone)) : new ActionResult(EnumActionResult.SUCCESS, itemstack);
+                    return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, empty) : new ActionResult(EnumActionResult.SUCCESS, itemstack);
                 }
                 else
                 {
@@ -169,7 +285,6 @@ public class CustomBucket extends Item implements IFluidHandler, IVariantProvide
                 }
             }
         }
-		return ret;
     }
 
     private ItemStack fillBucket(ItemStack emptyBuckets, EntityPlayer player, Item fullBucket)
@@ -287,19 +402,19 @@ public class CustomBucket extends Item implements IFluidHandler, IVariantProvide
 
 	@Override
 	public FluidStack drain(FluidStack resource, boolean doDrain) {
-		for(Block b : acceptedBlocks)
-			if(this.containedBlock == b) {
-				return new FluidStack(FluidRegistry.lookupFluidForBlock(b), 1000);
-			}
+		if(this.hasAcceptedBlock(this.containedBlock))
+		{
+			return new FluidStack(FluidRegistry.lookupFluidForBlock(this.containedBlock), 1000);
+		}
 		return null;
 	}
 
 	@Override
 	public FluidStack drain(int maxDrain, boolean doDrain) {
-		for(Block b : acceptedBlocks)
-			if(this.containedBlock == b) {
-				return new FluidStack(FluidRegistry.lookupFluidForBlock(b), 1000);
-			}
+		if(this.hasAcceptedBlock(this.containedBlock))
+		{
+				return new FluidStack(FluidRegistry.lookupFluidForBlock(this.containedBlock), 1000);
+		}
 		return null;
 	}
 }
