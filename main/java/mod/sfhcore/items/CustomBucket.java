@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import mod.sfhcore.BucketLoader;
 import mod.sfhcore.proxy.IVariantProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -34,20 +35,20 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 
-public class BucketStone extends Item implements IFluidHandler, IVariantProvider{
+public class CustomBucket extends Item implements IFluidHandler, IVariantProvider{
 	
 	/** field for checking if the bucket has been filled. */
-    private final Block containedBlock;
+    private Block containedBlock;
     
     /** List of accepted Fluids */
     private List<Block> acceptedBlocks;
     private List<Fluid> acceptedFluids;
 	
-	public BucketStone(Block containedBlockIn, String unlocalizedName){
+	public CustomBucket(Block containedBlockIn, String unlocalizedName, CreativeTabs tab){
 		this.acceptedBlocks = new ArrayList<Block>();
 		this.maxStackSize = 1;
         this.containedBlock = containedBlockIn;
-        this.setCreativeTab(NetherTweaksMod.tabNetherTweaksMod);
+        this.setCreativeTab(tab);
 	}
 	
 	public void addAcceptedFluid(Block b, Fluid f)
@@ -118,34 +119,31 @@ public class BucketStone extends Item implements IFluidHandler, IVariantProvider
                 {
                     IBlockState iblockstate = worldIn.getBlockState(blockpos);
                     Material material = iblockstate.getMaterial();
+                    Block b2 = iblockstate.getBlock();
 
-                    if (material == Material.WATER && ((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0)
-                    {
-                        worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 11);
-                        playerIn.addStat(StatList.getObjectUseStats(this));
-                        playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-                        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(itemstack, playerIn, BucketLoader.bucketStoneWater));
-                    }
-                    else if (material == Material.LAVA && ((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0)
-                    {
-                        playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 1.0F, 1.0F);
-                        worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 11);
-                        playerIn.addStat(StatList.getObjectUseStats(this));
-                        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(itemstack, playerIn, BucketLoader.bucketStoneLava));
-                    }
-                    else if (material == Material.WATER && iblockstate.equals(BucketLoader.blockDemonWater) && ((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0)
-                    {
-                        playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-                        worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 11);
-                        playerIn.addStat(StatList.getObjectUseStats(this));
-                        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(itemstack, playerIn, BucketLoader.bucketStoneDemonWater));
-                    }
-                    else
-                    {
-                        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
+                    for(Block b : acceptedBlocks){
+                    	if(((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0) {
+		                    if (b == acceptedBlocks)
+		                    {
+		                        worldIn.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 11);
+		                        playerIn.addStat(StatList.getObjectUseStats(this));
+		                        if(b == Blocks.FLOWING_LAVA)
+		                        	playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 1.0F, 1.0F);
+		                        	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(itemstack, playerIn, BucketLoader.bucketStoneWater));
+		                    	}
+		                        else {
+		                        	playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+		                        	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(itemstack, playerIn, BucketLoader.bucketStoneWater));
+		                    
+		                        }
+		                    }
+		                    else
+		                    {
+		                        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
+		                    }
+                    	}
                     }
                 }
-            }
             else
             {
                 boolean flag1 = worldIn.getBlockState(blockpos).getBlock().isReplaceable(worldIn, blockpos);
@@ -171,6 +169,7 @@ public class BucketStone extends Item implements IFluidHandler, IVariantProvider
                 }
             }
         }
+		return ret;
     }
 
     private ItemStack fillBucket(ItemStack emptyBuckets, EntityPlayer player, Item fullBucket)
@@ -257,7 +256,7 @@ public class BucketStone extends Item implements IFluidHandler, IVariantProvider
 
     @Override
     public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, @Nullable net.minecraft.nbt.NBTTagCompound nbt) {
-        if (this.getClass() == BucketStone.class)
+        if (this.getClass() == CustomBucket.class)
         {
             return new net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper(stack);
         }
@@ -288,23 +287,19 @@ public class BucketStone extends Item implements IFluidHandler, IVariantProvider
 
 	@Override
 	public FluidStack drain(FluidStack resource, boolean doDrain) {
-		if(this.containedBlock == Blocks.FLOWING_LAVA)
-			return new FluidStack(FluidRegistry.LAVA, 1000);
-			if(this.containedBlock == Blocks.FLOWING_WATER)
-				return new FluidStack(FluidRegistry.WATER, 1000);
-				if(this.containedBlock == BucketLoader.blockDemonWater)
-					return new FluidStack(BucketLoader.fluidDemonWater, 1000);
-			return null;
+		for(Block b : acceptedBlocks)
+			if(this.containedBlock == b) {
+				return new FluidStack(FluidRegistry.lookupFluidForBlock(b), 1000);
+			}
+		return null;
 	}
 
 	@Override
 	public FluidStack drain(int maxDrain, boolean doDrain) {
-		if(this.containedBlock == Blocks.FLOWING_LAVA)
-			return new FluidStack(FluidRegistry.LAVA, 1000);
-			if(this.containedBlock == Blocks.FLOWING_WATER)
-				return new FluidStack(FluidRegistry.WATER, 1000);
-				if(this.containedBlock == BucketLoader.blockDemonWater)
-					return new FluidStack(BucketLoader.fluidDemonWater, 1000);
-			return null;
+		for(Block b : acceptedBlocks)
+			if(this.containedBlock == b) {
+				return new FluidStack(FluidRegistry.lookupFluidForBlock(b), 1000);
+			}
+		return null;
 	}
 }
