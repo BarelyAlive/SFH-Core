@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class CubeTransparent extends Cube{
 	
 	public CubeTransparent(Material material, float resistance, float hardness, int sub) {
-		super(material, resistance, hardness, sub);
+		super(material, resistance, hardness, sub, name);
 		setLightOpacity(15);
 	}
 	

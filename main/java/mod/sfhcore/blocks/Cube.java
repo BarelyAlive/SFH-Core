@@ -14,13 +14,15 @@ import net.minecraft.world.World;
 
 public class Cube extends Block{
 	
-	private int sub;
+	static String name;
+	int sub;
 	
-	public Cube(Material material, float resistance, float hardness, int sub) {
+	public Cube(Material material, float resistance, float hardness, int sub, String name) {
 		super(material);
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
+		this.name = name;
 		this.sub = sub;
 		if(material == Material.GROUND){
 			setSoundType(blockSoundType.GROUND);;
@@ -49,4 +51,8 @@ public class Cube extends Block{
         }
     }
 
+	@Override
+    public String getUnlocalizedName() {
+    	return name + "_" + this.getMetaFromState(getDefaultState());
+    }
 }
