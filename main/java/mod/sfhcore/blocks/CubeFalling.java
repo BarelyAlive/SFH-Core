@@ -37,7 +37,7 @@ public class CubeFalling extends BlockFalling{
 			setSoundType(blockSoundType.GLASS);
 		}
 		if(material == Material.GRASS){
-			setSoundType(blockSoundType.GROUND);
+			setSoundType(blockSoundType.PLANT);
 		}
 		if(material == Material.WOOD){
 			setSoundType(blockSoundType.WOOD);
