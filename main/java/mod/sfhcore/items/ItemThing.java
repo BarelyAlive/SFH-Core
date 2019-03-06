@@ -9,10 +9,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemThing extends Item{
 		
-	public ItemThing(Item container, int maxstack, CreativeTabs tab, boolean subtypes, int subnumber){
+	public ItemThing(Item container, int maxstack, CreativeTabs tab, boolean subtypes, int subnumber, String name){
 		setCreativeTab(tab);
 		setMaxStackSize(maxstack);
 		setContainerItem(container);
+		setUnlocalizedName(name);
 		this.setHasSubtypes(subtypes);
 	}
 

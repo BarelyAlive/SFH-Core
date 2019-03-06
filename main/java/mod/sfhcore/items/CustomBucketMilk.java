@@ -15,11 +15,11 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class BucketCustomMilk extends Item
+public class CustomBucketMilk extends Item
 {
 	private ItemStack empty;
 	
-    public BucketCustomMilk(CreativeTabs tab, ItemStack empty)
+    public CustomBucketMilk(CreativeTabs tab, ItemStack empty)
     {
         this.setMaxStackSize(1);
         this.setCreativeTab(tab);
