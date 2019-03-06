@@ -13,14 +13,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CubeTransparent extends Cube{
 	
-	public CubeTransparent(Material material, float resistance, float hardness) {
-		super(material, resistance, hardness);
+	public CubeTransparent(Material material, float resistance, float hardness, int sub) {
+		super(material, resistance, hardness, sub);
 		setLightOpacity(15);
 	}
 	
 	public int quantityDropped(Random random)
     {
-        return 0;
+        return 1;
     }
 
     @SideOnly(Side.CLIENT)

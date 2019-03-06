@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import mod.sfhcore.proxy.IVariantProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -40,7 +39,7 @@ class BucketItem {
 	public ItemStack result;
 }
 
-public class CustomBucket extends Item implements IFluidHandler, IVariantProvider{
+public class CustomBucket extends Item implements IFluidHandler{
 	
 	/** field for checking if the bucket has been filled. */
     private Block containedBlock;
@@ -379,14 +378,6 @@ public class CustomBucket extends Item implements IFluidHandler, IVariantProvide
         {
             return super.initCapabilities(stack, nbt);
         }
-    }
-    
-    @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-            ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
-        return ret;
     }
 
     @Override

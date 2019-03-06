@@ -1,4 +1,4 @@
-package mod.sfhcore.items;
+package mod.sfhcore.items.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
