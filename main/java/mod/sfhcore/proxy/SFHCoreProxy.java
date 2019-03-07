@@ -5,10 +5,14 @@ import net.minecraft.item.Item;
 
 public class SFHCoreProxy {
 	
-	public void registerRenderers(){
-		
-		
-		
-	}
+	public void tryHandleBlockModel(Block block, String name, String modid)
+    {
+        // NO-OP
+    }
+
+    public void tryHandleItemModel(Item item, String name, String modid)
+    {
+        // NO-OP
+    }
 
 }
