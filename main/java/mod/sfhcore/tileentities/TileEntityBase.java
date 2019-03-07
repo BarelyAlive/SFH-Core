@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import scala.Int;
 
-public class TileEntityBase extends TileEntity implements ITickable,IInventory{
+public class TileEntityBase extends TileEntity implements ITickable, ISidedInventory {
 	
 	private int invSize = 0;
 	private NonNullList<ItemStack> machineItemStacks;
@@ -218,6 +219,24 @@ public class TileEntityBase extends TileEntity implements ITickable,IInventory{
 	public void clear() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int[] getSlotsForFace(EnumFacing side) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }
