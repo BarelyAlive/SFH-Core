@@ -24,27 +24,20 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import scala.Int;
 
-public class TileEntityFluidBase extends TileEntityBase implements IInventory{
+public class TileEntityFluidBase extends TileEntityBase {
 	
 	private static List<Fluid> acceptedFluids;
 	
-	private ItemStack[] inv;
-	private String field_145958_o;
-	public static int maxworkTime;
-	public int workTime;
 	public static int MAX_CAPACITY;
 	int volume;
 	public FluidStack fluid;
 	public FluidTank tank = new FluidTank(fluid, (int) volume);
-	World world = this.getWorld();
 	
-	public TileEntityFluidBase(int maxcapacity, int maxWorkTime) {
-		inv = new ItemStack[2];
-		workTime = 0;
+	public TileEntityFluidBase(int invSize, String machineCustomName, int MAX_CAPACITY) {
+		super(invSize, machineCustomName);
 		volume = 0;
 		fluid = new FluidStack(FluidRegistry.WATER, 0);
-		this.maxworkTime = workTime;
-		this.MAX_CAPACITY = maxcapacity;
+		this.MAX_CAPACITY = MAX_CAPACITY;
 	}
 	
 	public void update() {
@@ -66,86 +59,16 @@ public class TileEntityFluidBase extends TileEntityBase implements IInventory{
 	}
 	
 	@Override
-	public ItemStack decrStackSize(int slot, int amt) {
-		ItemStack stack = getStackInSlot(slot);
-		if(stack != null) {
-			if(stack.getCount() <= amt) {
-				setInventorySlotContents(slot, null);
-			}
-			else {
-				stack = stack.splitStack(amt);
-				if(stack.getCount() == 0) {
-					setInventorySlotContents(slot, null);
-				}
-			}
-		}
-		return stack;
-	}
-
-	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
-		inv[slot] = stack;
-		if(stack != null && stack.getCount() >= getInventoryStackLimit()) {
-			stack.setCount(getInventoryStackLimit());
-		}
-	}
-
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-	
-	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		
-		NBTTagList tagList = (NBTTagList) nbt.getTag("Inventory");
-		for(int i = 0; i < tagList.tagCount(); i++) {
-			NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-			byte slot = tag.getByte("Slot");
-			if(slot >= 0 && slot < inv.length) {
-				inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-			}
-		}
-		this.workTime = nbt.getShort("workTime");
 		this.fluid.amount = nbt.getShort("fluid");
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		
-		NBTTagList itemList = new NBTTagList();
-		for(int i = 0; i < inv.length; i++) {
-			ItemStack stack = inv[i];
-			if(stack != null) {
-				NBTTagCompound tag = new NBTTagCompound();
-				tag.setByte("Slot", (byte) i);
-				stack.writeToNBT(tag);
-				itemList.appendTag(tag);
-			}
-		}
-		nbt.setTag("Inventory", itemList);
-		nbt.setShort("workTime", (short)this.workTime);
+		nbt.setShort("fluid", ((short) this.fluid.amount));
 		return nbt;
-	}
-	
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomName() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ITextComponent getDisplayName() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	@Override
@@ -173,54 +96,6 @@ public class TileEntityFluidBase extends TileEntityBase implements IInventory{
 	public IFluidTankProperties[] getTankProperties() {
 		IFluidTankProperties[] prop = new IFluidTankProperties[fluid.amount];
 		return prop;
-		}
-
-	@Override
-	public ItemStack removeStackFromSlot(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void openInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void closeInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getField(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getFieldCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 }
