@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Registry {
 	
+	static SFHCoreClientProxy prox = new SFHCoreClientProxy();
+	
 	public static Block registerBlock(Block block, String modid)
     {
         if (block.getRegistryName() == null)
@@ -16,7 +18,7 @@ public class Registry {
         
         block.registerBlocks();
         block.setRegistryName(block.getUnlocalizedName());
-        SFHCoreClientProxy.tryHandleBlockModel(block, block.getUnlocalizedName(), 0, modid);
+        prox.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
         
         return block;
     }
@@ -30,7 +32,7 @@ public class Registry {
 
             block.registerBlocks();
             itemBlock.registerItems();
-            SFHCoreClientProxy.tryHandleBlockModel(block, block.getUnlocalizedName(), no, modid);
+            prox.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
 
         return block;
     }
@@ -41,7 +43,7 @@ public class Registry {
         	item.setUnlocalizedName(item.getUnlocalizedName());
             item.setRegistryName(item.getUnlocalizedName());
         item.registerItems();
-        SFHCoreClientProxy.tryHandleItemModel(item, item.getUnlocalizedName(), 0, modid);
+        prox.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
             
         return item;
     }
@@ -52,7 +54,7 @@ public class Registry {
         	item.setUnlocalizedName(item.getUnlocalizedName());
             item.setRegistryName(item.getUnlocalizedName());
             item.registerItems();
-        SFHCoreClientProxy.tryHandleItemModel(item, item.getUnlocalizedName(), no, modid);
+        prox.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
             
         return item;
     }
