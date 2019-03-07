@@ -20,11 +20,12 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import scala.Int;
 
-public class TileEntityFluidBase extends TileEntityBase {
+public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler, IFluidTank {
 	
 	private static List<Fluid> acceptedFluids;
 	
@@ -96,6 +97,30 @@ public class TileEntityFluidBase extends TileEntityBase {
 	public IFluidTankProperties[] getTankProperties() {
 		IFluidTankProperties[] prop = new IFluidTankProperties[fluid.amount];
 		return prop;
+	}
+
+	@Override
+	public FluidStack getFluid() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getFluidAmount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getCapacity() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public FluidTankInfo getInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
