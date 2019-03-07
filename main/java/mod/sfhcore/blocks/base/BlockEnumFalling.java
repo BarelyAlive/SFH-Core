@@ -12,6 +12,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -69,7 +70,14 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
     {
         return getMetaFromState(state);
     }
+    
+    @Override
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+        for (E type : types)
+            items.add(new ItemStack(this, 1, type.ordinal()));
+    }
 
+    /*
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subBlocks)
@@ -77,6 +85,7 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
         for (E type : types)
             subBlocks.add(new ItemStack(item, 1, type.ordinal()));
     }
+    */
 
     protected BlockStateContainer createStateContainer()
     {
