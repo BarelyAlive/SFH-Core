@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.datafix.walkers.ItemStackData;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -25,21 +26,26 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemStackHandler;
 import scala.Int;
 
 public class TileEntityBase extends TileEntity implements ITickable,IInventory{
 	
-	private NonNullList<ItemStack> machineItemStacks = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
+	private int invSize = 0;
+	private NonNullList<ItemStack> machineItemStacks;
 	private String field_145958_o;
 	public static final int maxworkTime = 100;
 	public int workTime;
 	public static final int MAX_CAPACITY = 16000;
 	float volume;
-	World world = this.getWorld();
+	private String machineCustomName;
 	
-	public TileEntityBase() {
-		workTime = 0;
-		volume = 0;
+	public TileEntityBase(int invSize, String machineCustomName) {
+		this.workTime = 0;
+		this.volume = 0;
+		this.invSize = invSize;
+		this.machineCustomName = machineCustomName;
+		this.machineItemStacks = NonNullList.<ItemStack>withSize(this.invSize, ItemStack.EMPTY);
 	}
 	
 	/**
@@ -52,7 +58,7 @@ public class TileEntityBase extends TileEntity implements ITickable,IInventory{
 	
 	public void update() {
 	}
-    
+	
 	/**
      * Returns the number of slots in the inventory.
      */
@@ -106,14 +112,8 @@ public class TileEntityBase extends TileEntity implements ITickable,IInventory{
             stack.setCount(this.getInventoryStackLimit());
         }
 
-        if (index == 0 && !flag)
-        {
-            this.maxWorkTime = this.getWorkTime(stack);
-            this.workTime = 0;
-            this.markDirty();
-        }
     }
-
+    
     /**
      * Get the name of this object. For players this returns their username
      */
@@ -149,32 +149,15 @@ public class TileEntityBase extends TileEntity implements ITickable,IInventory{
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		
-		NBTTagList tagList = (NBTTagList) nbt.getTag("Inventory");
-		for(int i = 0; i < tagList.tagCount(); i++) {
-			NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-			byte slot = tag.getByte("Slot");
-			if(slot >= 0 && slot < inv.length) {
-				inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-			}
-		}
+        this.machineItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(nbt, this.machineItemStacks);
 		this.workTime = nbt.getShort("workTime");
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		
-		NBTTagList itemList = new NBTTagList();
-		for(int i = 0; i < inv.length; i++) {
-			ItemStack stack = inv[i];
-			if(stack != null) {
-				NBTTagCompound tag = new NBTTagCompound();
-				tag.setByte("Slot", (byte) i);
-				stack.writeToNBT(tag);
-				itemList.appendTag(tag);
-			}
-		}
-		nbt.setTag("Inventory", itemList);
+		ItemStackHelper.saveAllItems(nbt, this.machineItemStacks);
 		nbt.setShort("workTime", (short)this.workTime);
 		return nbt;
 	}
@@ -188,5 +171,53 @@ public class TileEntityBase extends TileEntity implements ITickable,IInventory{
     {
         return inventory.getField(0) > 0;
     }
+
+	@Override
+	public ItemStack getStackInSlot(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getField(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getFieldCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
