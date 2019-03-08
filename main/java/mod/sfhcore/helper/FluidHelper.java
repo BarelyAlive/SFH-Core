@@ -1,5 +1,6 @@
 package mod.sfhcore.helper;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -9,6 +10,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class FluidHelper {
+	
+	public static FluidStack getFluidForFilledItem(Item item) {
+		return FluidUtil.getFluidContained(new ItemStack(item));
+	}
 
 	public static void switchFluids(ItemStack stack, Fluid fromFluid, Fluid toFluid){
 		if(stack != null){
@@ -31,7 +36,7 @@ public class FluidHelper {
 
 	}
 	
-	public static void fillContainer(ItemStack stack, Fluid fluid, int amount){
+	public static ItemStack fillContainer(ItemStack stack, Fluid fluid, int amount){
 		if(stack != null){
 			if(stack.getItem() instanceof IFluidHandler){
 				if(isFillableContainerWithRoom(stack)){
@@ -40,7 +45,8 @@ public class FluidHelper {
 					}	
 				}
 			}
-		}	
+		}
+		return stack;
 	}
 	
 	public static boolean isFillableContainerWithRoom(ItemStack container) {
