@@ -2,12 +2,14 @@ package mod.sfhcore;
 
 public class Constants {
 
-	public static final String ModIdSFHCORE = "SFHCore";
-	public static final String SFHCoreVersion = "1.0.0";
+	public static final String ModIdSFHCORE = "sfhcore";
+	public static final String SFHCoreVersion = "1.0.8";
+	public static final String DepSFH = "required-after:sfhcore@[1.0.8]";
 	
-	public static final String ModIdNTM = "NetherTweaks";
-	public static final String NTMVersion = "1.5.0";
+	public static final String ModIdNTM = "nethertweaksmod";
+	public static final String DepNTM = "required-after:nethertweaksmod";
+	public static final String TABNTM = "tabNetherTweaksMod";
 	
-	public static final String ModIdCHAUST = "Chaust";
-	public static final String ChaustVersion = "0.0.3";
+	public static final String ModIdCHAUST = "chaust";
+	public static final String AfterNTM = "after:NetherTweaksMod";
 }

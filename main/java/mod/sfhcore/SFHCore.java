@@ -32,8 +32,6 @@ public class SFHCore {
          
     @EventHandler
     public void PreInit(FMLPreInitializationEvent event){
-    	RecipeLoader.addOreDicNames();
-    	RecipeLoader.registerOreRecipes();
         new SFHCoreClientProxy();
     }
     
