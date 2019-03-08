@@ -1,7 +1,12 @@
 package mod.sfhcore.blocks.base;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+import mod.sfhcore.proxy.IVariantProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
@@ -16,13 +21,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends BlockFalling
+public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends BlockFalling implements IVariantProvider
 {
     private final E[] types;
     private final PropertyEnum<E> property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockEnumFalling(Material material, Class<E> enumClass, String propName)
+    public BlockEnumFalling(Material material, Class<E> enumClass, String propName, String name)
     {
         super(material);
 
@@ -30,15 +35,16 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
         this.property = PropertyEnum.create(propName, enumClass);
         this.realStateContainer = createStateContainer();
         setDefaultState(getBlockState().getBaseState());
+        setUnlocalizedName(name);
     }
     
     public E[] getTypes(){
     	return this.types;
     }
 
-    public BlockEnumFalling(Material material, Class<E> enumClass)
+    public BlockEnumFalling(Material material, Class<E> enumClass, String name)
     {
-        this(material, enumClass, "type");
+        this(material, enumClass, "type", name);
     }
 
     @Override
@@ -90,5 +96,15 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
     protected BlockStateContainer createStateContainer()
     {
         return new BlockStateContainer.Builder(this).add(property).build();
+        
+    }
+    
+    @Override
+    public List<Pair<Integer, String>> getVariants()
+    {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        for (int i = 0; i < this.getTypes().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
+        return ret;
     }
 }
