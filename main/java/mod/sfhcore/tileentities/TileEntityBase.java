@@ -33,9 +33,9 @@ import scala.Int;
 public class TileEntityBase extends TileEntity implements ITickable, ISidedInventory {
 	
 	private int invSize = 0;
-	private NonNullList<ItemStack> machineItemStacks;
+	public NonNullList<ItemStack> machineItemStacks;
 	private String field_145958_o;
-	public static final int maxworkTime = 100;
+	public static int maxworkTime = 100;
 	public int workTime;
 	public static final int MAX_CAPACITY = 16000;
 	float volume;

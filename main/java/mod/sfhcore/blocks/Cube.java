@@ -1,7 +1,13 @@
 package mod.sfhcore.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+import mod.sfhcore.proxy.IVariantProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,7 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public class Cube extends Block{
+public class Cube extends Block implements IVariantProvider{
 	
 	static String name;
 	int sub;
@@ -54,5 +60,13 @@ public class Cube extends Block{
 	@Override
     public String getUnlocalizedName() {
     	return name + "_" + this.getMetaFromState(getDefaultState());
+    }
+	
+	@Override
+    public List<Pair<Integer, String>> getVariants()
+    {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+            ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
+        return ret;
     }
 }
