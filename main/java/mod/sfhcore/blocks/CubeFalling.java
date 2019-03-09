@@ -25,7 +25,7 @@ public class CubeFalling extends BlockFalling{
 		this.name = name;
 		this.sub = sub;
 		if(material == Material.GROUND){
-			setSoundType(blockSoundType.GROUND);;
+			setSoundType(blockSoundType.GROUND);
 		}
 		if(material == Material.ROCK){
 			setSoundType(blockSoundType.STONE);
