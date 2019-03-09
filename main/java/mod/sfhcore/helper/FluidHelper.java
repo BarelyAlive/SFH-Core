@@ -50,7 +50,7 @@ public class FluidHelper {
 	}
 	
 	public static boolean isFillableContainerWithRoom(ItemStack container) {
-		if(container != null){
+		if(container == null){
 			return false;
 		}
 		IFluidHandler fluidHandler = FluidUtil.getFluidHandler(container);
