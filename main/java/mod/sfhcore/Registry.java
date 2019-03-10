@@ -23,11 +23,7 @@ public class Registry {
         }
         
         RegisterBlocks.blocks.add(block);
-        if (block.getRegistryName() == null)
-        {
-        	System.out.println(block.getUnlocalizedName());
-        	block.setRegistryName(block.getUnlocalizedName());
-        }
+        
         prox.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
         
         return block;
