@@ -15,6 +15,6 @@ public class TE2Block {
 	
 	public TE2Block(TileEntity te, Block b)
 	{
-		
+		this(b, te);
 	}
 }
