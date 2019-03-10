@@ -19,7 +19,11 @@ public class Registry {
         if (block.getRegistryName() == null)
         {
         	block.setUnlocalizedName(block.getUnlocalizedName());
-            block.setRegistryName(block.getUnlocalizedName());
+        	String unlocalizedName = block.getUnlocalizedName();
+        	while (unlocalizedName.startsWith("tile.tile.")) {
+        		unlocalizedName = unlocalizedName.substring(5);
+        	}
+            block.setRegistryName(unlocalizedName);
         }
         
         RegisterBlocks.blocks.add(block);
@@ -35,7 +39,11 @@ public class Registry {
 
         if (block.getRegistryName() == null)
         {
-            block.setRegistryName(block.getUnlocalizedName());
+        	String unlocalizedName = block.getUnlocalizedName();
+        	while (unlocalizedName.startsWith("tile.tile.")) {
+        		unlocalizedName = unlocalizedName.substring(5);
+        	}
+            block.setRegistryName(unlocalizedName);
         }
 
         RegisterBlocks.blocks.add(block);
