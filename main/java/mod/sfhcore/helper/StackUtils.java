@@ -16,7 +16,7 @@ public class StackUtils {
 		stack.setCount(currentStackSize);
 	}
 	
-	public static void substrateFromStackSize(ItemStack stack, int value) {
+	public static void substractFromStackSize(ItemStack stack, int value) {
 		int currentStackSize = stack.getCount();
 		currentStackSize -= value;
 		if (currentStackSize < 0)
