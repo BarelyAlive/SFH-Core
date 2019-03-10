@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CustomFuelhandler{
 	
-	List<Pair<String, Integer>> fuelList = new ArrayList<Pair<String, Integer>>();
+	protected static List<Pair<String, Integer>> fuelList = new ArrayList<Pair<String, Integer>>();
 
 	@SubscribeEvent
 	public int getBurnTime(FurnaceFuelBurnTimeEvent e) {
@@ -29,13 +29,14 @@ public class CustomFuelhandler{
 		//Don't delete this return. It must stay at the end.
 		return 0;
 	}
+	
 	/**
 	 * Use this method to register your Fuel-Item with it's burn time.
 	 * @param fuel
 	 * @param time
 	 * @return
 	 */
-	public boolean addFuelBurnTime(Item fuel, int time) {
+	public static boolean addFuelBurnTime(ItemStack fuel, int time) {
 		return fuelList.add(new ImmutablePair<String, Integer>(fuel.getUnlocalizedName(), time));
 	}
 	
