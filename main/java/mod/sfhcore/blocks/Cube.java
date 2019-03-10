@@ -63,11 +63,6 @@ public class Cube extends Block implements IVariantProvider{
             items.add(new ItemStack(this, 1, i));
         }
     }
-
-	@Override
-    public String getUnlocalizedName() {
-    	return name + "_" + this.getMetaFromState(getDefaultState());
-    }
 	
 	@Override
     public List<Pair<Integer, String>> getVariants()
