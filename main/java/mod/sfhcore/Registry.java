@@ -2,10 +2,12 @@ package mod.sfhcore;
 
 import mod.sfhcore.handler.RegisterBlocks;
 import mod.sfhcore.handler.RegisterItems;
+import mod.sfhcore.handler.RegisterTileEntity;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Registry {
@@ -21,7 +23,11 @@ public class Registry {
         }
         
         RegisterBlocks.blocks.add(block);
-        block.setRegistryName(block.getUnlocalizedName());
+        if (block.getRegistryName() == null)
+        {
+        	System.out.println(block.getUnlocalizedName());
+        	block.setRegistryName(block.getUnlocalizedName());
+        }
         prox.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
         
         return block;
@@ -37,6 +43,8 @@ public class Registry {
         }
 
         RegisterBlocks.blocks.add(block);
+        RegisterTileEntity.registerTileEntity(block);
+        
         //itemBlock.registerItems();
         prox.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
 

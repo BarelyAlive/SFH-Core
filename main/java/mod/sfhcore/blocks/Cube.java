@@ -20,16 +20,23 @@ import net.minecraft.world.World;
 
 public class Cube extends Block implements IVariantProvider{
 	
-	static String name;
+	String name;
 	int sub;
+	TileEntity te;
+	
 	
 	public Cube(Material material, float resistance, float hardness, int sub, String name) {
+		this(material, resistance, hardness, sub, name, null);
+	}
+	
+	public Cube(Material material, float resistance, float hardness, int sub, String name, TileEntity te) {
 		super(material);
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
 		this.name = name;
 		this.sub = sub;
+		this.te = te;
 		if(material == Material.GROUND){
 			setSoundType(blockSoundType.GROUND);;
 		}
