@@ -37,7 +37,7 @@ public class StackUtils {
 	}
 	
 	public static boolean isEmpty(ItemStack stack) {
-		if(stack == null)
+		if(stack == ItemStack.EMPTY)
 			return true;
 		return false;
 	}
