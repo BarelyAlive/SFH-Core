@@ -50,20 +50,12 @@ public class SFHCore {
     		RegisterItems.register(event.getRegistry());
     		RegisterBlocks.registerItemBlocks(event.getRegistry());
     	}
-    	
-    	public static void registerModels(ModelRegistryEvent event)
-    	{
-    		RegisterItems.registerModels();
-    		RegisterBlocks.registerModels();
-    	}
 
     }
 
          
     @EventHandler
     public void PreInit(FMLPreInitializationEvent event){
-    	RecipeLoader.addOreDicNames();
-    	RecipeLoader.registerOreRecipes();
         new SFHCoreClientProxy();
     }
     
