@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 public class FluidHelper {
 	
 	public static void addUniversalBucketForFluid(Fluid f, Block fluid){
-		ForgeModContainer.getInstance().universalBucket = new UniversalBucket(1000, new ItemStack(fluid, 1), false);
+		ForgeModContainer.getInstance().universalBucket = new UniversalBucket(1000, new ItemStack(fluid, 1), true);
 	}
 	
 	public static FluidStack getFluidForFilledItem(Item item) {

@@ -55,6 +55,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 		this.maxStackSize = 1;
         this.containedBlock = containedBlockIn;
         this.empty = empty;
+        this.setUnlocalizedName(unlocalizedName);
 	}
 	
 	public ItemStack getBucketForBlock(Block b) {
