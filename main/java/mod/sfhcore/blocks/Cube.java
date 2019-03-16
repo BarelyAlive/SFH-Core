@@ -73,8 +73,9 @@ public class Cube extends Block implements IVariantProvider{
 	@Override
 	public String getUnlocalizedName() {
 		if(this.sub > 0) {
-			return "item." + getName();
+			return "tile." + getName() + ;
 		}
+		return super.getUnlocalizedName();
 	}
 	
 	@Override
