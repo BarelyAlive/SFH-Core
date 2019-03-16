@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class CustomItem extends Item implements IVariantProvider{
 	
 	private int sub;
+	private String name;
 		
 	public CustomItem(Item container, int maxstack, CreativeTabs tab, boolean subtypes, int subnumber, String name){
 		setCreativeTab(tab);
@@ -25,6 +26,7 @@ public class CustomItem extends Item implements IVariantProvider{
 		setUnlocalizedName(name);
 		this.setHasSubtypes(subtypes);
 		this.sub = subnumber;
+		this.name = name;
 	}
 
 	@Override
@@ -34,9 +36,16 @@ public class CustomItem extends Item implements IVariantProvider{
 	    }
 	}
 
+	public String getName(ItemStack stack) {
+		if(this.hasSubtypes) {
+			return name + "_" + stack.getItemDamage();
+		}
+		return name;
+	}
+	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-	    return this.getUnlocalizedName() + "_" + stack.getItemDamage();
+	    return "item." + getName(stack);
 	}
 
 	@Override
