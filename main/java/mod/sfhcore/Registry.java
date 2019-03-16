@@ -20,7 +20,11 @@ public class Registry {
         {
         	block.setUnlocalizedName(block.getUnlocalizedName());
         	String unlocalizedName = block.getUnlocalizedName();
-        	while (unlocalizedName.startsWith("tile.tile."))
+        	while (unlocalizedName.startsWith("tile."))
+        	{
+        		unlocalizedName = unlocalizedName.substring(5);
+        	}
+        	while (unlocalizedName.startsWith("item."))
         	{
         		unlocalizedName = unlocalizedName.substring(5);
         	}
@@ -41,7 +45,11 @@ public class Registry {
         if (block.getRegistryName() == null)
         {
         	String unlocalizedName = block.getUnlocalizedName();
-        	while (unlocalizedName.startsWith("tile.tile."))
+        	while (unlocalizedName.startsWith("tile."))
+        	{
+        		unlocalizedName = unlocalizedName.substring(5);
+        	}
+        	while (unlocalizedName.startsWith("item."))
         	{
         		unlocalizedName = unlocalizedName.substring(5);
         	}
@@ -62,7 +70,16 @@ public class Registry {
         if (item.getRegistryName() == null)
         {
         	item.setUnlocalizedName(item.getUnlocalizedName());
-            item.setRegistryName(item.getUnlocalizedName());
+        	String unlocalizedName = item.getUnlocalizedName();
+        	while (unlocalizedName.startsWith("tile."))
+        	{
+        		unlocalizedName = unlocalizedName.substring(5);
+        	}
+        	while (unlocalizedName.startsWith("item."))
+        	{
+        		unlocalizedName = unlocalizedName.substring(5);
+        	}
+            item.setRegistryName(unlocalizedName);
         }
         RegisterItems.items.add(item);
         prox.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
@@ -75,7 +92,16 @@ public class Registry {
         if (item.getRegistryName() == null)
         {
         	item.setUnlocalizedName(item.getUnlocalizedName());
-            item.setRegistryName(item.getUnlocalizedName());
+        	String unlocalizedName = item.getUnlocalizedName();
+        	while (unlocalizedName.startsWith("tile."))
+        	{
+        		unlocalizedName = unlocalizedName.substring(5);
+        	}
+        	while (unlocalizedName.startsWith("item."))
+        	{
+        		unlocalizedName = unlocalizedName.substring(5);
+        	}
+            item.setRegistryName(unlocalizedName);
         }
         RegisterItems.items.add(item);
         prox.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
