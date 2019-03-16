@@ -1,9 +1,15 @@
 package mod.sfhcore.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+import mod.sfhcore.proxy.IVariantProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockPlanks;
@@ -36,7 +42,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockDoorCustom extends Block
+public class BlockDoorCustom extends Block implements IVariantProvider
 {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool OPEN = PropertyBool.create("open");
@@ -442,5 +448,12 @@ public class BlockDoorCustom extends Block
         {
             return this == LEFT ? "left" : "right";
         }
+    }
+    
+    public List<Pair<Integer, String>> getVariants()
+    {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();        
+        ret.add(new ImmutablePair<Integer, String>(0, "inventory"));
+        return ret;
     }
 }
