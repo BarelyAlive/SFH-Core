@@ -203,7 +203,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 	@Override
 	public int getItemBurnTime(ItemStack itemStack) {
 		if(FluidHelper.getFluidForFilledItem(itemStack.getItem()).getFluid() == FluidRegistry.LAVA)
-		return 20000;
+			return 20000;
 		return 0;
 	}
 
