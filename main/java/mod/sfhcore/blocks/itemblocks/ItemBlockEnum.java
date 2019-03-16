@@ -16,7 +16,6 @@ public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends Item
             setHasSubtypes(true);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public BlockEnum<E> getBlock()
     {
