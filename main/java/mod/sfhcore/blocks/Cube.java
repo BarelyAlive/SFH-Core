@@ -21,9 +21,7 @@ import net.minecraft.world.World;
 public class Cube extends Block implements IVariantProvider{
 	
 	String name;
-	int sub;
-	TileEntity te;
-	
+	int sub;	
 	
 	public Cube(Material material, float resistance, float hardness, int sub, String name) {
 		this(material, resistance, hardness, sub, name, null);
@@ -37,7 +35,6 @@ public class Cube extends Block implements IVariantProvider{
 		setUnlocalizedName(name);
 		this.name = name;
 		this.sub = sub;
-		this.te = te;
 		if(material == Material.GROUND){
 			setSoundType(blockSoundType.GROUND);;
 		}
@@ -64,6 +61,21 @@ public class Cube extends Block implements IVariantProvider{
             items.add(new ItemStack(this, 1, i));
         }
     }
+	
+	public String getName() {
+		if(this.sub > 0) {
+			return name + "_" + this.getMetaFromState(getDefaultState());
+		}
+		return name;
+		
+	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		if(this.sub > 0) {
+			return "item." + getName();
+		}
+	}
 	
 	@Override
     public List<Pair<Integer, String>> getVariants()
