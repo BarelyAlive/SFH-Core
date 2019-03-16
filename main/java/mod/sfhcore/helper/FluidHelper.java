@@ -1,15 +1,22 @@
 package mod.sfhcore.helper;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 public class FluidHelper {
+	
+	public static void addUniversalBucketForFluid(Fluid f, Block fluid){
+		ForgeModContainer.getInstance().universalBucket = new UniversalBucket(1000, new ItemStack(fluid, 1), false);
+	}
 	
 	public static FluidStack getFluidForFilledItem(Item item) {
 		return FluidUtil.getFluidContained(new ItemStack(item));
