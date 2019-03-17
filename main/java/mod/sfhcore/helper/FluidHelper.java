@@ -43,6 +43,19 @@ public class FluidHelper {
 
 	}
 	
+	public static ItemStack fillContainer(ItemStack stack, FluidStack fluid){
+		if(stack != null){
+			if(stack.getItem() instanceof IFluidHandler){
+				if(isFillableContainerWithRoom(stack)){
+					if(FluidUtil.getFluidContained(stack) == fluid){
+						FluidUtil.getFluidHandler(stack).fill(fluid, true);
+					}	
+				}
+			}
+		}
+		return stack;
+	}
+	
 	public static ItemStack fillContainer(ItemStack stack, Fluid fluid, int amount){
 		if(stack != null){
 			if(stack.getItem() instanceof IFluidHandler){

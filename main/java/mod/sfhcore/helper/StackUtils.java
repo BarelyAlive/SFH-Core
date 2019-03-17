@@ -1,6 +1,8 @@
 package mod.sfhcore.helper;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 
 public class StackUtils {
 	
@@ -52,5 +54,9 @@ public class StackUtils {
 	
 	public static int compareStackSize(ItemStack stack1, ItemStack stack2) {
 		return getStackSize(stack1) - getStackSize(stack2);
+	}
+	
+	public static ItemStack getPlayerHandStack(EntityPlayer player, EnumHand hand) {
+		return player.getHeldItem(hand);
 	}
 }
