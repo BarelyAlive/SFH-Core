@@ -50,6 +50,12 @@ public class SFHCore {
     		RegisterItems.register(event.getRegistry());
     		RegisterBlocks.registerItemBlocks(event.getRegistry());
     	}
+    	
+    	@SubscribeEvent
+    	public static void registerModels(ModelRegistryEvent event) {
+    		RegisterItems.registerModels();
+    		RegisterBlocks.registerModels();
+    	}
 
     }
 

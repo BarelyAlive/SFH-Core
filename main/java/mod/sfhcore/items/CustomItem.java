@@ -32,7 +32,7 @@ public class CustomItem extends Item implements IVariantProvider{
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 		for (int i = 0; i < sub; i ++) {
-	        items.add(items.get(i));
+	        items.add(new ItemStack(this, 1, i));
 	    }
 	}
 

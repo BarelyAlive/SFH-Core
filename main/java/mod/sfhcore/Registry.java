@@ -18,7 +18,6 @@ public class Registry {
     {
         if (block.getRegistryName() == null)
         {
-        	block.setUnlocalizedName(block.getUnlocalizedName());
         	String unlocalizedName = block.getUnlocalizedName();
         	while (unlocalizedName.startsWith("tile."))
         	{
@@ -28,12 +27,13 @@ public class Registry {
         	{
         		unlocalizedName = unlocalizedName.substring(5);
         	}
+        	block.setUnlocalizedName(unlocalizedName);
             block.setRegistryName(unlocalizedName);
         }
         
         RegisterBlocks.blocks.add(block);
         
-        prox.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
+        //SFHCore.proxy.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
         
         return block;
     }
@@ -53,6 +53,7 @@ public class Registry {
         	{
         		unlocalizedName = unlocalizedName.substring(5);
         	}
+        	block.setUnlocalizedName(unlocalizedName);
             block.setRegistryName(unlocalizedName);
         }
 
@@ -60,7 +61,7 @@ public class Registry {
         RegisterTileEntity.registerTileEntity(block);
         
         //itemBlock.registerItems();
-        prox.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
+       //SFHCore.proxy.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
 
         return block;
     }
@@ -69,7 +70,6 @@ public class Registry {
     {
         if (item.getRegistryName() == null)
         {
-        	item.setUnlocalizedName(item.getUnlocalizedName());
         	String unlocalizedName = item.getUnlocalizedName();
         	while (unlocalizedName.startsWith("tile."))
         	{
@@ -79,10 +79,11 @@ public class Registry {
         	{
         		unlocalizedName = unlocalizedName.substring(5);
         	}
+        	item.setUnlocalizedName(unlocalizedName);
             item.setRegistryName(unlocalizedName);
         }
         RegisterItems.items.add(item);
-        prox.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
+        //SFHCore.proxy.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
             
         return item;
     }
@@ -91,7 +92,6 @@ public class Registry {
     {
         if (item.getRegistryName() == null)
         {
-        	item.setUnlocalizedName(item.getUnlocalizedName());
         	String unlocalizedName = item.getUnlocalizedName();
         	while (unlocalizedName.startsWith("tile."))
         	{
@@ -101,10 +101,11 @@ public class Registry {
         	{
         		unlocalizedName = unlocalizedName.substring(5);
         	}
+        	item.setUnlocalizedName(unlocalizedName);
             item.setRegistryName(unlocalizedName);
         }
         RegisterItems.items.add(item);
-        prox.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
+        //SFHCore.proxy.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
             
         return item;
     }
