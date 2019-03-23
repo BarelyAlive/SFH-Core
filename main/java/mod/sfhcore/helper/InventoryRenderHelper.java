@@ -36,7 +36,7 @@ public class InventoryRenderHelper {
             @Override
             public ModelResourceLocation getModelLocation(ItemStack stack)
             {
-                return new ModelResourceLocation(modid + ":" + toRender.getClass().getSimpleName(), "fluid");
+                return new ModelResourceLocation(modid + ":" + toRender.getUnlocalizedName(), "fluid");
             }
         });
         ModelLoader.setCustomStateMapper(block, new StateMapperBase()
@@ -44,7 +44,7 @@ public class InventoryRenderHelper {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state)
             {
-                return new ModelResourceLocation(modid + ":" + toRender.getClass().getSimpleName(), "fluid");
+                return new ModelResourceLocation(modid + ":" + toRender.getUnlocalizedName(), "fluid");
             }
         });
     }
