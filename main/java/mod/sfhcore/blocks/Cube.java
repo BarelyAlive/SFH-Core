@@ -15,6 +15,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
@@ -74,6 +75,14 @@ public class Cube extends Block implements IVariantProvider{
 	public String getUnlocalizedName() {
 		return "item." + getName();
 	}
+	
+	/**
+     * The type of render function called. 3 for standard block models, 2 for TESR's, 1 for liquids, -1 is no render
+     */
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
+    }
 	
 	@Override
     public List<Pair<Integer, String>> getVariants()
