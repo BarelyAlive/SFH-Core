@@ -21,6 +21,13 @@ public class FluidHelper {
 	public static FluidStack getFluidForFilledItem(Item item) {
 		return FluidUtil.getFluidContained(new ItemStack(item));
 	}
+	
+	public static boolean hasFluidAmount(Fluid f, ItemStack held, int amount) {
+		if(FluidUtil.getFluidContained(held).getFluid() == f && FluidUtil.getFluidContained(held).amount >= amount) {
+			return true;
+		}
+		return false;
+	}
 
 	public static void switchFluids(ItemStack stack, Fluid fromFluid, Fluid toFluid){
 		if(stack != null){
