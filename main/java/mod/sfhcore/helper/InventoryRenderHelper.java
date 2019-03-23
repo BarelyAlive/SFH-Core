@@ -13,13 +13,6 @@ import net.minecraftforge.client.model.ModelLoader;
 
 public class InventoryRenderHelper {
 
-	private static String domain;
-	
-	public InventoryRenderHelper(String domain)
-    {
-        this.domain = domain;
-    }
-	
 	public static Item getItemFromBlock(Block block)
     {
         return Item.getItemFromBlock(block);
