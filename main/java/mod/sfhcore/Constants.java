@@ -2,6 +2,7 @@ package mod.sfhcore;
 
 public class Constants {
 
+	public static final String ModIdSFHCORE = "sfhcore";
 	public static final String SFHCoreVersion = "1.1.0";
 	
 	public static final String NTMVersion = "1.7.0";
