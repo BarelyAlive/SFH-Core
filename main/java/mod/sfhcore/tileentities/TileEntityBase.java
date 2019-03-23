@@ -148,19 +148,17 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		
         this.machineItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(nbt, this.machineItemStacks);
 		this.workTime = nbt.getShort("workTime");
+		super.readFromNBT(nbt);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
 		ItemStackHelper.saveAllItems(nbt, this.machineItemStacks);
 		nbt.setShort("workTime", (short)this.workTime);
-		return nbt;
+		return super.writeToNBT(nbt);
 	}
 
 	public int getWorkTimeRemainingScaled(int i) {

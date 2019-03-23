@@ -61,15 +61,14 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
 		this.fluid.amount = nbt.getShort("fluid");
+		super.readFromNBT(nbt);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
 		nbt.setShort("fluid", ((short) this.fluid.amount));
-		return nbt;
+		return super.writeToNBT(nbt);
 	}
 	
 	@Override
