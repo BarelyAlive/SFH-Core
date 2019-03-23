@@ -23,7 +23,7 @@ public class CustomItem extends Item implements IVariantProvider{
 		setCreativeTab(tab);
 		setMaxStackSize(maxstack);
 		setContainerItem(container);
-		setUnlocalizedName(name);
+		setRegistryName(name);
 		this.setHasSubtypes(subtypes);
 		this.sub = subnumber;
 		this.name = name;
