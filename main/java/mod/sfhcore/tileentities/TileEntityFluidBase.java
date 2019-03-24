@@ -73,6 +73,11 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 	
 	@Override
 	public int fill(FluidStack resource, boolean doFill) {
+		for(Fluid f : acceptedFluids) {
+			if(resource.getFluid() == f){
+				return resource.amount;
+			}
+		}
 		return 0;
 	}
 
@@ -88,8 +93,7 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 
 	@Override
 	public FluidStack drain(int maxDrain, boolean doDrain) {
-		// TODO Auto-generated method stub
-		return new FluidStack(FluidRegistry.WATER, Int.MaxValue());
+		return new FluidStack(tank.getFluid(), Int.MaxValue());
 	}
 
 	@Override
@@ -100,26 +104,22 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 
 	@Override
 	public FluidStack getFluid() {
-		// TODO Auto-generated method stub
-		return null;
+		return tank.getFluid();
 	}
 
 	@Override
 	public int getFluidAmount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return tank.getFluidAmount();
 	}
 
 	@Override
 	public int getCapacity() {
-		// TODO Auto-generated method stub
-		return 0;
+		return MAX_CAPACITY;
 	}
 
 	@Override
 	public FluidTankInfo getInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		return tank.getInfo();
 	}
 	
 }
