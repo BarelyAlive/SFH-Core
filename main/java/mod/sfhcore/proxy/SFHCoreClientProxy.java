@@ -2,6 +2,8 @@ package mod.sfhcore.proxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -31,12 +33,21 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         if (block instanceof IVariantProvider)
         {
             IVariantProvider variantProvider = (IVariantProvider) block;
-            for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(modid, name), variant.getRight()));
+            if (variantProvider.getVariants().size() == 1)
+            {
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(modid + ":" + name, "inventory"));
+            }
+            else
+            {
+	            for (Pair<Integer, String> variant : variantProvider.getVariants())
+	            {
+	                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(modid, name), variant.getRight()));
+	            }
+            }
         }
         else
         {
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(modid + ":" + name, "inventory")); //new ResourceLocation(modid, name), variant.getRight()));
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(modid + ":" + name, "inventory"));
         }
     }
 
@@ -46,12 +57,21 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         if (item instanceof IVariantProvider)
         {
             IVariantProvider variantProvider = (IVariantProvider) item;
-            for (Pair<Integer, String> variant : variantProvider.getVariants())
-                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(new ResourceLocation(modid, name), variant.getRight())); //new ResourceLocation(modid, name), variant.getRight()));
+            if (variantProvider.getVariants().size() == 1)
+            {
+                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(modid + ":" + name, "inventory"));
+            }
+            else
+            {
+	            for (Pair<Integer, String> variant : variantProvider.getVariants())
+	            {
+	                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(modid + ":" + name + "_" + variant.getLeft(), "inventory"));
+	            }
+            }
         }
         else
         {
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(modid + ":" + name, "inventory")); //new ResourceLocation(modid, name), variant.getRight()));
+            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(modid + ":" + name, "inventory"));
         }
     }
 }

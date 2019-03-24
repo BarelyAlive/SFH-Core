@@ -19,7 +19,8 @@ public class RegisterBlocks {
 	{
 		for(int i = 0; i < blocks.size(); i++)
 		{
-			registry.registerAll(blocks.get(i));
+			//registry.registerAll(blocks.get(i));
+			registry.register(blocks.get(i));
 		}
 	}
 	
@@ -37,7 +38,7 @@ public class RegisterBlocks {
         	{
         		unlocalizedName = unlocalizedName.substring(5);
         	}
-			registry.registerAll(new ItemBlock(blocks.get(i)).setRegistryName(unlocalizedName));
+			registry.register(new ItemBlock(blocks.get(i)).setUnlocalizedName(unlocalizedName).setRegistryName("nethertweaksmod", unlocalizedName));
 		}
 	}
 	

@@ -18,7 +18,7 @@ public class RegisterItems {
 	{
 		for(int i = 0; i < items.size(); i++)
 		{
-			registry.registerAll(items.get(i));
+			registry.register(items.get(i));
 		}
 	}
 	

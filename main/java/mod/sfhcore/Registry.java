@@ -27,10 +27,15 @@ public class Registry {
         	{
         		unlocalizedName = unlocalizedName.substring(5);
         	}
+        	while (unlocalizedName.endsWith(".name"))
+        	{
+        		unlocalizedName = unlocalizedName.substring((unlocalizedName.length() - 5), unlocalizedName.length());
+        	}
         	block.setUnlocalizedName(unlocalizedName);
             block.setRegistryName(unlocalizedName);
         }
         
+        RegisterTileEntity.registerTileEntity(block);
         RegisterBlocks.blocks.add(block);
         
         //SFHCore.proxy.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
@@ -53,12 +58,16 @@ public class Registry {
         	{
         		unlocalizedName = unlocalizedName.substring(5);
         	}
+        	while (unlocalizedName.endsWith(".name"))
+        	{
+        		unlocalizedName = unlocalizedName.substring((unlocalizedName.length() - 5), unlocalizedName.length());
+        	}
         	block.setUnlocalizedName(unlocalizedName);
             block.setRegistryName(unlocalizedName);
         }
 
-        RegisterBlocks.blocks.add(block);
         RegisterTileEntity.registerTileEntity(block);
+        RegisterBlocks.blocks.add(block);
         
         //itemBlock.registerItems();
        //SFHCore.proxy.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
@@ -78,6 +87,10 @@ public class Registry {
         	while (unlocalizedName.startsWith("item."))
         	{
         		unlocalizedName = unlocalizedName.substring(5);
+        	}
+        	while (unlocalizedName.endsWith(".name"))
+        	{
+        		unlocalizedName = unlocalizedName.substring((unlocalizedName.length() - 5), unlocalizedName.length());
         	}
         	item.setUnlocalizedName(unlocalizedName);
             item.setRegistryName(unlocalizedName);
