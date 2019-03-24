@@ -74,8 +74,9 @@ public class GuiHandler implements IGuiHandler {
 	 * @param time
 	 * @return
 	 */
-	public static boolean addGUIRelation(Object tile, Object con) {
-		return teco.add(new ImmutablePair<Class<TileEntity>, Class<Container>>((Class<TileEntity>)tile, (Class<Container>)con));
+	public static int addGUIRelation(Object tile, Object con) {
+		teco.add(new ImmutablePair<Class<TileEntity>, Class<Container>>((Class<TileEntity>)tile, (Class<Container>)con));
+		return (teco.size() - 1);
 	}
 }
 
