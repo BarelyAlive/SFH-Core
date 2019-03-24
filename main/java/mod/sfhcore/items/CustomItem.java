@@ -23,7 +23,8 @@ public class CustomItem extends Item implements IVariantProvider{
 		setCreativeTab(tab);
 		setMaxStackSize(maxstack);
 		setContainerItem(container);
-		setRegistryName(name);
+		setUnlocalizedName(name);
+		setRegistryName("nethertweaksmod", name);
 		this.setHasSubtypes(subtypes);
 		this.sub = subnumber;
 		this.name = name;
@@ -53,7 +54,7 @@ public class CustomItem extends Item implements IVariantProvider{
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (int i = 0; i < sub; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + i));
+            ret.add(new ImmutablePair<Integer, String>(i, "no=" + i));
         return ret;
     }
 }
