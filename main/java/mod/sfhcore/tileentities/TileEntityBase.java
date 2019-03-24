@@ -166,9 +166,9 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
 	}
 
     @SideOnly(Side.CLIENT)
-    public static boolean isWorking(IInventory inventory)
+    public boolean isWorking(IInventory inventory)
     {
-        return inventory.getField(0) > 0;
+        return workTime > 0;
     }
 
 	@Override
