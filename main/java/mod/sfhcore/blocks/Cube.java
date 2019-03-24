@@ -64,11 +64,11 @@ public class Cube extends Block implements IVariantProvider{
     }
 	
 	public String getName() {
-		if(this.sub > 0) {
-			return name + "_" + this.getMetaFromState(getDefaultState());
+		if (this.sub <= 1)
+		{
+			return name;
 		}
-		return name;
-		
+		return name + "_" + this.getMetaFromState(getDefaultState());
 	}
 	
 	@Override
