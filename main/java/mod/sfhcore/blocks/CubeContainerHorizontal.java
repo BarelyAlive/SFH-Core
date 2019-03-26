@@ -202,6 +202,11 @@ public class CubeContainerHorizontal extends BlockContainer{
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
     
+    protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {FACING});
+    }
+    
     //BlockFacinPart ENDE
     
     /**
