@@ -30,13 +30,12 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 	private static List<Fluid> acceptedFluids;
 	
 	public static int MAX_CAPACITY;
-	public float volume;
+	protected int mb;
 	public FluidStack fluid;
 	public FluidTank tank = new FluidTank(fluid, (int) volume);
 	
 	public TileEntityFluidBase(int invSize, String machineCustomName, int MAX_CAPACITY) {
 		super(invSize, machineCustomName);
-		this.volume = 0;
 		this.fluid = new FluidStack(FluidRegistry.WATER, 0);
 		this.MAX_CAPACITY = MAX_CAPACITY;
 	}

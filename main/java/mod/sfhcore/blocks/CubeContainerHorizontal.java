@@ -23,13 +23,13 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class CubeContainerBase extends BlockContainer{
+public class CubeContainerHorizontal extends BlockContainer{
 
 	private TileEntity te;
 	private static final PropertyDirection FACING = BlockHorizontal.FACING;
     private static boolean keepInventory;
 	
-	protected CubeContainerBase(Material materialIn, TileEntity te) {
+	protected CubeContainerHorizontal(Material materialIn, TileEntity te) {
 		super(materialIn);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		this.te = te;
