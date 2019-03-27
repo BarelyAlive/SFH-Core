@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import mod.sfhcore.blocks.Cube;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -20,17 +21,13 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class GuiHandler implements IGuiHandler {
 	
-	protected static List<Pair<Class<TileEntity>, Class<Container>>> teco = new ArrayList<Pair<Class<TileEntity>, Class<Container>>>();
-	
-	public GuiHandler(Object mod) {
-		NetworkRegistry.INSTANCE.registerGuiHandler(mod, this);
-	}
+	protected static List<Pair<Class<GuiContainer>, Class<Container>>> teco = new ArrayList<Pair<Class<GuiContainer>, Class<Container>>>();
 	
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Container getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
 		
-			for(Pair<Class<TileEntity>, Class<Container>> tc : teco) {
+			for(Pair<Class<GuiContainer>, Class<Container>> tc : teco) {
 				if(te1.getClass().equals(tc.getLeft().getClass())){
 					
 					Class<Container> c = (Class<Container>) tc.getRight();
@@ -48,15 +45,15 @@ public class GuiHandler implements IGuiHandler {
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public GuiContainer getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
 		
-		for(Pair<Class<TileEntity>, Class<Container>> tc : teco) {
+		for(Pair<Class<GuiContainer>, Class<Container>> tc : teco) {
 			if(te1.getClass().equals(tc.getLeft().getClass())){
 				
-				Class<Container> c = (Class<Container>) tc.getRight();
+				Class<GuiContainer> c = tc.getLeft();
 				try {
-				Constructor<Container> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
+				Constructor<GuiContainer> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
 				return con.newInstance(player.inventory, te1);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -75,7 +72,7 @@ public class GuiHandler implements IGuiHandler {
 	 * @return
 	 */
 	public static int addGUIRelation(Object tile, Object con) {
-		teco.add(new ImmutablePair<Class<TileEntity>, Class<Container>>((Class<TileEntity>)tile, (Class<Container>)con));
+		teco.add(new ImmutablePair<Class<GuiContainer>, Class<Container>>((Class<GuiContainer>)tile, (Class<Container>)con));
 		return (teco.size() - 1);
 	}
 }
