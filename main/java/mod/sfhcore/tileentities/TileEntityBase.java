@@ -3,7 +3,9 @@ package mod.sfhcore.tileentities;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -11,10 +13,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.walkers.ItemStackData;
+import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -30,23 +37,21 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import scala.Int;
 
-public class TileEntityBase extends TileEntity implements ITickable, ISidedInventory {
+public class TileEntityBase extends TileEntityLockable implements ITickable, ISidedInventory {
 	
-	private int invSize = 0;
 	public NonNullList<ItemStack> machineItemStacks;
 	private String field_145958_o;
 	public static int maxworkTime = 100;
 	public int workTime;
-	public static final int MAX_CAPACITY = 16000;
-	float volume;
 	private String machineCustomName;
+	private static final int[] SLOTS_TOP = new int[] {0};
+    private static final int[] SLOTS_BOTTOM = new int[] {2, 1};
+    private static final int[] SLOTS_SIDES = new int[] {1};
 	
 	public TileEntityBase(int invSize, String machineCustomName) {
 		this.workTime = 0;
-		this.volume = 0;
-		this.invSize = invSize;
 		this.machineCustomName = machineCustomName;
-		this.machineItemStacks = NonNullList.<ItemStack>withSize(this.invSize, ItemStack.EMPTY);
+		this.machineItemStacks = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
 	}
 	
 	/**
@@ -86,6 +91,7 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
     /**
      * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
      */
+    @Override
     public ItemStack decrStackSize(int index, int count)
     {
         return ItemStackHelper.getAndSplit(this.machineItemStacks, index, count);
@@ -94,6 +100,7 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
     /**
      * Removes a stack from the given slot and returns it.
      */
+    @Override
     public ItemStack removeStackFromSlot(int index)
     {
         return ItemStackHelper.getAndRemove(this.machineItemStacks, index);
@@ -102,9 +109,10 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
+    @Override
     public void setInventorySlotContents(int index, ItemStack stack)
     {
-        ItemStack itemstack = this.machineItemStacks.get(index);
+    	ItemStack itemstack = this.machineItemStacks.get(index);
         boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
         this.machineItemStacks.set(index, stack);
 
@@ -113,11 +121,17 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
             stack.setCount(this.getInventoryStackLimit());
         }
 
+        if (index == 0 && !flag)
+        {
+            this.workTime = 0;
+            this.markDirty();
+        }
     }
     
     /**
      * Get the name of this object. For players this returns their username
      */
+    @Override
     public String getName()
     {
         return this.hasCustomName() ? this.machineCustomName : "container.machine";
@@ -126,6 +140,7 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
     /**
      * Returns true if this thing is named
      */
+    @Override
     public boolean hasCustomName()
     {
         return this.machineCustomName != null && !this.machineCustomName.isEmpty();
@@ -143,7 +158,14 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
 	
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
-		return world.getTileEntity(pos) == this && player.getDistanceSq(pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d) < 64;
+		if (this.world.getTileEntity(this.pos) != this)
+        {
+            return false;
+        }
+        else
+        {
+            return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+        }
 	}
 	
 	@Override
@@ -173,32 +195,23 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.machineItemStacks.get(index);
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void openInventory(EntityPlayer player) {}
 
 	@Override
-	public void closeInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void closeInventory(EntityPlayer player) {}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return id;
 	}
 
 	@Override
@@ -209,32 +222,49 @@ public class TileEntityBase extends TileEntity implements ITickable, ISidedInven
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		this.machineItemStacks.clear();
 	}
 
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
-		// TODO Auto-generated method stub
-		return null;
+		int slots = getSizeInventory();
+		switch (side) {
+
+			case UP:
+	            return SLOTS_TOP;
+	        case DOWN:
+	            return SLOTS_BOTTOM;
+	        default:
+	            return SLOTS_SIDES;
+		}
 	}
 
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
-	
+
+	@Override
+	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getGuiID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -31,7 +31,7 @@ public class CubeContainerHorizontal extends BlockContainer{
 	private static final PropertyDirection FACING = BlockHorizontal.FACING;
     private static boolean keepInventory;
 	
-	protected CubeContainerHorizontal(Material materialIn, TileEntity te) {
+	protected CubeContainerHorizontal(Material materialIn) {
 		super(materialIn);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		this.te = te;
@@ -40,6 +40,7 @@ public class CubeContainerHorizontal extends BlockContainer{
 	/**
      * Called by ItemBlocks after a block is set in the world, to allow post-place logic
      */
+	@Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
@@ -204,11 +205,6 @@ public class CubeContainerHorizontal extends BlockContainer{
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
     
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {FACING});
-    }
-    
     //BlockFacinPart ENDE
     
     /**
@@ -226,7 +222,11 @@ public class CubeContainerHorizontal extends BlockContainer{
 	
 	@Override
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-		return te;
+		return null;
 	}
 
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] {FACING});
+	}
 }
