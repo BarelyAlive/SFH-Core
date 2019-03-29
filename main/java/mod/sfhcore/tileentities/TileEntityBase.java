@@ -170,7 +170,6 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-        this.machineItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(nbt, this.machineItemStacks);
 		this.workTime = nbt.getShort("workTime");
 		super.readFromNBT(nbt);
