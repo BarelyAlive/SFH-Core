@@ -186,12 +186,6 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 		return this.workTime * i / this.maxworkTime;
 	}
 
-    @SideOnly(Side.CLIENT)
-    public boolean isWorking(IInventory inventory)
-    {
-        return workTime > 0;
-    }
-
 	@Override
 	public ItemStack getStackInSlot(int index) {
 		return this.machineItemStacks.get(index);
