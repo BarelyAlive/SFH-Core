@@ -26,7 +26,7 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     private final PropertyEnum<E> property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockEnum(Material material, Class<E> enumClass, String propName, String name)
+    public BlockEnum(Material material, Class<E> enumClass, String propName, String name, CreativeTabs tab)
     {
         super(material);
 
@@ -35,15 +35,16 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         this.realStateContainer = createStateContainer();
         setDefaultState(getBlockState().getBaseState());
         setUnlocalizedName(name);
+        setCreativeTab(tab);
     }
     
     public E[] getTypes(){
     	return this.types;
     }
 
-    public BlockEnum(Material material, Class<E> enumClass, String name)
+    public BlockEnum(Material material, Class<E> enumClass, String name, CreativeTabs tab)
     {
-        this(material, enumClass, "type", name);
+        this(material, enumClass, "type", name, tab);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
     private final PropertyEnum<E> property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockEnumFalling(Material material, Class<E> enumClass, String propName, String name)
+    public BlockEnumFalling(Material material, Class<E> enumClass, String propName, String name, CreativeTabs tab)
     {
         super(material);
 
@@ -36,15 +36,16 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
         this.realStateContainer = createStateContainer();
         setDefaultState(getBlockState().getBaseState());
         setUnlocalizedName(name);
+        setCreativeTab(tab);
     }
     
     public E[] getTypes(){
     	return this.types;
     }
 
-    public BlockEnumFalling(Material material, Class<E> enumClass, String name)
+    public BlockEnumFalling(Material material, Class<E> enumClass, String name, CreativeTabs tab)
     {
-        this(material, enumClass, "type", name);
+        this(material, enumClass, "type", name, tab);
     }
 
     @Override
