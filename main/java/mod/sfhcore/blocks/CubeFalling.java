@@ -18,8 +18,9 @@ public class CubeFalling extends BlockFalling{
 	String name;
 	int sub;
 	
-	public CubeFalling(int sub, Material material, float resistance, float hardness, String name) {
+	public CubeFalling(int sub, Material material, float resistance, float hardness, CreativeTabs tab, String name) {
 		super();
+		setCreativeTab(tab);
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);

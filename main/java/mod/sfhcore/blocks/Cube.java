@@ -24,12 +24,13 @@ public class Cube extends Block implements IVariantProvider{
 	String name;
 	int sub;	
 	
-	public Cube(Material material, float resistance, float hardness, int sub, String name) {
-		this(material, resistance, hardness, sub, name, null);
+	public Cube(Material material, float resistance, float hardness, int sub, CreativeTabs tab, String name) {
+		this(material, resistance, hardness, sub, tab, name, null);
 	}
 	
-	public Cube(Material material, float resistance, float hardness, int sub, String name, TileEntity te) {
+	public Cube(Material material, float resistance, float hardness, int sub,  CreativeTabs tab, String name, TileEntity te) {
 		super(material);
+		setCreativeTab(tab);
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
