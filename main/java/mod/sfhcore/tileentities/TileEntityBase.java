@@ -62,6 +62,12 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
         return this.workTime > 0;
     }
 	
+    @SideOnly(Side.CLIENT)
+    public static boolean isWorking(IInventory inventory)
+    {
+        return inventory.getField(0) > 0;
+    }
+	
 	public void update() {
 	}
 	

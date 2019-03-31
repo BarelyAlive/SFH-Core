@@ -91,7 +91,7 @@ public class FluidHelper {
 				FluidStack contents = properties.getContents();
 				if (contents == null) {
 					return true;
-				} else if (contents.amount < properties.getCapacity()) {
+				} else if (contents.amount <= properties.getCapacity()) {
 					return true;
 				}
 			}

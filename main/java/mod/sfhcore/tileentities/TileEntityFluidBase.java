@@ -23,6 +23,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import scala.Int;
 
 public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler, IFluidTank {
@@ -33,7 +34,7 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 	protected int mb;
 	public FluidStack fluid;
 	int volume = 0;
-	public FluidTank tank = new FluidTank(fluid, (int) volume);
+	public FluidStack tank = new FluidStack(FluidRegistry.WATER, 0);			//new FluidTank(fluid, (int) volume);
 	
 	public TileEntityFluidBase(int invSize, String machineCustomName, int MAX_CAPACITY) {
 		super(invSize, machineCustomName);
@@ -74,8 +75,25 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 	@Override
 	public int fill(FluidStack resource, boolean doFill) {
 		for(Fluid f : acceptedFluids) {
-			if(resource.getFluid() == f){
+			if(resource.getFluid() != f){
+				return 0;
+			}
+			else if (resource.amount <= (this.MAX_CAPACITY - this.tank.amount)) {
+				if (doFill)
+				{
+					this.tank = new FluidStack(resource.getFluid(), (this.tank.amount + resource.amount));
+				}
 				return resource.amount;
+			}
+			else {
+				int empty_space_tank = (this.MAX_CAPACITY - this.tank.amount);
+				int oldAmount = resource.amount;
+				resource.amount = empty_space_tank;
+				if (doFill)
+				{
+					this.tank = new FluidStack(resource.getFluid(), this.tank.amount);
+				}
+				return (oldAmount - empty_space_tank);
 			}
 		}
 		return 0;
@@ -104,12 +122,12 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 
 	@Override
 	public FluidStack getFluid() {
-		return tank.getFluid();
+		return tank;
 	}
 
 	@Override
 	public int getFluidAmount() {
-		return tank.getFluidAmount();
+		return tank.amount;
 	}
 
 	@Override
@@ -119,7 +137,7 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 
 	@Override
 	public FluidTankInfo getInfo() {
-		return tank.getInfo();
+		return new FluidTankInfo(this.tank, this.MAX_CAPACITY);
 	}
 	
 }
