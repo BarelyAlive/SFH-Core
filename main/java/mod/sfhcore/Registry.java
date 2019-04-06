@@ -8,33 +8,15 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Registry {
 	
 	static SFHCoreClientProxy prox = new SFHCoreClientProxy();
 	
-	public static Block registerBlock(Block block, String modid)
-    {
-        if (block.getRegistryName() == null)
-        {
-        	String unlocalizedName = block.getUnlocalizedName();
-        	while (unlocalizedName.startsWith("tile."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.startsWith("item."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.endsWith(".name"))
-        	{
-        		unlocalizedName = unlocalizedName.substring((unlocalizedName.length() - 5), unlocalizedName.length());
-        	}
-        	block.setUnlocalizedName(unlocalizedName);
-            block.setRegistryName(unlocalizedName);
-        }
-        
+	public static Block registerBlock(ResourceLocation loc)
+    {      
         RegisterTileEntity.registerTileEntity(block);
         RegisterBlocks.blocks.add(block);
         

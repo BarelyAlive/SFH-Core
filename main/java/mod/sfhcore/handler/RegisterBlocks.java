@@ -26,37 +26,17 @@ public class RegisterBlocks {
 	
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{
-		String unlocalizedName;
 		for(int i = 0; i < blocks.size(); i++)
 		{
-        	unlocalizedName = blocks.get(i).getUnlocalizedName();
-        	while (unlocalizedName.startsWith("tile."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.startsWith("item."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-			registry.register(new ItemBlock(blocks.get(i)).setUnlocalizedName(unlocalizedName).setRegistryName("nethertweaksmod", unlocalizedName));
+			registry.register(new ItemBlock(blocks.get(i)));
 		}
 	}
 	
 	public static void registerModels()
 	{
-		String unlocalizedName;
 		for(int i = 0; i < blocks.size(); i++)
 		{
-        	unlocalizedName = blocks.get(i).getUnlocalizedName();
-        	while (unlocalizedName.startsWith("tile."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.startsWith("item."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(blocks.get(i), unlocalizedName, "nethertweaksmod");
+			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(new R);
 		}
 	}
 	

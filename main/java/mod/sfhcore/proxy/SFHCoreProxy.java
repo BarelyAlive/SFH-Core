@@ -2,15 +2,16 @@ package mod.sfhcore.proxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 
 public class SFHCoreProxy {
 	
-	public void tryHandleBlockModel(Block block, String name, String modid)
+	public void tryHandleBlockModel(ResourceLocation loc)
     {
         // NO-OP
     }
 
-    public void tryHandleItemModel(Item item, String name, String modid)
+    public void tryHandleItemModel(ResourceLocation loc)
     {
         // NO-OP
     }

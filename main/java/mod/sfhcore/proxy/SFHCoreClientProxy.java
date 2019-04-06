@@ -28,38 +28,38 @@ import mod.sfhcore.Constants;
 public class SFHCoreClientProxy extends SFHCoreProxy{
     
 	@Override
-	public void tryHandleBlockModel(Block block, String name, String modid)
+	public void tryHandleBlockModel(ResourceLocation loc)
     {
-        if (block instanceof IVariantProvider)
+        if (loc instanceof IVariantProvider)
         {
-            IVariantProvider variantProvider = (IVariantProvider) block;
+            IVariantProvider variantProvider = (IVariantProvider) loc;
             if (variantProvider.getVariants().size() == 1)
             {
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(modid + ":" + name, "inventory"));
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(loc), 0, new ModelResourceLocation(loc, "inventory"));
             }
             else
             {
 	            for (Pair<Integer, String> variant : variantProvider.getVariants())
 	            {
-	                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(modid + ":" + name, variant.getRight()));
+	                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(loc), variant.getLeft(), new ModelResourceLocation(loc, variant.getRight()));
 	            }
             }
         }
         else
         {
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(modid + ":" + name, "inventory"));
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(loc), 0, new ModelResourceLocation(loc, "inventory"));
         }
     }
 
 	@Override
-    public void tryHandleItemModel(Item item, String name, String modid)
+    public void tryHandleItemModel(ResourceLocation loc)
     {
         if (item instanceof IVariantProvider)
         {
             IVariantProvider variantProvider = (IVariantProvider) item;
             if (variantProvider.getVariants().size() == 1)
             {
-                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(modid + ":" + name, "inventory"));
+                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
             }
             else
             {
@@ -71,7 +71,7 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         }
         else
         {
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(modid + ":" + name, "inventory"));
+            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
         }
     }
 }
