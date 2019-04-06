@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RegisterTileEntity {
@@ -29,20 +30,24 @@ public class RegisterTileEntity {
 	public static void registerTileEntity(Block b)
 	{
 		int i = getIndexForBlock(b);
+		String domain = tile_entitys.get(i).block.getRegistryName().getResourceDomain();
+		String tename = tile_entitys.get(i).te.getClass().toString().toLowerCase();
 			
 		if(i != -1)
 		{
-			GameRegistry.registerTileEntity(tile_entitys.get(i).te.getClass(), b.getRegistryName());
+			GameRegistry.registerTileEntity(tile_entitys.get(i).te.getClass(), new ResourceLocation(domain, tename));
 		}
 	}
 	
 	public static void registerTileEntity(TileEntity te)
 	{
 		int i = getIndexForTileEntity(te);
+		String domain = tile_entitys.get(i).block.getRegistryName().getResourceDomain();
+		String tename = tile_entitys.get(i).te.getClass().toString().toLowerCase();
 			
 		if(i != -1)
 		{
-			GameRegistry.registerTileEntity(te.getClass(), tile_entitys.get(i).block.getRegistryName());
+			GameRegistry.registerTileEntity(te.getClass(), new ResourceLocation(domain, tename));
 		}
 	}
 	
