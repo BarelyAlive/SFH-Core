@@ -8,19 +8,20 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CubeTransparent extends Cube{
 	
-	public CubeTransparent(Material material, float resistance, float hardness, int sub, CreativeTabs tab, String name) {
-		super(material, resistance, hardness, sub, tab, name);
+	public CubeTransparent(Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc) {
+		super(material, resistance, hardness, 0, tab, loc);
 		setLightOpacity(15);
 	}
 	
-	public CubeTransparent(Material material, float resistance, float hardness, int sub, CreativeTabs tab, String name, TileEntity te) {
-		super(material, resistance, hardness, sub, tab, name, te);
+	public CubeTransparent(Material material, float resistance, float hardness, int sub, CreativeTabs tab, ResourceLocation loc, TileEntity te) {
+		super(material, resistance, hardness, sub, tab, loc, te);
 		setLightOpacity(15);
 	}
 	

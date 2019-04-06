@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -26,7 +27,7 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     private final PropertyEnum<E> property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockEnum(Material material, Class<E> enumClass, String propName, String name, CreativeTabs tab)
+    public BlockEnum(Material material, Class<E> enumClass, String propName, ResourceLocation loc, CreativeTabs tab)
     {
         super(material);
 
@@ -34,8 +35,8 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         this.property = PropertyEnum.create(propName, enumClass);
         this.realStateContainer = createStateContainer();
         setDefaultState(getBlockState().getBaseState());
-        setRegistryName("nethertweaksmod", name);
-        setUnlocalizedName(name);
+        setRegistryName(loc);
+        setUnlocalizedName(loc.getResourcePath());
         setCreativeTab(tab);
     }
     
@@ -43,9 +44,9 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     	return this.types;
     }
 
-    public BlockEnum(Material material, Class<E> enumClass, String name, CreativeTabs tab)
+    public BlockEnum(Material material, Class<E> enumClass, ResourceLocation loc, CreativeTabs tab)
     {
-        this(material, enumClass, "type", name, tab);
+        this(material, enumClass, "type", loc, tab);
     }
 
     @Override

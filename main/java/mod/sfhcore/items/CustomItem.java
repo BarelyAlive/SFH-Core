@@ -19,19 +19,19 @@ public class CustomItem extends Item implements IVariantProvider{
 	private int sub;
 	private String name;
 	
-	public CustomItem(int maxstack, CreativeTabs tab, String name){
-		this(null, maxstack, tab, false, 0, name);
+	public CustomItem(int maxstack, CreativeTabs tab, ResourceLocation loc){
+		this(null, maxstack, tab, false, 0, loc);
 	}
 		
-	public CustomItem(Item container, int maxstack, CreativeTabs tab, boolean subtypes, int subnumber, String name){
+	public CustomItem(Item container, int maxstack, CreativeTabs tab, boolean subtypes, int subnumber, ResourceLocation loc){
 		setCreativeTab(tab);
 		setMaxStackSize(maxstack);
 		setContainerItem(container);
-		setUnlocalizedName(name);
-		setRegistryName("nethertweaksmod", name);
+		setUnlocalizedName(loc.getResourcePath());
+		setRegistryName(loc);
 		this.setHasSubtypes(subtypes);
 		this.sub = subnumber;
-		this.name = name;
+		this.name = loc.getResourcePath();
 	}
 
 	@Override

@@ -21,20 +21,21 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class CubeContainerHorizontal extends BlockContainer{
 
-	private TileEntity te;
 	private static final PropertyDirection FACING = BlockHorizontal.FACING;
     private static boolean keepInventory;
 	
-	protected CubeContainerHorizontal(Material materialIn) {
+	protected CubeContainerHorizontal(Material materialIn, ResourceLocation loc) {
 		super(materialIn);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		this.te = te;
+		setRegistryName(loc);
+		setUnlocalizedName(loc.getResourcePath());
 	}
 	
 	/**

@@ -9,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,9 +18,11 @@ public class CubeFacingXYZ  extends Block{
 
 	public static final PropertyEnum<CubeFacingXYZ.EnumAxis> CUBE_AXIS = PropertyEnum.<CubeFacingXYZ.EnumAxis>create("axis", CubeFacingXYZ.EnumAxis.class);
 	
-	public CubeFacingXYZ(Material materialIn) {
+	public CubeFacingXYZ(Material materialIn, ResourceLocation loc) {
 		super(materialIn);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.Y));
+		setRegistryName(loc);
+		setUnlocalizedName(loc.getResourcePath());
 	}
 	
 	public static enum EnumAxis implements IStringSerializable

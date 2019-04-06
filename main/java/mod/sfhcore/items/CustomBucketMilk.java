@@ -13,18 +13,19 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class CustomBucketMilk extends Item
 {
 	private ItemStack empty;
 	
-    public CustomBucketMilk(CreativeTabs tab, ItemStack empty, String name)
+    public CustomBucketMilk(CreativeTabs tab, ItemStack empty, ResourceLocation loc)
     {
         this.setMaxStackSize(1);
         this.setCreativeTab(tab);
-        setUnlocalizedName(name);
-        setRegistryName("nethertweaksmod", name);
+        setUnlocalizedName(loc.getResourcePath());
+        setRegistryName(loc);
         this.empty = empty;
     }
 

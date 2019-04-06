@@ -13,9 +13,9 @@ public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> exten
     {
         super(block);
 
-            setHasSubtypes(true);
-            setRegistryName(block.getRegistryName());
-            setUnlocalizedName(block.getRegistryName().getResourcePath());
+        setHasSubtypes(true);
+        setRegistryName(block.getRegistryName());
+        setUnlocalizedName(block.getRegistryName().getResourcePath());
     }
 
     @SuppressWarnings("unchecked")

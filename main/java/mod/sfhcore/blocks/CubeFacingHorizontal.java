@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,9 +20,11 @@ public class CubeFacingHorizontal extends Block{
 
 	private static final PropertyDirection FACING = BlockHorizontal.FACING;
 
-	protected CubeFacingHorizontal(Material materialIn) {
+	protected CubeFacingHorizontal(Material materialIn, ResourceLocation loc) {
 		super(materialIn);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+		setRegistryName(loc);
+		setUnlocalizedName(loc.getResourcePath());
 	}
 	
 	/**

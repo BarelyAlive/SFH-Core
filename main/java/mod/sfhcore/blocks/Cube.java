@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class Cube extends Block implements IVariantProvider{
@@ -24,19 +25,19 @@ public class Cube extends Block implements IVariantProvider{
 	String name;
 	int sub;	
 	
-	public Cube(Material material, float resistance, float hardness, int sub, CreativeTabs tab, String name) {
-		this(material, resistance, hardness, sub, tab, name, null);
+	public Cube(Material material, float resistance, float hardness, int sub, CreativeTabs tab, ResourceLocation loc) {
+		this(material, resistance, hardness, sub, tab, loc, null);
 	}
 	
-	public Cube(Material material, float resistance, float hardness, int sub,  CreativeTabs tab, String name, TileEntity te) {
+	public Cube(Material material, float resistance, float hardness, int sub,  CreativeTabs tab, ResourceLocation loc, TileEntity te) {
 		super(material);
 		setCreativeTab(tab);
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
-		setUnlocalizedName(name);
-		setRegistryName("nethertweaksmod", name);
-		this.name = name;
+		setUnlocalizedName(loc.getResourcePath());
+		setRegistryName(loc);
+		this.name = loc.getResourcePath();
 		this.sub = sub;
 		if(material == Material.GROUND){
 			setSoundType(blockSoundType.GROUND);;

@@ -25,13 +25,13 @@ public class ItemDoor extends Item
     public Material doorMaterial;
     private Block block;
     
-    public ItemDoor(Block block, String name, CreativeTabs tab)
+    public ItemDoor(Block block, ResourceLocation loc, CreativeTabs tab)
     {
         this.maxStackSize = 1;
         this.block = block;
         this.setCreativeTab(tab);
-        setRegistryName("nethertweaksmod", name);
-        setUnlocalizedName(name);
+        setRegistryName(loc);
+        setUnlocalizedName(loc.getResourceDomain());
     }
 
     /**

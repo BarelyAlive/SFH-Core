@@ -12,21 +12,27 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 
 public class CubeFalling extends BlockFalling{
 	
 	protected String name;
 	int sub;
 	
-	public CubeFalling(int sub, Material material, float resistance, float hardness, CreativeTabs tab, String name) {
+	public CubeFalling(Material m, Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc)
+	{
+		this(0, material, resistance, hardness, tab, loc);
+	}
+	
+	public CubeFalling(int sub, Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc) {
 		super();
+		this.name = loc.getResourcePath();
 		setCreativeTab(tab);
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
 		setUnlocalizedName(name);
-		setRegistryName("nethertweaksmod", name);
-		this.name = name;
+		setRegistryName(loc);
 		this.sub = sub;
 		if(material == Material.GROUND){
 			setSoundType(blockSoundType.GROUND);
