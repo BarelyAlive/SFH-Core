@@ -6,12 +6,12 @@ import net.minecraft.util.ResourceLocation;
 
 public class SFHCoreProxy {
 	
-	public void tryHandleBlockModel(Block block, String name, String modid)
+	public void tryHandleBlockModel(Block block, ResourceLocation loc)
     {
         // NO-OP
     }
 
-    public void tryHandleItemModel(Item item, String name, String modid)
+    public void tryHandleItemModel(Item item, ResourceLocation loc)
     {
         // NO-OP
     }

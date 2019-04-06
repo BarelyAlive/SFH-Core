@@ -8,6 +8,7 @@ import mod.sfhcore.proxy.SFHCoreClientProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterItems {
@@ -24,19 +25,12 @@ public class RegisterItems {
 	
 	public static void registerModels()
 	{
-		String unlocalizedName;
+		ResourceLocation loc;
 		for(int i = 0; i < items.size(); i++)
 		{
-        	unlocalizedName = items.get(i).getUnlocalizedName();
-        	while (unlocalizedName.startsWith("tile."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.startsWith("item."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-	        ((SFHCoreClientProxy)SFHCore.proxy).tryHandleItemModel(items.get(i), unlocalizedName, "nethertweaksmod");
+        	loc = items.get(i).getRegistryName();
+        	
+	        ((SFHCoreClientProxy)SFHCore.proxy).tryHandleItemModel(items.get(i), loc);
 		}
 	}
 	

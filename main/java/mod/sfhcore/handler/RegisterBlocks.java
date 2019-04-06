@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterBlocks {
@@ -25,21 +26,19 @@ public class RegisterBlocks {
 	
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{
-		String unlocalizedName;
 		for(int i = 0; i < blocks.size(); i++)
 		{
-        	unlocalizedName = blocks.get(i).getUnlocalizedName();
 			registry.register(new ItemBlock(blocks.get(i)));
 		}
 	}
 	
 	public static void registerModels()
 	{
-		String unlocalizedName;
+		ResourceLocation loc;
 		for(int i = 0; i < blocks.size(); i++)
 		{
-        	unlocalizedName = blocks.get(i).getUnlocalizedName();
-			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(blocks.get(i), unlocalizedName, "nethertweaksmod");
+        	loc = blocks.get(i).getRegistryName();
+			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(blocks.get(i), loc);
 		}
 	}
 	
