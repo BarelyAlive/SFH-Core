@@ -33,8 +33,7 @@ public class RegisterBlocks {
 		{
 			if (!block.equals(blocks.get((blocks.size() - 1))))
 			{
-				Item item = new ItemBlock(block);
-				registry.register(item);
+				registry.register(Item.getItemFromBlock(block));
 			}
 		}
 			
