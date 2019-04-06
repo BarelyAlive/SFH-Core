@@ -32,7 +32,7 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 	
 	public TileEntityBase(int invSize, String machineCustomName) {
 		this.workTime = 0;
-		this.machineCustomName = machineCustomName;
+		setCustomInventoryName(machineCustomName);
 		this.machineItemStacks = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
 	}
 	
@@ -122,7 +122,7 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
     @Override
     public String getName()
     {
-        return this.hasCustomName() ? this.machineCustomName : "container.machine";
+        return machineCustomName;
     }
 
     /**
@@ -183,13 +183,14 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
         ItemStackHelper.loadAllItems(nbt, this.machineItemStacks);
 		this.workTime = nbt.getShort("workTime");
-		super.readFromNBT(nbt);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
 		ItemStackHelper.saveAllItems(nbt, this.machineItemStacks);
 		nbt.setShort("workTime", (short)this.workTime);
 		return super.writeToNBT(nbt);
