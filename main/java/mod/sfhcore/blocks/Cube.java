@@ -65,7 +65,7 @@ public class Cube extends Block implements IVariantProvider{
     }
 	
 	public String getName() {
-		if (this.sub <= 1)
+		if (this.sub == 1)
 		{
 			return name;
 		}
@@ -73,9 +73,13 @@ public class Cube extends Block implements IVariantProvider{
 	}
 	
 	@Override
-	public String getUnlocalizedName() {
-		return "item." + getName();
-	}
+    public String getUnlocalizedName() {
+		if (this.sub == 1)
+		{
+			return name;
+		}
+		return name + "_" + this.getMetaFromState(getDefaultState());
+    }
 	
 	/**
      * The type of render function called. 3 for standard block models, 2 for TESR's, 1 for liquids, -1 is no render

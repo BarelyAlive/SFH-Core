@@ -15,7 +15,7 @@ import net.minecraft.util.NonNullList;
 
 public class CubeFalling extends BlockFalling{
 	
-	String name;
+	protected String name;
 	int sub;
 	
 	public CubeFalling(int sub, Material material, float resistance, float hardness, CreativeTabs tab, String name) {
@@ -55,7 +55,15 @@ public class CubeFalling extends BlockFalling{
 	
 	@Override
     public String getUnlocalizedName() {
-    	return name + "_" + this.getMetaFromState(getDefaultState());
+		int meta = this.getMetaFromState(getDefaultState());
+		if(meta > 1)
+		{
+			return name + "_" + this.getMetaFromState(getDefaultState());
+		}
+		else
+		{
+			return name;
+		}
     }
 	
 	/**

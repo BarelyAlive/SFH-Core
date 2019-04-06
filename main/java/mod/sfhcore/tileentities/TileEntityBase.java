@@ -22,13 +22,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityBase extends TileEntityLockable implements ITickable, ISidedInventory {
 	
 	public NonNullList<ItemStack> machineItemStacks;
-	private String field_145958_o;
+	protected String field_145958_o;
 	public static int maxworkTime = 100;
 	public int workTime;
-	private String machineCustomName;
-	private static final int[] SLOTS_TOP = new int[] {0};
-    private static final int[] SLOTS_BOTTOM = new int[] {2, 1};
-    private static final int[] SLOTS_SIDES = new int[] {1};
+	protected String machineCustomName;
+	protected static int[] SLOTS_TOP = new int[] {0};
+	protected static int[] SLOTS_BOTTOM = new int[] {2, 1};
+	protected static int[] SLOTS_SIDES = new int[] {1};
 	
 	public TileEntityBase(int invSize, String machineCustomName) {
 		this.workTime = 0;
@@ -37,7 +37,7 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 	}
 	
 	/**
-     * Freezer is freezing
+     * Machine is working
      */
     public boolean isWorking()
     {
@@ -156,12 +156,12 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
         }
 	}
 	
+	//Networking & NBT
+	
 	@Override
     public void handleUpdateTag(NBTTagCompound tag) {
         super.handleUpdateTag(tag);
 	}
-	
-	//Networking & NBT
 	
 	@Override
     public NBTTagCompound getUpdateTag() {
@@ -224,9 +224,8 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 	}
 
 	@Override
-	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-		
+	public void setField(int id, int value)
+	{	
 	}
 
 	@Override
@@ -255,25 +254,21 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getGuiID() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
