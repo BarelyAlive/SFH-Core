@@ -24,6 +24,8 @@ public class CubeFalling extends BlockFalling{
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
+		setUnlocalizedName(name);
+		setRegistryName("nethertweaksmod", name);
 		this.name = name;
 		this.sub = sub;
 		if(material == Material.GROUND){

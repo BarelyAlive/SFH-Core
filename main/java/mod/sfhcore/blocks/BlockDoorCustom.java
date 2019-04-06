@@ -61,6 +61,7 @@ public class BlockDoorCustom extends Block implements IVariantProvider
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(OPEN, Boolean.valueOf(false)).withProperty(HINGE, BlockDoorCustom.EnumHingePosition.LEFT).withProperty(POWERED, Boolean.valueOf(false)).withProperty(HALF, BlockDoorCustom.EnumDoorHalf.LOWER));
         setCreativeTab(tab);
         setUnlocalizedName(name);
+        setRegistryName("nethertweaksmod", name);
     }
 
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)

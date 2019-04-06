@@ -35,6 +35,7 @@ public class Cube extends Block implements IVariantProvider{
 		setHardness(hardness);
 		setLightOpacity(0);
 		setUnlocalizedName(name);
+		setRegistryName("nethertweaksmod", name);
 		this.name = name;
 		this.sub = sub;
 		if(material == Material.GROUND){
