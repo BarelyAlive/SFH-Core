@@ -161,6 +161,8 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
         super.handleUpdateTag(tag);
 	}
 	
+	//Networking & NBT
+	
 	@Override
     public NBTTagCompound getUpdateTag() {
         return writeToNBT(new NBTTagCompound());
@@ -192,6 +194,8 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 		nbt.setShort("workTime", (short)this.workTime);
 		return super.writeToNBT(nbt);
 	}
+	
+	//ggggg
 
 	public int getWorkTimeRemainingScaled(int i) {
 		return this.workTime * i / this.maxworkTime;
