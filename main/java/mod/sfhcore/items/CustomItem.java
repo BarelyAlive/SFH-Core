@@ -18,6 +18,10 @@ public class CustomItem extends Item implements IVariantProvider{
 	
 	private int sub;
 	private String name;
+	
+	public CustomItem(int maxstack, CreativeTabs tab, String name){
+		this(null, maxstack, tab, false, 0, name);
+	}
 		
 	public CustomItem(Item container, int maxstack, CreativeTabs tab, boolean subtypes, int subnumber, String name){
 		setCreativeTab(tab);

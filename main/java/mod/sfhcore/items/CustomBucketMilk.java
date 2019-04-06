@@ -19,10 +19,12 @@ public class CustomBucketMilk extends Item
 {
 	private ItemStack empty;
 	
-    public CustomBucketMilk(CreativeTabs tab, ItemStack empty)
+    public CustomBucketMilk(CreativeTabs tab, ItemStack empty, String name)
     {
         this.setMaxStackSize(1);
         this.setCreativeTab(tab);
+        setUnlocalizedName(name);
+        setRegistryName("nethertweaksmod", name);
         this.empty = empty;
     }
 

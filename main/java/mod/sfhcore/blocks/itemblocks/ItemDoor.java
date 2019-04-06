@@ -1,4 +1,4 @@
-package mod.sfhcore.items.block;
+package mod.sfhcore.blocks.itemblocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
@@ -25,12 +25,13 @@ public class ItemDoor extends Item
     public Material doorMaterial;
     private Block block;
     
-    public ItemDoor(Block block, String unlocalizedName, CreativeTabs tab)
+    public ItemDoor(Block block, String name, CreativeTabs tab)
     {
         this.maxStackSize = 1;
         this.block = block;
         this.setCreativeTab(tab);
-        this.setUnlocalizedName(unlocalizedName);
+        setRegistryName("nethertweaksmod", name);
+        setUnlocalizedName(name);
     }
 
     /**

@@ -36,6 +36,7 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
         this.realStateContainer = createStateContainer();
         setDefaultState(getBlockState().getBaseState());
         setUnlocalizedName(name);
+        setRegistryName("nethertweaksmod", name);
         setCreativeTab(tab);
     }
     

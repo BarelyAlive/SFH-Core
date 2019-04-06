@@ -56,6 +56,8 @@ public class CustomBucket extends Item implements IFluidHandler{
         this.containedBlock = containedBlockIn;
         this.empty = empty;
         this.setUnlocalizedName(unlocalizedName);
+        setRegistryName("nethertweaksmod", unlocalizedName);
+        
 	}
 	
 	public ItemStack getBucketForBlock(Block b) {

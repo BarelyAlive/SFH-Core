@@ -34,6 +34,7 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         this.property = PropertyEnum.create(propName, enumClass);
         this.realStateContainer = createStateContainer();
         setDefaultState(getBlockState().getBaseState());
+        setRegistryName("nethertweaksmod", name);
         setUnlocalizedName(name);
         setCreativeTab(tab);
     }

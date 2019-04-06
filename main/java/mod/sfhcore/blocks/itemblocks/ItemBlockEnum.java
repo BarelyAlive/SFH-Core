@@ -14,6 +14,8 @@ public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends Item
         super(block);
 
             setHasSubtypes(true);
+            setRegistryName(block.getRegistryName());
+            setUnlocalizedName(block.getRegistryName().getResourcePath());
     }
 
     @Override

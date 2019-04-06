@@ -18,27 +18,38 @@ public class RegisterBlocks {
 	
 	public static void register(IForgeRegistry<Block> registry)
 	{
-		for(int i = 0; i < blocks.size(); i++)
+		for(Block block : blocks)
 		{
-			registry.register(blocks.get(i));
+			if (!block.equals(blocks.get((blocks.size() - 1))))
+			{
+				registry.register(block);
+			}
 		}
 	}
 	
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{
-		for(int i = 0; i < blocks.size(); i++)
+		for(Block block : blocks)
 		{
-			registry.register(new ItemBlock(blocks.get(i)));
+			if (!block.equals(blocks.get((blocks.size() - 1))))
+			{
+				Item item = new ItemBlock(block).setRegistryName(block.getRegistryName());
+				registry.register(item);
+			}
 		}
+			
 	}
 	
 	public static void registerModels()
 	{
 		ResourceLocation loc;
-		for(int i = 0; i < blocks.size(); i++)
+		for(Block block : blocks)
 		{
-        	loc = blocks.get(i).getRegistryName();
-			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(blocks.get(i), loc);
+			if (!block.equals(blocks.get((blocks.size() - 1))))
+			{
+	        	loc = block.getRegistryName();
+				((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(block, loc);
+			}
 		}
 	}
 	

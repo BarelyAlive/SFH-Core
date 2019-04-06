@@ -17,20 +17,26 @@ public class RegisterItems {
 	
 	public static void register(IForgeRegistry<Item> registry)
 	{
-		for(int i = 0; i < items.size(); i++)
+		for(Item item : items)
 		{
-			registry.register(items.get(i));
+			if (!item.equals(items.get((items.size() - 1))))
+			{
+				registry.register(item);
+			}
 		}
 	}
 	
 	public static void registerModels()
 	{
 		ResourceLocation loc;
-		for(int i = 0; i < items.size(); i++)
+		for(Item item : items)
 		{
-        	loc = items.get(i).getRegistryName();
-        	
-	        ((SFHCoreClientProxy)SFHCore.proxy).tryHandleItemModel(items.get(i), loc);
+			if (!item.equals(items.get((items.size() - 1))))
+			{
+	        	loc = item.getRegistryName();
+	        	
+		        ((SFHCoreClientProxy)SFHCore.proxy).tryHandleItemModel(item, loc);
+			}
 		}
 	}
 	
