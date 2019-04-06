@@ -14,41 +14,34 @@ public class Registry {
 	
 	static SFHCoreClientProxy prox = new SFHCoreClientProxy();
 	
-	public static Block registerBlock(Block block, String modid)
+	public static Block registerBlock(Block block)
     {        
         RegisterTileEntity.registerTileEntity(block);
         RegisterBlocks.blocks.add(block);
-        
-        //SFHCore.proxy.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
-        
+                
         return block;
     }
 
-    public static Block registerBlock(ItemBlock itemBlock, int no, String modid)
+    public static Block registerBlock(ItemBlock itemBlock, int no)
     {
         Block block = itemBlock.getBlock();
 
         RegisterTileEntity.registerTileEntity(block);
         RegisterBlocks.blocks.add(block);
         
-        //itemBlock.registerItems();
-       //SFHCore.proxy.tryHandleBlockModel(block, block.getUnlocalizedName(), modid);
-
         return block;
     }
     
-    public static Item registerItem(Item item, String modid)
+    public static Item registerItem(Item item)
     {
         RegisterItems.items.add(item);
-        //SFHCore.proxy.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
             
         return item;
     }
 	
-	public static Item registerItem(Item item, int no, String modid)
+	public static Item registerItem(Item item, int no)
     {
         RegisterItems.items.add(item);
-        //SFHCore.proxy.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
             
         return item;
     }
