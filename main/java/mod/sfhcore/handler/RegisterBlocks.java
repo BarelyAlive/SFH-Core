@@ -19,24 +19,27 @@ public class RegisterBlocks {
 	{
 		for(int i = 0; i < blocks.size(); i++)
 		{
-			//registry.registerAll(blocks.get(i));
 			registry.register(blocks.get(i));
 		}
 	}
 	
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{
+		String unlocalizedName;
 		for(int i = 0; i < blocks.size(); i++)
 		{
+        	unlocalizedName = blocks.get(i).getUnlocalizedName();
 			registry.register(new ItemBlock(blocks.get(i)));
 		}
 	}
 	
 	public static void registerModels()
 	{
+		String unlocalizedName;
 		for(int i = 0; i < blocks.size(); i++)
 		{
-			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(new R);
+        	unlocalizedName = blocks.get(i).getUnlocalizedName();
+			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(blocks.get(i), unlocalizedName, "nethertweaksmod");
 		}
 	}
 	

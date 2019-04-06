@@ -8,15 +8,14 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Registry {
 	
 	static SFHCoreClientProxy prox = new SFHCoreClientProxy();
 	
-	public static Block registerBlock(ResourceLocation loc)
-    {      
+	public static Block registerBlock(Block block, String modid)
+    {        
         RegisterTileEntity.registerTileEntity(block);
         RegisterBlocks.blocks.add(block);
         
@@ -29,25 +28,6 @@ public class Registry {
     {
         Block block = itemBlock.getBlock();
 
-        if (block.getRegistryName() == null)
-        {
-        	String unlocalizedName = block.getUnlocalizedName();
-        	while (unlocalizedName.startsWith("tile."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.startsWith("item."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.endsWith(".name"))
-        	{
-        		unlocalizedName = unlocalizedName.substring((unlocalizedName.length() - 5), unlocalizedName.length());
-        	}
-        	block.setUnlocalizedName(unlocalizedName);
-            block.setRegistryName(unlocalizedName);
-        }
-
         RegisterTileEntity.registerTileEntity(block);
         RegisterBlocks.blocks.add(block);
         
@@ -59,24 +39,6 @@ public class Registry {
     
     public static Item registerItem(Item item, String modid)
     {
-        if (item.getRegistryName() == null)
-        {
-        	String unlocalizedName = item.getUnlocalizedName();
-        	while (unlocalizedName.startsWith("tile."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.startsWith("item."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.endsWith(".name"))
-        	{
-        		unlocalizedName = unlocalizedName.substring((unlocalizedName.length() - 5), unlocalizedName.length());
-        	}
-        	item.setUnlocalizedName(unlocalizedName);
-            item.setRegistryName(unlocalizedName);
-        }
         RegisterItems.items.add(item);
         //SFHCore.proxy.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
             
@@ -85,20 +47,6 @@ public class Registry {
 	
 	public static Item registerItem(Item item, int no, String modid)
     {
-        if (item.getRegistryName() == null)
-        {
-        	String unlocalizedName = item.getUnlocalizedName();
-        	while (unlocalizedName.startsWith("tile."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	while (unlocalizedName.startsWith("item."))
-        	{
-        		unlocalizedName = unlocalizedName.substring(5);
-        	}
-        	item.setUnlocalizedName(unlocalizedName);
-            item.setRegistryName(unlocalizedName);
-        }
         RegisterItems.items.add(item);
         //SFHCore.proxy.tryHandleItemModel(item, item.getUnlocalizedName(), modid);
             
