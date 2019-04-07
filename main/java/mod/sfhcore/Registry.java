@@ -11,9 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Registry {
-	
-	static SFHCoreClientProxy prox = new SFHCoreClientProxy();
-	
+		
 	public static Block registerBlock(Block block)
     {        
         RegisterBlocks.blocks.add(block);
@@ -21,7 +19,7 @@ public class Registry {
         return block;
     }
 
-    public static Block registerBlock(ItemBlock itemBlock, int no)
+    public static Block registerBlock(ItemBlock itemBlock)
     {
         Block block = itemBlock.getBlock();
         RegisterBlocks.blocks.add(block);
@@ -30,13 +28,6 @@ public class Registry {
     }
     
     public static Item registerItem(Item item)
-    {
-        RegisterItems.items.add(item);
-            
-        return item;
-    }
-	
-	public static Item registerItem(Item item, int no)
     {
         RegisterItems.items.add(item);
             

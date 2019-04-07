@@ -19,7 +19,7 @@ public class CubeFalling extends BlockFalling{
 	protected String name;
 	int sub;
 	
-	public CubeFalling(Material m, Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc)
+	public CubeFalling(Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc)
 	{
 		this(0, material, resistance, hardness, tab, loc);
 	}
