@@ -27,6 +27,17 @@ public class RegisterTileEntity {
 		add(te, b);
 	}
 	
+	public static void register()
+	{
+		for(TE2Block t2b : tile_entitys)
+		{
+			if (t2b.equals(tile_entitys.get(tile_entitys.size())))
+			{
+				GameRegistry.registerTileEntity(t2b.te.getClass(), t2b.block.getRegistryName().toString());
+			}
+		}
+	}
+	
 	public static void registerTileEntity(Block b)
 	{
 		int i = getIndexForBlock(b);

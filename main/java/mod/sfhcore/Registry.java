@@ -16,7 +16,6 @@ public class Registry {
 	
 	public static Block registerBlock(Block block)
     {        
-        RegisterTileEntity.registerTileEntity(block);
         RegisterBlocks.blocks.add(block);
                 
         return block;
@@ -25,8 +24,6 @@ public class Registry {
     public static Block registerBlock(ItemBlock itemBlock, int no)
     {
         Block block = itemBlock.getBlock();
-
-        RegisterTileEntity.registerTileEntity(block);
         RegisterBlocks.blocks.add(block);
         
         return block;

@@ -2,6 +2,7 @@ package mod.sfhcore;
  
 import mod.sfhcore.handler.RegisterBlocks;
 import mod.sfhcore.handler.RegisterItems;
+import mod.sfhcore.handler.RegisterTileEntity;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
 import mod.sfhcore.proxy.SFHCoreProxy;
 import net.minecraft.block.Block;
@@ -42,6 +43,7 @@ public class SFHCore {
     	public static void registerBlocks (RegistryEvent.Register<Block> event)
     	{
     		RegisterBlocks.register(event.getRegistry());
+    		RegisterTileEntity.register();
     	}
     	
     	@SubscribeEvent
