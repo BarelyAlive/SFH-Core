@@ -22,17 +22,16 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemDoor extends Item
 {
-    private Material doorMaterial;
     private BlockDoorCustom block;
     
-    public ItemDoor(BlockDoorCustom block, ResourceLocation loc, CreativeTabs tab)
+    public ItemDoor(Block block, ResourceLocation loc, CreativeTabs tab)
     {
         this.maxStackSize = 1;
-        this.block = block;
+        this.block = (BlockDoorCustom) block;
         this.block.door = this;
         this.setCreativeTab(tab);
-        this.setRegistryName(loc);
-        this.setUnlocalizedName(loc.getResourcePath());
+        setRegistryName(loc);
+        setUnlocalizedName(loc.getResourcePath());
     }
 
     /**
