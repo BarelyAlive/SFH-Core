@@ -19,7 +19,7 @@ public class RegisterItems {
 	{
 		for(Item item : items)
 		{
-			if (!item.equals(items.get((items.size() - 1))))
+			if (item != null && item.getRegistryName() != null)
 			{
 				registry.register(item);
 			}
@@ -31,7 +31,7 @@ public class RegisterItems {
 		ResourceLocation loc;
 		for(Item item : items)
 		{
-			if (!item.equals(items.get((items.size() - 1))))
+			if (item != null && item.getRegistryName() != null)
 			{
 	        	loc = item.getRegistryName();
 	        	

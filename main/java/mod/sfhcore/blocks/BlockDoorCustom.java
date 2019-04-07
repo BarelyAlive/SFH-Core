@@ -27,6 +27,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -54,6 +55,7 @@ public class BlockDoorCustom extends Block implements IVariantProvider
     protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.8125D, 1.0D, 1.0D, 1.0D);
     protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.8125D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
     protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.1875D, 1.0D, 1.0D);
+    public Item door;
 
     public BlockDoorCustom(Material materialIn, CreativeTabs tab, ResourceLocation loc)
     {
@@ -227,14 +229,19 @@ public class BlockDoorCustom extends Block implements IVariantProvider
         }
     }
 
-//    /**
-//     * Get the Item that this Block should drop when harvested.
-//     */
-//    @Nullable
-//    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-//    {
-//        return state.getValue(HALF) == BlockDoorNTM.EnumDoorHalf.UPPER ? null : this.getItem();
-//    }
+    /**
+     * Get the Item that this Block should drop when harvested.
+     */
+    @Nullable
+    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    {
+        return state.getValue(HALF) == BlockDoorCustom.EnumDoorHalf.UPPER ? null : this.getItem();
+    }
+    
+    private Item getItem()
+    {
+        return door;
+    }
 
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
     {
