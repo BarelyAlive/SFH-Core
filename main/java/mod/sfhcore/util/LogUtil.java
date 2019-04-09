@@ -15,9 +15,10 @@ import org.apache.logging.log4j.Logger;
 public class LogUtil
 {
 	
-    private static Logger logger = LogManager.getLogger("SFHCore");
     private static File logFile;
     private static PrintWriter logWriter;
+    private static String modid;
+    private static Logger logger = LogManager.getLogger(modid);
     
     public static void log(Level level, Object object)
     {
@@ -76,9 +77,10 @@ public class LogUtil
         log(Level.TRACE, object);
     }
     
-    public static void setup()
+    public static void setup(String modid, File f)
     {
-        File logDirectory = new File("./logs/exnihiloadscensio/");
+    	LogUtil.modid = modid;
+        File logDirectory = f;
         logDirectory.mkdirs();
         
         String baseName = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
