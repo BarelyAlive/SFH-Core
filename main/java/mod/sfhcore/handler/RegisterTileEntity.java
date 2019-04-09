@@ -12,29 +12,30 @@ public class RegisterTileEntity {
 	
 	public static List<TE2Block> tile_entitys = new ArrayList<TE2Block>();
 	
-	public static void add(TileEntity te, Block b)
+	public static void add(Class te, Block b)
 	{
 		int i = getIndexForBlock(b);
 		
 		if(i == -1)
 		{
 			TE2Block te2block = new TE2Block(b, te);
+			tile_entitys.add(te2block);
 		}
 	}
 	
-	public static void add(Block b, TileEntity te)
+	public static void add(Block b, Class te)
 	{
 		add(te, b);
 	}
 	
 	public static void register()
 	{
+		System.out.println("RegisterTileEntity");
 		for(TE2Block t2b : tile_entitys)
 		{
-			if (t2b.equals(tile_entitys.get(tile_entitys.size())))
-			{
-				GameRegistry.registerTileEntity(t2b.te.getClass(), t2b.block.getRegistryName().toString());
-			}
+			System.out.println(t2b.te.getSuperclass());
+			System.out.println(t2b.te);
+			GameRegistry.registerTileEntity(t2b.te, t2b.block.getRegistryName());
 		}
 	}
 	
@@ -46,7 +47,7 @@ public class RegisterTileEntity {
 		{
 			String domain = tile_entitys.get(i).block.getRegistryName().getResourceDomain();
 			String tename = tile_entitys.get(i).te.getClass().toString().toLowerCase();
-			GameRegistry.registerTileEntity(tile_entitys.get(i).te.getClass(), new ResourceLocation(domain, tename));
+			GameRegistry.registerTileEntity(tile_entitys.get(i).te, new ResourceLocation(domain, tename));
 		}
 	}
 	
