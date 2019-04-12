@@ -50,14 +50,14 @@ public class CustomBucket extends Item implements IFluidHandler{
 
 	private ItemStack empty;
 	
-	public CustomBucket(Block containedBlockIn, ResourceLocation loc, ItemStack empty){
+	public CustomBucket(Block containedBlockIn, ResourceLocation loc, ItemStack empty, CreativeTabs tab){
 		this.bucketList = new ArrayList<BucketItem>();
 		this.maxStackSize = 1;
         this.containedBlock = containedBlockIn;
         this.empty = empty;
         this.setUnlocalizedName(loc.getResourcePath());
         setRegistryName(loc);
-        
+        setCreativeTab(tab);
 	}
 	
 	public ItemStack getBucketForBlock(Block b) {
