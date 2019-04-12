@@ -393,7 +393,6 @@ public class CustomBucket extends Item implements IFluidHandler{
 
     @Override
 	public IFluidTankProperties[] getTankProperties() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
