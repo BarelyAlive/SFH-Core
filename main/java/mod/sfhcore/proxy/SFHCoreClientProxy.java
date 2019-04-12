@@ -57,16 +57,10 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         if (item instanceof IVariantProvider)
         {
             IVariantProvider variantProvider = (IVariantProvider) item;
-            if (variantProvider.getVariants().size() == 1)
+            
+            for (Pair<Integer, String> variant : variantProvider.getVariants())
             {
-                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
-            }
-            else
-            {
-	            for (Pair<Integer, String> variant : variantProvider.getVariants())
-	            {
-	                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(loc.toString() + "_" + variant.getLeft(), "inventory"));
-	            }
+                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(loc.toString() + "_" + variant.getRight(), "inventory"));
             }
         }
         else

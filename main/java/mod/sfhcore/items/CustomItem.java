@@ -58,7 +58,7 @@ public class CustomItem extends Item implements IVariantProvider{
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (int i = 0; i < sub; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "no=" + i));
+            ret.add(new ImmutablePair<Integer, String>(i, Integer.toString(i)));
         return ret;
     }
 }

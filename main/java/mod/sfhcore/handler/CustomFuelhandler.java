@@ -8,18 +8,19 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CustomFuelhandler{
 	
-	protected static List<Pair<String, Integer>> fuelList = new ArrayList<Pair<String, Integer>>();
+	protected static List<Pair<ResourceLocation, Integer>> fuelList = new ArrayList<Pair<ResourceLocation, Integer>>();
 
 	@SubscribeEvent
 	public int getBurnTime(FurnaceFuelBurnTimeEvent e) {
 		
-		for(Pair<String, Integer> f : fuelList) {
-			if(e.getItemStack().getUnlocalizedName().contains(f.getLeft())){
+		for(Pair<ResourceLocation, Integer> f : fuelList) {
+			if(e.getItemStack().getItem().getRegistryName().equals(f.getLeft())){
 				
 				return f.getRight();
 				
@@ -36,8 +37,8 @@ public class CustomFuelhandler{
 	 * @param time
 	 * @return
 	 */
-	public static boolean addFuelBurnTime(ItemStack fuel, int time) {
-		return fuelList.add(new ImmutablePair<String, Integer>(fuel.getUnlocalizedName(), time));
+	public static boolean addFuelBurnTime(ResourceLocation loc, int time) {
+		return fuelList.add(new ImmutablePair<ResourceLocation, Integer>(loc, time));
 	}
 	
 }
