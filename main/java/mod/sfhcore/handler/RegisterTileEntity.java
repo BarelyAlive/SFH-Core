@@ -30,11 +30,8 @@ public class RegisterTileEntity {
 	
 	public static void register()
 	{
-		System.out.println("RegisterTileEntity");
 		for(TE2Block t2b : tile_entitys)
 		{
-			System.out.println(t2b.te.getSuperclass());
-			System.out.println(t2b.te);
 			GameRegistry.registerTileEntity(t2b.te, t2b.block.getRegistryName());
 		}
 	}

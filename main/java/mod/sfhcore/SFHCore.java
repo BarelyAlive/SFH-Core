@@ -61,7 +61,7 @@ public class SFHCore {
 
     }
 
-         
+
     @EventHandler
     public void PreInit(FMLPreInitializationEvent event){
         new SFHCoreClientProxy();
@@ -71,7 +71,7 @@ public class SFHCore {
     public void load(FMLInitializationEvent event){
         
     }
-     
+    
     @EventHandler
     public void PostInit(FMLPostInitializationEvent event){
     }

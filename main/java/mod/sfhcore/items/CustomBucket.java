@@ -48,7 +48,7 @@ public class CustomBucket extends Item implements IFluidHandler{
     /** List of accepted Fluids */
     private List<BucketItem> bucketList;
 
-	private ItemStack empty;
+	private final ItemStack empty;
 	
 	public CustomBucket(Block containedBlockIn, ResourceLocation loc, ItemStack empty, CreativeTabs tab){
 		this.bucketList = new ArrayList<BucketItem>();
