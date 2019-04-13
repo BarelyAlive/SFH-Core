@@ -20,7 +20,7 @@ public class CustomItem extends Item implements IVariantProvider{
 	private String name;
 	
 	public CustomItem(int maxstack, CreativeTabs tab, ResourceLocation loc){
-		this(null, maxstack, tab, false, 0, loc);
+		this(null, maxstack, tab, false, 1, loc);
 	}
 		
 	public CustomItem(Item container, int maxstack, CreativeTabs tab, boolean subtypes, int subnumber, ResourceLocation loc){
@@ -64,7 +64,7 @@ public class CustomItem extends Item implements IVariantProvider{
         	return ret;
         }
         for (int i = 0; i < sub; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, Integer.toString(i)));
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + i));
         return ret;
     }
 }
