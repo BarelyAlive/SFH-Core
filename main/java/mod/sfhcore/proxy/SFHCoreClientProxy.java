@@ -62,7 +62,7 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
             
             for (Pair<Integer, String> variant : variantProvider.getVariants())
             {
-                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(loc.toString() + "_" + variant.getRight(), "inventory"));
+                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(loc, variant.getRight()));
             }
         }
         else

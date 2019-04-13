@@ -18,7 +18,6 @@ public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> exten
         setUnlocalizedName(block.getRegistryName().getResourcePath());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public BlockEnumFalling<E> getBlock()
     {

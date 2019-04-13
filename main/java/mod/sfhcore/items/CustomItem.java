@@ -57,6 +57,12 @@ public class CustomItem extends Item implements IVariantProvider{
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        
+        if(sub == 1)
+        {
+        	ret.add(new ImmutablePair<Integer, String>(0, "inventory"));
+        	return ret;
+        }
         for (int i = 0; i < sub; i++)
             ret.add(new ImmutablePair<Integer, String>(i, Integer.toString(i)));
         return ret;

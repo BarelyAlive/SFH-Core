@@ -85,16 +85,6 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
             items.add(new ItemStack(this, 1, type.ordinal()));
     }
 
-    /*
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> subBlocks)
-    {
-        for (E type : types)
-            subBlocks.add(new ItemStack(item, 1, type.ordinal()));
-    }
-    */
-
     protected BlockStateContainer createStateContainer()
     {
         return new BlockStateContainer.Builder(this).add(property).build();
