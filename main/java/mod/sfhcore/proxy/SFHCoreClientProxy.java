@@ -35,21 +35,15 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         if (block instanceof IVariantProvider)
         {
             IVariantProvider variantProvider = (IVariantProvider) block;
-            if (variantProvider.getVariants().size() == 1)
+            
+            for (Pair<Integer, String> variant : variantProvider.getVariants())
             {
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(loc, "inventory"));
-            }
-            else
-            {
-	            for (Pair<Integer, String> variant : variantProvider.getVariants())
-	            {
-	                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(loc, variant.getRight()));
-	            }
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(loc, variant.getRight()));
             }
         }
         else
         {
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(loc, "inventory"));
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(loc, "inventory"));
         }
     }
 
@@ -67,7 +61,9 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         }
         else
         {
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
+            if (!item.getHasSubtypes()) {
+				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
+			}
         }
     }
 	
