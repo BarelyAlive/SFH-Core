@@ -69,14 +69,6 @@ public class Cube extends Block implements IVariantProvider{
 		}
     }
 	
-	public String getName() {
-		if (this.sub == 1)
-		{
-			return name;
-		}
-		return name + "_" + this.getMetaFromState(getDefaultState());
-	}
-	
 	@Override
     public String getUnlocalizedName() {
 		if (this.sub == 1)
