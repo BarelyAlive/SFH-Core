@@ -203,9 +203,16 @@ public class CustomBucket extends Item implements IFluidHandler{
 	}
 	
 	@Override
-	public int getItemBurnTime(ItemStack itemStack) {
-		if(FluidHelper.getFluidForFilledItem(itemStack.getItem()).getFluid() == FluidRegistry.LAVA)
-			return 20000;
+	public int getItemBurnTime(ItemStack itemStack)
+	{
+		Fluid f = FluidRegistry.lookupFluidForBlock(this.containedBlock);
+		if(f != null)
+		{
+			if(f.getTemperature() >= FluidRegistry.LAVA.getTemperature())
+			{
+				return 18000 * (f.getTemperature() / FluidRegistry.LAVA.getTemperature());
+			}
+		}
 		return 0;
 	}
 
