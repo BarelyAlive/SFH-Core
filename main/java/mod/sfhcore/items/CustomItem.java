@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.proxy.IVariantProvider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -32,6 +33,18 @@ public class CustomItem extends Item implements IVariantProvider{
 		this.setHasSubtypes(subtypes);
 		this.sub = subnumber;
 		this.name = loc.getResourcePath();
+	}
+	
+	@Override
+	public int getItemBurnTime(ItemStack itemStack) {
+		for(Pair<ItemStack, Integer> f : CustomFuelHandler.fuelList)
+		{
+			if(ItemStack.areItemsEqual(itemStack, f.getLeft()))
+			{	
+				return f.getRight();	
+			}
+		}
+		return 0;
 	}
 
 	@Override

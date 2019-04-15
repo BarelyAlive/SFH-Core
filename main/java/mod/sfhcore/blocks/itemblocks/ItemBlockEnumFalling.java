@@ -1,6 +1,9 @@
 package mod.sfhcore.blocks.itemblocks;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import mod.sfhcore.blocks.base.BlockEnumFalling;
+import mod.sfhcore.handler.CustomFuelHandler;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
@@ -17,6 +20,18 @@ public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> exten
         setRegistryName(block.getRegistryName());
         setUnlocalizedName(block.getRegistryName().getResourcePath());
     }
+    
+    @Override
+	public int getItemBurnTime(ItemStack itemStack) {
+		for(Pair<ItemStack, Integer> f : CustomFuelHandler.fuelList)
+		{
+			if(ItemStack.areItemsEqual(itemStack, f.getLeft()))
+			{	
+				return f.getRight();	
+			}
+		}
+		return 0;
+	}
 
     @Override
     public BlockEnumFalling<E> getBlock()

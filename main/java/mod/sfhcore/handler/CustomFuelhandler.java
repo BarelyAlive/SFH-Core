@@ -15,9 +15,34 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class CustomFuelhandler{
+public class CustomFuelHandler{
 	
 	public static List<Pair<ItemStack, Integer>> fuelList = new ArrayList<Pair<ItemStack, Integer>>();
+
+	@SubscribeEvent
+	public int getBurnTime(FurnaceFuelBurnTimeEvent e)
+	{
+		ItemStack stack = e.getItemStack();
+		Item item = stack.getItem();
+		
+		//have to do this to prevent crashes
+		if (stack.isEmpty()) {
+            return 0;
+        }
+		
+		try {
+			item.getItemBurnTime(stack);
+		} catch (NullPointerException ex) {
+			LogUtil.fatal("SFHCore tried to get burn time of" + stack.getDisplayName() + "and it was NULL!");
+		}
+						
+		//Don't delete this return. It must stay at the end.
+		if(item.getItemBurnTime(stack) < 0)
+		{
+			return 0;
+		}
+		return item.getItemBurnTime(stack);
+	}
 	
 	/**
 	 * Use this method to register your Fuel-Item with it's burn time.
