@@ -6,8 +6,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,6 +25,16 @@ public class CubeTransparent extends Cube{
 	public CubeTransparent(Material material, float resistance, float hardness, int sub, CreativeTabs tab, ResourceLocation loc, TileEntity te) {
 		super(material, resistance, hardness, sub, tab, loc, te);
 		setLightOpacity(15);
+	}
+	
+	@Override
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+		if(itemIn.equals(this.getCreativeTabToDisplayOn()))
+		{
+			for (int i = 0; i < sub; i ++) {
+		        items.add(new ItemStack(this, 1, i));
+		    }
+		}
 	}
 	
 	public int quantityDropped(Random random)

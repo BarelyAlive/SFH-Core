@@ -81,8 +81,11 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     
     @Override
     public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-        for (E type : types)
-            items.add(new ItemStack(this, 1, type.ordinal()));
+    	if(itemIn.equals(this.getCreativeTabToDisplayOn()))
+		{   
+    		for (E type : types)
+	            items.add(new ItemStack(this, 1, type.ordinal()));
+		}
     }
 
     protected BlockStateContainer createStateContainer()

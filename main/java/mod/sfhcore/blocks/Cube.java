@@ -61,9 +61,12 @@ public class Cube extends Block implements IVariantProvider{
 	
 	@Override
     public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-    	for (int i = 0; i < sub; i ++) {
-            items.add(new ItemStack(this, 1, i));
-        }
+		if(itemIn.equals(this.getCreativeTabToDisplayOn()))
+		{
+			for (int i = 0; i < sub; i ++) {
+		        items.add(new ItemStack(this, 1, i));
+		    }
+		}
     }
 	
 	public String getName() {
