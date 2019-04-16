@@ -1,6 +1,6 @@
 package mod.sfhcore.blocks.itemblocks;
 
-import mod.sfhcore.blocks.BlockDoorCustom;
+import mod.sfhcore.blocks.CustomDoor;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -22,21 +22,18 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemDoor extends Item
 {
-    private BlockDoorCustom block;
+	private Block door;
     
-    public ItemDoor(Block block, ResourceLocation loc, CreativeTabs tab)
+    public ItemDoor(Block door, CreativeTabs tab, ResourceLocation loc)
     {
         this.maxStackSize = 1;
-        this.block = (BlockDoorCustom) block;
-        this.block.door = this;
         this.setCreativeTab(tab);
-        setRegistryName(loc);
-        setUnlocalizedName(loc.getResourcePath());
+        this.setRegistryName(loc);
+        this.setUnlocalizedName(loc.getResourcePath());
+        this.door = door;
     }
 
-    /**
-     * Called when a Block is right-clicked with this Item
-     */
+    @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         if (facing != EnumFacing.UP)
@@ -55,13 +52,13 @@ public class ItemDoor extends Item
 
             ItemStack itemstack = player.getHeldItem(hand);
 
-            if (player.canPlayerEdit(pos, facing, itemstack) && this.block.canPlaceBlockAt(worldIn, pos))
+            if (player.canPlayerEdit(pos, facing, itemstack) && door.canPlaceBlockAt(worldIn, pos))
             {
                 EnumFacing enumfacing = EnumFacing.fromAngle((double)player.rotationYaw);
                 int i = enumfacing.getFrontOffsetX();
                 int j = enumfacing.getFrontOffsetZ();
                 boolean flag = i < 0 && hitZ < 0.5F || i > 0 && hitZ > 0.5F || j < 0 && hitX > 0.5F || j > 0 && hitX < 0.5F;
-                placeDoor(worldIn, pos, enumfacing, this.block, flag);
+                placeDoor(worldIn, pos, enumfacing, door, flag);
                 SoundType soundtype = worldIn.getBlockState(pos).getBlock().getSoundType(worldIn.getBlockState(pos), worldIn, pos, player);
                 worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                 itemstack.shrink(1);
@@ -98,9 +95,9 @@ public class ItemDoor extends Item
 
         BlockPos blockpos2 = pos.up();
         boolean flag2 = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(blockpos2);
-        IBlockState iblockstate = door.getDefaultState().withProperty(mod.sfhcore.blocks.BlockDoorCustom.FACING, facing).withProperty(mod.sfhcore.blocks.BlockDoorCustom.HINGE, isRightHinge ? BlockDoorCustom.EnumHingePosition.RIGHT : BlockDoorCustom.EnumHingePosition.LEFT).withProperty(BlockDoorCustom.POWERED, Boolean.valueOf(flag2)).withProperty(BlockDoorCustom.OPEN, Boolean.valueOf(flag2));
-        worldIn.setBlockState(pos, iblockstate.withProperty(BlockDoorCustom.HALF, BlockDoorCustom.EnumDoorHalf.LOWER), 2);
-        worldIn.setBlockState(blockpos2, iblockstate.withProperty(BlockDoorCustom.HALF, BlockDoorCustom.EnumDoorHalf.UPPER), 2);
+        IBlockState iblockstate = door.getDefaultState().withProperty(CustomDoor.FACING, facing).withProperty(CustomDoor.HINGE, isRightHinge ? CustomDoor.EnumHingePosition.RIGHT : CustomDoor.EnumHingePosition.LEFT).withProperty(CustomDoor.POWERED, Boolean.valueOf(flag2)).withProperty(CustomDoor.OPEN, Boolean.valueOf(flag2));
+        worldIn.setBlockState(pos, iblockstate.withProperty(CustomDoor.HALF, CustomDoor.EnumDoorHalf.LOWER), 2);
+        worldIn.setBlockState(blockpos2, iblockstate.withProperty(CustomDoor.HALF, CustomDoor.EnumDoorHalf.UPPER), 2);
         worldIn.notifyNeighborsOfStateChange(pos, door, false);
         worldIn.notifyNeighborsOfStateChange(blockpos2, door, false);
     }

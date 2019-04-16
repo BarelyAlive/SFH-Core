@@ -9,6 +9,7 @@ import javax.jws.Oneway;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import mod.sfhcore.blocks.itemblocks.ItemBlockEnum;
 import mod.sfhcore.proxy.IVariantProvider;
 import mod.sfhcore.util.Util;
 import net.minecraft.block.Block;
@@ -48,18 +49,6 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         setRegistryName(loc);
         setUnlocalizedName(loc.getResourcePath());
         setCreativeTab(tab);
-    }
-    
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-    		ItemStack stack) {
-    	worldIn.setBlockState(pos, getStateFromMeta(stack.getItemDamage()));
-    }
-    
-    @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
-    		EntityPlayer player) {
-    	return new ItemStack(state.getBlock(), 1, getMetaFromState(state));
     }
     
     public E[] getTypes(){

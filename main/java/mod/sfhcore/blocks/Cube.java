@@ -78,19 +78,13 @@ public class Cube extends Block implements IVariantProvider{
 		return name + "_" + this.getMetaFromState(getDefaultState());
     }
 	
-	/**
-     * The type of render function called. 3 for standard block models, 2 for TESR's, 1 for liquids, -1 is no render
-     */
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
-        return EnumBlockRenderType.MODEL;
-    }
-	
 	@Override
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-            ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
-        return ret;
+            for (int i = 0; i < sub; i++) {
+				ret.add(new ImmutablePair<Integer, String>(i, "type=" + i));
+			}
+		return ret;
     }
 }
