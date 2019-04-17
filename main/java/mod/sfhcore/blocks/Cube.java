@@ -21,15 +21,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class Cube extends Block implements IVariantProvider{
+		
+	private TileEntity te;
 	
-	String name;
-	int sub;	
-	
-	public Cube(Material material, float resistance, float hardness, int sub, CreativeTabs tab, ResourceLocation loc) {
-		this(material, resistance, hardness, sub, tab, loc, null);
+	public Cube(Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc) {
+		this(material, resistance, hardness, tab, loc, null);
 	}
 	
-	public Cube(Material material, float resistance, float hardness, int sub,  CreativeTabs tab, ResourceLocation loc, TileEntity te) {
+	public Cube(Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc, TileEntity te) {
 		super(material);
 		setCreativeTab(tab);
 		setResistance(resistance);
@@ -37,8 +36,7 @@ public class Cube extends Block implements IVariantProvider{
 		setLightOpacity(0);
 		setUnlocalizedName(loc.getResourcePath());
 		setRegistryName(loc);
-		this.name = loc.getResourcePath();
-		this.sub = sub;
+		this.te = te;
 		if(material == Material.GROUND){
 			setSoundType(blockSoundType.GROUND);;
 		}
@@ -60,31 +58,17 @@ public class Cube extends Block implements IVariantProvider{
 	}
 	
 	@Override
-    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-		if(itemIn.equals(this.getCreativeTabToDisplayOn()))
-		{
-			for (int i = 0; i < sub; i ++) {
-		        items.add(new ItemStack(this, 1, i));
-		    }
-		}
-    }
-	
-	@Override
-    public String getUnlocalizedName() {
-		if (this.sub == 1)
-		{
-			return name;
-		}
-		return name + "_" + this.getMetaFromState(getDefaultState());
-    }
+	public TileEntity createTileEntity(World world, IBlockState state) {
+		return this.te;
+	}
 	
 	@Override
     public List<Pair<Integer, String>> getVariants()
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-            for (int i = 0; i < sub; i++) {
-				ret.add(new ImmutablePair<Integer, String>(i, "type=" + i));
-			}
+        
+		ret.add(new ImmutablePair<Integer, String>(0, "inventory"));
+		
 		return ret;
     }
 }

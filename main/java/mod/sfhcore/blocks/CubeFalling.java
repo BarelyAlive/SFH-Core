@@ -16,24 +16,14 @@ import net.minecraft.util.ResourceLocation;
 
 public class CubeFalling extends BlockFalling{
 	
-	protected String name;
-	int sub;
-	
-	public CubeFalling(Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc)
-	{
-		this(0, material, resistance, hardness, tab, loc);
-	}
-	
-	public CubeFalling(int sub, Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc) {
+	public CubeFalling(Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc) {
 		super();
-		this.name = loc.getResourcePath();
 		setCreativeTab(tab);
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
-		setUnlocalizedName(name);
+		setUnlocalizedName(loc.getResourcePath());
 		setRegistryName(loc);
-		this.sub = sub;
 		if(material == Material.GROUND){
 			setSoundType(blockSoundType.GROUND);
 		}
@@ -53,29 +43,6 @@ public class CubeFalling extends BlockFalling{
 			setSoundType(blockSoundType.WOOD);
 		}
 	}
-	
-	@Override
-    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-		if(itemIn.equals(this.getCreativeTabToDisplayOn()))
-		{
-			for (int i = 0; i < sub; i ++) {
-		        items.add(new ItemStack(this, 1, i));
-		    }
-		}
-    }
-	
-	@Override
-    public String getUnlocalizedName() {
-		int meta = this.getMetaFromState(getDefaultState());
-		if(meta > 1)
-		{
-			return name + "_" + this.getMetaFromState(getDefaultState());
-		}
-		else
-		{
-			return name;
-		}
-    }
 	
 	/**
      * The type of render function called. 3 for standard block models, 2 for TESR's, 1 for liquids, -1 is no render

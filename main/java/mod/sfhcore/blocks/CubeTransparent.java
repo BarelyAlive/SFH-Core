@@ -18,23 +18,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class CubeTransparent extends Cube{
 	
 	public CubeTransparent(Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc) {
-		super(material, resistance, hardness, 0, tab, loc);
+		super(material, resistance, hardness, tab, loc);
 		setLightOpacity(15);
 	}
 	
-	public CubeTransparent(Material material, float resistance, float hardness, int sub, CreativeTabs tab, ResourceLocation loc, TileEntity te) {
-		super(material, resistance, hardness, sub, tab, loc, te);
+	public CubeTransparent(Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc, TileEntity te) {
+		super(material, resistance, hardness, tab, loc, te);
 		setLightOpacity(15);
-	}
-	
-	@Override
-	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-		if(itemIn.equals(this.getCreativeTabToDisplayOn()))
-		{
-			for (int i = 0; i < sub; i ++) {
-		        items.add(new ItemStack(this, 1, i));
-		    }
-		}
 	}
 	
 	public int quantityDropped(Random random)
