@@ -17,7 +17,7 @@ public class RegisterBlocks {
 	public static List<Block> blocks = new ArrayList<Block>();
 	public static List<ItemBlock> itemblocks = new ArrayList<ItemBlock>();
 	
-	public static void register(IForgeRegistry<Block> registry)
+	public static void registerBlocks(IForgeRegistry<Block> registry)
 	{
 		for(Block block : blocks)
 		{

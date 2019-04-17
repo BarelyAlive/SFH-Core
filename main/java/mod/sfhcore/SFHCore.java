@@ -43,7 +43,7 @@ public class SFHCore {
     	@SubscribeEvent
     	public static void registerBlocks (RegistryEvent.Register<Block> event)
     	{
-    		RegisterBlocks.register(event.getRegistry());
+    		RegisterBlocks.registerBlocks(event.getRegistry());
     		RegisterTileEntity.register();
     	}
     	

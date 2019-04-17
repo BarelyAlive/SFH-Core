@@ -18,6 +18,7 @@ public class Registry {
         if (block.getRegistryName() != null)
         {
 			RegisterBlocks.blocks.add(block);
+			RegisterItems.items.add(Item.getItemFromBlock(block));
 		}
         else
         {

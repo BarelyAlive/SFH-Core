@@ -56,7 +56,13 @@ public class CustomFuelHandler{
 	 * @param time
 	 * @return
 	 */
-	public static boolean addFuelBurnTime(ItemStack stack, int time) {
+	public static boolean addFuelBurnTime(ItemStack stack, int time)
+	{
+		if(stack.getItem().getRegistryName() ==null) {
+			LogUtil.warn("SFHCore tried to add an item which has registry name!");
+			return false;
+		}
+		
 		return fuelList.add(new ImmutablePair<ItemStack, Integer>(stack, time));
 	}
 	
