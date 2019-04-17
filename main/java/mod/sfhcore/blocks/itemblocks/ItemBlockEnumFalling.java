@@ -1,25 +1,40 @@
 package mod.sfhcore.blocks.itemblocks;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import mod.sfhcore.blocks.base.BlockEnumFalling;
 import mod.sfhcore.handler.CustomFuelHandler;
+import mod.sfhcore.proxy.IVariantProvider;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 
-public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> extends ItemBlock
+public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> extends ItemBlock implements IVariantProvider
 {
 
-    public ItemBlockEnumFalling(BlockEnumFalling<E> block)
+    public ItemBlockEnumFalling(BlockEnumFalling<E> block, CreativeTabs tab)
     {
         super(block);
 
         setHasSubtypes(true);
-        setRegistryName(block.getRegistryName());
-        setUnlocalizedName(block.getRegistryName().getResourcePath());
-        setCreativeTab(block.getCreativeTabToDisplayOn());
+        setRegistryName("item_" + block.getRegistryName());
+        setUnlocalizedName("item_" + block.getRegistryName().getResourcePath());
+        setCreativeTab(tab);
+    }
+    
+    @Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+    	for(int i = 0; i < getBlock().getTypes().length; i++)
+    	{
+    		items.add(new ItemStack(this, 1, i));
+    	}
     }
     
     @Override
@@ -43,12 +58,21 @@ public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> exten
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return getBlock().getUnlocalizedName() + getBlock().getTypes()[MathHelper.clamp(stack.getItemDamage(), 0, 15)].getName();
+        return "item." + getBlock().getRegistryName().getResourcePath() + "_" + getBlock().getTypes()[stack.getItemDamage()].toString();
     }
 
     @Override
     public int getMetadata(int damage)
     {
         return damage;
+    }
+    
+    @Override
+    public List<Pair<Integer, String>> getVariants()
+    {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        for (int i = 0; i < this.getBlock().getTypes().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getBlock().getTypes()[i]));
+        return ret;
     }
 }

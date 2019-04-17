@@ -1,5 +1,6 @@
 package mod.sfhcore;
 
+import akka.io.Tcp.Register;
 import mod.sfhcore.handler.RegisterBlocks;
 import mod.sfhcore.handler.RegisterItems;
 import mod.sfhcore.handler.RegisterTileEntity;
@@ -18,11 +19,14 @@ public class Registry {
         if (block.getRegistryName() != null)
         {
 			RegisterBlocks.blocks.add(block);
-			RegisterItems.items.add(Item.getItemFromBlock(block));
+			
+			Item item = new ItemBlock(block);
+			item.setRegistryName(block.getRegistryName().getResourceDomain(), "item_" + block.getRegistryName().getResourcePath());
+			RegisterItems.items.add(item);
 		}
         else
         {
-        	LogUtil.warn("SFHCore added a block which has a null name!");
+        	LogUtil.warn("SFHCore tried to register a block which has a null name!");
         }
 		return block;
     }
@@ -36,7 +40,7 @@ public class Registry {
     	}
     	else
     	{
-    		LogUtil.warn("SFHCore added an itemblock which has a null name!");
+    		LogUtil.warn("SFHCore tried to register an itemblock which has a null name!");
     	}
         
         return itemBlock;
@@ -49,7 +53,7 @@ public class Registry {
     	}
     	else
     	{
-    		LogUtil.warn("SFHCore added an itemblock which has a null name!");
+    		LogUtil.warn("SFHCore tried to register an itemblock which has a null name!");
     	}
             
         return item;

@@ -13,6 +13,7 @@ import mod.sfhcore.blocks.itemblocks.ItemBlockEnum;
 import mod.sfhcore.proxy.IVariantProvider;
 import mod.sfhcore.util.Util;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -38,7 +39,7 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     private final PropertyEnum<E> property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockEnum(Material material, Class<E> enumClass, String propName, ResourceLocation loc, CreativeTabs tab, float resi, float hard)
+    public BlockEnum(Material material, Class<E> enumClass, String propName, ResourceLocation loc, float resi, float hard)
     {
         super(material);
 
@@ -48,7 +49,6 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         setDefaultState(getBlockState().getBaseState());
         setRegistryName(loc);
         setUnlocalizedName(loc.getResourcePath());
-        setCreativeTab(tab);
         setResistance(resi);
         setHardness(hard);
     }
@@ -64,9 +64,9 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     	return this.types;
     }
 
-    public BlockEnum(Material material, Class<E> enumClass, ResourceLocation loc, CreativeTabs tab, float resi, float hard)
+    public BlockEnum(Material material, Class<E> enumClass, ResourceLocation loc, float resi, float hard)
     {
-        this(material, enumClass, "type", loc, tab, resi, hard);
+        this(material, enumClass, "type", loc, resi, hard);
     }
 
     @Override
@@ -97,15 +97,6 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     public int damageDropped(IBlockState state)
     {
         return getMetaFromState(state);
-    }
-    
-    @Override
-    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-    	if(itemIn.equals(this.getCreativeTabToDisplayOn()))
-		{   
-    		for (E type : types)
-	            items.add(new ItemStack(this, 1, type.ordinal()));
-		}
     }
 
     protected BlockStateContainer createStateContainer()

@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
@@ -44,6 +45,24 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         else
         {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(loc, "inventory"));
+        }
+    }
+	
+	@Override
+	public void tryHandleBlockModel(ItemBlock block, ResourceLocation loc)
+    {
+        if (block instanceof IVariantProvider)
+        {
+            IVariantProvider variantProvider = (IVariantProvider) block;
+            
+            for (Pair<Integer, String> variant : variantProvider.getVariants())
+            {
+                ModelLoader.setCustomModelResourceLocation(block, variant.getLeft(), new ModelResourceLocation(loc, variant.getRight()));
+            }
+        }
+        else
+        {
+			ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(loc, "inventory"));
         }
     }
 

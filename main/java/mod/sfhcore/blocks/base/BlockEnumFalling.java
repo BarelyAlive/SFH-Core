@@ -14,11 +14,15 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,7 +32,7 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
     private final PropertyEnum<E> property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockEnumFalling(Material material, Class<E> enumClass, String propName, ResourceLocation loc, CreativeTabs tab, float resi, float hard)
+    public BlockEnumFalling(Material material, Class<E> enumClass, String propName, ResourceLocation loc, float resi, float hard)
     {
         super(material);
 
@@ -38,18 +42,24 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
         setDefaultState(getBlockState().getBaseState());
         setUnlocalizedName(loc.getResourcePath());
         setRegistryName(loc);
-        setCreativeTab(tab);
         setResistance(resi);
         setHardness(hard);
+    }
+    
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
+    		EntityPlayer player)
+    {
+    	return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
     }
     
     public E[] getTypes(){
     	return this.types;
     }
 
-    public BlockEnumFalling(Material material, Class<E> enumClass, ResourceLocation loc, CreativeTabs tab, float resi, float hard)
+    public BlockEnumFalling(Material material, Class<E> enumClass, ResourceLocation loc, float resi, float hard)
     {
-        this(material, enumClass, "type", loc, tab, resi, hard);
+        this(material, enumClass, "type", loc, resi, hard);
     }
 
     @Override
@@ -80,15 +90,6 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
     public int damageDropped(IBlockState state)
     {
         return getMetaFromState(state);
-    }
-    
-    @Override
-    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-    	if(itemIn.equals(this.getCreativeTabToDisplayOn()))
-		{
-    		for (E type : types)
-    			items.add(new ItemStack(this, 1, type.ordinal()));
-		}
     }
 
     protected BlockStateContainer createStateContainer()

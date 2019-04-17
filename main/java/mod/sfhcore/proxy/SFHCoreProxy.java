@@ -2,6 +2,7 @@ package mod.sfhcore.proxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 
 public class SFHCoreProxy {
@@ -15,5 +16,10 @@ public class SFHCoreProxy {
     {
         // NO-OP
     }
+
+	public void tryHandleBlockModel(ItemBlock block, ResourceLocation loc) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
