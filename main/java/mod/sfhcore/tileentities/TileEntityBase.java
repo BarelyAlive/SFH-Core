@@ -220,17 +220,27 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 
 	@Override
 	public int getField(int id) {
-		return id;
+		switch(id)
+		{
+		case 0:
+			return this.workTime;
+		}
+		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value)
-	{	
+	{
+		switch(id)
+		{
+		case 0:
+			this.workTime = value;
+		}
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 0;
+		return 1;
 	}
 
 	@Override
