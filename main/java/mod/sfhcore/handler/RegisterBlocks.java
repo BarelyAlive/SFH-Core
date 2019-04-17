@@ -40,6 +40,19 @@ public class RegisterBlocks {
 				registry.register(block);
 			}
 		}
+		for(Block block : blocks)
+		{
+			{
+				if (block != null && block.getRegistryName() != null)
+				{
+					loc = block.getRegistryName();
+					Item item = new ItemBlock(block);
+					item.setRegistryName(loc.getResourceDomain(), "item_" + loc.getResourcePath());
+					
+					registry.register(item);
+				}
+			}
+		}
 			
 	}
 	
