@@ -1,5 +1,7 @@
 package mod.sfhcore.blocks.itemblocks;
 
+import javax.annotation.Nonnull;
+
 import mod.sfhcore.blocks.CustomDoor;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -24,13 +26,17 @@ public class ItemDoor extends Item
 {
 	private Block door;
     
-    public ItemDoor(Block door, CreativeTabs tab, ResourceLocation loc)
+    public ItemDoor(CreativeTabs tab, ResourceLocation loc)
     {
         this.maxStackSize = 1;
         this.setCreativeTab(tab);
         this.setRegistryName(loc);
         this.setUnlocalizedName(loc.getResourcePath());
-        this.door = door;
+    }
+    
+    public void setDoor(Block door)
+    {
+    	this.door = door;
     }
 
     @Override
@@ -51,14 +57,17 @@ public class ItemDoor extends Item
             }
 
             ItemStack itemstack = player.getHeldItem(hand);
+            
+            System.out.println(player.canPlayerEdit(pos, facing, itemstack));
+            System.out.println(this.door);
 
-            if (player.canPlayerEdit(pos, facing, itemstack) && door.canPlaceBlockAt(worldIn, pos))
+            if (player.canPlayerEdit(pos, facing, itemstack) && this.door.canPlaceBlockAt(worldIn, pos))
             {
                 EnumFacing enumfacing = EnumFacing.fromAngle((double)player.rotationYaw);
                 int i = enumfacing.getFrontOffsetX();
                 int j = enumfacing.getFrontOffsetZ();
                 boolean flag = i < 0 && hitZ < 0.5F || i > 0 && hitZ > 0.5F || j < 0 && hitX > 0.5F || j > 0 && hitX < 0.5F;
-                placeDoor(worldIn, pos, enumfacing, door, flag);
+                placeDoor(worldIn, pos, enumfacing, this.door, flag);
                 SoundType soundtype = worldIn.getBlockState(pos).getBlock().getSoundType(worldIn.getBlockState(pos), worldIn, pos, player);
                 worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                 itemstack.shrink(1);

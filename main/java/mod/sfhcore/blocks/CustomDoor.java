@@ -49,7 +49,7 @@ public class CustomDoor extends Block
     
     private Item door;
 
-    public CustomDoor(Material mat, Item door, ResourceLocation loc, float hard, float resi)
+    public CustomDoor(Material mat, ResourceLocation loc, float resi, float hard)
     {
         super(mat);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(OPEN, Boolean.valueOf(false)).withProperty(HINGE, CustomDoor.EnumHingePosition.LEFT).withProperty(POWERED, Boolean.valueOf(false)).withProperty(HALF, CustomDoor.EnumDoorHalf.LOWER));
@@ -57,7 +57,11 @@ public class CustomDoor extends Block
         setUnlocalizedName(loc.getResourcePath());
         setResistance(resi);
         setHardness(hard);
-        this.door = door;
+    }
+    
+    public void setDoor(Item door)
+    {
+    	this.door = door;
     }
 
     @Override
