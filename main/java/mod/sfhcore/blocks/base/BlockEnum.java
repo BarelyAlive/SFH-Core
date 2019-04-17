@@ -38,7 +38,7 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     private final PropertyEnum<E> property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockEnum(Material material, Class<E> enumClass, String propName, ResourceLocation loc, CreativeTabs tab)
+    public BlockEnum(Material material, Class<E> enumClass, String propName, ResourceLocation loc, CreativeTabs tab, float resi, float hard)
     {
         super(material);
 
@@ -49,15 +49,24 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         setRegistryName(loc);
         setUnlocalizedName(loc.getResourcePath());
         setCreativeTab(tab);
+        setResistance(resi);
+        setHardness(hard);
+    }
+    
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
+    		EntityPlayer player)
+    {
+    	return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
     }
     
     public E[] getTypes(){
     	return this.types;
     }
 
-    public BlockEnum(Material material, Class<E> enumClass, ResourceLocation loc, CreativeTabs tab)
+    public BlockEnum(Material material, Class<E> enumClass, ResourceLocation loc, CreativeTabs tab, float resi, float hard)
     {
-        this(material, enumClass, "type", loc, tab);
+        this(material, enumClass, "type", loc, tab, resi, hard);
     }
 
     @Override
@@ -109,7 +118,7 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i]));
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i].toString()));
         return ret;
     }
 }

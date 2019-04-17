@@ -15,7 +15,8 @@ public class Registry {
 		
 	public static Block registerBlock(Block block)
     {        
-        if (block.getRegistryName() != null) {
+        if (block.getRegistryName() != null)
+        {
 			RegisterBlocks.blocks.add(block);
 		}
         else
@@ -25,20 +26,19 @@ public class Registry {
 		return block;
     }
 
-    public static Block registerBlock(ItemBlock itemBlock)
+    public static ItemBlock registerBlock(ItemBlock itemBlock)
     {
-        Block block = itemBlock.getBlock();
-
-    	
-    	if (block.getRegistryName() != null) {
-	        RegisterBlocks.blocks.add(block);
+    	if (itemBlock.getRegistryName() != null)
+    	{
+	        RegisterBlocks.itemblocks.add(itemBlock);
+	        RegisterBlocks.blocks.add(itemBlock.getBlock());
     	}
     	else
     	{
     		LogUtil.warn("SFHCore added an itemblock which has a null name!");
     	}
         
-        return block;
+        return itemBlock;
     }
     
     public static Item registerItem(Item item)

@@ -15,6 +15,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class RegisterBlocks {
 	
 	public static List<Block> blocks = new ArrayList<Block>();
+	public static List<ItemBlock> itemblocks = new ArrayList<ItemBlock>();
 	
 	public static void register(IForgeRegistry<Block> registry)
 	{
@@ -30,15 +31,13 @@ public class RegisterBlocks {
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{
 		ResourceLocation loc;
-		for(Block block : blocks)
+		for(ItemBlock block : itemblocks)
 		{
 			if (block != null && block.getRegistryName() != null)
 			{
 				loc = block.getRegistryName();
-				Item item = new ItemBlock(block);
-				item.setRegistryName(loc.getResourceDomain(), "item_" + loc.getResourcePath());
 				
-				registry.register(item);
+				registry.register(block);
 			}
 		}
 			
