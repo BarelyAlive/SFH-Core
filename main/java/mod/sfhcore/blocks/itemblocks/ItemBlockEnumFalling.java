@@ -31,10 +31,11 @@ public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> exten
     
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-    	for(int i = 0; i < getBlock().getTypes().length; i++)
-    	{
-    		items.add(new ItemStack(this, 1, i));
-    	}
+    	if (tab.equals(this.getCreativeTab())) {
+			for (int i = 0; i < getBlock().getTypes().length; i++) {
+				items.add(new ItemStack(this, 1, i));
+			} 
+		}
     }
     
     @Override
