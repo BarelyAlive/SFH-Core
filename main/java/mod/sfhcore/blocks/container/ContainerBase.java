@@ -2,6 +2,7 @@ package mod.sfhcore.blocks.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 import mod.sfhcore.tileentities.TileEntityBase;
+import mod.sfhcore.tileentities.TileEntityFluidBase;
 
 public class ContainerBase extends Container {
 
@@ -154,12 +156,25 @@ public class ContainerBase extends Container {
 	    return success;
 	}
 	
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		for (int i = 0; i < this.listeners.size(); i++)
+		{
+			IContainerListener iconlis = (IContainerListener)this.listeners.get(i);
+			if (this.tileentity.workTime != this.tileentity.getField(0))
+			{
+				iconlis.sendWindowProperty(this, 0, this.tileentity.getField(0));
+			}
+		}
+		this.tileentity.workTime = this.tileentity.getField(0);
+	}
+	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void updateProgressBar(int slot, int newValue) {
 		super.updateProgressBar(slot, newValue);
-		
-		if(slot == 0) this.tileentity.workTime = newValue;
-}
+		this.tileentity.setField(slot, newValue);
+	}
 
 }

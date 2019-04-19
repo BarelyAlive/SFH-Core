@@ -23,7 +23,7 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 	
 	public NonNullList<ItemStack> machineItemStacks;
 	protected String field_145958_o;
-	public static int maxworkTime = 100;
+	public int maxworkTime = 100;
 	public int workTime;
 	protected String machineCustomName;
 	protected static int[] SLOTS_TOP = new int[] {0};
@@ -50,8 +50,7 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
         return inventory.getField(0) > 0;
     }
 	
-	public void update() {
-	}
+	public void update() {}
 	
 	/**
      * Returns the number of slots in the inventory.
@@ -170,14 +169,16 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 	
 	@Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        this.readFromNBT(pkt.getNbtCompound());
+		super.onDataPacket(net, pkt);
+        readFromNBT(pkt.getNbtCompound());
     }
 
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
+    	super.getUpdatePacket();
+        NBTTagCompound compound = new NBTTagCompound();        
+        writeToNBT(compound);
         return new SPacketUpdateTileEntity(getPos(), 1, compound);
     }
 	
@@ -199,7 +200,7 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 	//ggggg
 
 	public int getWorkTimeRemainingScaled(int i) {
-		return this.workTime * i / this.maxworkTime;
+		return this.getField(0) * i / this.getField(1);
 	}
 
 	@Override
@@ -224,6 +225,8 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 		{
 		case 0:
 			return this.workTime;
+		case 1:
+			return this.maxworkTime;
 		}
 		return 0;
 	}
@@ -235,12 +238,16 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 		{
 		case 0:
 			this.workTime = value;
+			break;
+		case 1:
+			this.maxworkTime = value;
+			break;
 		}
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 1;
+		return 2;
 	}
 
 	@Override

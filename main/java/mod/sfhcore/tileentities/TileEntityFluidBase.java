@@ -2,6 +2,8 @@ package mod.sfhcore.tileentities;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +12,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
@@ -31,14 +35,11 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 	private static List<Fluid> acceptedFluids;
 	
 	public static int MAX_CAPACITY;
-	protected int mb;
-	public FluidStack fluid;
-	int volume = 0;
-	public FluidStack tank = new FluidStack(FluidRegistry.WATER, 0);			//new FluidTank(fluid, (int) volume);
+	public FluidStack tank; // = new FluidStack(FluidRegistry.WATER, 0);			//new FluidTank(fluid, (int) volume);
 	
 	public TileEntityFluidBase(int invSize, String machineCustomName, int MAX_CAPACITY) {
 		super(invSize, machineCustomName);
-		this.fluid = new FluidStack(FluidRegistry.WATER, 0);
+		this.tank = new FluidStack(FluidRegistry.WATER, 0);
 		this.MAX_CAPACITY = MAX_CAPACITY;
 	}
 	
@@ -62,13 +63,13 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		this.fluid.amount = nbt.getShort("fluid");
+		this.tank.amount = nbt.getShort("fluid");
 		super.readFromNBT(nbt);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		nbt.setShort("fluid", ((short) this.fluid.amount));
+		nbt.setShort("fluid", ((short) this.tank.amount));
 		return super.writeToNBT(nbt);
 	}
 	
@@ -103,7 +104,7 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 	public FluidStack drain(FluidStack resource, boolean doDrain) {
 		for(Fluid f : acceptedFluids) {
 			if(resource.getFluid() == f){
-				return fluid;
+				return tank;
 			}
 		}
 		return null;
@@ -116,10 +117,35 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 
 	@Override
 	public IFluidTankProperties[] getTankProperties() {
-		IFluidTankProperties[] prop = new IFluidTankProperties[fluid.amount];
+		IFluidTankProperties[] prop = new IFluidTankProperties[1];
 		return prop;
 	}
+	
+	@Override
+	public int getField(int id) {
+		if (id == super.getFieldCount())
+		{
+			return this.tank.amount;
+		}
+		return super.getField(id);
+	}
 
+	@Override
+	public int getFieldCount() {
+		// TODO Auto-generated method stub
+		return super.getFieldCount() + 1;
+	}
+	
+	@Override
+	public void setField(int id, int value) {
+		if (id < super.getFieldCount())
+			super.setField(id, value);
+		if (id == super.getFieldCount())
+		{
+			this.tank.amount = value;
+		}
+	}
+	
 	@Override
 	public FluidStack getFluid() {
 		return tank;
@@ -139,5 +165,19 @@ public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler
 	public FluidTankInfo getInfo() {
 		return new FluidTankInfo(this.tank, this.MAX_CAPACITY);
 	}
+	
+	@Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		super.onDataPacket(net, pkt);
+        readFromNBT(pkt.getNbtCompound());
+    }
+
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+    	super.getUpdatePacket();
+        NBTTagCompound compound = new NBTTagCompound();        
+        writeToNBT(compound);
+        return new SPacketUpdateTileEntity(getPos(), 1, compound);
+    }
 	
 }
