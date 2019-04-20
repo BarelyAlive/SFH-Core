@@ -12,15 +12,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-import mod.sfhcore.tileentities.TileEntityBase;
+import mod.sfhcore.tileentities.TEBaseInventory;
 import mod.sfhcore.tileentities.TileEntityFluidBase;
 
 public class ContainerBase extends Container {
 
 	protected BlockPos pos;
-	public TileEntityBase tileentity;
+	public TEBaseInventory tileentity;
 	
-	protected ContainerBase(TileEntityBase te) {
+	protected ContainerBase(TEBaseInventory te) {
 		this.tileentity = te;
 	}
 	

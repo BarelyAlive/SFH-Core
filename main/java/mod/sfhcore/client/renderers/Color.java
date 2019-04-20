@@ -1,4 +1,4 @@
-package mod.sfhcore.texturing;
+package mod.sfhcore.client.renderers;
 
 import java.util.Objects;
 

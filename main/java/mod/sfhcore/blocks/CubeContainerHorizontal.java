@@ -2,7 +2,7 @@ package mod.sfhcore.blocks;
 
 import java.util.Random;
 
-import mod.sfhcore.tileentities.TileEntityBase;
+import mod.sfhcore.tileentities.TEBaseInventory;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -50,9 +50,9 @@ public class CubeContainerHorizontal extends BlockContainer{
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityBase)
+            if (tileentity instanceof TEBaseInventory)
             {
-            	((TileEntityBase)tileentity).setCustomInventoryName(stack.getDisplayName());
+            	((TEBaseInventory)tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -63,9 +63,9 @@ public class CubeContainerHorizontal extends BlockContainer{
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             
-            if (tileentity instanceof TileEntityBase)
+            if (tileentity instanceof TEBaseInventory)
             {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityBase) tileentity);
+                InventoryHelper.dropInventoryItems(worldIn, pos, (TEBaseInventory) tileentity);
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
         }

@@ -30,7 +30,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import scala.Int;
 
-public class TileEntityFluidBase extends TileEntityBase implements IFluidHandler, IFluidTank {
+public class TileEntityFluidBase extends TEBaseInventory implements IFluidHandler, IFluidTank {
 	
 	private static List<Fluid> acceptedFluids;
 	

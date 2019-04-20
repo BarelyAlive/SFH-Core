@@ -2,11 +2,13 @@ package mod.sfhcore;
 
 import akka.io.Tcp.Register;
 import mod.sfhcore.handler.RegisterBlocks;
+import mod.sfhcore.handler.RegisterEnchantments;
 import mod.sfhcore.handler.RegisterItems;
 import mod.sfhcore.handler.RegisterTileEntity;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
@@ -57,5 +59,18 @@ public class Registry {
     	}
             
         return item;
+    }
+    
+    public static Enchantment registerEnchantment(Enchantment chant)
+    {
+    	if (chant.getRegistryName() != null) {
+        	RegisterEnchantments.enchantments.add(chant);
+    	}
+    	else
+    	{
+    		LogUtil.warn("SFHCore tried to register an enchantment which has a null name!");
+    	}
+            
+        return chant;
     }
 }

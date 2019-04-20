@@ -19,7 +19,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityBase extends TileEntityLockable implements ITickable, ISidedInventory {
+public class TEBaseInventory extends TileEntityLockable implements ITickable, ISidedInventory {
 	
 	public NonNullList<ItemStack> machineItemStacks;
 	protected String field_145958_o;
@@ -30,7 +30,7 @@ public class TileEntityBase extends TileEntityLockable implements ITickable, ISi
 	protected static int[] SLOTS_BOTTOM = new int[] {2, 1};
 	protected static int[] SLOTS_SIDES = new int[] {1};
 	
-	public TileEntityBase(int invSize, String machineCustomName) {
+	public TEBaseInventory(int invSize, String machineCustomName) {
 		this.workTime = 0;
 		setCustomInventoryName(machineCustomName);
 		this.machineItemStacks = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
