@@ -102,17 +102,28 @@ public class TileEntityFluidBase extends TEBaseInventory implements IFluidHandle
 
 	@Override
 	public FluidStack drain(FluidStack resource, boolean doDrain) {
-		for(Fluid f : acceptedFluids) {
-			if(resource.getFluid() == f){
-				return tank;
-			}
+		if (this.tank.getFluid().equals(resource.getFluid()))
+		{
+			return this.drain(resource.amount, doDrain);
 		}
 		return null;
 	}
 
 	@Override
 	public FluidStack drain(int maxDrain, boolean doDrain) {
-		return new FluidStack(tank.getFluid(), Int.MaxValue());
+		Fluid f = this.tank.getFluid();
+		if (this.tank.amount >= maxDrain)
+		{
+			if (doDrain)
+			{
+				this.tank.amount -= maxDrain;
+			}
+			return new FluidStack(f, maxDrain);
+		}
+		else
+		{
+			return new FluidStack(f, 0);
+		}
 	}
 
 	@Override

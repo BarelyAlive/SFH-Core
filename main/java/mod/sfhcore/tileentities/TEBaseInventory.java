@@ -219,6 +219,10 @@ public class TEBaseInventory extends TileEntityLockable implements ITickable, IS
 		return true;
 	}
 
+	public boolean isItemValidForSlotToExtract(int index, ItemStack itemStack) {
+		return true;
+	}
+
 	@Override
 	public int getField(int id) {
 		switch(id)
@@ -254,12 +258,11 @@ public class TEBaseInventory extends TileEntityLockable implements ITickable, IS
 	public void clear() {
 		this.machineItemStacks.clear();
 	}
-
+	
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
 		int slots = getSizeInventory();
 		switch (side) {
-
 			case UP:
 	            return SLOTS_TOP;
 	        case DOWN:
@@ -271,12 +274,21 @@ public class TEBaseInventory extends TileEntityLockable implements ITickable, IS
 
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		return true;
+		int[] valid_slot = this.getSlotsForFace(direction);
+		for (int i = 0; i < valid_slot.length; i++)
+		{
+			if (valid_slot[i] == index)
+			{
+				return isItemValidForSlot(index, itemStackIn);
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		return true;
+		int[] valid_slot = this.getSlotsForFace(direction);
+		return isItemValidForSlotToExtract(index, stack);
 	}
 
 	@Override

@@ -58,7 +58,7 @@ public class ContainerBase extends Container {
 	        previous = current.copy();
 
 	        if (index < this.tileentity.getSizeInventory()) {
-	            if (!this.mergeItemStack(current, this.tileentity.getSizeInventory(), 36+this.tileentity.getSizeInventory(), true))
+	            if (!this.mergeItemStack(current, this.tileentity.getSizeInventory(), 35+this.tileentity.getSizeInventory(), true))
 	                return ItemStack.EMPTY;
 	            slot.onSlotChange(current, previous);
 	        } else {
