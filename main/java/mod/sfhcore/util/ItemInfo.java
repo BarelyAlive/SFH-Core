@@ -182,6 +182,8 @@ public class ItemInfo implements StackInfo {
         // If not, accept any item that matches this, otherwise
         // Only accept items with meta 0
         NonNullList<ItemStack> subItems = NonNullList.create();
+        if (item == null)
+        	return;
         item.getSubItems(item.getCreativeTab() == null ? CreativeTabs.SEARCH : item.getCreativeTab(), subItems);
         if (subItems.size() <= 1)
             this.isWildcard = true;
