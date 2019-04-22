@@ -40,7 +40,7 @@ public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> exten
     
     @Override
 	public int getItemBurnTime(ItemStack itemStack) {
-		for(Pair<ItemStack, Integer> f : CustomFuelHandler.fuelList)
+		for(Pair<ItemStack, Integer> f : CustomFuelHandler.getFuelList())
 		{
 			if(ItemStack.areItemsEqual(itemStack, f.getLeft()))
 			{	

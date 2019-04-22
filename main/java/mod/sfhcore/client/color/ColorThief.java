@@ -28,7 +28,7 @@ import java.util.Arrays;
  *
  * @author https://github.com/mezz
  */
-@SuppressWarnings("ALL")
+@SuppressWarnings("all")
 public class ColorThief {
 
     private static final int DEFAULT_QUALITY = 2;

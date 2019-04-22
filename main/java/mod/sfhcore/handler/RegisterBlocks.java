@@ -14,9 +14,17 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterBlocks {
 	
-	public static List<Block> blocks = new ArrayList<Block>();
-	public static List<ItemBlock> itemblocks = new ArrayList<ItemBlock>();
+	private static List<Block> blocks = new ArrayList<Block>();
+	private static List<ItemBlock> itemblocks = new ArrayList<ItemBlock>();
 	
+	public static List<Block> getBlocks() {
+		return blocks;
+	}
+
+	public static List<ItemBlock> getItemblocks() {
+		return itemblocks;
+	}
+
 	public static void registerBlocks(IForgeRegistry<Block> registry)
 	{
 		ResourceLocation loc;

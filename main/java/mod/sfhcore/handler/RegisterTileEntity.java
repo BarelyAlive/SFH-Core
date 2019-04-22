@@ -3,17 +3,40 @@ package mod.sfhcore.handler;
 import java.util.ArrayList;
 import java.util.List;
 
+import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class RegisterTileEntity {
+public class RegisterTileEntity
+{	
+	private static List<TE2Block> tile_entitys = new ArrayList<TE2Block>();
 	
-	public static List<TE2Block> tile_entitys = new ArrayList<TE2Block>();
-	
-	public static void add(Class te, Block b)
+	public static List<TE2Block> getTile_entitys()
 	{
+		return tile_entitys;
+	}
+	
+	public static void add(Block b, Class te)
+	{	
+		try {
+			b.getRegistryName();
+		} catch (NullPointerException e) {
+			LogUtil.fatal("SFHCore tried to register a tile entity, but the corresponding block was NULL!");
+			return;
+		}
+		if(te == null)
+		{
+			LogUtil.fatal("SFHCore tried to register a tile entity, but it was NULL!");
+			return;
+		}
+		if(b.getRegistryName() == null)
+		{
+			LogUtil.fatal("SFHCore tried to register a tile entity, but the corresponding block has a NULL name!");
+			return;
+		}
+		
 		int i = getIndexForBlock(b);
 		
 		if(i == -1)
@@ -23,53 +46,12 @@ public class RegisterTileEntity {
 		}
 	}
 	
-	public static void add(Block b, Class te)
-	{
-		add(te, b);
-	}
-	
 	public static void register()
 	{
 		for(TE2Block t2b : tile_entitys)
 		{
 			GameRegistry.registerTileEntity(t2b.te, t2b.block.getRegistryName());
 		}
-	}
-	
-	public static void registerTileEntity(Block b)
-	{
-		int i = getIndexForBlock(b);
-			
-		if(i != -1)
-		{
-			String domain = tile_entitys.get(i).block.getRegistryName().getResourceDomain();
-			String tename = tile_entitys.get(i).te.getClass().toString().toLowerCase();
-			GameRegistry.registerTileEntity(tile_entitys.get(i).te, new ResourceLocation(domain, tename));
-		}
-	}
-	
-	public static void registerTileEntity(TileEntity te)
-	{
-		int i = getIndexForTileEntity(te);
-			
-		if(i != -1)
-		{
-			String domain = tile_entitys.get(i).block.getRegistryName().getResourceDomain();
-			String tename = tile_entitys.get(i).te.getClass().toString().toLowerCase();
-			GameRegistry.registerTileEntity(te.getClass(), new ResourceLocation(domain, tename));
-		}
-	}
-	
-	private static int getIndexForTileEntity(TileEntity te)
-	{
-		for(int i = 0; i < tile_entitys.size(); i++)
-		{
-			if(tile_entitys.get(i).te.equals(te))
-			{
-				return i;
-			}
-		}
-		return -1;
 	}
 	
 	private static int getIndexForBlock(Block b)
@@ -83,5 +65,4 @@ public class RegisterTileEntity {
 		}
 		return -1;
 	}
-	
 }

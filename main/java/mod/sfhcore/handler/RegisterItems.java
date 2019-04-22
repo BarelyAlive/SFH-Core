@@ -5,6 +5,7 @@ import java.util.List;
 
 import mod.sfhcore.SFHCore;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
+import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -13,8 +14,12 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterItems {
 	
-	public static List<Item> items = new ArrayList<Item>();
+	private static List<Item> items = new ArrayList<Item>();
 	
+	public static List<Item> getItems() {
+		return items;
+	}
+
 	public static void register(IForgeRegistry<Item> registry)
 	{
 		for(Item item : items)

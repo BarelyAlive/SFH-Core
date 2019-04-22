@@ -23,7 +23,11 @@ import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 
 public class CustomFuelHandler{
 	
-	public static List<Pair<ItemStack, Integer>> fuelList = new ArrayList<Pair<ItemStack, Integer>>();
+	private static List<Pair<ItemStack, Integer>> fuelList = new ArrayList<Pair<ItemStack, Integer>>();
+	
+	public static List<Pair<ItemStack, Integer>> getFuelList() {
+		return fuelList;
+	}
 
 	@SubscribeEvent
 	public int getBurnTime(FurnaceFuelBurnTimeEvent e)
@@ -31,9 +35,10 @@ public class CustomFuelHandler{
 		ItemStack stack = e.getItemStack();
 		Item item = stack.getItem();
 		int burnTime = 0;
+		
 		//have to do this to prevent crashes
 		if (stack.isEmpty()) {
-            return 0;
+            return burnTime;
         }
 		
 		try {
@@ -45,7 +50,7 @@ public class CustomFuelHandler{
 		//Don't delete this return. It must stay at the end.
 		if(burnTime < 0)
 		{
-			return 0;
+			return burnTime;
 		}
 		return burnTime;
 	}

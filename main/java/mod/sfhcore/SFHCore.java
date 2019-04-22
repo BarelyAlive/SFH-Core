@@ -2,12 +2,14 @@ package mod.sfhcore;
  
 import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.handler.RegisterBlocks;
+import mod.sfhcore.handler.RegisterEnchantments;
 import mod.sfhcore.handler.RegisterItems;
 import mod.sfhcore.handler.RegisterTileEntity;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
 import mod.sfhcore.proxy.SFHCoreProxy;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -29,8 +31,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
  
 @Mod(modid=Constants.ModIdSFHCORE, name=Constants.ModIdSFHCORE, version=Constants.SFHCoreVersion)
-public class SFHCore {
-     
+public class SFHCore
+{     
     @Instance(value=Constants.ModIdSFHCORE)
     public static SFHCore instance;
     
@@ -55,14 +57,18 @@ public class SFHCore {
     	}
     	
     	@SubscribeEvent
+    	public static void registerEnchantments(RegistryEvent.Register<Enchantment> event)
+    	{
+    		RegisterEnchantments.registerEnchantments(event.getRegistry());
+    	}
+    	
+    	@SubscribeEvent
     	public static void registerModels(ModelRegistryEvent event)
     	{
     		RegisterItems.registerModels();
     		RegisterBlocks.registerModels();
     	}
-
     }
-
 
     @Mod.EventHandler
     public void PreInit(FMLPreInitializationEvent event)

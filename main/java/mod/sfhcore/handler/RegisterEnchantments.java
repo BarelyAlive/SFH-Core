@@ -12,8 +12,12 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterEnchantments
 {
-	public static List<Enchantment> enchantments = new ArrayList<Enchantment>();
+	private static List<Enchantment> enchantments = new ArrayList<Enchantment>();
 	
+	public static List<Enchantment> getEnchantments() {
+		return enchantments;
+	}
+
 	public static void registerEnchantments(IForgeRegistry<Enchantment> registry)
 	{
 		ResourceLocation loc;
