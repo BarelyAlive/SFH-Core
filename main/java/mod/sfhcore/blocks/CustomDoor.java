@@ -34,7 +34,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-
 public class CustomDoor extends Block
 {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -47,21 +46,16 @@ public class CustomDoor extends Block
     protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.8125D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
     protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.1875D, 1.0D, 1.0D);
     
-    private Item door;
+    private ResourceLocation doorItem;
 
-    public CustomDoor(Material mat, ResourceLocation loc, float resi, float hard)
+    public CustomDoor(Material mat, ResourceLocation doorBlock, ResourceLocation doorItem, float resi, float hard)
     {
         super(mat);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(OPEN, Boolean.valueOf(false)).withProperty(HINGE, CustomDoor.EnumHingePosition.LEFT).withProperty(POWERED, Boolean.valueOf(false)).withProperty(HALF, CustomDoor.EnumDoorHalf.LOWER));
-        setRegistryName(loc);
-        setUnlocalizedName(loc.getResourcePath());
+        setRegistryName(doorBlock);
+        setUnlocalizedName(doorBlock.getResourcePath());
         setResistance(resi);
         setHardness(hard);
-    }
-    
-    public void setDoor(Item door)
-    {
-    	this.door = door;
     }
 
     @Override
@@ -274,7 +268,7 @@ public class CustomDoor extends Block
 
     private Item getItem()
     {
-        return this.door;
+        return Item.REGISTRY.getObject(doorItem);
     }
 
     @Override

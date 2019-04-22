@@ -18,47 +18,19 @@ public class RegisterTileEntity
 		return tile_entitys;
 	}
 	
-	public static void add(Block b, Class te)
-	{	
-		try {
-			b.getRegistryName();
-		} catch (NullPointerException e) {
-			LogUtil.fatal("SFHCore tried to register a tile entity, but the corresponding block was NULL!");
-			return;
-		}
-		if(te == null)
-		{
-			LogUtil.fatal("SFHCore tried to register a tile entity, but it was NULL!");
-			return;
-		}
-		if(b.getRegistryName() == null)
-		{
-			LogUtil.fatal("SFHCore tried to register a tile entity, but the corresponding block has a NULL name!");
-			return;
-		}
-		
-		int i = getIndexForBlock(b);
-		
-		if(i == -1)
-		{
-			TE2Block te2block = new TE2Block(b, te);
-			tile_entitys.add(te2block);
-		}
-	}
-	
 	public static void register()
 	{
 		for(TE2Block t2b : tile_entitys)
 		{
-			GameRegistry.registerTileEntity(t2b.te, t2b.block.getRegistryName());
+			GameRegistry.registerTileEntity(t2b.getTe(), t2b.getBlock().getRegistryName());
 		}
 	}
 	
-	private static int getIndexForBlock(Block b)
+	public static int getIndexForBlock(Block b)
 	{
 		for(int i = 0; i < tile_entitys.size(); i++)
 		{
-			if(tile_entitys.get(i).block.equals(b))
+			if(tile_entitys.get(i).getBlock().equals(b))
 			{
 				return i;
 			}

@@ -15,7 +15,7 @@ public class Registry
 	//This is the class with the methods to register your stuff
 	
 	public static Block registerBlock(Block block)
-    {        
+    {		
 		if(block == null)
 		{
 			LogUtil.warn("SFHCore tried to register a block which was NULL!");
@@ -92,4 +92,32 @@ public class Registry
     	}        
         return chant;
     }
+    
+    public static void registerTileEntity(Block b, Class te)
+	{	
+		try {
+			b.getRegistryName();
+		} catch (NullPointerException e) {
+			LogUtil.fatal("SFHCore tried to register a tile entity, but the corresponding block was NULL!");
+			return;
+		}
+		if(te == null)
+		{
+			LogUtil.fatal("SFHCore tried to register a tile entity, but it was NULL!");
+			return;
+		}
+		if(b.getRegistryName() == null)
+		{
+			LogUtil.fatal("SFHCore tried to register a tile entity, but the corresponding block has a NULL name!");
+			return;
+		}
+		
+		int i = RegisterTileEntity.getIndexForBlock(b);
+		
+		if(i == -1)
+		{
+			TE2Block te2block = new TE2Block(b, te);
+			RegisterTileEntity.getTile_entitys().add(te2block);
+		}
+	}
 }

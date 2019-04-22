@@ -24,19 +24,15 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemDoor extends Item
 {
-	private Block door;
+	private ResourceLocation doorBlock;
     
-    public ItemDoor(CreativeTabs tab, ResourceLocation loc)
+    public ItemDoor(CreativeTabs tab, ResourceLocation doorItem, ResourceLocation doorBlock)
     {
         this.maxStackSize = 1;
         this.setCreativeTab(tab);
-        this.setRegistryName(loc);
-        this.setUnlocalizedName(loc.getResourcePath());
-    }
-    
-    public void setDoor(Block door)
-    {
-    	this.door = door;
+        this.setRegistryName(doorItem);
+        this.setUnlocalizedName(doorItem.getResourcePath());
+        this.doorBlock = doorBlock;
     }
 
     @Override
@@ -58,16 +54,15 @@ public class ItemDoor extends Item
 
             ItemStack itemstack = player.getHeldItem(hand);
             
-            System.out.println(player.canPlayerEdit(pos, facing, itemstack));
-            System.out.println(this.door);
-
-            if (player.canPlayerEdit(pos, facing, itemstack) && this.door.canPlaceBlockAt(worldIn, pos))
+            Block door = Block.REGISTRY.getObject(this.doorBlock);
+            
+            if (player.canPlayerEdit(pos, facing, itemstack) && ((CustomDoor) door).canPlaceBlockAt(worldIn, pos))
             {
                 EnumFacing enumfacing = EnumFacing.fromAngle((double)player.rotationYaw);
                 int i = enumfacing.getFrontOffsetX();
                 int j = enumfacing.getFrontOffsetZ();
                 boolean flag = i < 0 && hitZ < 0.5F || i > 0 && hitZ > 0.5F || j < 0 && hitX > 0.5F || j > 0 && hitX < 0.5F;
-                placeDoor(worldIn, pos, enumfacing, this.door, flag);
+                placeDoor(worldIn, pos, enumfacing, door, flag);
                 SoundType soundtype = worldIn.getBlockState(pos).getBlock().getSoundType(worldIn.getBlockState(pos), worldIn, pos, player);
                 worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                 itemstack.shrink(1);

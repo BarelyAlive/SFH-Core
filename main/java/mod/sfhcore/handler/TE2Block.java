@@ -4,9 +4,17 @@ import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 
 public class TE2Block {
-	Block block;
-	Class te;
+	private Block block;
+	private Class te;
 	
+	public Block getBlock() {
+		return block;
+	}
+
+	public Class getTe() {
+		return te;
+	}
+
 	public TE2Block(Block b, Class te)
 	{
 		this.block = b;
