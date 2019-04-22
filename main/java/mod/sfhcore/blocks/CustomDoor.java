@@ -46,9 +46,7 @@ public class CustomDoor extends Block
     protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.8125D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
     protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.1875D, 1.0D, 1.0D);
     
-    private ResourceLocation doorItem;
-
-    public CustomDoor(Material mat, ResourceLocation doorBlock, ResourceLocation doorItem, float resi, float hard)
+    public CustomDoor(Material mat, ResourceLocation doorBlock, float resi, float hard)
     {
         super(mat);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(OPEN, Boolean.valueOf(false)).withProperty(HINGE, CustomDoor.EnumHingePosition.LEFT).withProperty(POWERED, Boolean.valueOf(false)).withProperty(HALF, CustomDoor.EnumDoorHalf.LOWER));
@@ -268,7 +266,7 @@ public class CustomDoor extends Block
 
     private Item getItem()
     {
-        return Item.REGISTRY.getObject(doorItem);
+        return Item.REGISTRY.getObject(this.getRegistryName());
     }
 
     @Override

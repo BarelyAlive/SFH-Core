@@ -24,15 +24,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemDoor extends Item
 {
-	private ResourceLocation doorBlock;
     
-    public ItemDoor(CreativeTabs tab, ResourceLocation doorItem, ResourceLocation doorBlock)
+    public ItemDoor(CreativeTabs tab, ResourceLocation doorItem)
     {
         this.maxStackSize = 1;
         this.setCreativeTab(tab);
         this.setRegistryName(doorItem);
         this.setUnlocalizedName(doorItem.getResourcePath());
-        this.doorBlock = doorBlock;
     }
 
     @Override
@@ -54,7 +52,7 @@ public class ItemDoor extends Item
 
             ItemStack itemstack = player.getHeldItem(hand);
             
-            Block door = Block.REGISTRY.getObject(this.doorBlock);
+            Block door = Block.REGISTRY.getObject(this.getRegistryName());
             
             if (player.canPlayerEdit(pos, facing, itemstack) && ((CustomDoor) door).canPlaceBlockAt(worldIn, pos))
             {
