@@ -1,9 +1,6 @@
-package mod.sfhcore;
+package mod.sfhcore.handler;
 
 import akka.io.Tcp.Register;
-import mod.sfhcore.handler.RegisterBlocks;
-import mod.sfhcore.handler.RegisterEnchantments;
-import mod.sfhcore.handler.RegisterItems;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
