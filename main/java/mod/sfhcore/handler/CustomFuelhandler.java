@@ -30,24 +30,24 @@ public class CustomFuelHandler{
 	{
 		ItemStack stack = e.getItemStack();
 		Item item = stack.getItem();
-		
+		int burnTime = 0;
 		//have to do this to prevent crashes
 		if (stack.isEmpty()) {
             return 0;
         }
 		
 		try {
-			item.getItemBurnTime(stack);
+			burnTime = item.getItemBurnTime(stack);
 		} catch (NullPointerException ex) {
 			LogUtil.fatal("SFHCore tried to get the burn time of " + item.getRegistryName() + " and it was NULL!");
 		}
 						
 		//Don't delete this return. It must stay at the end.
-		if(item.getItemBurnTime(stack) < 0)
+		if(burnTime < 0)
 		{
 			return 0;
 		}
-		return item.getItemBurnTime(stack);
+		return burnTime;
 	}
 	
 	/**
