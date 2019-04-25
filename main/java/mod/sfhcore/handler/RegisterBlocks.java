@@ -9,13 +9,14 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterBlocks {
 	
-	private static List<Block> blocks = new ArrayList<Block>();
-	private static List<ItemBlock> itemblocks = new ArrayList<ItemBlock>();
+	private static NonNullList<Block> blocks = NonNullList.create();
+	private static NonNullList<ItemBlock> itemblocks = NonNullList.create();
 	
 	public static List<Block> getBlocks() {
 		return blocks;

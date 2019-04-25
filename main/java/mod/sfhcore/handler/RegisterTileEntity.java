@@ -6,12 +6,13 @@ import java.util.List;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RegisterTileEntity
 {	
-	private static List<TE2Block> tile_entitys = new ArrayList<TE2Block>();
+	private static NonNullList<TE2Block> tile_entitys = NonNullList.create();
 	
 	public static List<TE2Block> getTile_entitys()
 	{

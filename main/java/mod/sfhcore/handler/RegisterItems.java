@@ -1,20 +1,17 @@
 package mod.sfhcore.handler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mod.sfhcore.SFHCore;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
-import mod.sfhcore.util.LogUtil;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterItems {
 	
-	private static List<Item> items = new ArrayList<Item>();
+	private static NonNullList<Item> items = NonNullList.create();
 	
 	public static List<Item> getItems() {
 		return items;
