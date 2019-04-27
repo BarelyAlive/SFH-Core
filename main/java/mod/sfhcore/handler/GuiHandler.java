@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -21,10 +23,15 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class GuiHandler implements IGuiHandler {
 	
-	protected static List<Pair<Class<GuiContainer>, Class<Container>>> teco = new ArrayList<Pair<Class<GuiContainer>, Class<Container>>>();
+	private static List<Pair<Class<GuiContainer>, Class<Container>>> teco = new ArrayList<Pair<Class<GuiContainer>, Class<Container>>>();
 	
+	public static List<Pair<Class<GuiContainer>, Class<Container>>> getTeco() {
+		return teco;
+	}
+
 	@Override
-	public Container getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Container getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+	{
 		TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
 		
 			for(Pair<Class<GuiContainer>, Class<Container>> tc : teco) {
@@ -32,8 +39,8 @@ public class GuiHandler implements IGuiHandler {
 					
 					Class<Container> c = (Class<Container>) tc.getRight();
 					try {
-					Constructor<Container> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
-					return con.newInstance(player.inventory, te1);
+						Constructor<Container> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
+						return con.newInstance(player.inventory, te1);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
@@ -45,15 +52,17 @@ public class GuiHandler implements IGuiHandler {
 	}
 
 	@Override
-	public GuiContainer getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public GuiContainer getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+	{
 		TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
 		
 		for(Pair<Class<GuiContainer>, Class<Container>> tc : teco) {
 			if(te1.getClass().equals(tc.getLeft().getClass())){
 				
 				Class<GuiContainer> c = tc.getLeft();
+				
 				try {
-				Constructor<GuiContainer> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
+					Constructor<GuiContainer> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
 				return con.newInstance(player.inventory, te1);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -71,7 +80,7 @@ public class GuiHandler implements IGuiHandler {
 	 * @param time
 	 * @return
 	 */
-	public static int addGUIRelation(Object tile, Object con) {
+	public static int addGUIRelation(@Nonnull Object tile, @Nonnull Object con) {
 		teco.add(new ImmutablePair<Class<GuiContainer>, Class<Container>>((Class<GuiContainer>)tile, (Class<Container>)con));
 		return (teco.size() - 1);
 	}
