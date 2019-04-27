@@ -101,6 +101,7 @@ public class SFHCore
     	
     	configDirectory = new File(event.getModConfigurationDirectory(), Constants.ModIdSFHCORE);
     	configDirectory.mkdirs();
+    	Config.loadConfigs();
     	
     	NetworkHandler.initPackets();
         new SFHCoreClientProxy();
