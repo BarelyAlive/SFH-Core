@@ -1,5 +1,7 @@
 package mod.sfhcore;
  
+import java.io.File;
+
 import mod.sfhcore.handler.BucketHandler;
 import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.network.NetworkHandler;
@@ -9,6 +11,7 @@ import mod.sfhcore.registries.RegisterBlocks;
 import mod.sfhcore.registries.RegisterEnchantments;
 import mod.sfhcore.registries.RegisterItems;
 import mod.sfhcore.registries.RegisterTileEntity;
+import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -41,6 +44,8 @@ public class SFHCore
     
     @SidedProxy(clientSide="mod.sfhcore.proxy.SFHCoreClientProxy", serverSide="mod.sfhcore.proxy.SFHCoreProxy")
     public static SFHCoreProxy proxy;
+    
+    public static File configDirectory;
      
     @Mod.EventBusSubscriber
     public static class RegistrationHandler
@@ -91,7 +96,12 @@ public class SFHCore
 
     @Mod.EventHandler
     public void PreInit(FMLPreInitializationEvent event)
-    {
+    {        
+    	LogUtil.setup(Constants.ModIdSFHCORE, configDirectory);
+    	
+    	configDirectory = new File(event.getModConfigurationDirectory(), Constants.ModIdSFHCORE);
+    	configDirectory.mkdirs();
+    	
     	NetworkHandler.initPackets();
         new SFHCoreClientProxy();
     }
