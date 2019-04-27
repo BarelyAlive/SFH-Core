@@ -1,5 +1,6 @@
 package mod.sfhcore;
  
+import mod.sfhcore.handler.BucketHandler;
 import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
 import mod.sfhcore.proxy.SFHCoreProxy;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -67,6 +69,22 @@ public class SFHCore
     	{
     		RegisterItems.registerModels();
     		RegisterBlocks.registerModels();
+    	}
+    }
+    
+    @Mod.EventBusSubscriber
+    public static class BucketRegistrationHandler
+    {
+    	@SubscribeEvent(priority = EventPriority.LOWEST)
+    	public static void registerBuckets (RegistryEvent.Register<Item> event)
+    	{
+    		BucketHandler.registerBuckets(event);
+    	}
+    	
+    	@SubscribeEvent(priority = EventPriority.LOWEST)
+    	public static void registerBucketModels(ModelRegistryEvent event)
+    	{
+    		BucketHandler.registerBucketModels(event);
     	}
     }
 
