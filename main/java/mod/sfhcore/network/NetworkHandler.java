@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -18,6 +19,12 @@ public class NetworkHandler {
 	
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.ModIdSFHCORE);
 	private static int id = 0;
+	
+	//Please use this this method! Otherwise ids could be identical
+	public static void registerMessage(Class<? extends IMessageHandler<IMessage, IMessage>> messageHandler, Class<IMessage> requestMessageType, Side side)
+	{
+		INSTANCE.registerMessage(messageHandler, requestMessageType, id++, side);
+	}
 	
 	public static void initPackets()
 	{
