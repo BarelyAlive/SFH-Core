@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import mod.sfhcore.Constants;
+import mod.sfhcore.util.LogUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -14,14 +15,19 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class NetworkHandler {
-	
+public class NetworkHandler
+{	
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.ModIdSFHCORE);
 	private static int id = 0;
 	
-	public static void registerMessage(Class a, Class b, Side side)
+	public static void registerMessage(Class messageHandler, Class message, Side side)
 	{
-		INSTANCE.registerMessage(a, b, id++, side);
+		try {
+			INSTANCE.registerMessage(messageHandler, message, id++, side);
+		} catch (IllegalArgumentException e) {
+			LogUtil.error("SFHCore tried to register a message with illegal arguments!");
+			e.printStackTrace();
+		}
 	}
 	
 	public static void initPackets()
@@ -42,7 +48,8 @@ public class NetworkHandler {
         sendToAllAround(message, te, 64);
     }
 	
-	public static void sendNBTUpdate(TileEntity te) {
+	public static void sendNBTUpdate(TileEntity te)
+	{
 		sendToAllAround(new MessageNBTUpdate(te), te);
 	}
 }
