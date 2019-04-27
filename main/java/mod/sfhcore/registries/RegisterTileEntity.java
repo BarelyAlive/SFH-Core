@@ -1,8 +1,9 @@
-package mod.sfhcore.handler;
+package mod.sfhcore.registries;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import mod.sfhcore.handler.TE2Block;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;

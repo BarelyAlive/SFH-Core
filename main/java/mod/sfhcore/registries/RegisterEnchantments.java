@@ -1,4 +1,4 @@
-package mod.sfhcore.handler;
+package mod.sfhcore.registries;
 
 import java.util.ArrayList;
 import java.util.List;

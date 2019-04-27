@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 import mod.sfhcore.tileentities.TEBaseInventory;
-import mod.sfhcore.tileentities.TileEntityFluidBase;
+import mod.sfhcore.tileentities.TEBaseFluidInventory;
 
 public class ContainerBase extends Container {
 

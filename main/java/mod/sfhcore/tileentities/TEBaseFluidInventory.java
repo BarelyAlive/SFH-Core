@@ -30,14 +30,14 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import scala.Int;
 
-public class TileEntityFluidBase extends TEBaseInventory implements IFluidHandler, IFluidTank {
+public class TEBaseFluidInventory extends TEBaseInventory implements IFluidHandler, IFluidTank {
 	
 	private static List<Fluid> acceptedFluids;
 	
 	public static int MAX_CAPACITY;
 	public FluidStack tank; // = new FluidStack(FluidRegistry.WATER, 0);			//new FluidTank(fluid, (int) volume);
 	
-	public TileEntityFluidBase(int invSize, String machineCustomName, int MAX_CAPACITY) {
+	public TEBaseFluidInventory(int invSize, String machineCustomName, int MAX_CAPACITY) {
 		super(invSize, machineCustomName);
 		this.tank = new FluidStack(FluidRegistry.WATER, 0);
 		this.MAX_CAPACITY = MAX_CAPACITY;

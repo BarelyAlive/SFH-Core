@@ -1,12 +1,12 @@
 package mod.sfhcore;
  
 import mod.sfhcore.handler.CustomFuelHandler;
-import mod.sfhcore.handler.RegisterBlocks;
-import mod.sfhcore.handler.RegisterEnchantments;
-import mod.sfhcore.handler.RegisterItems;
-import mod.sfhcore.handler.RegisterTileEntity;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
 import mod.sfhcore.proxy.SFHCoreProxy;
+import mod.sfhcore.registries.RegisterBlocks;
+import mod.sfhcore.registries.RegisterEnchantments;
+import mod.sfhcore.registries.RegisterItems;
+import mod.sfhcore.registries.RegisterTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;

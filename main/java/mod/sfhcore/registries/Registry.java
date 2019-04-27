@@ -1,6 +1,7 @@
-package mod.sfhcore.handler;
+package mod.sfhcore.registries;
 
 import akka.io.Tcp.Register;
+import mod.sfhcore.handler.TE2Block;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
