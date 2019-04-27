@@ -1,6 +1,7 @@
 package mod.sfhcore;
  
 import mod.sfhcore.handler.CustomFuelHandler;
+import mod.sfhcore.network.NetworkHandler;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
 import mod.sfhcore.proxy.SFHCoreProxy;
 import mod.sfhcore.registries.RegisterBlocks;
@@ -73,6 +74,7 @@ public class SFHCore
     @Mod.EventHandler
     public void PreInit(FMLPreInitializationEvent event)
     {
+    	NetworkHandler.initPackets();
         new SFHCoreClientProxy();
     }
     
