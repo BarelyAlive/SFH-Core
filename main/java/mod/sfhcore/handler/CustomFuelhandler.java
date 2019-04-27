@@ -50,7 +50,7 @@ public class CustomFuelHandler{
 		//Don't delete this return. It must stay at the end.
 		if(burnTime < 0)
 		{
-			return burnTime;
+			return 0;
 		}
 		return burnTime;
 	}
@@ -64,7 +64,7 @@ public class CustomFuelHandler{
 	public static boolean addFuelBurnTime(ItemStack stack, int time)
 	{
 		if(stack.getItem().getRegistryName() ==null) {
-			LogUtil.warn("SFHCore tried to add an item which has registry name!");
+			LogUtil.warn("SFHCore tried to add an item which has no registry name!");
 			return false;
 		}
 		
