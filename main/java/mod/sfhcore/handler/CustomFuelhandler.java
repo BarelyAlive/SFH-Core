@@ -39,7 +39,7 @@ public class CustomFuelHandler{
 		ItemStack stack = e.getItemStack();
 		//have to do this to prevent crashes
 		if (stack.isEmpty()) {
-            return burnTime;
+            return 0;
         }
 		Item item = stack.getItem();
 		
