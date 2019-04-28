@@ -96,11 +96,11 @@ public class SFHCore
 
     @Mod.EventHandler
     public void PreInit(FMLPreInitializationEvent event)
-    {        
+    {   
+    	configDirectory = new File(event.getModConfigurationDirectory(), Constants.ModIdSFHCORE);
+    	
     	LogUtil.setup(Constants.ModIdSFHCORE, configDirectory);
     	
-    	configDirectory = new File(event.getModConfigurationDirectory(), Constants.ModIdSFHCORE);
-    	configDirectory.mkdirs();
     	Config.loadConfigs();
     	
     	NetworkHandler.initPackets();
