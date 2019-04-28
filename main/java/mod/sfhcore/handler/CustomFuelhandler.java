@@ -3,6 +3,8 @@ package mod.sfhcore.handler;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.logging.Log;
@@ -31,15 +33,15 @@ public class CustomFuelHandler{
 
 	@SubscribeEvent
 	public int getBurnTime(FurnaceFuelBurnTimeEvent e)
-	{
-		ItemStack stack = e.getItemStack();
-		Item item = stack.getItem();
+	{		
 		int burnTime = 0;
-		
+
+		ItemStack stack = e.getItemStack();
 		//have to do this to prevent crashes
 		if (stack.isEmpty()) {
             return burnTime;
         }
+		Item item = stack.getItem();
 		
 		try {
 			burnTime = item.getItemBurnTime(stack);
@@ -61,9 +63,9 @@ public class CustomFuelHandler{
 	 * @param time
 	 * @return
 	 */
-	public static boolean addFuelBurnTime(ItemStack stack, int time)
+	public static boolean addFuelBurnTime(@Nonnull ItemStack stack, @Nonnull int time)
 	{
-		if(stack.getItem().getRegistryName() ==null) {
+		if(stack.getItem().getRegistryName() == null) {
 			LogUtil.warn("SFHCore tried to add an item which has no registry name!");
 			return false;
 		}
