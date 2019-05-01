@@ -3,8 +3,10 @@ package mod.sfhcore.helper;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class NotNull
@@ -32,7 +34,7 @@ public class NotNull
     	if(o instanceof Item)
     	{
     		Item item = (Item) o;
-    		if(item == null)
+    		if(item == null || item.equals(Items.AIR))
     		{
     			LogUtil.warn("SFHCore tried to register an item which is NULL!");
     			return false;
@@ -40,6 +42,20 @@ public class NotNull
     		if(item.getRegistryName().toString().isEmpty())
     		{
     			LogUtil.warn("SFHCore tried to register an item, which has no name!");
+    			return false;
+    		}
+    	}
+    	if(o instanceof ItemStack)
+    	{
+    		ItemStack item = (ItemStack) o;
+    		if(item.isEmpty())
+    			return false;
+    		if(item.getItem() == null || item.getItem().equals(Items.AIR))
+    		{
+    			return false;
+    		}
+    		if(item.getItem().getRegistryName().toString().isEmpty())
+    		{
     			return false;
     		}
     	}

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.logging.Log;
 
+import mod.sfhcore.helper.NotNull;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
@@ -33,14 +34,15 @@ public class CustomFuelHandler{
 
 	@SubscribeEvent
 	public int getBurnTime(FurnaceFuelBurnTimeEvent e)
-	{		
+	{
 		int burnTime = 0;
-
-		ItemStack stack = e.getItemStack();
+		
 		//have to do this to prevent crashes
-		if (stack.isEmpty()) {
+		if (NotNull.checkNotNull(e.getItemStack())) {
             return 0;
         }
+		
+		ItemStack stack = e.getItemStack();
 		Item item = stack.getItem();
 		
 		try {
@@ -49,11 +51,11 @@ public class CustomFuelHandler{
 			LogUtil.fatal("SFHCore tried to get the burn time of " + item.getRegistryName() + " and it was NULL!");
 		}
 						
-		//Don't delete this return. It must stay at the end.
 		if(burnTime < 0)
 		{
 			return 0;
 		}
+		
 		return burnTime;
 	}
 	
