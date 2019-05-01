@@ -67,7 +67,8 @@ public class CustomFuelHandler{
 	 */
 	public static boolean addFuelBurnTime(@Nonnull ItemStack stack, @Nonnull int time)
 	{
-		if(stack.getItem().getRegistryName() == null) {
+		if(stack.getItem().getRegistryName() == null)
+		{
 			LogUtil.warn("SFHCore tried to add an item which has no registry name!");
 			return false;
 		}
