@@ -21,10 +21,12 @@ public class RegisterItems {
 	{
 		for(Item item : items)
 		{
-			if (item != null && item.getRegistryName() != null)
-			{
-				registry.register(item);
-			}
+			if (item == null)
+				continue;
+			if(item.getRegistryName() == null)
+				continue;
+			
+			registry.register(item);
 		}
 	}
 	
@@ -33,13 +35,14 @@ public class RegisterItems {
 		ResourceLocation loc;
 		for(Item item : items)
 		{
-			if (item != null && item.getRegistryName() != null)
-			{
-	        	loc = item.getRegistryName();
-	        	
-		        ((SFHCoreClientProxy)SFHCore.proxy).tryHandleItemModel(item, loc);
-			}
+			if (item == null)
+				continue;
+			if(item.getRegistryName() == null)
+				continue;
+			
+        	loc = item.getRegistryName();
+        	
+	        ((SFHCoreClientProxy)SFHCore.proxy).tryHandleItemModel(item, loc);
 		}
 	}
-	
 }

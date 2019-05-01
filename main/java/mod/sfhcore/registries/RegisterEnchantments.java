@@ -25,10 +25,12 @@ public class RegisterEnchantments
 		
 		for(Enchantment chant : enchantments)
 		{
-			if (chant != null && chant.getRegistryName() != null)
-			{
-				registry.register(chant);
-			}
+			if (chant == null)
+				continue;
+			if(chant.getRegistryName() == null)
+				continue;
+			
+			registry.register(chant);
 		}
 	}
 }

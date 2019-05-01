@@ -32,10 +32,12 @@ public class RegisterBlocks {
 		
 		for(Block block : blocks)
 		{
-			if (block != null && block.getRegistryName() != null)
-			{
-				registry.register(block);
-			}
+			if (block == null)
+				continue;
+			if(block.getRegistryName() == null)
+				continue;
+			
+			registry.register(block);
 		}
 	}
 	
@@ -44,14 +46,13 @@ public class RegisterBlocks {
 		ResourceLocation loc;
 		for(ItemBlock block : itemblocks)
 		{
-			if (block != null && block.getRegistryName() != null)
-			{
-				loc = block.getRegistryName();
-				
-				registry.register(block);
-			}
+			if (block == null)
+				continue;
+			if(block.getRegistryName() == null)
+				continue;
+						
+			registry.register(block);
 		}
-			
 	}
 	
 	public static void registerModels()
@@ -59,22 +60,28 @@ public class RegisterBlocks {
 		ResourceLocation loc;
 		for(Block block : blocks)
 		{
-			if (block != null && block.getRegistryName() != null)
-			{
-	        	loc = block.getRegistryName();
-				((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(block, loc);
-			}
+			if (block == null)
+				continue;
+			if(block.getRegistryName() == null)
+				continue;
+			
+        	loc = block.getRegistryName();
+			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(block, loc);
 		}
 		
 		for(ItemBlock block : itemblocks)
 		{
-			if (block != null && block.getRegistryName() != null)
-			{
-	        	loc = block.getRegistryName();
-				((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(block.getBlock(), block.getBlock().getRegistryName());
-				((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(block, block.getBlock().getRegistryName());
-			}
+			if (block == null)
+				continue;
+			if(block.getRegistryName() == null)
+				continue;
+			if(block.getBlock() == null)
+				continue;
+			if(block.getBlock().getRegistryName() == null)
+				continue;
+			
+			((SFHCoreClientProxy) SFHCore.proxy).tryHandleBlockModel(block.getBlock(), block.getBlock().getRegistryName());
+			((SFHCoreClientProxy) SFHCore.proxy).tryHandleBlockModel(block, block.getRegistryName());
 		}
 	}
-	
 }
