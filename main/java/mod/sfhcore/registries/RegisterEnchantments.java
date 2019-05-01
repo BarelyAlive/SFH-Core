@@ -20,16 +20,9 @@ public class RegisterEnchantments
 	}
 
 	public static void registerEnchantments(IForgeRegistry<Enchantment> registry)
-	{
-		ResourceLocation loc;
-		
+	{		
 		for(Enchantment chant : enchantments)
-		{
-			if (chant == null)
-				continue;
-			if(chant.getRegistryName() == null)
-				continue;
-			
+		{			
 			registry.register(chant);
 		}
 	}

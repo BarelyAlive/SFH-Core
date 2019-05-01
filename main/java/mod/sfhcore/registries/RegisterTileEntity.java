@@ -23,12 +23,7 @@ public class RegisterTileEntity
 	public static void register()
 	{
 		for(TE2Block t2b : tile_entitys)
-		{
-			if (t2b.getBlock() == null)
-				continue;
-			if(t2b.getBlock().getRegistryName() == null)
-				continue;
-			
+		{			
 			GameRegistry.registerTileEntity(t2b.getTe(), t2b.getBlock().getRegistryName());
 		}
 	}

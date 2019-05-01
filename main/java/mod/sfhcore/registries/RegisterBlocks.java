@@ -27,30 +27,17 @@ public class RegisterBlocks {
 	}
 
 	public static void registerBlocks(IForgeRegistry<Block> registry)
-	{
-		ResourceLocation loc;
-		
+	{		
 		for(Block block : blocks)
-		{
-			if (block == null)
-				continue;
-			if(block.getRegistryName() == null)
-				continue;
-			
+		{			
 			registry.register(block);
 		}
 	}
 	
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{
-		ResourceLocation loc;
 		for(ItemBlock block : itemblocks)
-		{
-			if (block == null)
-				continue;
-			if(block.getRegistryName() == null)
-				continue;
-						
+		{						
 			registry.register(block);
 		}
 	}
@@ -59,29 +46,16 @@ public class RegisterBlocks {
 	{
 		ResourceLocation loc;
 		for(Block block : blocks)
-		{
-			if (block == null)
-				continue;
-			if(block.getRegistryName() == null)
-				continue;
-			
+		{			
         	loc = block.getRegistryName();
 			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(block, loc);
 		}
 		
 		for(ItemBlock block : itemblocks)
-		{
-			if (block == null)
-				continue;
-			if(block.getRegistryName() == null)
-				continue;
-			if(block.getBlock() == null)
-				continue;
-			if(block.getBlock().getRegistryName() == null)
-				continue;
-			
+		{	
+			loc = block.getRegistryName();
 			((SFHCoreClientProxy) SFHCore.proxy).tryHandleBlockModel(block.getBlock(), block.getBlock().getRegistryName());
-			((SFHCoreClientProxy) SFHCore.proxy).tryHandleBlockModel(block, block.getRegistryName());
+			((SFHCoreClientProxy) SFHCore.proxy).tryHandleBlockModel(block, loc);
 		}
 	}
 }

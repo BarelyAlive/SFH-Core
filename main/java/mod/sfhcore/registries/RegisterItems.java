@@ -20,12 +20,7 @@ public class RegisterItems {
 	public static void register(IForgeRegistry<Item> registry)
 	{
 		for(Item item : items)
-		{
-			if (item == null)
-				continue;
-			if(item.getRegistryName() == null)
-				continue;
-			
+		{			
 			registry.register(item);
 		}
 	}
@@ -34,12 +29,7 @@ public class RegisterItems {
 	{
 		ResourceLocation loc;
 		for(Item item : items)
-		{
-			if (item == null)
-				continue;
-			if(item.getRegistryName() == null)
-				continue;
-			
+		{			
         	loc = item.getRegistryName();
         	
 	        ((SFHCoreClientProxy)SFHCore.proxy).tryHandleItemModel(item, loc);
