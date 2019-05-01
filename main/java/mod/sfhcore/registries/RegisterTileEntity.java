@@ -15,7 +15,7 @@ public class RegisterTileEntity
 {	
 	private static NonNullList<TE2Block> tile_entitys = NonNullList.create();
 	
-	public static List<TE2Block> getTile_entitys()
+	public static List<TE2Block> getTile_Entitys()
 	{
 		return tile_entitys;
 	}

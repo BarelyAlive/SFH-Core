@@ -20,10 +20,18 @@ public class Registry
     {
 		if (NotNull.checkNotNull(block))
 		{
+			for(Block b : RegisterBlocks.getBlocks())
+				if(b.equals(block))
+				{
+					LogUtil.warn("SFHCORE: Cant't register " + block.getRegistryName() + ", because it's already registered!");
+					return block;
+				}
+			
 			RegisterBlocks.getBlocks().add(block);
 			Item item = new ItemBlock(block);
 			item.setRegistryName(block.getRegistryName().getResourceDomain(),
 					"item_" + block.getRegistryName().getResourcePath());
+			
 			RegisterItems.getItems().add(item);
 		}
 		
@@ -34,6 +42,13 @@ public class Registry
     {
     	if (NotNull.checkNotNull(itemBlock))
 		{
+    		for(ItemBlock b : RegisterBlocks.getItemblocks())
+				if(b.equals(itemBlock))
+				{
+					LogUtil.warn("SFHCORE: Cant't register " + itemBlock.getRegistryName() + ", because it's already registered!");
+					return itemBlock;
+				}
+    		
 	        RegisterBlocks.getItemblocks().add(itemBlock);
 	        RegisterBlocks.getBlocks().add(itemBlock.getBlock());
     	}
@@ -45,6 +60,13 @@ public class Registry
     {
     	if (NotNull.checkNotNull(item))
 		{
+    		for(Item b : RegisterItems.getItems())
+				if(b.equals(item))
+				{
+					LogUtil.warn("SFHCORE: Cant't register " + item.getRegistryName() + ", because it's already registered!");
+					return item;
+				}
+    		
         	RegisterItems.getItems().add(item);
     	}
             
@@ -55,6 +77,13 @@ public class Registry
     {
     	if (NotNull.checkNotNull(chant))
 		{
+    		for(Enchantment b : RegisterEnchantments.getEnchantments())
+				if(b.equals(chant))
+				{
+					LogUtil.warn("SFHCORE: Cant't register " + chant.getRegistryName() + ", because it's already registered!");
+					return chant;
+				}
+    		
         	RegisterEnchantments.getEnchantments().add(chant);
     	}
     	
@@ -63,11 +92,18 @@ public class Registry
     
     public static void registerTileEntity(Block b, Class te)
 	{		
-		if (NotNull.checkNotNull(b) && NotNull.checkNotNull(te)) {
+		if (NotNull.checkNotNull(b) && NotNull.checkNotNull(te))
+		{
+			for(TE2Block te2 : RegisterTileEntity.getTile_Entitys())
+				if(te2.getTe().equals(te.getClass()))
+				{
+					LogUtil.warn("SFHCORE: Cant't register " + te.getName() + ", because it's already registered!");
+					return;
+				}
 			int i = RegisterTileEntity.getIndexForBlock(b);
 			if (i == -1) {
 				TE2Block te2block = new TE2Block(b, te);
-				RegisterTileEntity.getTile_entitys().add(te2block);
+				RegisterTileEntity.getTile_Entitys().add(te2block);
 			} 
 		}
 	}
