@@ -24,8 +24,7 @@ public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> exten
         super(block);
 
         setHasSubtypes(true);
-        setRegistryName("item_" + block.getRegistryName());
-        setUnlocalizedName("item_" + block.getRegistryName().getResourcePath());
+        setRegistryName(block.getRegistryName());
         setCreativeTab(tab);
     }
     

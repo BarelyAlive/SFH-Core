@@ -1,4 +1,4 @@
-package mod.sfhcore.handler;
+package mod.sfhcore.vars;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;

@@ -51,7 +51,6 @@ public class CustomDoor extends Block
         super(mat);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(OPEN, Boolean.valueOf(false)).withProperty(HINGE, CustomDoor.EnumHingePosition.LEFT).withProperty(POWERED, Boolean.valueOf(false)).withProperty(HALF, CustomDoor.EnumDoorHalf.LOWER));
         setRegistryName(doorBlock);
-        setUnlocalizedName(doorBlock.getResourcePath());
         setResistance(resi);
         setHardness(hard);
     }

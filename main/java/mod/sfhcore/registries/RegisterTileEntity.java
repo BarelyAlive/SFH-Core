@@ -3,8 +3,8 @@ package mod.sfhcore.registries;
 import java.util.ArrayList;
 import java.util.List;
 
-import mod.sfhcore.handler.TE2Block;
 import mod.sfhcore.util.LogUtil;
+import mod.sfhcore.vars.TE2Block;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;

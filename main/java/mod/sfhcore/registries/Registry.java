@@ -1,18 +1,15 @@
 package mod.sfhcore.registries;
 
-import akka.io.Tcp.Register;
-import mod.sfhcore.handler.TE2Block;
+import mod.sfhcore.helper.NameHelper;
 import mod.sfhcore.helper.NotNull;
-import mod.sfhcore.proxy.SFHCoreClientProxy;
 import mod.sfhcore.util.LogUtil;
+import mod.sfhcore.vars.TE2Block;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class Registry
+public class Registry extends NameHelper
 {
 	//This is the class with the methods to register your stuff
 	
@@ -23,14 +20,16 @@ public class Registry
 			for(Block b : RegisterBlocks.getBlocks())
 				if(b.equals(block))
 				{
-					LogUtil.warn("SFHCORE: Cant't register " + block.getRegistryName() + ", because it's already registered!");
+					LogUtil.warn("SFHCORE: Can't register " + block.getRegistryName() + ", because it's already registered!");
 					return block;
 				}
 			
+			block.setUnlocalizedName(getName(block));
+			
 			RegisterBlocks.getBlocks().add(block);
 			Item item = new ItemBlock(block);
-			item.setRegistryName(block.getRegistryName().getResourceDomain(),
-					"item_" + block.getRegistryName().getResourcePath());
+			item.setUnlocalizedName(getName(block));
+			item.setRegistryName(getModID(block), getName(block));
 			
 			RegisterItems.getItems().add(item);
 		}
@@ -45,9 +44,11 @@ public class Registry
     		for(ItemBlock b : RegisterBlocks.getItemblocks())
 				if(b.equals(itemBlock))
 				{
-					LogUtil.warn("SFHCORE: Cant't register " + itemBlock.getRegistryName() + ", because it's already registered!");
+					LogUtil.warn("SFHCORE: Can't register " + itemBlock.getRegistryName() + ", because it's already registered!");
 					return itemBlock;
 				}
+    		
+    		itemBlock.setUnlocalizedName(getName(itemBlock));
     		
 	        RegisterBlocks.getItemblocks().add(itemBlock);
 	        RegisterBlocks.getBlocks().add(itemBlock.getBlock());
@@ -63,9 +64,10 @@ public class Registry
     		for(Item b : RegisterItems.getItems())
 				if(b.equals(item))
 				{
-					LogUtil.warn("SFHCORE: Cant't register " + item.getRegistryName() + ", because it's already registered!");
+					LogUtil.warn("SFHCORE: Can't register " + item.getRegistryName() + ", because it's already registered!");
 					return item;
 				}
+    		item.setUnlocalizedName(getName(item));
     		
         	RegisterItems.getItems().add(item);
     	}
@@ -80,7 +82,7 @@ public class Registry
     		for(Enchantment b : RegisterEnchantments.getEnchantments())
 				if(b.equals(chant))
 				{
-					LogUtil.warn("SFHCORE: Cant't register " + chant.getRegistryName() + ", because it's already registered!");
+					LogUtil.warn("SFHCORE: Can't register " + chant.getRegistryName() + ", because it's already registered!");
 					return chant;
 				}
     		
@@ -97,7 +99,7 @@ public class Registry
 			for(TE2Block te2 : RegisterTileEntity.getTile_Entitys())
 				if(te2.getTe().equals(te.getClass()))
 				{
-					LogUtil.warn("SFHCORE: Cant't register " + te.getName() + ", because it's already registered!");
+					LogUtil.warn("SFHCORE: Can't register " + te.getName() + ", because it's already registered!");
 					return;
 				}
 			int i = RegisterTileEntity.getIndexForBlock(b);

@@ -48,7 +48,6 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         this.realStateContainer = createStateContainer();
         setDefaultState(getBlockState().getBaseState());
         setRegistryName(loc);
-        setUnlocalizedName(loc.getResourcePath());
         setResistance(resi);
         setHardness(hard);
     }

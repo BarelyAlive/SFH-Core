@@ -24,8 +24,7 @@ public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends Item
         super(block);
 
         setHasSubtypes(true);
-        setRegistryName("item_" + block.getRegistryName());
-        setUnlocalizedName(block.getRegistryName().getResourcePath());
+        setRegistryName(block.getRegistryName());
         setCreativeTab(tab);
     }
     
@@ -59,7 +58,7 @@ public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends Item
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return "item.item_" + getBlock().getRegistryName().getResourcePath() + "_" + getBlock().getTypes()[stack.getItemDamage()].toString();
+        return "item." + getBlock().getRegistryName().getResourcePath() + "_" + getBlock().getTypes()[stack.getItemDamage()].toString();
     }
 
     @Override

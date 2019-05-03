@@ -57,7 +57,6 @@ public class CustomBucket extends Item implements IFluidHandler{
         this.containedBlock = b;
         this.empty = empty;
         this.fluid = FluidRegistry.lookupFluidForBlock(b);
-        this.setUnlocalizedName(loc.getResourcePath());
         this.setRegistryName(loc);
         this.setCreativeTab(tab);
         this.setContainerItem(empty.getItem());

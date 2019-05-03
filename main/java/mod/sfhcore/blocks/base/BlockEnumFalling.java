@@ -40,7 +40,6 @@ public class BlockEnumFalling<E extends Enum<E> & IStringSerializable> extends B
         this.property = PropertyEnum.create(propName, enumClass);
         this.realStateContainer = createStateContainer();
         setDefaultState(getBlockState().getBaseState());
-        setUnlocalizedName(loc.getResourcePath());
         setRegistryName(loc);
         setResistance(resi);
         setHardness(hard);

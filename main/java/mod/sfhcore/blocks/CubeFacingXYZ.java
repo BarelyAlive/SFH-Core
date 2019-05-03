@@ -22,7 +22,6 @@ public class CubeFacingXYZ  extends Block{
 		super(materialIn);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.Y));
 		setRegistryName(loc);
-		setUnlocalizedName(loc.getResourcePath());
 	}
 	
 	public static enum EnumAxis implements IStringSerializable

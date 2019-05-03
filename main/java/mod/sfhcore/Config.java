@@ -15,7 +15,7 @@ public class Config {
 		Configuration config = new Configuration(new File(SFHCore.configDirectory, "NetherTweaksMod.cfg"));
 		config.load();
 		
-        oreDictPreferenceOrder = config.getStringList("OreDict preference order", "Compat", oreDictPreferenceOrder, "Coffe has caffeine");
+        oreDictPreferenceOrder = config.getStringList("OreDict preference order", "Compat", oreDictPreferenceOrder, "Coffe has caffeine, you know!");
         
         config.save();
 	}

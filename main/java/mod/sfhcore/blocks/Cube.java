@@ -34,7 +34,6 @@ public class Cube extends Block implements IVariantProvider{
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
-		setUnlocalizedName(loc.getResourcePath());
 		setRegistryName(loc);
 		this.te = te;
 		if(material == Material.GROUND){

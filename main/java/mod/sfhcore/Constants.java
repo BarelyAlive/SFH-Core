@@ -11,7 +11,6 @@ public class Constants {
 	public static final String ChaustVersion = "0.0.4";
 	
 	public static final String MOD = "nethertweaksmod";
-    public static final String TEX = "nethertweaksmod:";
 
     public static final String DEPENDENCY_CORE = "required-after:sfhcore;";
     
