@@ -27,9 +27,12 @@ public class Registry extends NameHelper
 			block.setUnlocalizedName(getName(block));
 			
 			RegisterBlocks.getBlocks().add(block);
+			
+			//Create ItemBlock
 			Item item = new ItemBlock(block);
-			item.setUnlocalizedName(getName(block));
-			item.setRegistryName(getModID(block), getName(block));
+			
+			item.setUnlocalizedName("item_" + getName(block));
+			item.setRegistryName(getModID(block), "item_" + getName(block));
 			
 			RegisterItems.getItems().add(item);
 		}
@@ -48,7 +51,7 @@ public class Registry extends NameHelper
 					return itemBlock;
 				}
     		
-    		itemBlock.setUnlocalizedName(getName(itemBlock));
+    		itemBlock.setUnlocalizedName("item_" + getName(itemBlock));
     		
 	        RegisterBlocks.getItemblocks().add(itemBlock);
 	        RegisterBlocks.getBlocks().add(itemBlock.getBlock());
@@ -67,7 +70,7 @@ public class Registry extends NameHelper
 					LogUtil.warn("SFHCORE: Can't register " + item.getRegistryName() + ", because it's already registered!");
 					return item;
 				}
-    		item.setUnlocalizedName(getName(item));
+    		item.setUnlocalizedName("item_" + getName(item));
     		
         	RegisterItems.getItems().add(item);
     	}
