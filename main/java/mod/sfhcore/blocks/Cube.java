@@ -20,8 +20,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class Cube extends Block implements IVariantProvider{
-		
+public class Cube extends Block
+{		
 	private TileEntity te;
 	
 	public Cube(Material material, float resistance, float hardness, CreativeTabs tab, ResourceLocation loc) {
@@ -60,14 +60,4 @@ public class Cube extends Block implements IVariantProvider{
 	public TileEntity createTileEntity(World world, IBlockState state) {
 		return this.te;
 	}
-	
-	@Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        
-		ret.add(new ImmutablePair<Integer, String>(0, "inventory"));
-		
-		return ret;
-    }
 }

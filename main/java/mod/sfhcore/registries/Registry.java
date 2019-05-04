@@ -70,7 +70,7 @@ public class Registry extends NameHelper
 					LogUtil.warn("SFHCORE: Can't register " + item.getRegistryName() + ", because it's already registered!");
 					return item;
 				}
-    		item.setUnlocalizedName("item_" + getName(item));
+    		item.setUnlocalizedName(getName(item));
     		
         	RegisterItems.getItems().add(item);
     	}
