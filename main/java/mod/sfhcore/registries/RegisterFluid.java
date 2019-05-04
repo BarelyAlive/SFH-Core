@@ -1,22 +1,31 @@
 package mod.sfhcore.registries;
 
+import java.util.List;
+
+import mod.sfhcore.blocks.Fluid;
 import mod.sfhcore.helper.FluidStateMapper;
 import mod.sfhcore.helper.NameHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class RegisterFluid extends NameHelper
 {
-	public static void register(Fluid f, Block b)
+	private static NonNullList<Fluid> fluids = NonNullList.create();
+	
+	public static List<Fluid> getBlocks() {
+		return fluids;
+	}
+	
+	public static void register(net.minecraftforge.fluids.Fluid f, Block b)
 	{
 		f.setUnlocalizedName(f.getName());
-		FluidRegistry.registerFluid(f);
-		initModel(f, b);
+		initModel((Fluid) f, b);
 		Registry.registerBlock(b);
 		FluidRegistry.addBucketForFluid(f);
 	}
