@@ -23,16 +23,16 @@ public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends Item
 
     public ItemBlockEnum(Block block, CreativeTabs tab)
     {
-        super((BlockEnum<E>) block);
+        super(block);
 
-        setHasSubtypes(true);
-        setRegistryName(((BlockEnum<E>) block).getRegistryName());
-        setCreativeTab(tab);
+        this.setHasSubtypes(true);
+        this.setRegistryName(((BlockEnum<E>) block).getRegistryName());
+        this.setCreativeTab(tab);
     }
     
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-    	if (tab.equals(this.getCreativeTab())) {
+    	if (this.isInCreativeTab(tab)) {
 			for (int i = 0; i < getBlock().getTypes().length; i++) {
 				items.add(new ItemStack(this, 1, i));
 			} 

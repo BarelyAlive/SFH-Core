@@ -39,7 +39,7 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     private final PropertyEnum<E> property;
     private final BlockStateContainer realStateContainer;
 
-    public BlockEnum(Material material, Class<E> enumClass, String propName, ResourceLocation loc, float resi, float hard)
+    public BlockEnum(Material material, Class<E> enumClass, String propName, ResourceLocation loc, float resi, float hard, CreativeTabs tab)
     {
         super(material);
 
@@ -50,6 +50,7 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         setRegistryName(loc);
         setResistance(resi);
         setHardness(hard);
+        setCreativeTab(tab);
     }
     
     @Override
@@ -63,9 +64,9 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
     	return this.types;
     }
 
-    public BlockEnum(Material material, Class<E> enumClass, ResourceLocation loc, float resi, float hard)
+    public BlockEnum(Material material, Class<E> enumClass, ResourceLocation loc, float resi, float hard, CreativeTabs tab)
     {
-        this(material, enumClass, "type", loc, resi, hard);
+        this(material, enumClass, "type", loc, resi, hard, tab);
     }
 
     @Override

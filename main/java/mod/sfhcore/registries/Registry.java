@@ -52,6 +52,7 @@ public class Registry extends NameHelper
 				}
     		
     		itemBlock.setUnlocalizedName("item_" + getName(itemBlock));
+    		itemBlock.getBlock().setUnlocalizedName(getName(itemBlock));
     		
 	        RegisterBlocks.getItemblocks().add(itemBlock);
 	        RegisterBlocks.getBlocks().add(itemBlock.getBlock());
