@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
  
-@Mod(modid=Constants.ModIdSFHCORE, name=Constants.ModIdSFHCORE, version=Constants.SFHCoreVersion)
+@Mod(modid=Constants.ModIdSFHCORE, name="SFH Core", version=Constants.SFHCoreVersion)
 public class SFHCore
 {     
     @Instance(value=Constants.ModIdSFHCORE)

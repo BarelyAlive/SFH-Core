@@ -80,8 +80,8 @@ public class GuiHandler implements IGuiHandler {
 	 * @param time
 	 * @return
 	 */
-	public static int addGUIRelation(@Nonnull Object tile, @Nonnull Object con) {
-		teco.add(new ImmutablePair<Class<GuiContainer>, Class<Container>>((Class<GuiContainer>)tile, (Class<Container>)con));
+	public static int addGUIRelation(@Nonnull Object gui, @Nonnull Object con) {
+		teco.add(new ImmutablePair<Class<GuiContainer>, Class<Container>>((Class<GuiContainer>)gui, (Class<Container>)con));
 		return (teco.size() - 1);
 	}
 }
