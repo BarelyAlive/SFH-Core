@@ -7,8 +7,10 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import mod.sfhcore.blocks.base.BlockEnum;
+import mod.sfhcore.blocks.base.BlockEnumFalling;
 import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.proxy.IVariantProvider;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -19,12 +21,12 @@ import net.minecraft.util.math.MathHelper;
 public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends ItemBlock implements IVariantProvider
 {
 
-    public ItemBlockEnum(BlockEnum<E> block, CreativeTabs tab)
+    public ItemBlockEnum(Block block, CreativeTabs tab)
     {
-        super(block);
+        super((BlockEnum<E>) block);
 
         setHasSubtypes(true);
-        setRegistryName(block.getRegistryName());
+        setRegistryName(((BlockEnum<E>) block).getRegistryName());
         setCreativeTab(tab);
     }
     
