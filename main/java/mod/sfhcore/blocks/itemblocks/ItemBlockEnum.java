@@ -45,7 +45,7 @@ public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends Item
 		{
 			if(ItemStack.areItemsEqual(itemStack, f.getLeft()))
 			{	
-				return f.getRight();	
+				return f.getRight();
 			}
 		}
 		return 0;
