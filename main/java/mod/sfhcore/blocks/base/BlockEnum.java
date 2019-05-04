@@ -46,11 +46,11 @@ public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block im
         this.types = enumClass.getEnumConstants();
         this.property = PropertyEnum.create(propName, enumClass);
         this.realStateContainer = createStateContainer();
-        setDefaultState(getBlockState().getBaseState());
-        setRegistryName(loc);
-        setResistance(resi);
-        setHardness(hard);
-        setCreativeTab(tab);
+        this.setDefaultState(getBlockState().getBaseState());
+        this.setRegistryName(loc);
+        this.setResistance(resi);
+        this.setHardness(hard);
+        this.setCreativeTab(tab);
     }
     
     @Override
