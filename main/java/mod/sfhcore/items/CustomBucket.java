@@ -44,23 +44,36 @@ public class CustomBucket extends Item implements IFluidHandler{
 	/** field for checking if the bucket has been filled. */
     private Block containedBlock;
     private Fluid fluid;
+    private int color;
     
     /** List of accepted Fluids */
     private List<BucketItem> bucketList;
 
 	private final ItemStack empty;
 	
-	public CustomBucket(Block b, ResourceLocation loc, ItemStack empty, CreativeTabs tab)
+	public CustomBucket(Block b, ResourceLocation loc, ItemStack empty, CreativeTabs tab, int color)
 	{
 		this.bucketList = new ArrayList<BucketItem>();
 		this.maxStackSize = 1;
         this.containedBlock = b;
         this.empty = empty;
+        this.color = color;
         this.fluid = FluidRegistry.lookupFluidForBlock(b);
+        this.setUnlocalizedName(loc.getResourcePath());
         this.setRegistryName(loc);
         this.setCreativeTab(tab);
         this.setContainerItem(empty.getItem());
         this.addBucket(b, FluidRegistry.lookupFluidForBlock(b), new ItemStack(this));
+	}
+	
+	public int getColor()
+	{
+		return this.color;
+	}
+	
+	public Fluid getFluid()
+	{
+		return this.fluid;
 	}
 	
 	private FluidStack getFluidContained()
@@ -232,9 +245,15 @@ public class CustomBucket extends Item implements IFluidHandler{
 		}
 		return 0;
 	}
+	
 	private Block getContainedB(ItemStack stack)
 	{
 		return ((CustomBucket) stack.getItem()).containedBlock;
+	}
+	
+	public Block getContainedBlock()
+	{
+		return this.containedBlock;
 	}
 	
 	private boolean isAir()

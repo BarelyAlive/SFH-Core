@@ -17,12 +17,12 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.world.WorldType;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.terraingen.WorldTypeEvent;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
  
-@Mod(modid=Constants.ModIdSFHCORE, name="SFH Core", version=Constants.SFHCoreVersion)
+@Mod(modid=Constants.ModIdSFHCORE, name=Constants.ModIdSFHCORE, version=Constants.SFHCoreVersion)
 public class SFHCore
 {     
     @Instance(value=Constants.ModIdSFHCORE)
@@ -46,12 +46,7 @@ public class SFHCore
     @SidedProxy(clientSide="mod.sfhcore.proxy.SFHCoreClientProxy", serverSide="mod.sfhcore.proxy.SFHCoreProxy")
     public static SFHCoreProxy proxy;
     
-	static File configDirectory;
-    
-    static
-    {
-    	FluidRegistry.enableUniversalBucket();
-    }
+    public static File configDirectory;
      
     @Mod.EventBusSubscriber
     public static class RegistrationHandler
@@ -93,6 +88,12 @@ public class SFHCore
     		BucketHandler.registerBuckets(event);
     	}
     	
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        public static void registerItemHandlers(ColorHandlerEvent.Item event)
+        {
+        	BucketHandler.registerItemHandlers(event);
+        }
+    	
     	@SubscribeEvent(priority = EventPriority.LOWEST)
     	public static void registerBucketModels(ModelRegistryEvent event)
     	{
@@ -102,8 +103,9 @@ public class SFHCore
 
     @Mod.EventHandler
     public void PreInit(FMLPreInitializationEvent event)
-    {   
+    {        
     	configDirectory = new File(event.getModConfigurationDirectory(), Constants.ModIdSFHCORE);
+    	configDirectory.mkdirs();
     	
     	LogUtil.setup(Constants.ModIdSFHCORE, configDirectory);
     	
