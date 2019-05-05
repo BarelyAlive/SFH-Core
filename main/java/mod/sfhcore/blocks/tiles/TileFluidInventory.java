@@ -74,30 +74,27 @@ public class TileFluidInventory extends TileInventory implements IFluidHandler, 
 	}
 	
 	@Override
-	public int fill(FluidStack resource, boolean doFill) {
-		for(Fluid f : acceptedFluids) {
-			if(resource.getFluid() != f){
-				return 0;
+	public int fill(FluidStack resource, boolean doFill)
+	{
+		if(!hasAcceptedFluids(resource.getFluid()))
+			return 0;
+		if (resource.amount <= (this.MAX_CAPACITY - this.tank.amount)) {
+			if (doFill)
+			{
+				this.tank = new FluidStack(resource.getFluid(), (this.tank.amount += resource.amount));
 			}
-			else if (resource.amount <= (this.MAX_CAPACITY - this.tank.amount)) {
-				if (doFill)
-				{
-					this.tank = new FluidStack(resource.getFluid(), (this.tank.amount + resource.amount));
-				}
-				return resource.amount;
-			}
-			else {
-				int empty_space_tank = (this.MAX_CAPACITY - this.tank.amount);
-				int oldAmount = resource.amount;
-				resource.amount = empty_space_tank;
-				if (doFill)
-				{
-					this.tank = new FluidStack(resource.getFluid(), this.tank.amount);
-				}
-				return (oldAmount - empty_space_tank);
-			}
+			return (this.MAX_CAPACITY - this.tank.amount);
 		}
-		return 0;
+		else {
+			int empty_space_tank = (this.MAX_CAPACITY - this.tank.amount);
+			int oldAmount = resource.amount;
+			resource.amount = empty_space_tank;
+			if (doFill)
+			{
+				this.tank = new FluidStack(resource.getFluid(), this.tank.amount = this.MAX_CAPACITY);
+			}
+			return (this.MAX_CAPACITY - this.tank.amount);
+		}
 	}
 
 	@Override
@@ -106,7 +103,7 @@ public class TileFluidInventory extends TileInventory implements IFluidHandler, 
 		{
 			return this.drain(resource.amount, doDrain);
 		}
-		return null;
+		return new FluidStack(resource.getFluid(), 0);
 	}
 
 	@Override
