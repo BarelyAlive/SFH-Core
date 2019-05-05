@@ -89,7 +89,6 @@ public class ModelDynCustomBucket implements IModel {
     public ModelDynCustomBucket(@Nullable Fluid fluid, boolean flipGas, boolean tint)
     {
         this.baseLocation = new ResourceLocation("sfhcore", "items/bucket_empty"); //baseLocation;
-        /*
         if (fluid == null)
         {
             this.liquidLocation = null;    //liquidLocation;
@@ -97,10 +96,9 @@ public class ModelDynCustomBucket implements IModel {
         }
         else
         {
-        	*/
-            this.liquidLocation = new ResourceLocation("sfhcore", "items/bucket_fluid");    //liquidLocation;
-            this.coverLocation = new ResourceLocation("sfhcore", "items/bucket_fluid");   //coverLocation;
-        //}
+            this.liquidLocation = fluid.getStill();    //liquidLocation;
+            this.coverLocation = new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask");   //coverLocation;
+        }
         this.fluid = fluid;
         this.flipGas = flipGas;
         this.tint = tint;
