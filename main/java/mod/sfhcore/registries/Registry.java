@@ -97,11 +97,13 @@ public class Registry extends NameHelper
     }
     
     public static void registerTileEntity(Block b, Class te)
-	{		
-		if (NotNull.checkNotNull(b) && NotNull.checkNotNull(te))
+	{	
+    	registerBlock(b);
+    	
+		if (NotNull.checkNotNull(te))
 		{
 			for(TE2Block te2 : RegisterTileEntity.getTile_Entitys())
-				if(te2.getTe().equals(te.getClass()))
+				if(te2.getTe().equals(te))
 				{
 					LogUtil.warn("SFHCORE: Can't register " + te.getName() + ", because it's already registered!");
 					return;
