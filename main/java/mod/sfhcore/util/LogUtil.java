@@ -80,16 +80,19 @@ public class LogUtil
     public static void setup(String modid, File f)
     {
     	LogUtil.modid = modid;
-        File logDirectory = f;
-        if(!logDirectory.exists())
-        	logDirectory.mkdirs();
+        File modDir = f;
+        if(!modDir.exists())
+        	modDir.mkdirs();
+        File logDir = new File(modDir + "/log/");
+        if(!logDir.exists())
+        	logDir.mkdirs();
         
-        String baseName = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String baseName = new SimpleDateFormat("yyyy-MM-dd_ss.mm.hh").format(new Date());
         
         int i = 0;
         
         // One-liners for the win
-        for (; (logFile = new File(logDirectory, baseName + "-" + i + ".log")).exists(); i++);
+        for (; (logFile = new File(logDir, baseName + "-" + ".log")).exists(); i++);
         
         try
         {

@@ -1,6 +1,6 @@
 package mod.sfhcore.util;
 
-import mod.sfhcore.blocks.tiles.BaseTileEntity;
+import mod.sfhcore.blocks.tiles.TileBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ public class TankUtil {
         WATER_BOTTLE.setTagCompound(waterPotion);
     }
 
-    public static boolean drainWaterIntoBottle(BaseTileEntity tileEntity, EntityPlayer player, FluidTank tank) {
+    public static boolean drainWaterIntoBottle(TileBase tileEntity, EntityPlayer player, FluidTank tank) {
         if (player.getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE) {
             if (tank.getFluid() != null && tank.getFluidAmount() >= 250 && tank.getFluid().getFluid() == FluidRegistry.WATER) {
                 if (player.addItemStackToInventory(WATER_BOTTLE.copy())) {
@@ -36,7 +36,7 @@ public class TankUtil {
         return false;
     }
 
-    public static boolean drainWaterFromBottle(BaseTileEntity tileEntity, EntityPlayer player, FluidTank tank) {
+    public static boolean drainWaterFromBottle(TileBase tileEntity, EntityPlayer player, FluidTank tank) {
         if (player.getHeldItemMainhand().getItem() == Items.POTIONITEM && WATER_BOTTLE.getTagCompound().equals(player.getHeldItemMainhand().getTagCompound())) {
             FluidStack water = new FluidStack(FluidRegistry.WATER, 250);
 

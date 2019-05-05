@@ -1,6 +1,5 @@
 package mod.sfhcore.blocks;
 
-import mod.sfhcore.tileentities.TEBaseInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;

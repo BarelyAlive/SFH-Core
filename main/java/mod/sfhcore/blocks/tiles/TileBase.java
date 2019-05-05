@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 import mod.sfhcore.network.NetworkHandler;
 
-public class BaseTileEntity extends TileEntity {
+public class TileBase extends TileEntity {
 
     public void markDirtyClient() {
         markDirty();

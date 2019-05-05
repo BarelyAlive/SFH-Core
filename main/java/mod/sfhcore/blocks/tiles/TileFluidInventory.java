@@ -1,4 +1,4 @@
-package mod.sfhcore.tileentities;
+package mod.sfhcore.blocks.tiles;
 
 import java.util.List;
 
@@ -30,14 +30,14 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import scala.Int;
 
-public class TEBaseFluidInventory extends TEBaseInventory implements IFluidHandler, IFluidTank {
+public class TileFluidInventory extends TileInventory implements IFluidHandler, IFluidTank {
 	
 	private static List<Fluid> acceptedFluids;
 	
 	public static int MAX_CAPACITY;
 	public FluidStack tank; // = new FluidStack(FluidRegistry.WATER, 0);			//new FluidTank(fluid, (int) volume);
 	
-	public TEBaseFluidInventory(int invSize, String machineCustomName, int MAX_CAPACITY) {
+	public TileFluidInventory(int invSize, String machineCustomName, int MAX_CAPACITY) {
 		super(invSize, machineCustomName);
 		this.tank = new FluidStack(FluidRegistry.WATER, 0);
 		this.MAX_CAPACITY = MAX_CAPACITY;
@@ -143,7 +143,6 @@ public class TEBaseFluidInventory extends TEBaseInventory implements IFluidHandl
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
 		return super.getFieldCount() + 1;
 	}
 	
@@ -176,19 +175,4 @@ public class TEBaseFluidInventory extends TEBaseInventory implements IFluidHandl
 	public FluidTankInfo getInfo() {
 		return new FluidTankInfo(this.tank, this.MAX_CAPACITY);
 	}
-	
-	@Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		super.onDataPacket(net, pkt);
-        readFromNBT(pkt.getNbtCompound());
-    }
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-    	super.getUpdatePacket();
-        NBTTagCompound compound = new NBTTagCompound();        
-        writeToNBT(compound);
-        return new SPacketUpdateTileEntity(getPos(), 1, compound);
-    }
-	
 }
