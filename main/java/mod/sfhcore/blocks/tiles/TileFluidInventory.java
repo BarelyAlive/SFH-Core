@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import mod.sfhcore.util.TankUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,9 +34,21 @@ import scala.Int;
 public class TileFluidInventory extends TileInventory implements IFluidHandler, IFluidTank {
 	
 	private static List<Fluid> acceptedFluids;
+	protected static FluidStack tank;
 	
-	public static int MAX_CAPACITY;
-	public FluidStack tank; // = new FluidStack(FluidRegistry.WATER, 0);			//new FluidTank(fluid, (int) volume);
+	public static FluidStack getTank()
+	{
+		FluidStack t = tank;
+		return tank;
+	}
+	
+	private static int MAX_CAPACITY;
+	
+	public static int getMaxCapacity()
+	{
+		int cap = MAX_CAPACITY;
+		return cap;
+	}
 	
 	public TileFluidInventory(int invSize, String machineCustomName, int MAX_CAPACITY) {
 		super(invSize, machineCustomName);
@@ -46,7 +59,15 @@ public class TileFluidInventory extends TileInventory implements IFluidHandler, 
 	public void update() {
 	}
 	
-	public static boolean hasAcceptedFluids(Fluid f) {
+	public static int fillable()
+	{
+		int a = tank.amount;
+		return getMaxCapacity() - a;
+	}
+	
+	public static boolean hasAcceptedFluids(@Nullable Fluid f)
+	{
+		if(f == null) return false;
 		for(Fluid fluid : acceptedFluids) {
 			if(fluid == f) return true;
 		}

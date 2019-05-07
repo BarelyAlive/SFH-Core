@@ -87,12 +87,12 @@ public class LogUtil
         if(!logDir.exists())
         	logDir.mkdirs();
         
-        String baseName = new SimpleDateFormat("yyyy-MM-dd_ss.mm.hh").format(new Date());
+        String baseName = new SimpleDateFormat("yyyy-MM-dd_hh.mm.ss").format(new Date());
         
         int i = 0;
         
         // One-liners for the win
-        for (; (logFile = new File(logDir, baseName + "-" + ".log")).exists(); i++);
+        for (; (logFile = new File(logDir, baseName + ".log")).exists(); i++);
         
         try
         {
