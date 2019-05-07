@@ -84,13 +84,16 @@ public class TileFluidInventory extends TileInventory implements IFluidHandler, 
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		this.tank.amount = nbt.getShort("fluid");
+		this.tank = new FluidStack(
+		FluidRegistry.getFluid(nbt.getString("fluidname")),
+		nbt.getShort("fluid"));
 		super.readFromNBT(nbt);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		nbt.setShort("fluid", ((short) this.tank.amount));
+		nbt.setString("fluidname", this.getTank().getFluid().getName());
 		return super.writeToNBT(nbt);
 	}
 	
@@ -99,48 +102,49 @@ public class TileFluidInventory extends TileInventory implements IFluidHandler, 
 	{
 		if(!hasAcceptedFluids(resource.getFluid()))
 			return 0;
-		if (resource.amount <= (this.MAX_CAPACITY - this.tank.amount)) {
+		if (resource.amount <= fillable()) {
 			if (doFill)
 			{
 				this.tank = new FluidStack(resource.getFluid(), (this.tank.amount += resource.amount));
 			}
-			return (this.MAX_CAPACITY - this.tank.amount);
 		}
 		else {
-			int empty_space_tank = (this.MAX_CAPACITY - this.tank.amount);
-			int oldAmount = resource.amount;
-			resource.amount = empty_space_tank;
 			if (doFill)
 			{
 				this.tank = new FluidStack(resource.getFluid(), this.tank.amount = this.MAX_CAPACITY);
 			}
-			return (this.MAX_CAPACITY - this.tank.amount);
 		}
+		return fillable();
 	}
 
 	@Override
-	public FluidStack drain(FluidStack resource, boolean doDrain) {
-		if (this.tank.getFluid().equals(resource.getFluid()))
-		{
-			return this.drain(resource.amount, doDrain);
-		}
-		return new FluidStack(resource.getFluid(), 0);
+	public FluidStack drain(FluidStack resource, boolean doDrain)
+	{
+		FluidStack joaNeist = new FluidStack(resource.getFluid(), 0);
+		
+		if(!this.getTank().isFluidEqual(resource)) return joaNeist;
+		if(this.getTank().amount <= 0) return joaNeist;
+		
+		return drain(resource.amount, doDrain);
 	}
 
 	@Override
-	public FluidStack drain(int maxDrain, boolean doDrain) {
+	public FluidStack drain(int maxDrain, boolean doDrain)
+	{
 		Fluid f = this.tank.getFluid();
-		if (this.tank.amount >= maxDrain)
+		if (this.getTank().amount >= maxDrain)
 		{
 			if (doDrain)
-			{
-				this.tank.amount -= maxDrain;
-			}
+				this.tank.amount = this.getTank().amount - maxDrain;
+			
 			return new FluidStack(f, maxDrain);
 		}
 		else
 		{
-			return new FluidStack(f, 0);
+			if (doDrain) {
+				this.tank.amount = 0;
+			}
+			return new FluidStack(f, this.getTank().amount);
 		}
 	}
 
