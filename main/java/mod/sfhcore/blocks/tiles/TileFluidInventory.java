@@ -56,8 +56,7 @@ public class TileFluidInventory extends TileInventory implements IFluidHandler, 
 		this.MAX_CAPACITY = MAX_CAPACITY;
 	}
 	
-	public void update() {
-	}
+	public void update() {}
 	
 	public static int fillable()
 	{
