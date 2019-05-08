@@ -84,6 +84,5 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
 				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
 			}
         }
-    }
-	
+    }	
 }
