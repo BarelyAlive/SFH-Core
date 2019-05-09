@@ -48,8 +48,8 @@ public class TankUtil {
                 }
 			}
 		
-		if(FluidUtil.tryFluidTransfer(te, heldFH, f, true) == null) return false;
-		return true;
+		if(FluidUtil.tryFluidTransfer(te, heldFH, f, true) != null) return true;
+		return false;
 	}
     
     public static boolean fillToHand(EntityPlayer player, EnumHand hand, TileFluidInventory te)
