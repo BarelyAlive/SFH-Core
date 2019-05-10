@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
+import scala.actors.remote.SendTo;
 
 public class NetworkHandler
 {	
@@ -35,6 +36,7 @@ public class NetworkHandler
 		//CLIENT
 		INSTANCE.registerMessage(MessageNBTUpdate.MessageNBTUpdateHandler.class, MessageNBTUpdate.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageCheckLight.MessageCheckLightHandler.class, MessageCheckLight.class, id++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageFluidTankContents.Handler.class, MessageFluidTankContents.class, id++, Side.CLIENT);
 	}
 	
 	public static void sendToAllAround(IMessage message, TileEntity te, int range) 
@@ -47,6 +49,11 @@ public class NetworkHandler
 	{
         sendToAllAround(message, te, 64);
     }
+	
+	public static void sendToServer(IMessage message)
+	{
+		INSTANCE.sendToServer(message);
+	}
 	
 	public static void sendNBTUpdate(TileEntity te)
 	{

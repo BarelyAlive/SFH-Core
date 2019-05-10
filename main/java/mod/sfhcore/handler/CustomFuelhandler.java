@@ -16,6 +16,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLContainer;
@@ -44,6 +48,16 @@ public class CustomFuelHandler{
 		
 		ItemStack stack = e.getItemStack();
 		Item item = stack.getItem();
+		
+		FluidStack f = FluidUtil.getFluidContained(stack);
+		if(f != null)
+		{
+			if (f.getFluid() == FluidRegistry.LAVA && f.amount > 1000) {
+				IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
+				boolean success = ifhi.drain(1000, true) != null;
+				return 20000;
+			}
+		}
 		
 		try {
 			burnTime = item.getItemBurnTime(stack);
