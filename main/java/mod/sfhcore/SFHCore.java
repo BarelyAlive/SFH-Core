@@ -23,6 +23,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.terraingen.WorldTypeEvent;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -47,6 +48,11 @@ public class SFHCore
     public static SFHCoreProxy proxy;
     
     public static File configDirectory;
+    
+    static
+    {
+    	FluidRegistry.enableUniversalBucket();
+    }
      
     @Mod.EventBusSubscriber
     public static class RegistrationHandler

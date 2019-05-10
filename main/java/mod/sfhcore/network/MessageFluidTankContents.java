@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
@@ -24,11 +25,10 @@ public class MessageFluidTankContents implements IMessage {
 	private TileFluidInventory te;
 	int x, y, z;
 	
-	@SuppressWarnings("unused")
 	public MessageFluidTankContents() {
 	}
 
-	public MessageFluidTankContents(final IFluidTankProperties[] fluidTankProperties, TileFluidInventory te) {
+	public MessageFluidTankContents(IFluidTankProperties[] fluidTankProperties, TileFluidInventory te) {
 		this.fluidTankProperties = fluidTankProperties;
 		this.te = te;
 	}
@@ -40,7 +40,7 @@ public class MessageFluidTankContents implements IMessage {
 	 * @param buf The buffer
 	 */
 	@Override
-	public void fromBytes(final ByteBuf buf) {
+	public void fromBytes(ByteBuf buf) {
 		this.x = buf.readInt();
 		this.y = buf.readInt();
 		this.z = buf.readInt();
@@ -64,7 +64,7 @@ public class MessageFluidTankContents implements IMessage {
 	 * @param buf The buffer
 	 */
 	@Override
-	public void toBytes(final ByteBuf buf) {
+	public void toBytes(ByteBuf buf) {
 		buf.writeInt(this.te.getPos().getX());
 		buf.writeInt(this.te.getPos().getY());
 		buf.writeInt(this.te.getPos().getZ());
@@ -96,26 +96,13 @@ public class MessageFluidTankContents implements IMessage {
 		 */
 		@Nullable
 		@Override
-		public IMessage onMessage(final MessageFluidTankContents message, final MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-				@Override
-				public void run()
-				{
-					TileFluidInventory entity =  (TileFluidInventory) Minecraft.getMinecraft().player.world.getTileEntity(new BlockPos(message.x, message.y, message.z));
-					System.out.println(Minecraft.getMinecraft().player.world.isRemote);
-					FluidStack contents = message.fluidTankProperties[0].getContents();
-					System.out.println(contents.getFluid());
-					System.out.println(contents.amount);
-					entity.tank.setFluid(contents);
-				}
-			});
-			/*
-			//TestMod3.proxy.getThreadListener(ctx).addScheduledTask(() -> {
-				final EntityPlayer player = TestMod3.proxy.getPlayer(ctx);
-
-				BlockFl.getFluidDataForDisplay(message.fluidTankProperties).forEach(player::sendMessage);
-			//});
-				*/
+		public IMessage onMessage(MessageFluidTankContents message, MessageContext ctx) {
+			TileFluidInventory entity =  (TileFluidInventory) Minecraft.getMinecraft().player.world.getTileEntity(new BlockPos(message.x, message.y, message.z));
+			FluidStack contents = message.fluidTankProperties[0].getContents();
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setString("FluidName", FluidRegistry.getFluidName(contents.getFluid()));
+		    nbt.setInteger("Amount", contents.amount);
+		    entity.tank.readFromNBT(nbt);
 			return null;
 		}
 	}

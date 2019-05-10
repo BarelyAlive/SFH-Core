@@ -80,15 +80,14 @@ public class TileFluidInventory extends TileInventory
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
+		tank.readFromNBT(nbt);
 		super.readFromNBT(nbt);
-		tank.writeToNBT(nbt);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		nbt = super.writeToNBT(nbt);
-		tank.readFromNBT(nbt);
-		return nbt;
+		tank.writeToNBT(nbt);
+		return super.writeToNBT(nbt);
 	}
 	
 	@Override

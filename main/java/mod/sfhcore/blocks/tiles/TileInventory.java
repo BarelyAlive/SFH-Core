@@ -200,14 +200,13 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
         ItemStackHelper.loadAllItems(nbt, this.machineItemStacks);
 		this.workTime = nbt.getShort("workTime");
+		super.readFromNBT(nbt);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
 		ItemStackHelper.saveAllItems(nbt, this.machineItemStacks);
 		nbt.setShort("workTime", (short)this.workTime);
 		return super.writeToNBT(nbt);
