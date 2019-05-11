@@ -301,4 +301,11 @@ public class ItemInfo implements StackInfo {
     public NBTTagCompound getNbt() {
         return nbt;
     }
+    
+    public ItemInfo copy()
+    {
+    	ItemInfo info = new ItemInfo(this.item, this.meta, this.nbt);
+    	info.isWildcard = this.isWildcard;
+    	return info;
+    }
 }

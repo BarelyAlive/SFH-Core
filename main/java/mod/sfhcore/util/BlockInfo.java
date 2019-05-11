@@ -132,7 +132,7 @@ public class BlockInfo implements StackInfo {
     public static IBlockState getStateFromMeta(Block block, int meta){
         try {
             //noinspection deprecation
-            return block.getStateFromMeta(meta);
+            return block.getStateById(meta);
         } catch (Exception e) {
             return block.getDefaultState();
         }
