@@ -106,9 +106,9 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
     }
 	
     @SideOnly(Side.CLIENT)
-    public static boolean isWorking(IInventory inventory)
+    public static boolean isWorking(TileInventory inventory)
     {
-        return inventory.getField(0) > 0;
+        return inventory.getWorkTime() > 0;
     }
 	
 	public void update() {}
@@ -237,7 +237,7 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
 	//ggggg
 
 	public int getWorkTimeRemainingScaled(int i) {
-		return this.getField(0) * i / this.getField(1);
+		return this.getWorkTime() * i / this.getMaxworkTime();
 	}
 
 	@Override
@@ -271,7 +271,7 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
 
 	@Override
 	public int getFieldCount() {
-		return 2;
+		return 0;
 	}
 
 	@Override
