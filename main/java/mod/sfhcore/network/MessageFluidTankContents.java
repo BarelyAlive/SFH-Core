@@ -102,7 +102,7 @@ public class MessageFluidTankContents implements IMessage {
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setString("FluidName", FluidRegistry.getFluidName(contents.getFluid()));
 		    nbt.setInteger("Amount", contents.amount);
-		    entity.tank.readFromNBT(nbt);
+		    entity.getTank().readFromNBT(nbt);
 			return null;
 		}
 	}
