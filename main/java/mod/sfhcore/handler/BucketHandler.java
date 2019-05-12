@@ -125,9 +125,9 @@ public class BucketHandler {
 				ResourceLocation liquidLocation = null;
 				ResourceLocation coverLocation = null;
 				Fluid fluid = strfld.f;
-				ModelDynCustomBucket bucketModel = new ModelDynCustomBucket(fluid, false, true);
+				ModelDynBucket bucketModel = new ModelDynBucket(null, null, null, fluid, false, true);
 				//bucketModel.LOCATION = new ModelResourceLocation(new ResourceLocation("sfhcore", "bucket"), "inventory");
-				ModelLoaderRegistry.registerLoader(ModelDynCustomBucket.LoaderDynCustomBucket.INSTANCE);
+				ModelLoaderRegistry.registerLoader(ModelDynBucket.LoaderDynBucket.INSTANCE);
 				ModelLoader.setCustomMeshDefinition(item, stack -> bucketModel.LOCATION);
 				//ModelLoader.setCustomModelResourceLocation(item, 0, bucketModel.LOCATION);
 				ModelBakery.registerItemVariants(item, bucketModel.LOCATION);

@@ -37,7 +37,6 @@ import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ItemLayerModel;
 import net.minecraftforge.client.model.ItemTextureQuadConverter;
-import net.minecraftforge.client.model.ModelDynBucket;
 import net.minecraftforge.client.model.ModelStateComposition;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.SimpleModelState;
@@ -63,11 +62,11 @@ public class ModelDynCustomBucket implements IModel {
     @Nullable
     public ModelResourceLocation LOCATION = new ModelResourceLocation(new ResourceLocation("sfhcore", "bucket_empty"), "inventory");
     @Nullable
-    private final ResourceLocation baseLocation;
+    private ResourceLocation baseLocation;
     @Nullable
-    private final ResourceLocation liquidLocation;
+    private ResourceLocation liquidLocation;
     @Nullable
-    private final ResourceLocation coverLocation;
+    private ResourceLocation coverLocation;
     @Nullable
     private final Fluid fluid;
 
@@ -79,7 +78,7 @@ public class ModelDynCustomBucket implements IModel {
         this(null, false, true);
     }
 
-    /** @deprecated use {@link #ModelDynBucket(ResourceLocation, ResourceLocation, ResourceLocation, Fluid, boolean, boolean)} */
+    /** @deprecated use {@link #ModelDynCustomBucket(ResourceLocation, ResourceLocation, ResourceLocation, Fluid, boolean, boolean)} */
     @Deprecated // TODO: remove
     public ModelDynCustomBucket(@Nullable Fluid fluid, boolean flipGas)
     {
@@ -96,8 +95,8 @@ public class ModelDynCustomBucket implements IModel {
         }
         else
         {
-            this.liquidLocation = fluid.getStill();    //liquidLocation;
-            this.coverLocation = new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask");   //coverLocation;
+            this.liquidLocation = new ResourceLocation("sfhcore", "items/bucket_fluid");    //liquidLocation;
+            this.coverLocation = new ResourceLocation("sfhcore", "items/bucket_fluid");   //coverLocation;
         }
         this.fluid = fluid;
         this.flipGas = flipGas;
@@ -143,11 +142,6 @@ public class ModelDynCustomBucket implements IModel {
             fluidSprite = bakedTextureGetter.apply(fluid.getStill());
         }
         
-        System.out.println(fluidSprite);
-        System.out.println(baseLocation);
-        System.out.println(liquidLocation);
-        System.out.println(coverLocation);
-        
         if (baseLocation != null)
         {
             // build base (insidest)
@@ -155,7 +149,7 @@ public class ModelDynCustomBucket implements IModel {
             builder.addAll(model.getQuads(null, null, 0));
             particleSprite = model.getParticleTexture();
         }
-        if (liquidLocation != null)// && fluidSprite != null)
+        if (liquidLocation != null && fluidSprite != null)
         {
             TextureAtlasSprite liquid = bakedTextureGetter.apply(liquidLocation);
             fluidSprite = liquid;
@@ -168,8 +162,10 @@ public class ModelDynCustomBucket implements IModel {
         {
             // cover (the actual item around the other two)
             TextureAtlasSprite cover = bakedTextureGetter.apply(coverLocation);
-            builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, NORTH_Z_COVER, cover, EnumFacing.NORTH, 0xFFFFFFFF, 2));
-            builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, SOUTH_Z_COVER, cover, EnumFacing.SOUTH, 0xFFFFFFFF, 2));
+            //builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, NORTH_Z_COVER, cover, EnumFacing.NORTH, 0xFFFFFFFF, 2));
+            //builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, SOUTH_Z_COVER, cover, EnumFacing.SOUTH, 0xFFFFFFFF, 2));
+            builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, cover, fluidSprite, NORTH_Z_FLUID, EnumFacing.NORTH, 0xFFFFFFFF, 2));
+            builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, cover, fluidSprite, SOUTH_Z_FLUID, EnumFacing.SOUTH, 0xFFFFFFFF, 2));
             if (particleSprite == null)
             {
                 particleSprite = cover;
@@ -202,7 +198,7 @@ public class ModelDynCustomBucket implements IModel {
             if (flipStr.equals("true")) flip = true;
             else if (flipStr.equals("false")) flip = false;
             else
-                throw new IllegalArgumentException(String.format("DynBucket custom data \"flipGas\" must have value \'true\' or \'false\' (was \'%s\')", flipStr));
+                throw new IllegalArgumentException(String.format("DynCustomBucket custom data \"flipGas\" must have value \'true\' or \'false\' (was \'%s\')", flipStr));
         }
 
         boolean tint = this.tint;
@@ -213,7 +209,7 @@ public class ModelDynCustomBucket implements IModel {
             {
                 case "true":  tint = true;  break;
                 case "false": tint = false; break;
-                default: throw new IllegalArgumentException(String.format("DynBucket custom data \"applyTint\" must have value \'true\' or \'false\' (was \'%s\')", string));
+                default: throw new IllegalArgumentException(String.format("DynCustomBucket custom data \"applyTint\" must have value \'true\' or \'false\' (was \'%s\')", string));
             }
         }
         
@@ -236,21 +232,18 @@ public class ModelDynCustomBucket implements IModel {
      * If no liquid is given a hardcoded variant for the bucket is used.
      */
     @Override
-    public ModelDynBucket retexture(ImmutableMap<String, String> textures)
+    public ModelDynCustomBucket retexture(ImmutableMap<String, String> textures)
     {
 
-        ResourceLocation base = baseLocation;
-        ResourceLocation liquid = liquidLocation;
-        ResourceLocation cover = coverLocation;
 
         if (textures.containsKey("base"))
-            base = new ResourceLocation(textures.get("base"));
+            baseLocation = new ResourceLocation(textures.get("base"));
         if (textures.containsKey("fluid"))
-            liquid = new ResourceLocation(textures.get("fluid"));
+            liquidLocation = new ResourceLocation(textures.get("fluid"));
         if (textures.containsKey("cover"))
-            cover = new ResourceLocation(textures.get("cover"));
+            coverLocation = new ResourceLocation(textures.get("cover"));
 
-        return new ModelDynBucket(base, liquid, cover, fluid, flipGas, tint);
+        return new ModelDynCustomBucket(fluid, flipGas, tint);
     }
 
     public enum LoaderDynCustomBucket implements ICustomModelLoader
@@ -281,16 +274,16 @@ public class ModelDynCustomBucket implements IModel {
         {
             // only create these textures if they are not added by a resource pack
 
-            if (getResource(new ResourceLocation(ForgeVersion.MOD_ID, "textures/items/bucket_cover.png")) == null)
+            if (getResource(new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask")) == null)
             {
-                ResourceLocation bucketCover = new ResourceLocation(ForgeVersion.MOD_ID, "items/bucket_cover");
+                ResourceLocation bucketCover = new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask");
                 CustomBucketCoverSprite bucketCoverSprite = new CustomBucketCoverSprite(bucketCover);
                 map.setTextureEntry(bucketCoverSprite);
             }
 
-            if (getResource(new ResourceLocation(ForgeVersion.MOD_ID, "textures/items/bucket_base.png")) == null)
+            if (getResource(new ResourceLocation("sfhcore", "items/bucket_empty")) == null)
             {
-                ResourceLocation bucketBase = new ResourceLocation(ForgeVersion.MOD_ID, "items/bucket_base");
+                ResourceLocation bucketBase = new ResourceLocation("sfhcore", "items/bucket_empty");
                 CustomBucketBaseSprite bucketBaseSprite = new CustomBucketBaseSprite(bucketBase);
                 map.setTextureEntry(bucketBaseSprite);
             }
@@ -312,7 +305,7 @@ public class ModelDynCustomBucket implements IModel {
 
     private static final class CustomBucketBaseSprite extends TextureAtlasSprite
     {
-        private final ResourceLocation bucket = new ResourceLocation("items/bucket_empty");
+        private final ResourceLocation bucket = new ResourceLocation("sfhcore", "items/bucket_empty");
         private final ImmutableList<ResourceLocation> dependencies = ImmutableList.of(bucket);
 
         private CustomBucketBaseSprite(ResourceLocation resourceLocation)
@@ -350,8 +343,8 @@ public class ModelDynCustomBucket implements IModel {
      */
     private static final class CustomBucketCoverSprite extends TextureAtlasSprite
     {
-        private final ResourceLocation bucket = new ResourceLocation("items/bucket_empty");
-        private final ResourceLocation bucketCoverMask = new ResourceLocation(ForgeVersion.MOD_ID, "items/vanilla_bucket_cover_mask");
+        private final ResourceLocation bucket = new ResourceLocation("sfhcore", "items/bucket_empty");
+        private final ResourceLocation bucketCoverMask = new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask");
         private final ImmutableList<ResourceLocation> dependencies = ImmutableList.of(bucket, bucketCoverMask);
 
         private CustomBucketCoverSprite(ResourceLocation resourceLocation)
@@ -382,8 +375,8 @@ public class ModelDynCustomBucket implements IModel {
             pixels[0] = new int[width * height];
 
             try (
-                 IResource empty = LoaderDynCustomBucket.getResource(new ResourceLocation("sfhcore", "textures/items/bucket_empty.png"));
-                 IResource mask = LoaderDynCustomBucket.getResource(new ResourceLocation(ForgeVersion.MOD_ID, "textures/items/vanilla_bucket_cover_mask.png"))
+                 IResource empty = LoaderDynCustomBucket.getResource(new ResourceLocation("sfhcore", "items/bucket_fluid"));
+                 IResource mask = LoaderDynCustomBucket.getResource(new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask"));
             ) {
                 // use the alpha mask if it fits, otherwise leave the cover texture blank
                 if (empty != null && mask != null && Objects.equals(empty.getResourcePackName(), mask.getResourcePackName()) &&
