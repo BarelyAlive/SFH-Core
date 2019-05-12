@@ -45,7 +45,7 @@ public class TileFluidInventory extends TileInventory
 
 	private int maxCapacity;
 	
-	public int getMAX_CAPACITY()
+	public int getMaxCapacity()
 	{
 		return maxCapacity;
 	}
@@ -58,10 +58,10 @@ public class TileFluidInventory extends TileInventory
 	
 	public void update() {}
 	
-	public int fillable()
+	public int emptyRoom()
 	{
 		int a = tank.getFluidAmount();
-		return getMAX_CAPACITY() - a;
+		return getMaxCapacity() - a;
 	}
 	
 	public static boolean hasAcceptedFluids(@Nullable Fluid f)
