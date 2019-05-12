@@ -26,17 +26,39 @@ import mod.sfhcore.network.NetworkHandler;
 
 public class TileInventory extends TileEntityLockable implements ISidedInventory, ITickable
 {
-	public NonNullList<ItemStack> machineItemStacks;
-	protected String field_145958_o;
-	public int maxworkTime = 100;
-	public int workTime;
+	private NonNullList<ItemStack> machineItemStacks;
+	
+	private int maxworkTime = 0;
+	
+	public int getMaxworkTime() {
+		return maxworkTime;
+	}
+
+	public void setMaxworkTime(int maxworkTime) {
+		this.maxworkTime = maxworkTime;
+	}
+
+	private int workTime = 0;
+	
+	public void work()
+	{
+		workTime++;
+	}
+	
+	public int getWorkTime() {
+		return workTime;
+	}
+
+	public void setWorkTime(int workTime) {
+		this.workTime = workTime;
+	}
+	
 	protected String machineCustomName;
 	protected static int[] SLOTS_TOP = new int[] {0};
 	protected static int[] SLOTS_BOTTOM = new int[] {2, 1};
 	protected static int[] SLOTS_SIDES = new int[] {1};
 	
 	public TileInventory(int invSize, String machineCustomName) {
-		this.workTime = 0;
 		setCustomInventoryName(machineCustomName);
 		this.machineItemStacks = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
 	}
@@ -80,13 +102,13 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
      */
     public boolean isWorking()
     {
-        return this.workTime > 0;
+        return this.getWorkTime() > 0;
     }
 	
     @SideOnly(Side.CLIENT)
-    public static boolean isWorking(IInventory inventory)
+    public static boolean isWorking(TileInventory inventory)
     {
-        return inventory.getField(0) > 0;
+        return inventory.getWorkTime() > 0;
     }
 	
 	public void update() {}
@@ -149,7 +171,7 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
 
         if (index == 0 && !flag)
         {
-            this.workTime = 0;
+            this.setWorkTime(0);
             this.markDirty();
         }
     }
@@ -201,21 +223,21 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
         ItemStackHelper.loadAllItems(nbt, this.machineItemStacks);
-		this.workTime = nbt.getShort("workTime");
+		this.setWorkTime(nbt.getShort("workTime"));
 		super.readFromNBT(nbt);
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		ItemStackHelper.saveAllItems(nbt, this.machineItemStacks);
-		nbt.setShort("workTime", (short)this.workTime);
+		nbt.setShort("workTime", (short)this.getWorkTime());
 		return super.writeToNBT(nbt);
 	}
 	
 	//ggggg
 
 	public int getWorkTimeRemainingScaled(int i) {
-		return this.getField(0) * i / this.getField(1);
+		return this.getWorkTime() * i / this.getMaxworkTime();
 	}
 
 	@Override
@@ -239,34 +261,17 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
 	}
 
 	@Override
-	public int getField(int id) {
-		switch(id)
-		{
-		case 0:
-			return this.workTime;
-		case 1:
-			return this.maxworkTime;
-		}
+	public int getField(int id)
+	{
 		return 0;
 	}
 
 	@Override
-	public void setField(int id, int value)
-	{
-		switch(id)
-		{
-		case 0:
-			this.workTime = value;
-			break;
-		case 1:
-			this.maxworkTime = value;
-			break;
-		}
-	}
+	public void setField(int id, int value) {}
 
 	@Override
 	public int getFieldCount() {
-		return 2;
+		return 0;
 	}
 
 	@Override

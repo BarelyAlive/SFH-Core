@@ -37,25 +37,28 @@ import scala.Int;
 public class TileFluidInventory extends TileInventory
 {	
 	private static List<Fluid> acceptedFluids;
-	public FluidTank tank;
+	private FluidTank tank;
 	
-	private static int MAX_CAPACITY;
-	
-	public static int getMaxCapacity()
-	{
-		int cap = MAX_CAPACITY;
-		return cap;
+	public FluidTank getTank() {
+		return tank;
 	}
+
+	private int maxCapacity;
 	
-	public TileFluidInventory(int invSize, String machineCustomName, int MAX_CAPACITY) {
+	public int getMaxCapacity()
+	{
+		return maxCapacity;
+	}
+
+	public TileFluidInventory(int invSize, String machineCustomName, int maxCapacity) {
 		super(invSize, machineCustomName);
-		this.tank = new FluidTank(MAX_CAPACITY);
-		this.MAX_CAPACITY = MAX_CAPACITY;
+		this.tank = new FluidTank(maxCapacity);
+		this.maxCapacity = maxCapacity;
 	}
 	
 	public void update() {}
 	
-	public int fillable()
+	public int emptyRoom()
 	{
 		int a = tank.getFluidAmount();
 		return getMaxCapacity() - a;
