@@ -27,6 +27,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -68,7 +69,7 @@ public class TileFluidInventory extends TileInventory
 	{
 		if(f == null) return false;
 		for(Fluid fluid : acceptedFluids) {
-			if(fluid == f) return true;
+			if(f == fluid) return true;
 		}
 		return false;
 	}

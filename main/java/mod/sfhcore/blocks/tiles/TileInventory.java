@@ -16,6 +16,7 @@ import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.IInteractionObject;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -24,7 +25,7 @@ import javax.annotation.Nullable;
 
 import mod.sfhcore.network.NetworkHandler;
 
-public class TileInventory extends TileEntityLockable implements ISidedInventory, ITickable
+public class TileInventory extends TileBase implements ISidedInventory, ITickable, IInteractionObject
 {
 	private NonNullList<ItemStack> machineItemStacks;
 	
