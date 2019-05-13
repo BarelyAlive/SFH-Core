@@ -18,10 +18,8 @@ public class FluidTankSingle extends FluidTank
 	}
 	
 	@Override
-	public int fill(FluidStack resource, boolean doFill) {
-		if(resource.isFluidEqual(getFluid()))
-		return super.fill(resource, doFill);
-		
-		return 0;
+	public boolean canFillFluidType(FluidStack fluid)
+	{
+		return fluid.getFluid() == f;
 	}
 }

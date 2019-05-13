@@ -28,7 +28,6 @@ import mod.sfhcore.network.NetworkHandler;
 public class TileInventory extends TileBase implements ISidedInventory, ITickable, IInteractionObject
 {
 	private NonNullList<ItemStack> machineItemStacks;
-	
 	private int maxworkTime = 0;
 	
 	public int getMaxworkTime() {
@@ -127,12 +126,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     public boolean isEmpty()
     {
         for (ItemStack itemstack : this.machineItemStacks)
-        {
             if (!itemstack.isEmpty())
-            {
                 return false;
-            }
-        }
 
         return true;
     }
@@ -144,6 +139,11 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     public ItemStack decrStackSize(int index, int count)
     {
         return ItemStackHelper.getAndSplit(this.machineItemStacks, index, count);
+    }
+    
+    public void setCustomInventoryName(String p_145951_1_)
+    {
+        this.machineCustomName = p_145951_1_;
     }
 
     /**
@@ -193,11 +193,6 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     public boolean hasCustomName()
     {
         return this.machineCustomName != null && !this.machineCustomName.isEmpty();
-    }
-
-    public void setCustomInventoryName(String p_145951_1_)
-    {
-        this.machineCustomName = p_145951_1_;
     }
 
 	@Override
