@@ -292,19 +292,21 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		int[] valid_slot = this.getSlotsForFace(direction);
 		for (int i = 0; i < valid_slot.length; i++)
-		{
 			if (valid_slot[i] == index)
-			{
 				return isItemValidForSlot(index, itemStackIn);
-			}
-		}
+		
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
+	{
 		int[] valid_slot = this.getSlotsForFace(direction);
-		return isItemValidForSlotToExtract(index, stack);
+		for (int i = 0; i < valid_slot.length; i++)
+			if (valid_slot[i] == index)
+				return isItemValidForSlotToExtract(index, stack);
+		
+		return false;
 	}
 
 	@Override
