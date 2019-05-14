@@ -146,7 +146,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
         return ItemStackHelper.getAndSplit(this.machineItemStacks, index, count);
     }
     
-    private void setCustomInventoryName(String p_145951_1_)
+    public void setCustomInventoryName(String p_145951_1_)
     {
         this.machineCustomName = p_145951_1_;
     }
@@ -292,7 +292,69 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	            return SLOTS_SIDES;
 		}
 	}
+	
+	public void extractFromInventory(BlockPos pos, EnumFacing facing)
+	{
+		TileEntity te = this.getWorld().getTileEntity(pos);
+		ItemStack stack= ItemStack.EMPTY;
+		IInventory inventory = null;
+		if (te == null) return;
+		if (!(te instanceof IInventory)) return;
+		inventory = ((IInventory)te);
+		
+		for (int i = 0; i < inventory.getSizeInventory(); i++)
+		{
+			stack = inventory.getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			for (int j = 0; j < this.getSizeInventory(); j++)
+			{
+				if (!this.canInsertItem(j, stack, facing)) continue;
+				if (!this.canExtractFromInventory(j, stack)) continue;
+				ItemStack this_stack = this.getStackInSlot(j);
+				if (this_stack.isEmpty())
+				{
+					this.setInventorySlotContents(j, stack);
+					inventory.setInventorySlotContents(i, ItemStack.EMPTY);
+					j = this.getSizeInventory();
+				}
+				else
+				{
+					if (this_stack.getCount() == this_stack.getMaxStackSize()) continue;
+					if (!ItemStack.areItemsEqual(stack, this_stack)) continue;
+					this_stack.setCount(this_stack.getCount() + stack.getCount());
+					if (this_stack.getCount() > this_stack.getMaxStackSize())
+					{
+						stack.setCount(this_stack.getCount() - this_stack.getMaxStackSize());
+					}
+					else
+					{
+						stack = ItemStack.EMPTY;
+					}
+					this.setInventorySlotContents(j, this_stack);
+					inventory.setInventorySlotContents(i, stack);
+					if (stack == ItemStack.EMPTY)
+					{
+						j = this.getSizeInventory();
+					}
+				}
+			}
+		}
+	}
+	
+	public boolean canExtractFromInventory(int index, ItemStack stack)
+	{
+		return true;
+	}
 
+	public void insertToInventory(BlockPos pos, EnumFacing facing)
+	{
+		
+	}
+	
+	public boolean canInsertToInventory(int index, ItemStack stack)
+	{
+		return true;
+	}
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		int[] valid_slot = this.getSlotsForFace(direction);
