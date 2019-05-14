@@ -131,7 +131,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     public boolean isEmpty()
     {
         for (ItemStack itemstack : this.machineItemStacks)
-            if (!itemstack.isEmpty())
+            if(!itemstack.isEmpty())
                 return false;
 
         return true;
@@ -146,9 +146,9 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
         return ItemStackHelper.getAndSplit(this.machineItemStacks, index, count);
     }
     
-    public void setCustomInventoryName(String p_145951_1_)
+    public void setCustomInventoryName(String name)
     {
-        this.machineCustomName = p_145951_1_;
+        this.machineCustomName = name;
     }
 
     /**
@@ -170,12 +170,12 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
         boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
         this.machineItemStacks.set(index, stack);
 
-        if (stack.getCount() > this.getInventoryStackLimit())
+        if(stack.getCount() > this.getInventoryStackLimit())
         {
             stack.setCount(this.getInventoryStackLimit());
         }
 
-        if (index == 0 && !flag)
+        if(index == 0 && !flag)
         {
             this.setWorkTime(0);
             this.markDirty();
@@ -207,7 +207,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
-		if (!(this.world.getTileEntity(this.pos) instanceof TileInventory)) return false;
+		if(!(this.world.getTileEntity(this.pos) instanceof TileInventory)) return false;
         return player.getDistanceSq(
         		(double)this.pos.getX() + 0.5D,
         		(double)this.pos.getY() + 0.5D,
@@ -298,20 +298,20 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		TileEntity te = this.getWorld().getTileEntity(pos);
 		ItemStack stack= ItemStack.EMPTY;
 		IInventory inventory = null;
-		if (te == null) return;
-		if (!(te instanceof IInventory)) return;
+		if(te == null) return;
+		if(!(te instanceof IInventory)) return;
 		inventory = ((IInventory)te);
 		
 		for (int i = 0; i < inventory.getSizeInventory(); i++)
 		{
 			stack = inventory.getStackInSlot(i);
-			if (stack.isEmpty()) continue;
+			if(stack.isEmpty()) continue;
 			for (int j = 0; j < this.getSizeInventory(); j++)
 			{
-				if (!this.canInsertItem(j, stack, facing)) continue;
-				if (!this.canExtractFromInventory(j, stack)) continue;
+				if(!this.canInsertItem(j, stack, facing)) continue;
+				if(!this.canExtractFromInventory(j, stack)) continue;
 				ItemStack this_stack = this.getStackInSlot(j);
-				if (this_stack.isEmpty())
+				if(this_stack.isEmpty())
 				{
 					this.setInventorySlotContents(j, stack);
 					inventory.setInventorySlotContents(i, ItemStack.EMPTY);
@@ -319,10 +319,10 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 				}
 				else
 				{
-					if (this_stack.getCount() == this_stack.getMaxStackSize()) continue;
-					if (!ItemStack.areItemsEqual(stack, this_stack)) continue;
+					if(this_stack.getCount() == this_stack.getMaxStackSize()) continue;
+					if(!ItemStack.areItemsEqual(stack, this_stack)) continue;
 					this_stack.setCount(this_stack.getCount() + stack.getCount());
-					if (this_stack.getCount() > this_stack.getMaxStackSize())
+					if(this_stack.getCount() > this_stack.getMaxStackSize())
 					{
 						stack.setCount(this_stack.getCount() - this_stack.getMaxStackSize());
 					}
@@ -332,7 +332,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 					}
 					this.setInventorySlotContents(j, this_stack);
 					inventory.setInventorySlotContents(i, stack);
-					if (stack == ItemStack.EMPTY)
+					if(stack == ItemStack.EMPTY)
 					{
 						j = this.getSizeInventory();
 					}
@@ -359,7 +359,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		int[] valid_slot = this.getSlotsForFace(direction);
 		for (int i = 0; i < valid_slot.length; i++)
-			if (valid_slot[i] == index)
+			if(valid_slot[i] == index)
 				return isItemValidForSlot(index, itemStackIn);
 		
 		return false;
@@ -370,7 +370,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	{
 		int[] valid_slot = this.getSlotsForFace(direction);
 		for (int i = 0; i < valid_slot.length; i++)
-			if (valid_slot[i] == index)
+			if(valid_slot[i] == index)
 				return isItemValidForSlotToExtract(index, stack);
 		
 		return false;
