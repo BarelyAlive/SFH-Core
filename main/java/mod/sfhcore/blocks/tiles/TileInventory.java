@@ -67,40 +67,6 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		setCustomInventoryName(machineCustomName);
 		this.machineItemStacks = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
 	}
-	
-	//Network && NBT
-    public void markDirtyClient() {
-        markDirty();
-        NetworkHandler.sendNBTUpdate(this);
-    }
-
-    public void markDirtyChunk() {
-        markDirty();
-        IBlockState state = getWorld().getBlockState(getPos());
-        getWorld().notifyBlockUpdate(getPos(), state, state, 3);
-        NetworkHandler.sendNBTUpdate(this);
-    }
-
-    @Nullable
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
-    }
-
-    @Override
-    @Nonnull
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        readFromNBT(pkt.getNbtCompound());
-        IBlockState state = world.getBlockState(pos);
-        world.notifyBlockUpdate(pos, state, state, 3);
-    }
-    //ENDE
 
     /**
      * Machine is working
@@ -355,6 +321,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	{
 		return true;
 	}
+	
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		int[] valid_slot = this.getSlotsForFace(direction);
