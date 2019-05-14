@@ -314,7 +314,51 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	public void insertToInventory(BlockPos pos, EnumFacing facing)
 	{
+		TileEntity te = this.getWorld().getTileEntity(pos);
+		ItemStack stack= ItemStack.EMPTY;
+		IInventory inventory = null;
+		if(te == null) return;
+		if(!(te instanceof IInventory)) return;
+		inventory = ((IInventory)te);
 		
+		for (int i = 0; i < this.getSizeInventory(); i++)
+		{
+			stack = this.getStackInSlot(i);
+			if(stack.isEmpty()) continue;
+			if(!isItemValidForSlotToExtract(i, stack)) continue;
+			if(!canInsertToInventory(i, stack)) continue;
+			for (int j = 0; j < inventory.getSizeInventory(); j++)
+			{
+				ItemStack inventory_stack = inventory.getStackInSlot(j);
+				if(!inventory.isItemValidForSlot(j, stack)) continue;
+				if(inventory_stack.isEmpty())
+				{
+					inventory.setInventorySlotContents(j, stack);
+					this.setInventorySlotContents(i, ItemStack.EMPTY);
+					j = inventory.getSizeInventory();
+				}
+				else
+				{
+					if(inventory_stack.getCount() == inventory_stack.getMaxStackSize()) continue;
+					if(!ItemStack.areItemsEqual(stack, inventory_stack)) continue;
+					inventory_stack.setCount(inventory_stack.getCount() + stack.getCount());
+					if(inventory_stack.getCount() > inventory_stack.getMaxStackSize())
+					{
+						stack.setCount(inventory_stack.getCount() - inventory_stack.getMaxStackSize());
+					}
+					else
+					{
+						stack = ItemStack.EMPTY;
+					}
+					inventory.setInventorySlotContents(j, inventory_stack);
+					this.setInventorySlotContents(i, stack);
+					if(stack == ItemStack.EMPTY)
+					{
+						j = this.getSizeInventory();
+					}
+				}
+			}
+		}
 	}
 	
 	public boolean canInsertToInventory(int index, ItemStack stack)
