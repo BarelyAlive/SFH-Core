@@ -55,7 +55,9 @@ public class CustomFuelHandler{
 			if (f.getFluid() == FluidRegistry.LAVA && f.amount > 1000) {
 				IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
 				boolean success = ifhi.drain(1000, true) != null;
-				return 20000;
+				
+				if(success)
+					return 20000;
 			}
 		}
 		
@@ -82,7 +84,10 @@ public class CustomFuelHandler{
 	public static boolean addFuelBurnTime(@Nonnull ItemStack stack, @Nonnull int time)
 	{
 		if(stack.isEmpty())
+		{
 			LogUtil.error("Nice try!");
+			return false;
+		}
 		if(stack.getItem().getRegistryName() == null)
 		{
 			LogUtil.warn("SFHCore tried to add an item which has no registry name!");

@@ -50,10 +50,6 @@ public class NotNull
     		ItemStack item = (ItemStack) o;
     		if(item.isEmpty())
     			return false;
-    		if(item.getItem() == null || item.getItem().equals(Items.AIR))
-    		{
-    			return false;
-    		}
     		if(item.getItem().getRegistryName().toString().isEmpty())
     		{
     			return false;

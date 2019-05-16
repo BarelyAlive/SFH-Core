@@ -46,6 +46,4 @@ public class TileBase extends TileEntity {
         IBlockState state = world.getBlockState(pos);
         world.notifyBlockUpdate(pos, state, state, 3);
     }
-
-
 }
