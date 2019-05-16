@@ -45,8 +45,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	private int workTime = 0;
 	
-	public void work()
-	{
+	public void work() {
 		workTime++;
 	}
 	
@@ -59,12 +58,9 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	}
 	
 	protected String machineCustomName;
-	protected static int[] SLOTS_TOP = new int[] {0, 1, 2};
-	protected static int[] SLOTS_BOTTOM = new int[] {0, 1, 2};
-	protected static int[] SLOTS_SIDES = new int[] {0, 1, 2};
 	
 	public TileInventory(int invSize, String machineCustomName) {
-		setCustomInventoryName(machineCustomName);
+		this.setCustomInventoryName(machineCustomName);
 		this.machineItemStacks = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
 	}
 
@@ -228,9 +224,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	}
 
 	@Override
-	public int getField(int id)
-	{
-		return 0;
+	public int getField(int id){
+		return id;
 	}
 
 	@Override
@@ -249,13 +244,14 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
 		int slots = getSizeInventory();
+		int[] slotsArr = new int[slots];
 		switch (side) {
 			case UP:
-	            return SLOTS_TOP;
+	            return slotsArr;
 	        case DOWN:
-	            return SLOTS_BOTTOM;
+	            return slotsArr;
 	        default:
-	            return SLOTS_SIDES;
+	            return slotsArr;
 		}
 	}
 	
