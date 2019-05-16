@@ -45,6 +45,7 @@ public class NotNull
     			return false;
     		}
     	}
+    	else
     	if(o instanceof ItemStack)
     	{
     		ItemStack item = (ItemStack) o;
