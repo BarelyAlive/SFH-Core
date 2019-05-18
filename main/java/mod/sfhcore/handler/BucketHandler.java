@@ -56,6 +56,42 @@ public class BucketHandler {
 		registerItem(event.getRegistry());
 	}
 	
+	public static CustomBucket getBucketFromFluid(Fluid searchFluid, String material)
+	{
+		for(CustomBucket item : allBucketList.keySet())
+		{
+			if (item != null)
+			{
+				if(item.getFluid() != searchFluid)
+				{
+					continue;
+				}
+				StringFluid fl = allBucketList.get(item);
+				if(!fl.str.contains(material))
+				{
+					continue;
+				}
+				return item;
+			}
+		}
+		
+		return null;
+	}
+	
+	public static String getMaterialFromBucket(ItemStack stack)
+	{
+		if (stack.isEmpty())
+			return "";
+		if (!(stack.getItem() instanceof CustomBucket))
+			return "";
+		return getMaterialFromBucket((CustomBucket) stack.getItem());
+	}
+	
+	public static String getMaterialFromBucket(CustomBucket bucket)
+	{
+		return bucket.getMaterial();
+	}
+
 	private static void addAllBuckets()
 	{
 		Map<String, Fluid> fluids = FluidRegistry.getRegisteredFluids();
@@ -73,20 +109,22 @@ public class BucketHandler {
 		{
 			BucketInfo bucket_info = bucketList.get(material);
 			bucketName = new ResourceLocation("sfhcore", "bucket_" + material);
-			bucket_0 = new CustomBucket(Blocks.AIR, bucketName, ItemStack.EMPTY, bucket_info.tab, bucket_info.color);
+			bucket_0 = new CustomBucket(Blocks.AIR, bucketName, ItemStack.EMPTY, bucket_info.tab, bucket_info.color, material);
 			strfld = new StringFluid();
 			strfld.f = null;
 			strfld.str = material;
 			allBucketList.put(bucket_0, strfld);
+			emptyBucket = new ItemStack(bucket_0);
 			for(String name : fluids.keySet())
 			{
 				f = fluids.get(name);
 				resource_domain = bucket_0.getRegistryName().getResourceDomain();
 				resource_path = bucket_0.getRegistryName().getResourcePath() + "_" + name;
 				res_loc = new ResourceLocation(resource_domain, resource_path);
-				emptyBucket = new ItemStack(bucket_0);
 				
-				new_bucket = new CustomBucket(f.getBlock(), res_loc, emptyBucket, bucket_info.tab, bucket_info.color);
+				System.out.println(f.getBlock());
+				
+				new_bucket = new CustomBucket(f.getBlock(), res_loc, emptyBucket, bucket_info.tab, bucket_info.color, material);
 				
 				strfld = new StringFluid();
 				strfld.f = f;
@@ -125,9 +163,9 @@ public class BucketHandler {
 				ResourceLocation liquidLocation = null;
 				ResourceLocation coverLocation = null;
 				Fluid fluid = strfld.f;
-				ModelDynCustomBucket bucketModel = new ModelDynCustomBucket(fluid, false, true);
+				ModelDynBucket bucketModel = new ModelDynBucket(null, null, null, fluid, false, true);
 				//bucketModel.LOCATION = new ModelResourceLocation(new ResourceLocation("sfhcore", "bucket"), "inventory");
-				ModelLoaderRegistry.registerLoader(ModelDynCustomBucket.LoaderDynCustomBucket.INSTANCE);
+				ModelLoaderRegistry.registerLoader(ModelDynBucket.LoaderDynBucket.INSTANCE);
 				ModelLoader.setCustomMeshDefinition(item, stack -> bucketModel.LOCATION);
 				//ModelLoader.setCustomModelResourceLocation(item, 0, bucketModel.LOCATION);
 				ModelBakery.registerItemVariants(item, bucketModel.LOCATION);

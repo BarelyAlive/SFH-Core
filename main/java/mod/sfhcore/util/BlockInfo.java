@@ -87,7 +87,9 @@ public class BlockInfo implements StackInfo {
                 try {
                     meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
                     block = Block.getBlockFromName(split[0] + ":" + split[1]);
+                    System.out.println(block);
                     this.state = getStateFromMeta(block, meta);
+                    System.out.println(state);
                     this.isWildcard = (meta == -1);
                 } catch (NumberFormatException | NullPointerException e) {
                     this.state = Blocks.AIR.getDefaultState();
