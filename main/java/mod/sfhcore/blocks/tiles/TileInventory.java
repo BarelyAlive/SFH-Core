@@ -146,7 +146,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
         return ItemStackHelper.getAndSplit(this.machineItemStacks, index, count);
     }
     
-    private void setCustomInventoryName(String p_145951_1_)
+    public void setCustomInventoryName(String p_145951_1_)
     {
         this.machineCustomName = p_145951_1_;
     }

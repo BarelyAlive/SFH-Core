@@ -8,10 +8,12 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import mod.sfhcore.handler.BucketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -33,37 +35,28 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 
-class BucketItem {
-	public Block block;
-	public Fluid fluid;
-	public ItemStack result;
-}
-
 public class CustomBucket extends Item implements IFluidHandler{
 	
 	/** field for checking if the bucket has been filled. */
     private Block containedBlock;
     private Fluid fluid;
     private int color;
+    private String material;
     
-    /** List of accepted Fluids */
-    private List<BucketItem> bucketList;
-
 	private final ItemStack empty;
 	
-	public CustomBucket(Block b, ResourceLocation loc, ItemStack empty, CreativeTabs tab, int color)
+	public CustomBucket(Block b, ResourceLocation loc, ItemStack empty, CreativeTabs tab, int color, String material)
 	{
-		this.bucketList = new ArrayList<BucketItem>();
 		this.maxStackSize = 1;
         this.containedBlock = b;
         this.empty = empty;
         this.color = color;
+        this.material = material;
         this.fluid = FluidRegistry.lookupFluidForBlock(b);
         this.setUnlocalizedName(loc.getResourcePath());
         this.setRegistryName(loc);
         this.setCreativeTab(tab);
         this.setContainerItem(empty.getItem());
-        this.addBucket(b, FluidRegistry.lookupFluidForBlock(b), new ItemStack(this));
 	}
 	
 	public int getColor()
@@ -76,6 +69,11 @@ public class CustomBucket extends Item implements IFluidHandler{
 		return this.fluid;
 	}
 	
+	public String getMaterial()
+	{
+		return this.material;
+	}
+	
 	private FluidStack getFluidContained()
 	{
 		if(!isAir()) {
@@ -83,153 +81,6 @@ public class CustomBucket extends Item implements IFluidHandler{
 			return new FluidStack(f, 1000);
 		}
 		return null;
-	}
-	
-	public ItemStack getBucketForBlock(Block b) {
-		int bucketListSize = this.bucketList.size();
-		BucketItem bl;
-		
-		for(int i = 0; i < bucketListSize; i++)
-		{
-			bl = this.bucketList.get(i);
-			if(bl.block.equals(b))
-			{
-				return bl.result;
-			}
-		}
-		
-		return empty;
-	}
-	
-	public ItemStack getBucketForFluid(Fluid f) {
-		int bucketListSize = this.bucketList.size();
-		BucketItem bl;
-		
-		for(int i = 0; i < bucketListSize; i++)
-		{
-			bl = this.bucketList.get(i);
-			if(f == null){
-				if (bl.fluid.equals(f)) {
-					return bl.result;
-				} 
-			}
-		}
-		
-		return empty;
-	}
-
-	public ItemStack getBucketForBlockAndFluid(Block b, Fluid f) {
-		int bucketListSize = this.bucketList.size();
-		BucketItem bl;
-		
-		for(int i = 0; i < bucketListSize; i++)
-		{
-			bl = this.bucketList.get(i);
-			if(!(bl.block.equals(b)))
-			{
-				continue;
-			}
-			if(!(bl.fluid.equals(f)))
-			{
-				continue;
-			}
-			return bl.result;
-		}
-		
-		return empty;
-	}
-	
-	public void addBucket(Block b, Fluid f, ItemStack result)
-	{
-		BucketItem bl = new BucketItem();
-		bl.block = b;
-		bl.fluid = f;
-		bl.result = result;
-		this.bucketList.add(bl);
-	}
-	
-	public boolean hasAcceptedFluid(Fluid f)
-	{
-		if(f == null)
-			return false;
-		if ((this.getBucketForFluid(f)).equals(this.empty))
-		{
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean hasAcceptedBlock(Block b)
-	{
-		if( b == null || this.empty == null)
-			return false;
-		if ((this.getBucketForBlock(b)).equals(this.empty))
-		{
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean hasAcceptedFluidAndBlock(Block b, Fluid f)
-	{
-		if ((this.getBucketForBlockAndFluid(b, f)).equals(this.empty))
-		{
-			return false;
-		}
-		return true;
-	}
-	
-	public void removeAcceptedFluids(Fluid f)
-	{
-		int bucketListSize = this.bucketList.size();
-		BucketItem bl;
-		
-		for(int i = 0; i < bucketListSize; i++)
-		{
-			bl = this.bucketList.get(i);
-			if(bl.fluid.equals(f))
-			{
-				this.bucketList.remove(i);
-				i--;
-			}
-		}
-	}
-	
-	public void removeAcceptedBlocks(Block b)
-	{
-		int bucketListSize = this.bucketList.size();
-		BucketItem bl;
-		
-		for(int i = 0; i < bucketListSize; i++)
-		{
-			bl = this.bucketList.get(i);
-			if(bl.block.equals(b))
-			{
-				this.bucketList.remove(i);
-				i--;
-			}
-		}
-	}
-	
-	public void removeAcceptedBlocksAndFluids(Block b, Fluid f)
-	{
-		int bucketListSize = this.bucketList.size();
-		BucketItem bl;
-		
-		for(int i = 0; i < bucketListSize; i++)
-		{
-			bl = this.bucketList.get(i);
-			if(bl.block.equals(b) && bl.fluid.equals(f))
-			{
-				this.bucketList.remove(i);
-				i--;
-			}
-		}
-	}
-	
-	public List<BucketItem> getAcceptedFluids()
-	{
-		return this.bucketList;
 	}
 	
 	@Override
@@ -258,7 +109,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 	
 	private boolean isAir()
 	{
-		return this.containedBlock == Blocks.AIR ? true : false;
+		return this.containedBlock == Blocks.AIR;
 	}
 
     /**
@@ -267,6 +118,12 @@ public class CustomBucket extends Item implements IFluidHandler{
 	@Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
+		/*
+		if(!worldIn.isRemote)
+		{
+	        return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(handIn));
+		}
+		*/
 		boolean flag = isAir();
         ItemStack held = playerIn.getHeldItem(handIn);
         RayTraceResult raytraceresult = this.rayTrace(worldIn, playerIn, flag);
@@ -274,49 +131,78 @@ public class CustomBucket extends Item implements IFluidHandler{
         if (raytraceresult == null)
             return new ActionResult<ItemStack>(EnumActionResult.PASS, held);
         
-        if(raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK && this.containedBlock != null)
+        if(raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK)
         {
-        	BlockPos blockpos = raytraceresult.getBlockPos();
-        	
-        	if (!worldIn.isBlockModifiable(playerIn, blockpos))
-            {
-                return new ActionResult<ItemStack>(EnumActionResult.FAIL, held);
-            }
-        	
-        	else if (flag)
+        	BlockPos pos = raytraceresult.getBlockPos();
+        	if (!flag && this.containedBlock != null)
         	{
-        		if (!playerIn.canPlayerEdit(blockpos.offset(raytraceresult.sideHit), raytraceresult.sideHit, held))
+        		if (!playerIn.canPlayerEdit(pos.offset(raytraceresult.sideHit), raytraceresult.sideHit, held))
                 {
                     return new ActionResult<ItemStack>(EnumActionResult.FAIL, held);
                 }
         		else
         		{
-        			boolean flag1 = worldIn.getBlockState(blockpos).getBlock().isReplaceable(worldIn, blockpos);
-    				BlockPos blockpos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP ? blockpos : blockpos.offset(raytraceresult.sideHit);
+        			boolean flag1 = worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos);
+    				BlockPos pos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP ? pos : pos.offset(raytraceresult.sideHit);
     				
-    				if (!playerIn.canPlayerEdit(blockpos1, raytraceresult.sideHit, held))
+    				if (!playerIn.canPlayerEdit(pos1, raytraceresult.sideHit, held))
                     {
                         return new ActionResult<ItemStack>(EnumActionResult.FAIL, held);
                     }
-    				
-        			else {
-        				Block block = worldIn.getBlockState(blockpos1).getBlock();
-        				if(!this.hasAcceptedBlock(block))
-        					return new ActionResult<ItemStack>(EnumActionResult.FAIL, held);
+        			else
+        			{
         				
-    					if (FluidUtil.tryPickUpFluid(held.getItem().getContainerItem(held), playerIn, worldIn, blockpos, raytraceresult.sideHit).success) {
-    						
-    						return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, getBucketForBlock(block)) : new ActionResult(EnumActionResult.SUCCESS, held);
-    					}
-    				} 
+        				Block block = worldIn.getBlockState(pos1).getBlock();
+        				Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
+        				
+        				fluid_from_block = FluidRegistry.lookupFluidForBlock(this.containedBlock);
+						if (block.isReplaceable(worldIn, pos1) && fluid_from_block != null)
+						{
+							if(fluid_from_block.doesVaporize(new FluidStack(fluid_from_block, 1000)) && worldIn.provider.doesWaterVaporize())
+							{
+								fluid_from_block.vaporize(playerIn, worldIn, pos1, getFluidContained());
+							}
+							else
+							{
+								if (this.containedBlock.equals(Blocks.WATER))
+								{
+        							worldIn.setBlockState(pos1, Blocks.FLOWING_WATER.getDefaultState());
+								}
+								else if (this.containedBlock.equals(Blocks.LAVA))
+								{
+        							worldIn.setBlockState(pos1, Blocks.FLOWING_LAVA.getDefaultState());
+								}
+								else
+								{
+        							worldIn.setBlockState(pos1, this.containedBlock.getDefaultState());
+								}
+							}
+							return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, held.getItem().getContainerItem(held)) : new ActionResult(EnumActionResult.SUCCESS, held);
+						}
+    				}
         		}
-				
 			}
-			
-			if (FluidUtil.tryPlaceFluid(playerIn, worldIn, blockpos, held,
-					new FluidStack(FluidRegistry.lookupFluidForBlock(containedBlock), 1000)).success) {
-				
-				return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(held.getItem().getContainerItem())) : new ActionResult(EnumActionResult.SUCCESS, held);
+			else
+			{
+        		if (!playerIn.canPlayerEdit(pos, raytraceresult.sideHit, held))
+                {
+                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, held);
+                }
+        		else
+        		{
+        			boolean flag1 = worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos);
+    				//BlockPos pos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP ? pos : pos.offset(raytraceresult.sideHit);
+    				
+    				Block block = worldIn.getBlockState(pos).getBlock();
+    				Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
+    				if (fluid_from_block != null)
+    				{
+    					worldIn.setBlockToAir(pos);
+    					CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
+    					playerIn.inventory.markDirty();
+						return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(new_bucket)) : new ActionResult(EnumActionResult.SUCCESS, held);
+    				}
+        		}
 			}
         }
         
