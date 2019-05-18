@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import mod.sfhcore.fluid.FluidTankSingle;
 import mod.sfhcore.util.TankUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,6 +28,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -37,7 +39,7 @@ import scala.Int;
 public class TileFluidInventory extends TileInventory
 {	
 	private static List<Fluid> acceptedFluids;
-	private FluidTank tank;
+	private FluidTankSingle tank;
 	
 	public FluidTank getTank() {
 		return tank;
@@ -50,10 +52,10 @@ public class TileFluidInventory extends TileInventory
 		return maxCapacity;
 	}
 
-	public TileFluidInventory(int invSize, String machineCustomName, int maxCapacity) {
+	public TileFluidInventory(int invSize, String machineCustomName, FluidTankSingle tank) {
 		super(invSize, machineCustomName);
-		this.tank = new FluidTank(maxCapacity);
-		this.maxCapacity = maxCapacity;
+		this.tank = tank;
+		this.maxCapacity = tank.getCapacity();
 	}
 	
 	public void update() {}
@@ -68,7 +70,7 @@ public class TileFluidInventory extends TileInventory
 	{
 		if(f == null) return false;
 		for(Fluid fluid : acceptedFluids) {
-			if(fluid == f) return true;
+			if(f == fluid) return true;
 		}
 		return false;
 	}

@@ -1,8 +1,10 @@
 package mod.sfhcore.blocks.tiles;
 
+import net.minecraft.block.BlockHopper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -16,18 +18,21 @@ import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IInteractionObject;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import mod.sfhcore.network.NetworkHandler;
 
-public class TileInventory extends TileEntityLockable implements ISidedInventory, ITickable
+public class TileInventory extends TileBase implements ISidedInventory, ITickable, IInteractionObject
 {
 	private NonNullList<ItemStack> machineItemStacks;
-	
 	private int maxworkTime = 0;
 	
 	public int getMaxworkTime() {
@@ -54,9 +59,9 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
 	}
 	
 	protected String machineCustomName;
-	protected static int[] SLOTS_TOP = new int[] {0};
-	protected static int[] SLOTS_BOTTOM = new int[] {2, 1};
-	protected static int[] SLOTS_SIDES = new int[] {1};
+	protected static int[] SLOTS_TOP = new int[] {0, 1, 2};
+	protected static int[] SLOTS_BOTTOM = new int[] {0, 1, 2};
+	protected static int[] SLOTS_SIDES = new int[] {0, 1, 2};
 	
 	public TileInventory(int invSize, String machineCustomName) {
 		setCustomInventoryName(machineCustomName);
@@ -126,12 +131,8 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
     public boolean isEmpty()
     {
         for (ItemStack itemstack : this.machineItemStacks)
-        {
             if (!itemstack.isEmpty())
-            {
                 return false;
-            }
-        }
 
         return true;
     }
@@ -143,6 +144,11 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
     public ItemStack decrStackSize(int index, int count)
     {
         return ItemStackHelper.getAndSplit(this.machineItemStacks, index, count);
+    }
+    
+    private void setCustomInventoryName(String p_145951_1_)
+    {
+        this.machineCustomName = p_145951_1_;
     }
 
     /**
@@ -192,11 +198,6 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
     public boolean hasCustomName()
     {
         return this.machineCustomName != null && !this.machineCustomName.isEmpty();
-    }
-
-    public void setCustomInventoryName(String p_145951_1_)
-    {
-        this.machineCustomName = p_145951_1_;
     }
 
 	@Override
@@ -296,19 +297,21 @@ public class TileInventory extends TileEntityLockable implements ISidedInventory
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		int[] valid_slot = this.getSlotsForFace(direction);
 		for (int i = 0; i < valid_slot.length; i++)
-		{
 			if (valid_slot[i] == index)
-			{
 				return isItemValidForSlot(index, itemStackIn);
-			}
-		}
+		
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
+	{
 		int[] valid_slot = this.getSlotsForFace(direction);
-		return isItemValidForSlotToExtract(index, stack);
+		for (int i = 0; i < valid_slot.length; i++)
+			if (valid_slot[i] == index)
+				return isItemValidForSlotToExtract(index, stack);
+		
+		return false;
 	}
 
 	@Override
