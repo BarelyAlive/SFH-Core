@@ -5,6 +5,7 @@ import java.util.*;
 import mod.sfhcore.items.CustomBucket;
 import mod.sfhcore.items.model_bucket.FluidCustomBucketColorer;
 import mod.sfhcore.items.model_bucket.ModelDynCustomBucket;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -39,6 +40,7 @@ class BucketInfo {
 	Integer max_stack_size_for_empty_bucket;
 	String mod_id;
 	String material_name;
+	Integer highest_temperatur;
 	CreativeTabs tab;
 }
 
@@ -48,13 +50,14 @@ public class BucketHandler {
 	private static Map<String, ArrayList<String>> disabledBuckets = new HashMap<String, ArrayList<String>>();
 	
 
-	public static void addBucket(String material, String material_name, int max_stack_size_for_empty_bucket, String mod_id, int bucket_color, CreativeTabs tab)
+	public static void addBucket(String material, String material_name, int highest_temperatur, int max_stack_size_for_empty_bucket, String mod_id, int bucket_color, CreativeTabs tab)
 	{
 		BucketInfo info = new BucketInfo();
 		info.color = bucket_color;
 		info.mod_id = mod_id;
 		info.max_stack_size_for_empty_bucket = max_stack_size_for_empty_bucket;
 		info.tab = tab;
+		info.highest_temperatur = highest_temperatur;
 		info.material_name = material_name;
 		bucketList.put(material, info);
 	}
@@ -158,13 +161,18 @@ public class BucketHandler {
 					{
 						continue;
 					}
-						
+				}
+				
+				if (!( bucket_info.highest_temperatur == -1 || bucket_info.highest_temperatur == 0))
+				{
+					if(f.getTemperature() >= bucket_info.highest_temperatur)
+					{
+						continue;
+					}
 				}
 				resource_domain = bucket_0.getRegistryName().getResourceDomain();
 				resource_path = bucket_0.getRegistryName().getResourcePath() + "_" + name;
 				res_loc = new ResourceLocation(resource_domain, resource_path);
-				
-				System.out.println(f.getBlock());
 				
 				new_bucket = new CustomBucket(f.getBlock(), res_loc, emptyBucket, bucket_info.tab, bucket_info.color, material);
 				new_bucket.setMaxStackSize(1);
