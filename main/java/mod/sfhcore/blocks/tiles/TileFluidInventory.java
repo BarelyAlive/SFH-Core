@@ -38,24 +38,16 @@ import scala.Int;
 
 public class TileFluidInventory extends TileInventory
 {	
-	private static List<Fluid> acceptedFluids;
 	private FluidTankSingle tank;
 	
-	public FluidTank getTank() {
-		return tank;
-	}
-
-	private int maxCapacity;
-	
-	public int getMaxCapacity()
+	public FluidTank getTank()
 	{
-		return maxCapacity;
+		return tank;
 	}
 
 	public TileFluidInventory(int invSize, String machineCustomName, FluidTankSingle tank) {
 		super(invSize, machineCustomName);
 		this.tank = tank;
-		this.maxCapacity = tank.getCapacity();
 	}
 	
 	public void update() {}
@@ -63,24 +55,7 @@ public class TileFluidInventory extends TileInventory
 	public int emptyRoom()
 	{
 		int a = tank.getFluidAmount();
-		return getMaxCapacity() - a;
-	}
-	
-	public static boolean hasAcceptedFluids(@Nullable Fluid f)
-	{
-		if(f == null) return false;
-		for(Fluid fluid : acceptedFluids) {
-			if(f == fluid) return true;
-		}
-		return false;
-	}
-	
-	public static void setAcceptedFluids(List<Fluid> listf) {
-		acceptedFluids = listf;
-	}
-	
-	public static List<Fluid> getAcceptedFluids() {
-		return acceptedFluids;
+		return tank.getCapacity() - a;
 	}
 	
 	@Override
@@ -111,36 +86,13 @@ public class TileFluidInventory extends TileInventory
     }
     
     @Override
-    public void setField(int id, int value) {
-    	if (id < super.getFieldCount())
-    	{
-    		super.setField(id, value);
-    	}
-    	else
-    	{
-    		if (id == super.getFieldCount())
-    		{
-    			if (this.tank.getFluid() != null)
-    				this.tank.getFluid().amount = value;
-    		}
-    	}
-    }
+    public void setField(int id, int value) {}
     
     @Override
-    public int getField(int id) {
-    	if (id < super.getFieldCount())
-    	{
-        	return super.getField(id);
-    	}
-    	else
-    	{
-    		if (id == super.getFieldCount())
-    		{
-    			return this.tank.getFluidAmount();
-    		}
-    	}
-    	return 0;
-    }
+    public int getField(int id)
+    {
+		return id;
+	}
     
     @Override
     public int getFieldCount() {

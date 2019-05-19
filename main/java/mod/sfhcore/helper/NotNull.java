@@ -45,15 +45,12 @@ public class NotNull
     			return false;
     		}
     	}
+    	else
     	if(o instanceof ItemStack)
     	{
     		ItemStack item = (ItemStack) o;
     		if(item.isEmpty())
     			return false;
-    		if(item.getItem() == null || item.getItem().equals(Items.AIR))
-    		{
-    			return false;
-    		}
     		if(item.getItem().getRegistryName().toString().isEmpty())
     		{
     			return false;
