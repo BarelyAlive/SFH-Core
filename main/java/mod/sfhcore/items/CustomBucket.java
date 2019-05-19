@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import mod.sfhcore.capabilities.CustomBucketCapability;
 import mod.sfhcore.handler.BucketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -23,6 +24,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
@@ -42,8 +44,9 @@ public class CustomBucket extends Item implements IFluidHandler{
     private Fluid fluid;
     private int color;
     private String material;
+    private String localizedName;
     
-	private final ItemStack empty;
+	private ItemStack empty;
 	
 	public CustomBucket(Block b, ResourceLocation loc, ItemStack empty, CreativeTabs tab, int color, String material)
 	{
@@ -53,10 +56,12 @@ public class CustomBucket extends Item implements IFluidHandler{
         this.color = color;
         this.material = material;
         this.fluid = FluidRegistry.lookupFluidForBlock(b);
+        this.localizedName = "";
         this.setUnlocalizedName(loc.getResourcePath());
         this.setRegistryName(loc);
         this.setCreativeTab(tab);
         this.setContainerItem(empty.getItem());
+        //this.setHasSubtypes(true);
 	}
 	
 	public int getColor()
@@ -83,6 +88,45 @@ public class CustomBucket extends Item implements IFluidHandler{
 		return null;
 	}
 	
+	public void setColor(int color)
+	{
+		this.color = color;
+	}
+	
+	public void setFluid(Fluid f)
+	{
+		this.fluid = f;
+	}
+	
+	public void setMaterial(String material)
+	{
+		this.material = material;
+	}
+	
+	public void setLocalizedName(String localizedName) {
+		this.localizedName = localizedName;
+	}
+	
+	public String getLocalizedName() {
+		return this.localizedName;
+	}
+	
+	@Override
+	public String getItemStackDisplayName(ItemStack stack) {
+		if (stack.isEmpty())
+		{
+			return "";
+		}
+		else if (!(stack.getItem() instanceof CustomBucket))
+		{
+			return I18n.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name").trim();
+		}
+		else
+		{
+			return ((CustomBucket) stack.getItem()).getLocalizedName();
+		}
+	}
+		
 	@Override
 	public int getItemBurnTime(ItemStack itemStack)
 	{
@@ -208,12 +252,20 @@ public class CustomBucket extends Item implements IFluidHandler{
         
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, held);
     }
+	
+	/*
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		// TODO Auto-generated method stub
+		super.getSubItems(tab, items);
+	}
+	*/
 
     @Override
     public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, @Nullable net.minecraft.nbt.NBTTagCompound nbt) {
         if (this.getClass() == CustomBucket.class)
         {
-            return new net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper(stack);
+            return new CustomBucketCapability(stack);
         }
         else
         {

@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.client.FluidContainerColorer;
@@ -19,8 +20,13 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.event.RegistryEvent.*;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 class StringFluid {
@@ -30,20 +36,40 @@ class StringFluid {
 
 class BucketInfo {
 	Integer color;
+	Integer max_stack_size_for_empty_bucket;
+	String mod_id;
+	String material_name;
 	CreativeTabs tab;
 }
 
 public class BucketHandler {
 	private static Map<String, BucketInfo> bucketList = new HashMap<String, BucketInfo>();
 	private static Map<CustomBucket, StringFluid> allBucketList = new HashMap<CustomBucket, StringFluid>();
+	private static Map<String, ArrayList<String>> disabledBuckets = new HashMap<String, ArrayList<String>>();
 	
 
-	public static void addBucket(String material, Integer bucket_color, CreativeTabs tab)
+	public static void addBucket(String material, String material_name, int max_stack_size_for_empty_bucket, String mod_id, int bucket_color, CreativeTabs tab)
 	{
 		BucketInfo info = new BucketInfo();
 		info.color = bucket_color;
+		info.mod_id = mod_id;
+		info.max_stack_size_for_empty_bucket = max_stack_size_for_empty_bucket;
 		info.tab = tab;
+		info.material_name = material_name;
 		bucketList.put(material, info);
+	}
+	
+	public static void disabledBucket(String material, String fluid_id)
+	{
+		if (!(disabledBuckets.containsKey(material)))
+		{
+			disabledBuckets.put(material, new ArrayList<>());
+		}
+		
+		if (!(disabledBuckets.get(material).contains(fluid_id)))
+		{
+			disabledBuckets.get(material).add(fluid_id);
+		}
 	}
 
 	public static void registerBuckets(Register<Item> event)
@@ -108,16 +134,32 @@ public class BucketHandler {
 		for(String material : bucketList.keySet())
 		{
 			BucketInfo bucket_info = bucketList.get(material);
-			bucketName = new ResourceLocation("sfhcore", "bucket_" + material);
+			bucketName = new ResourceLocation(bucket_info.mod_id, "bucket_" + material);
 			bucket_0 = new CustomBucket(Blocks.AIR, bucketName, ItemStack.EMPTY, bucket_info.tab, bucket_info.color, material);
+			bucket_0.setMaxStackSize(bucket_info.max_stack_size_for_empty_bucket);
 			strfld = new StringFluid();
 			strfld.f = null;
 			strfld.str = material;
+			bucket_0.setLocalizedName(bucket_info.material_name + " " + Items.BUCKET.getItemStackDisplayName(new ItemStack(Items.BUCKET)));
 			allBucketList.put(bucket_0, strfld);
 			emptyBucket = new ItemStack(bucket_0);
 			for(String name : fluids.keySet())
 			{
 				f = fluids.get(name);
+				if (disabledBuckets.containsKey(material))
+				{
+					if (
+							disabledBuckets.get(material).contains(name) 
+							|| disabledBuckets.get(material).contains(f.getName()) 
+							|| disabledBuckets.get(material).contains(f.getUnlocalizedName()) 
+							|| disabledBuckets.get(material).contains(f.getLocalizedName(new FluidStack(f, 1000))) 
+							|| disabledBuckets.get(material).contains(f.getBlock().getRegistryName().getResourcePath())
+							|| disabledBuckets.get(material).contains(f.getBlock().getRegistryName().getResourcePath() + ":" + f.getBlock().getRegistryName().getResourcePath()))
+					{
+						continue;
+					}
+						
+				}
 				resource_domain = bucket_0.getRegistryName().getResourceDomain();
 				resource_path = bucket_0.getRegistryName().getResourcePath() + "_" + name;
 				res_loc = new ResourceLocation(resource_domain, resource_path);
@@ -125,11 +167,13 @@ public class BucketHandler {
 				System.out.println(f.getBlock());
 				
 				new_bucket = new CustomBucket(f.getBlock(), res_loc, emptyBucket, bucket_info.tab, bucket_info.color, material);
+				new_bucket.setMaxStackSize(1);
 				
 				strfld = new StringFluid();
 				strfld.f = f;
 				strfld.str = material;
 				
+				new_bucket.setLocalizedName(f.getLocalizedName(new FluidStack(f, 1000)) + " " + bucket_info.material_name + " " + Items.BUCKET.getItemStackDisplayName(new ItemStack(Items.BUCKET)));
 				allBucketList.put(new_bucket, strfld);
 			}
 		}

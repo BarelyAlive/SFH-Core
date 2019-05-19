@@ -24,7 +24,7 @@ public class FluidCustomBucketColorer implements IItemColor
         {
         	return bucket.getColor();
         }
-        else if (tintIndex == 0)
+        else
         {
 	        Block b = bucket.getContainedBlock();
 	        if (b == Blocks.AIR)
@@ -34,14 +34,25 @@ public class FluidCustomBucketColorer implements IItemColor
 	        }
 	        try {
 	        	// First get Texture and then 1 Pixel from the Fluid
-	        	IBakedModel res = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(new ItemStack(b));
-		        return ((res.getParticleTexture().getFrameTextureData(0)[0][0] & 0xFFFFFF) | 0x00000000);
+	        	if (b == Blocks.LAVA || b == Blocks.FLOWING_LAVA)
+	        	{
+	        		return 0xFFDC711D;
+	        	}
+	        	else if (b == Blocks.WATER || b == Blocks.FLOWING_WATER)
+	        	{
+	        		return 0xFF354FF4;
+	        	}
+	        	else
+	        	{
+		        	IBakedModel res = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(new ItemStack(b));
+			        return ((res.getParticleTexture().getFrameTextureData(0)[0][0] & 0xFFFFFF) | 0xFF000000);
+	        	}
 			} catch (Exception e) {
 	        	e.printStackTrace();
 	        	return pixel;
 			}
         }
-        return 0xFF000000;
+        //return 0xFF000000;
 	}
 	
 }

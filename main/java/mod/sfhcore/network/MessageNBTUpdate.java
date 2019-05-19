@@ -52,7 +52,11 @@ public class MessageNBTUpdate implements IMessage {
 				public void run()
 				{
 					TileEntity entity =  Minecraft.getMinecraft().player.world.getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
-					entity.readFromNBT(msg.tag);
+					if (entity != null)
+					{
+						entity.readFromNBT(msg.tag);
+					}
+					
 				}
 			});
 			return null;

@@ -124,7 +124,7 @@ public class SFHCore
     @Mod.EventHandler
     public void load(FMLInitializationEvent event)
     {
-    	MinecraftForge.EVENT_BUS.register(new CustomFuelHandler());    
+    	MinecraftForge.EVENT_BUS.register(new CustomFuelHandler());
     }
     
     @Mod.EventHandler
