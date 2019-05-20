@@ -36,7 +36,6 @@ public class TankUtil
                     return true;
             }
         }
-
         return false;
     }
 
@@ -56,8 +55,6 @@ public class TankUtil
                 }
             }
         }
-
         return false;
     }
-
 }
