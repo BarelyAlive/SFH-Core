@@ -361,6 +361,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	{
 		return true;
 	}
+	
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		int[] valid_slot = this.getSlotsForFace(direction);
