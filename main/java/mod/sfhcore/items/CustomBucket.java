@@ -15,9 +15,11 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
@@ -172,6 +174,12 @@ public class CustomBucket extends Item implements IFluidHandler{
         ItemStack held = playerIn.getHeldItem(handIn);
         RayTraceResult raytraceresult = this.rayTrace(worldIn, playerIn, flag);
         
+        if (FluidRegistry.lookupFluidForBlock(((CustomBucket) held.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
+        {
+            playerIn.setActiveHand(handIn);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, held);
+        }
+        
         if (raytraceresult == null)
             return new ActionResult<ItemStack>(EnumActionResult.PASS, held);
         
@@ -271,6 +279,54 @@ public class CustomBucket extends Item implements IFluidHandler{
         {
             return super.initCapabilities(stack, nbt);
         }
+    }
+
+    /**
+     * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
+     * the Item before the action is complete.
+     */
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
+    {
+        if (!worldIn.isRemote) entityLiving.curePotionEffects(stack); // FORGE - move up so stack.shrink does not turn stack into air
+        
+        if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
+        {
+	        if (entityLiving instanceof EntityPlayerMP)
+	        {
+	            EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
+	            CriteriaTriggers.CONSUME_ITEM.trigger(entityplayermp, stack);
+	            entityplayermp.addStat(StatList.getObjectUseStats(this));
+	        }
+	
+	        if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)
+	        {
+	        	CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
+	            stack.shrink(1);
+	            ((EntityPlayer)entityLiving).addItemStackToInventory(new ItemStack(emptyBucket));
+	        }
+        }
+
+        return stack.isEmpty() ? empty : stack;
+    }
+
+    /**
+     * How long it takes to use or consume an item
+     */
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
+    	if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
+    		return 32;
+    	return 0;
+    }
+
+    /**
+     * returns the action that specifies what animation to play when the items is being used
+     */
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
+    	if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
+    		return EnumAction.DRINK;
+        return EnumAction.NONE;
     }
 
     @Override
