@@ -32,7 +32,7 @@ import mod.sfhcore.network.NetworkHandler;
 
 public class TileInventory extends TileBase implements ISidedInventory, ITickable, IInteractionObject
 {
-	private NonNullList<ItemStack> machineItemStacks;
+	protected NonNullList<ItemStack> machineItemStacks;
 	private int maxworkTime = 0;
 	
 	public int getMaxworkTime() {
@@ -130,8 +130,10 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     {
     	ItemStack output = machineItemStacks.get(index).copy();
     	if(!output.isEmpty())
+    	{
     		if(output.getCount() == output.getMaxStackSize()) return;
     		else if((output.getMaxStackSize() - output.getCount()) < input.getCount()) return;
+    	}
     	
         machineItemStacks.set(index, input);
 
