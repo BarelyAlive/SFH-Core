@@ -3,6 +3,7 @@ package mod.sfhcore.helper;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class NameHelper
 {
@@ -26,6 +27,19 @@ public class NameHelper
 				return block.getRegistryName().getResourcePath();
 			} catch (NullPointerException e) {
 				LogUtil.fatal("SFHCore tried to get the name of a block, but it was null");
+				e.printStackTrace();
+			}
+		
+		return null;
+	}
+	
+	public static String getName(ItemStack stack)
+	{
+		if(NotNull.checkNotNull(stack))
+			try {
+				return stack.getItem().getRegistryName().getResourcePath();
+			} catch (NullPointerException e) {
+				LogUtil.fatal("SFHCore tried to get the name of an ItemStack, but it was null");
 				e.printStackTrace();
 			}
 		

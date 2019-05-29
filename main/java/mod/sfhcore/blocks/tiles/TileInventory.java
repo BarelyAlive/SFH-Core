@@ -32,7 +32,7 @@ import mod.sfhcore.network.NetworkHandler;
 
 public class TileInventory extends TileBase implements ISidedInventory, ITickable, IInteractionObject
 {
-	private NonNullList<ItemStack> machineItemStacks;
+	protected NonNullList<ItemStack> machineItemStacks;
 	private int maxworkTime = 0;
 	
 	public int getMaxworkTime() {
@@ -60,8 +60,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	protected String machineCustomName;
 	
 	public TileInventory(int invSize, String machineCustomName) {
-		this.setCustomInventoryName(machineCustomName);
-		this.machineItemStacks = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
+		setCustomInventoryName(machineCustomName);
+		machineItemStacks = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
 	}
 
     /**
@@ -69,7 +69,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
      */
     public boolean isWorking()
     {
-        return this.getWorkTime() > 0;
+        return getWorkTime() > 0;
     }
 	
     @SideOnly(Side.CLIENT)
@@ -86,13 +86,13 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	@Override
     public int getSizeInventory()
     {
-        return this.machineItemStacks.size();
+        return machineItemStacks.size();
     }
 	
     @Override
     public boolean isEmpty()
     {
-        for (ItemStack itemstack : this.machineItemStacks)
+        for (ItemStack itemstack : machineItemStacks)
             if(!itemstack.isEmpty())
                 return false;
 
@@ -105,12 +105,12 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     @Override
     public ItemStack decrStackSize(int index, int count)
     {
-        return ItemStackHelper.getAndSplit(this.machineItemStacks, index, count);
+    	return ItemStackHelper.getAndSplit(machineItemStacks, index, count);
     }
     
     public void setCustomInventoryName(String name)
     {
-        this.machineCustomName = name;
+        machineCustomName = name;
     }
 
     /**
@@ -119,28 +119,30 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     @Override
     public ItemStack removeStackFromSlot(int index)
     {
-        return ItemStackHelper.getAndRemove(this.machineItemStacks, index);
+        return ItemStackHelper.getAndRemove(machineItemStacks, index);
     }
 	
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack)
+    public void setInventorySlotContents(int index, @Nonnull ItemStack input)
     {
-    	ItemStack itemstack = this.machineItemStacks.get(index);
-        boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
-        this.machineItemStacks.set(index, stack);
+    	ItemStack output = machineItemStacks.get(index).copy();
+	
+    	if(!output.isEmpty())
+    	{
+    		if(output.getCount() == output.getMaxStackSize()) return;
+    		else if((output.getMaxStackSize() - output.getCount()) < input.getCount()) return;
 
-        if(stack.getCount() > this.getInventoryStackLimit())
-        {
-            stack.setCount(this.getInventoryStackLimit());
-        }
+    	}
+	
+    	
+        machineItemStacks.set(index, input);
 
-        if(index == 0 && !flag)
+        if(input.getCount() > getInventoryStackLimit())
         {
-            this.setWorkTime(0);
-            this.markDirty();
+            input.setCount(getInventoryStackLimit());
         }
     }
     
@@ -159,7 +161,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     @Override
     public boolean hasCustomName()
     {
-        return this.machineCustomName != null && !this.machineCustomName.isEmpty();
+        return machineCustomName != null && !machineCustomName.isEmpty();
     }
 
 	@Override
@@ -169,11 +171,11 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer player) {
-		if(!(this.world.getTileEntity(this.pos) instanceof TileInventory)) return false;
+		if(!(world.getTileEntity(pos) instanceof TileInventory)) return false;
         return player.getDistanceSq(
-        		(double)this.pos.getX() + 0.5D,
-        		(double)this.pos.getY() + 0.5D,
-        		(double)this.pos.getZ() + 0.5D) <= 64.0D;
+        		(double)pos.getX() + 0.5D,
+        		(double)pos.getY() + 0.5D,
+        		(double)pos.getZ() + 0.5D) <= 64.0D;
 	}
 	
 	//Networking & NBT
@@ -185,27 +187,27 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-        ItemStackHelper.loadAllItems(nbt, this.machineItemStacks);
-		this.setWorkTime(nbt.getShort("workTime"));
+        ItemStackHelper.loadAllItems(nbt, machineItemStacks);
+		setWorkTime(nbt.getShort("workTime"));
 		super.readFromNBT(nbt);
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		ItemStackHelper.saveAllItems(nbt, this.machineItemStacks);
-		nbt.setShort("workTime", (short)this.getWorkTime());
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
+		ItemStackHelper.saveAllItems(nbt, machineItemStacks);
+		nbt.setShort("workTime", (short)getWorkTime());
 		return super.writeToNBT(nbt);
 	}
 	
 	//ggggg
 
 	public int getWorkTimeRemainingScaled(int i) {
-		return this.getWorkTime() * i / this.getMaxworkTime();
+		return getWorkTime() * i / getMaxworkTime();
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		return this.machineItemStacks.get(index);
+		return machineItemStacks.get(index);
 	}
 
 	@Override
@@ -238,7 +240,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	@Override
 	public void clear() {
-		this.machineItemStacks.clear();
+		machineItemStacks.clear();
 	}
 	
 	@Override
@@ -257,7 +259,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	
 	public void extractFromInventory(BlockPos pos, EnumFacing facing)
 	{
-		TileEntity te = this.getWorld().getTileEntity(pos);
+		TileEntity te = getWorld().getTileEntity(pos);
 		ItemStack stack= ItemStack.EMPTY;
 		IInventory inventory = null;
 		if(te == null) return;
@@ -268,16 +270,16 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		{
 			stack = inventory.getStackInSlot(i);
 			if(stack.isEmpty()) continue;
-			for (int j = 0; j < this.getSizeInventory(); j++)
+			for (int j = 0; j < getSizeInventory(); j++)
 			{
-				if(!this.canInsertItem(j, stack, facing)) continue;
-				if(!this.canExtractFromInventory(j, stack)) continue;
-				ItemStack this_stack = this.getStackInSlot(j);
+				if(!canInsertItem(j, stack, facing)) continue;
+				if(!canExtractFromInventory(j, stack)) continue;
+				ItemStack this_stack = getStackInSlot(j);
 				if(this_stack.isEmpty())
 				{
-					this.setInventorySlotContents(j, stack);
+					setInventorySlotContents(j, stack);
 					inventory.setInventorySlotContents(i, ItemStack.EMPTY);
-					j = this.getSizeInventory();
+					j = getSizeInventory();
 				}
 				else
 				{
@@ -292,11 +294,11 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 					{
 						stack = ItemStack.EMPTY;
 					}
-					this.setInventorySlotContents(j, this_stack);
+					setInventorySlotContents(j, this_stack);
 					inventory.setInventorySlotContents(i, stack);
 					if(stack == ItemStack.EMPTY)
 					{
-						j = this.getSizeInventory();
+						j = getSizeInventory();
 					}
 				}
 			}
@@ -310,16 +312,16 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	public void insertToInventory(BlockPos pos, EnumFacing facing)
 	{
-		TileEntity te = this.getWorld().getTileEntity(pos);
+		TileEntity te = getWorld().getTileEntity(pos);
 		ItemStack stack= ItemStack.EMPTY;
 		IInventory inventory = null;
 		if(te == null) return;
 		if(!(te instanceof IInventory)) return;
 		inventory = ((IInventory)te);
 		
-		for (int i = 0; i < this.getSizeInventory(); i++)
+		for (int i = 0; i < getSizeInventory(); i++)
 		{
-			stack = this.getStackInSlot(i);
+			stack = getStackInSlot(i);
 			if(stack.isEmpty()) continue;
 			if(!isItemValidForSlotToExtract(i, stack)) continue;
 			if(!canInsertToInventory(i, stack)) continue;
@@ -330,7 +332,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 				if(inventory_stack.isEmpty())
 				{
 					inventory.setInventorySlotContents(j, stack);
-					this.setInventorySlotContents(i, ItemStack.EMPTY);
+					setInventorySlotContents(i, ItemStack.EMPTY);
 					j = inventory.getSizeInventory();
 				}
 				else
@@ -347,10 +349,10 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 						stack = ItemStack.EMPTY;
 					}
 					inventory.setInventorySlotContents(j, inventory_stack);
-					this.setInventorySlotContents(i, stack);
+					setInventorySlotContents(i, stack);
 					if(stack == ItemStack.EMPTY)
 					{
-						j = this.getSizeInventory();
+						j = getSizeInventory();
 					}
 				}
 			}
@@ -361,9 +363,10 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	{
 		return true;
 	}
+	
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		int[] valid_slot = this.getSlotsForFace(direction);
+		int[] valid_slot = getSlotsForFace(direction);
 		for (int i = 0; i < valid_slot.length; i++)
 			if(valid_slot[i] == index)
 				return isItemValidForSlot(index, itemStackIn);
@@ -374,7 +377,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
 	{
-		int[] valid_slot = this.getSlotsForFace(direction);
+		int[] valid_slot = getSlotsForFace(direction);
 		for (int i = 0; i < valid_slot.length; i++)
 			if(valid_slot[i] == index)
 				return isItemValidForSlotToExtract(index, stack);
