@@ -134,11 +134,9 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     	{
     		if(output.getCount() == output.getMaxStackSize()) return;
     		else if((output.getMaxStackSize() - output.getCount()) < input.getCount()) return;
-<<<<<<< HEAD
+
     	}
-=======
 	*/
->>>>>>> ee2527fb3aee7867702ad0d4ad104e9242c31b96
     	
         machineItemStacks.set(index, input);
 
@@ -195,7 +193,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		ItemStackHelper.saveAllItems(nbt, machineItemStacks);
 		nbt.setShort("workTime", (short)getWorkTime());
 		return super.writeToNBT(nbt);
