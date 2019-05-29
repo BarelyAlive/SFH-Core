@@ -129,11 +129,16 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     public void setInventorySlotContents(int index, @Nonnull ItemStack input)
     {
     	ItemStack output = machineItemStacks.get(index).copy();
+	/*
     	if(!output.isEmpty())
     	{
     		if(output.getCount() == output.getMaxStackSize()) return;
     		else if((output.getMaxStackSize() - output.getCount()) < input.getCount()) return;
+<<<<<<< HEAD
     	}
+=======
+	*/
+>>>>>>> ee2527fb3aee7867702ad0d4ad104e9242c31b96
     	
         machineItemStacks.set(index, input);
 
