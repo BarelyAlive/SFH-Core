@@ -275,6 +275,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 					if(this_stack.getCount() > this_stack.getMaxStackSize())
 					{
 						stack.setCount(this_stack.getCount() - this_stack.getMaxStackSize());
+						this_stack.setCount(this_stack.getMaxStackSize());
 					}
 					else
 					{
