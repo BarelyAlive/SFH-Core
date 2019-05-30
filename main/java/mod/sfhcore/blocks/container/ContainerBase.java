@@ -159,23 +159,16 @@ public class ContainerBase extends Container {
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-	}
-	
-	/*
-	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
 		for (int i = 0; i < this.listeners.size(); i++)
 		{
 			IContainerListener iconlis = (IContainerListener)this.listeners.get(i);
-			if (this.tileentity.workTime != this.tileentity.workTime)
+			if (this.tileentity.getWorkTime() != this.tileentity.getWorkTime())
 			{
-				iconlis.sendWindowProperty(this, 0, this.tileentity.getField(0));
+				iconlis.sendWindowProperty(this, 0, this.tileentity.getWorkTime());
 			}
 		}
-		this.tileentity.workTime = this.tileentity.getField(0);
+		this.tileentity.setWorkTime(this.tileentity.getWorkTime());
 	}
-	*/
 	
 	@SideOnly(Side.CLIENT)
 	@Override
