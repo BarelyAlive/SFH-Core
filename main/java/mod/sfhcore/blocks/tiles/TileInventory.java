@@ -61,7 +61,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	
 	public TileInventory(int invSize, String machineCustomName) {
 		setCustomInventoryName(machineCustomName);
-		machineItemStacks = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
+		machineItemStacks = NonNullList.<ItemStack>withSize(invSize, new ItemStack(Blocks.AIR));
 	}
 
     /**
@@ -128,22 +128,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     @Override
     public void setInventorySlotContents(int index, @Nonnull ItemStack input)
     {
-    	ItemStack output = machineItemStacks.get(index).copy();
-	
-    	if(!output.isEmpty())
-    	{
-    		if(output.getCount() == output.getMaxStackSize()) return;
-    		else if((output.getMaxStackSize() - output.getCount()) < input.getCount()) return;
-
-    	}
-	
-    	
         machineItemStacks.set(index, input);
-
-        if(input.getCount() > getInventoryStackLimit())
-        {
-            input.setCount(getInventoryStackLimit());
-        }
+        this.markDirty();
     }
     
     /**
