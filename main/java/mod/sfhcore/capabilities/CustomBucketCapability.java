@@ -48,6 +48,14 @@ public class CustomBucketCapability implements IFluidHandlerItem, ICapabilityPro
     @Nullable
     public FluidStack getFluid()
     {
+		if (this.container.getItem() == null)
+		{
+			return null;
+		}
+		if (((CustomBucket)this.container.getItem()).getContainedBlock() == null)
+		{
+			return null;
+		}
         if (!(((CustomBucket)this.container.getItem()).getContainedBlock().equals(Blocks.AIR)))
         {
         	if (FluidRegistry.lookupFluidForBlock(((CustomBucket)this.container.getItem()).getContainedBlock()) != null)
