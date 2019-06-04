@@ -3,6 +3,9 @@ package mod.sfhcore.helper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -20,12 +23,11 @@ public class Tools {
 	 * @param hoehe
 	 * @return
 	 */
-	public static boolean checkBlockArea(World world, IBlockState block, BlockPos pos, int laenge, int breite, int hoehe){
-		
+	public static boolean checkBlockArea(World world, IBlockState block, BlockPos pos, int laenge, int breite, int hoehe)
+	{
 		int zahl = pos.getX();
 		int zahl2 = pos.getY();
 		int zahl3 = pos.getZ();
-		
 		
 		for(int numba3 = hoehe; numba3 > 0; numba3--){
 			for(int numba2 = laenge; numba2 > 0; numba2--){
@@ -43,12 +45,11 @@ public class Tools {
 		return true;
 	}
 	
-	public static boolean checkBlockArea(World world, IBlockState[] block, BlockPos pos, int laenge, int breite, int hoehe){
-		
+	public static boolean checkBlockArea(World world, IBlockState[] block, BlockPos pos, int laenge, int breite, int hoehe)
+	{	
 		int zahl = pos.getX();
 		int zahl2 = pos.getY();
-		int zahl3 = pos.getZ();
-		
+		int zahl3 = pos.getZ();	
 		
 		for(int numba3 = hoehe; numba3 > 0; numba3--){
 			for(int numba2 = laenge; numba2 > 0; numba2--){
@@ -67,13 +68,4 @@ public class Tools {
 		}
 		return true;
 	}
-	
-	public boolean checkHandEmpty(EntityPlayer player){
-    	if(player.inventory.getCurrentItem() == null){
-    		return true;
-    	}
-    	else{
-    		return false;
-    	}
-    }
 }
