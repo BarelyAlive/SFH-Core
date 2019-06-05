@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.logging.Log;
 
 import mod.sfhcore.helper.NotNull;
+import mod.sfhcore.util.ItemInfo;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
@@ -81,20 +82,20 @@ public class CustomFuelHandler{
 	 * @param time
 	 * @return
 	 */
-	public static boolean addFuelBurnTime(@Nonnull ItemStack stack, @Nonnull int time)
+	public static boolean addFuelBurnTime(@Nonnull ItemInfo item, @Nonnull int time)
 	{
-		if(stack.isEmpty())
+		if(item.getItemStack().isEmpty())
 		{
 			LogUtil.error("Nice try!");
 			return false;
 		}
-		if(stack.getItem().getRegistryName() == null)
+		if(item.getItem().getRegistryName() == null)
 		{
 			LogUtil.warn("SFHCore tried to add an item which has no registry name!");
 			return false;
 		}
 		
-		return fuelList.add(new ImmutablePair<ItemStack, Integer>(stack, time));
+		return fuelList.add(new ImmutablePair<ItemStack, Integer>(item.getItemStack(), time));
 	}
 	
 }
