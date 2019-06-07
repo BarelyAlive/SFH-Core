@@ -44,25 +44,23 @@ public class MessageNBTUpdate implements IMessage {
 		this.tag = ByteBufUtils.readTag(buf);
 	}
 
-	public static class MessageNBTUpdateHandler implements IMessageHandler<MessageNBTUpdate, IMessage> 
-	{
-		@Override
-		public IMessage onMessage(final MessageNBTUpdate msg, MessageContext ctx)
-		{
-			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-				@Override
-				public void run()
-				{
-					TileEntity entity =  Minecraft.getMinecraft().player.world.getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
-					if (entity != null)
-					{
-						entity.readFromNBT(msg.tag);
-					}
-					
-				}
-			});
-			return null;
-		}
+	public static class MessageNBTUpdateHandler implements IMessageHandler<MessageNBTUpdate, IMessage> {
+        @Override
+        @SideOnly(Side.CLIENT)
+        public IMessage onMessage(final MessageNBTUpdate msg, MessageContext ctx) {
+            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+                @Override
+                @SideOnly(Side.CLIENT)
+                public void run() {
+                    TileEntity entity = Minecraft.getMinecraft().player.getEntityWorld().getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
+
+                    if (entity != null) {
+                        entity.readFromNBT(msg.tag);
+                    }
+                }
+            });
+            return null;
+        }
 	}
 		
 	/****

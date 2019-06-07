@@ -4,6 +4,7 @@ import java.util.List;
 
 import mod.sfhcore.SFHCore;
 import mod.sfhcore.proxy.SFHCoreClientProxy;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +33,9 @@ public class RegisterItems {
 		{			
         	loc = item.getRegistryName();
         	
-	        ((SFHCoreClientProxy)SFHCore.proxy).tryHandleItemModel(item, loc);
+	        if (!RegisterBlocks.getBlocks().contains(Block.getBlockFromItem(item))) {
+				((SFHCoreClientProxy) SFHCore.proxy).tryHandleItemModel(item, loc);
+			}
 		}
 	}
 }

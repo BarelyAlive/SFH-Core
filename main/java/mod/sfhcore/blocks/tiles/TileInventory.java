@@ -77,6 +77,10 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
     {
         return inventory.getWorkTime() > 0;
     }
+    
+    public int getWorkTimeRemainingScaled(int i) {
+		return getWorkTime() * i / getMaxworkTime();
+	}
 
 	public void update() {}
 
@@ -186,11 +190,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	}
 
 	//ggggg
-
-	public int getWorkTimeRemainingScaled(int i) {
-		return getWorkTime() * i / getMaxworkTime();
-	}
-
+	
 	@Override
 	public ItemStack getStackInSlot(int index) {
 		return machineItemStacks.get(index);
@@ -213,15 +213,18 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	@Override
 	public int getField(int id){
-		return id;
+		if (id == 0) return this.getWorkTime();
+		return 0;
 	}
 
 	@Override
-	public void setField(int id, int value) {}
+	public void setField(int id, int value) {
+		if (id == 0) this.setWorkTime(value);
+	}
 
 	@Override
 	public int getFieldCount() {
-		return 0;
+		return 1;
 	}
 
 	@Override
