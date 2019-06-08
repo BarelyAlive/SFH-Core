@@ -5,6 +5,7 @@ import mod.sfhcore.helper.NotNull;
 import mod.sfhcore.util.LogUtil;
 import mod.sfhcore.vars.TE2Block;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -28,13 +29,16 @@ public class Registry extends NameHelper
 			
 			RegisterBlocks.getBlocks().add(block);
 			
-			//Create ItemBlock
-			Item item = new ItemBlock(block);
+			if (!(block instanceof BlockSlab))
+			{
+				//Create ItemBlock
+				Item item = new ItemBlock(block);
 			
-			item.setUnlocalizedName("item_" + getName(block));
-			item.setRegistryName(getModID(block), "item_" + getName(block));
+				item.setUnlocalizedName("item_" + getName(block));
+				item.setRegistryName(getModID(block), "item_" + getName(block));
 			
-			RegisterItems.getItems().add(item);
+				RegisterItems.getItems().add(item);
+			}
 		}
 		
 		return block;
