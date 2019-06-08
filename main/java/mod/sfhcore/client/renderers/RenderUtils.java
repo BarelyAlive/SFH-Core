@@ -1,6 +1,5 @@
 package mod.sfhcore.client.renderers;
 
-
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.vertex.VertexFormat;
