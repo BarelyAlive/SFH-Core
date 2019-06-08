@@ -54,7 +54,6 @@ public class RegisterBlocks {
 		for(ItemBlock block : itemblocks)
 		{	
 			loc = block.getRegistryName();
-			((SFHCoreClientProxy) SFHCore.proxy).tryHandleBlockModel(block.getBlock(), block.getBlock().getRegistryName());
 			((SFHCoreClientProxy) SFHCore.proxy).tryHandleBlockModel(block, loc);
 		}
 	}

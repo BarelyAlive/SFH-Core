@@ -29,7 +29,7 @@ public class Registry extends NameHelper
 			RegisterBlocks.getBlocks().add(block);
 			
 			//Create ItemBlock
-			ItemBlock item = new ItemBlock(block);
+			Item item = new ItemBlock(block);
 			
 			item.setUnlocalizedName("item_" + getName(block));
 			item.setRegistryName(getModID(block), "item_" + getName(block));
