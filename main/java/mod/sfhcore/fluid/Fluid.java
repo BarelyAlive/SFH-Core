@@ -1,4 +1,4 @@
-package mod.sfhcore.blocks;
+package mod.sfhcore.fluid;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;

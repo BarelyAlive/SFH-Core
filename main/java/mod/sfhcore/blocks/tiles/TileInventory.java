@@ -34,6 +34,9 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 {
 	protected NonNullList<ItemStack> machineItemStacks;
 	private int maxworkTime = 0;
+	
+	private int pullTick = 0;
+	private int pushTick = 0;
 
 	public int getMaxworkTime() {
 		return maxworkTime;
@@ -179,6 +182,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	public void readFromNBT(NBTTagCompound nbt) {
         ItemStackHelper.loadAllItems(nbt, machineItemStacks);
 		setWorkTime(nbt.getShort("workTime"));
+		pullTick = nbt.getShort("pullTick");
+		pushTick = nbt.getShort("pushTick");
 		super.readFromNBT(nbt);
 	}
 
@@ -186,6 +191,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		ItemStackHelper.saveAllItems(nbt, machineItemStacks);
 		nbt.setShort("workTime", (short)getWorkTime());
+		nbt.setShort("pullTick", (short) pullTick);
+		nbt.setShort("pushTick", (short) pushTick);
 		return super.writeToNBT(nbt);
 	}
 
@@ -255,43 +262,42 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		if(!(te instanceof IInventory)) return;
 		inventory = ((IInventory)te);
 
-		for (int i = 0; i < inventory.getSizeInventory(); i++)
-		{
-			stack = inventory.getStackInSlot(i);
-			if(stack.isEmpty()) continue;
-			for (int j = 0; j < getSizeInventory(); j++)
-			{
-				if(!canInsertItem(j, stack, facing)) continue;
-				if(!canExtractFromInventory(j, stack)) continue;
-				ItemStack this_stack = getStackInSlot(j);
-				if(this_stack.isEmpty())
-				{
-					setInventorySlotContents(j, stack);
-					inventory.setInventorySlotContents(i, ItemStack.EMPTY);
-					j = getSizeInventory();
-				}
-				else
-				{
-					if(this_stack.getCount() == this_stack.getMaxStackSize()) continue;
-					if(!ItemStack.areItemsEqual(stack, this_stack)) continue;
-					this_stack.setCount(this_stack.getCount() + stack.getCount());
-					if(this_stack.getCount() > this_stack.getMaxStackSize())
-					{
-						stack.setCount(this_stack.getCount() - this_stack.getMaxStackSize());
-						this_stack.setCount(this_stack.getMaxStackSize());
-					}
-					else
-					{
-						stack = ItemStack.EMPTY;
-					}
-					setInventorySlotContents(j, this_stack);
-					inventory.setInventorySlotContents(i, stack);
-					if(stack == ItemStack.EMPTY)
-					{
+		pullTick++;
+		
+		if (pullTick == 20) {
+			for (int i = 0; i < inventory.getSizeInventory(); i++) {
+				stack = inventory.getStackInSlot(i);
+				if (stack.isEmpty())
+					continue;
+				for (int j = 0; j < getSizeInventory(); j++) {
+					if (!canInsertItem(j, stack, facing))
+						continue;
+					if (!canExtractFromInventory(i, stack))
+						continue;
+					ItemStack this_stack = getStackInSlot(j).copy();
+					if (this_stack.isEmpty()) {
+						stack.shrink(1);
+						inventory.setInventorySlotContents(i, stack);
+						this_stack = stack.copy();
+						this_stack.setCount(1);
+						setInventorySlotContents(j, this_stack);
 						j = getSizeInventory();
+					} else {
+						if (this_stack.getCount() == this_stack.getMaxStackSize())
+							continue;
+						if (!ItemStack.areItemsEqual(stack, this_stack))
+							continue;
+						this_stack.grow(1);
+						stack.shrink(1);
+						setInventorySlotContents(j, this_stack.copy());
+						inventory.setInventorySlotContents(i, stack.copy());
+						j = getSizeInventory();
+						i = inventory.getSizeInventory();
+						break;
 					}
 				}
 			}
+			pullTick = 0;
 		}
 	}
 
@@ -309,43 +315,46 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		if(!(te instanceof IInventory)) return;
 		inventory = ((IInventory)te);
 
-		for (int i = 0; i < getSizeInventory(); i++)
-		{
-			stack = getStackInSlot(i);
-			if(stack.isEmpty()) continue;
-			if(!isItemValidForSlotToExtract(i, stack)) continue;
-			if(!canInsertToInventory(i, stack)) continue;
-			for (int j = 0; j < inventory.getSizeInventory(); j++)
-			{
-				ItemStack inventory_stack = inventory.getStackInSlot(j);
-				if(!inventory.isItemValidForSlot(j, stack)) continue;
-				if(inventory_stack.isEmpty())
-				{
-					inventory.setInventorySlotContents(j, stack);
-					setInventorySlotContents(i, ItemStack.EMPTY);
-					j = inventory.getSizeInventory();
-				}
-				else
-				{
-					if(inventory_stack.getCount() == inventory_stack.getMaxStackSize()) continue;
-					if(!ItemStack.areItemsEqual(stack, inventory_stack)) continue;
-					inventory_stack.setCount(inventory_stack.getCount() + stack.getCount());
-					if(inventory_stack.getCount() > inventory_stack.getMaxStackSize())
-					{
-						stack.setCount(inventory_stack.getCount() - inventory_stack.getMaxStackSize());
-					}
-					else
-					{
-						stack = ItemStack.EMPTY;
-					}
-					inventory.setInventorySlotContents(j, inventory_stack);
-					setInventorySlotContents(i, stack);
-					if(stack == ItemStack.EMPTY)
-					{
-						j = getSizeInventory();
+		pushTick++;
+		
+		if (pushTick == 20) {
+			for (int i = 0; i < getSizeInventory(); i++) {
+				stack = getStackInSlot(i);
+				stack.setCount(1);
+				if (stack.isEmpty())
+					continue;
+				if (!isItemValidForSlotToExtract(i, stack))
+					continue;
+				if (!canInsertToInventory(i, stack))
+					continue;
+				for (int j = 0; j < inventory.getSizeInventory(); j++) {
+					ItemStack inventory_stack = inventory.getStackInSlot(j);
+					if (!inventory.isItemValidForSlot(j, stack))
+						continue;
+					if (inventory_stack.isEmpty()) {
+						inventory.setInventorySlotContents(j, stack);
+						setInventorySlotContents(i, ItemStack.EMPTY);
+						j = inventory.getSizeInventory();
+					} else {
+						if (inventory_stack.getCount() == inventory_stack.getMaxStackSize())
+							continue;
+						if (!ItemStack.areItemsEqual(stack, inventory_stack))
+							continue;
+						inventory_stack.setCount(inventory_stack.getCount() + stack.getCount());
+						if (inventory_stack.getCount() > inventory_stack.getMaxStackSize()) {
+							stack.setCount(inventory_stack.getCount() - inventory_stack.getMaxStackSize());
+						} else {
+							stack = ItemStack.EMPTY;
+						}
+						inventory.setInventorySlotContents(j, inventory_stack);
+						setInventorySlotContents(i, stack);
+						if (stack == ItemStack.EMPTY) {
+							j = getSizeInventory();
+						}
 					}
 				}
 			}
+			pushTick = 0;
 		}
 	}
 

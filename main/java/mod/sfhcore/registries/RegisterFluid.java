@@ -2,7 +2,7 @@ package mod.sfhcore.registries;
 
 import java.util.List;
 
-import mod.sfhcore.blocks.Fluid;
+import mod.sfhcore.fluid.Fluid;
 import mod.sfhcore.helper.FluidStateMapper;
 import mod.sfhcore.helper.NameHelper;
 import net.minecraft.block.Block;
