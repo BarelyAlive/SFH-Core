@@ -319,7 +319,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		
 		if (pushTick == 20) {
 			for (int i = 0; i < getSizeInventory(); i++) {
-				stack = getStackInSlot(i);
+				stack = getStackInSlot(i).copy();
 				stack.setCount(1);
 				if (stack.isEmpty())
 					continue;
