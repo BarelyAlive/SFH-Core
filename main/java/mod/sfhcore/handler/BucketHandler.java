@@ -170,6 +170,19 @@ public class BucketHandler {
 						continue;
 					}
 				}
+				
+				if (f.getBlock() == null)
+				{
+					continue;
+				}
+				if (f.getBlock().equals(Blocks.AIR))
+				{
+					continue;
+				}
+				if (!(f.getBlock() instanceof BlockFluidBase))
+				{
+					continue;
+				}
 				resource_domain = bucket_0.getRegistryName().getResourceDomain();
 				resource_path = bucket_0.getRegistryName().getResourcePath() + "_" + name;
 				res_loc = new ResourceLocation(resource_domain, resource_path);
