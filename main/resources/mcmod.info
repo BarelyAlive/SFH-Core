@@ -1,14 +1,14 @@
 [
 {
-  "modid": "SFHCore",
+  "modid": "sfhcore",
   "name": "SFHCore",
-  "description": "Shared Classes for NTM and Chaust",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
+  "description": "Shared Classes for NTM and other mods",
+  "version": "2.0.0",
+  "mcversion": "1.12.2",
   "url": "",
   "updateUrl": "",
-  "authorList": ["SpaceFoxhound"],
-  "credits": "Gaprosys",
+  "authorList": ["Angayoco", "Gaprosys"],
+  "credits": "Gaprosysfor his love and contributions",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
