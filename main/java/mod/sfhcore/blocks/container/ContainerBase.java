@@ -1,19 +1,14 @@
 package mod.sfhcore.blocks.container;
 
+import mod.sfhcore.blocks.tiles.TileInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-
-import mod.sfhcore.blocks.tiles.TileFluidInventory;
-import mod.sfhcore.blocks.tiles.TileInventory;
 
 public class ContainerBase extends Container {
 

@@ -3,7 +3,8 @@ package mod.sfhcore.util;
 import javax.annotation.Nullable;
 
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 /**
  * Utility methods for Capabilities.

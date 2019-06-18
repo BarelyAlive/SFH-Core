@@ -1,5 +1,9 @@
 package mod.sfhcore.blocks.tiles;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import mod.sfhcore.network.NetworkHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -7,11 +11,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import mod.sfhcore.network.NetworkHandler;
 
 public class TileBase extends TileEntity {
 

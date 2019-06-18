@@ -1,6 +1,6 @@
 package mod.sfhcore.client.color;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * original source: https://github.com/mezz/JustEnoughItems/blob/1.12/src/main/java/mezz/jei/color/ColorUtil.java

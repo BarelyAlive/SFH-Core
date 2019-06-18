@@ -1,10 +1,8 @@
 package mod.sfhcore;
 
 import java.io.File;
-import java.util.List;
 
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class Config {
 	

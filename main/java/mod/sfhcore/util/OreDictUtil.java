@@ -1,7 +1,6 @@
 package mod.sfhcore.util;
 
 import mod.sfhcore.Config;
-import mod.sfhcore.util.ItemInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.Loader;

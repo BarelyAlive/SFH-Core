@@ -15,7 +15,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.MathHelper;
 
 public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> extends ItemBlock implements IVariantProvider
 {

@@ -1,14 +1,10 @@
 package mod.sfhcore.registries;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import mod.sfhcore.util.LogUtil;
 import mod.sfhcore.vars.TE2Block;
 import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RegisterTileEntity

@@ -1,12 +1,13 @@
 package mod.sfhcore.proxy;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * Provides a custom {@link ItemMeshDefinition} for automatic registration of

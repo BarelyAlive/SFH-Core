@@ -1,13 +1,12 @@
 package mod.sfhcore.items.model_bucket;
 
-import mod.sfhcore.items.*;
-import net.minecraft.block.*;
-import net.minecraft.client.*;
-import net.minecraft.client.renderer.block.model.*;
-import net.minecraft.client.renderer.color.*;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
-import net.minecraftforge.fluids.*;
+import mod.sfhcore.items.CustomBucket;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 
 public class FluidCustomBucketColorer implements IItemColor
 {

@@ -1,7 +1,6 @@
 package mod.sfhcore.vars;
 
 import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntity;
 
 public class TE2Block {
 	private Block block;
