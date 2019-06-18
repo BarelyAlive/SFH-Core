@@ -31,7 +31,8 @@ public class CustomBucketMilk extends Item
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
      * the Item before the action is complete.
      */
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
+    @Override
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
     {
         if (!worldIn.isRemote) entityLiving.curePotionEffects(stack); // FORGE - move up so stack.shrink does not turn stack into air
         if (entityLiving instanceof EntityPlayerMP)
@@ -52,7 +53,8 @@ public class CustomBucketMilk extends Item
     /**
      * How long it takes to use or consume an item
      */
-    public int getMaxItemUseDuration(ItemStack stack)
+    @Override
+	public int getMaxItemUseDuration(ItemStack stack)
     {
         return 32;
     }
@@ -60,7 +62,8 @@ public class CustomBucketMilk extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAction getItemUseAction(ItemStack stack)
+    @Override
+	public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.DRINK;
     }
@@ -73,7 +76,8 @@ public class CustomBucketMilk extends Item
     /**
      * Called when the equipped item is right clicked.
      */
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    @Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
         playerIn.setActiveHand(handIn);
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));

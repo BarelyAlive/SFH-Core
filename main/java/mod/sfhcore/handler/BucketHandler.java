@@ -225,9 +225,9 @@ public class BucketHandler {
 				ModelDynBucket bucketModel = new ModelDynBucket(null, null, null, fluid, false, true);
 				//bucketModel.LOCATION = new ModelResourceLocation(new ResourceLocation("sfhcore", "bucket"), "inventory");
 				ModelLoaderRegistry.registerLoader(ModelDynBucket.LoaderDynBucket.INSTANCE);
-				ModelLoader.setCustomMeshDefinition(item, stack -> bucketModel.LOCATION);
+				ModelLoader.setCustomMeshDefinition(item, stack -> ModelDynBucket.LOCATION);
 				//ModelLoader.setCustomModelResourceLocation(item, 0, bucketModel.LOCATION);
-				ModelBakery.registerItemVariants(item, bucketModel.LOCATION);
+				ModelBakery.registerItemVariants(item, ModelDynBucket.LOCATION);
 			}
 		}
 	}

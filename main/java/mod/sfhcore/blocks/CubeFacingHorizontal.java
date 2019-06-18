@@ -27,7 +27,8 @@ public class CubeFacingHorizontal extends Block{
 	/**
      * Called by ItemBlocks after a block is set in the world, to allow post-place logic
      */
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    @Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
     }
@@ -37,7 +38,8 @@ public class CubeFacingHorizontal extends Block{
   	/**
        * Convert the given metadata into a BlockState for this Block
        */
-      public IBlockState getStateFromMeta(int meta)
+      @Override
+	public IBlockState getStateFromMeta(int meta)
       {
           EnumFacing enumfacing = EnumFacing.getFront(meta);
 
@@ -52,27 +54,30 @@ public class CubeFacingHorizontal extends Block{
       /**
        * Convert the BlockState into the correct metadata value
        */
-      public int getMetaFromState(IBlockState state)
+      @Override
+	public int getMetaFromState(IBlockState state)
       {
-          return ((EnumFacing)state.getValue(FACING)).getIndex();
+          return state.getValue(FACING).getIndex();
       }
 
       /**
        * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
        * blockstate.
        */
-      public IBlockState withRotation(IBlockState state, Rotation rot)
+      @Override
+	public IBlockState withRotation(IBlockState state, Rotation rot)
       {
-          return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+          return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
       }
 
       /**
        * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
        * blockstate.
        */
-      public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+      @Override
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
       {
-          return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+          return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
       }
       
       @Override
@@ -89,7 +94,7 @@ public class CubeFacingHorizontal extends Block{
               IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
               IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
               IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
-              EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+              EnumFacing enumfacing = state.getValue(FACING);
 
               if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())
               {

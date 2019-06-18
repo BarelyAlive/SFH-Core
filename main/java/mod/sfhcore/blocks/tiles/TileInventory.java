@@ -75,6 +75,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		return getWorkTime() * i / getMaxworkTime();
 	}
 
+	@Override
 	public void update() {}
 
 	/**
@@ -156,9 +157,9 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	public boolean isUsableByPlayer(EntityPlayer player) {
 		if(!(world.getTileEntity(pos) instanceof TileInventory)) return false;
         return player.getDistanceSq(
-        		(double)pos.getX() + 0.5D,
-        		(double)pos.getY() + 0.5D,
-        		(double)pos.getZ() + 0.5D) <= 64.0D;
+        		pos.getX() + 0.5D,
+        		pos.getY() + 0.5D,
+        		pos.getZ() + 0.5D) <= 64.0D;
 	}
 
 	//Networking & NBT

@@ -56,8 +56,8 @@ public class CustomDoor extends Block
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         state = state.getActualState(source, pos);
-        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
-        boolean flag = !((Boolean)state.getValue(OPEN)).booleanValue();
+        EnumFacing enumfacing = state.getValue(FACING);
+        boolean flag = !state.getValue(OPEN).booleanValue();
         boolean flag1 = state.getValue(HINGE) == CustomDoor.EnumHingePosition.RIGHT;
 
         switch (enumfacing)
@@ -123,7 +123,7 @@ public class CustomDoor extends Block
                 state = iblockstate.cycleProperty(OPEN);
                 worldIn.setBlockState(blockpos, state, 10);
                 worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
-                worldIn.playEvent(playerIn, ((Boolean)state.getValue(OPEN)).booleanValue() ? this.getOpenSound() : this.getCloseSound(), pos, 0);
+                worldIn.playEvent(playerIn, state.getValue(OPEN).booleanValue() ? this.getOpenSound() : this.getCloseSound(), pos, 0);
                 return true;
             }
         }
@@ -138,7 +138,7 @@ public class CustomDoor extends Block
             BlockPos blockpos = iblockstate.getValue(HALF) == CustomDoor.EnumDoorHalf.LOWER ? pos : pos.down();
             IBlockState iblockstate1 = pos == blockpos ? iblockstate : worldIn.getBlockState(blockpos);
 
-            if (iblockstate1.getBlock() == this && ((Boolean)iblockstate1.getValue(OPEN)).booleanValue() != open)
+            if (iblockstate1.getBlock() == this && iblockstate1.getValue(OPEN).booleanValue() != open)
             {
                 worldIn.setBlockState(blockpos, iblockstate1.withProperty(OPEN, Boolean.valueOf(open)), 10);
                 worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
@@ -198,11 +198,11 @@ public class CustomDoor extends Block
             {
                 boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(blockpos1);
 
-                if (blockIn != this && (flag || blockIn.getDefaultState().canProvidePower()) && flag != ((Boolean)iblockstate1.getValue(POWERED)).booleanValue())
+                if (blockIn != this && (flag || blockIn.getDefaultState().canProvidePower()) && flag != iblockstate1.getValue(POWERED).booleanValue())
                 {
                     worldIn.setBlockState(blockpos1, iblockstate1.withProperty(POWERED, Boolean.valueOf(flag)), 2);
 
-                    if (flag != ((Boolean)state.getValue(OPEN)).booleanValue())
+                    if (flag != state.getValue(OPEN).booleanValue())
                     {
                         worldIn.setBlockState(pos, state.withProperty(OPEN, Boolean.valueOf(flag)), 2);
                         worldIn.markBlockRangeForRenderUpdate(pos, pos);
@@ -255,7 +255,8 @@ public class CustomDoor extends Block
         return removeHalfBit(k) | (flag ? 8 : 0) | (flag1 ? 16 : 0) | (flag2 ? 32 : 0);
     }
 
-    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
+    @Override
+	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
         return new ItemStack(this.getItem());
     }
@@ -322,13 +323,13 @@ public class CustomDoor extends Block
     @Override
     public IBlockState withRotation(IBlockState state, Rotation rot)
     {
-        return state.getValue(HALF) != CustomDoor.EnumDoorHalf.LOWER ? state : state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+        return state.getValue(HALF) != CustomDoor.EnumDoorHalf.LOWER ? state : state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
     }
 
     @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
     {
-        return mirrorIn == Mirror.NONE ? state : state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING))).cycleProperty(HINGE);
+        return mirrorIn == Mirror.NONE ? state : state.withRotation(mirrorIn.toRotation(state.getValue(FACING))).cycleProperty(HINGE);
     }
 
     @Override
@@ -351,16 +352,16 @@ public class CustomDoor extends Block
                 i |= 1;
             }
 
-            if (((Boolean)state.getValue(POWERED)).booleanValue())
+            if (state.getValue(POWERED).booleanValue())
             {
                 i |= 2;
             }
         }
         else
         {
-            i = i | ((EnumFacing)state.getValue(FACING)).rotateY().getHorizontalIndex();
+            i = i | state.getValue(FACING).rotateY().getHorizontalIndex();
 
-            if (((Boolean)state.getValue(OPEN)).booleanValue())
+            if (state.getValue(OPEN).booleanValue())
             {
                 i |= 4;
             }
@@ -416,12 +417,14 @@ public class CustomDoor extends Block
         UPPER,
         LOWER;
 
-        public String toString()
+        @Override
+		public String toString()
         {
             return this.getName();
         }
 
-        public String getName()
+        @Override
+		public String getName()
         {
             return this == UPPER ? "upper" : "lower";
         }
@@ -432,12 +435,14 @@ public class CustomDoor extends Block
         LEFT,
         RIGHT;
 
-        public String toString()
+        @Override
+		public String toString()
         {
             return this.getName();
         }
 
-        public String getName()
+        @Override
+		public String getName()
         {
             return this == LEFT ? "left" : "right";
         }

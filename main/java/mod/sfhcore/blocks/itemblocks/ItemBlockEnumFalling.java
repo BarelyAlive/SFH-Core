@@ -21,7 +21,7 @@ public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> exten
 
     public ItemBlockEnumFalling(Block block, CreativeTabs tab)
     {
-        super((BlockEnumFalling<E>) block);
+        super(block);
 
         setHasSubtypes(true);
         setRegistryName(((BlockEnumFalling<E>) block).getRegistryName());

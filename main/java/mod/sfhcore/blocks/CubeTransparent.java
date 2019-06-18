@@ -23,23 +23,27 @@ public class CubeTransparent extends Cube{
 		setLightOpacity(15);
 	}
 	
+	@Override
 	public int quantityDropped(Random random)
     {
         return 1;
     }
 
-    @SideOnly(Side.CLIENT)
+    @Override
+	@SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
         return BlockRenderLayer.CUTOUT;
     }
 
-    public boolean isFullCube(IBlockState state)
+    @Override
+	public boolean isFullCube(IBlockState state)
     {
         return false;
     }
 
-    protected boolean canSilkHarvest()
+    @Override
+	protected boolean canSilkHarvest()
     {
         return true;
     }

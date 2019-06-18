@@ -34,9 +34,9 @@ public class GuiHandler implements IGuiHandler {
 			for(Pair<Class<GuiContainer>, Class<Container>> tc : teco) {
 				if(te1.getClass().equals(tc.getLeft().getClass())){
 					
-					Class<Container> c = (Class<Container>) tc.getRight();
+					Class<Container> c = tc.getRight();
 					try {
-						Constructor<Container> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
+						Constructor<Container> con = c.getConstructor(player.inventory.getClass(), te1.getClass());
 						return con.newInstance(player.inventory, te1);
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -59,7 +59,7 @@ public class GuiHandler implements IGuiHandler {
 				Class<GuiContainer> c = tc.getLeft();
 				
 				try {
-					Constructor<GuiContainer> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
+					Constructor<GuiContainer> con = c.getConstructor(player.inventory.getClass(), te1.getClass());
 				return con.newInstance(player.inventory, te1);
 				} catch (Exception ex) {
 					ex.printStackTrace();

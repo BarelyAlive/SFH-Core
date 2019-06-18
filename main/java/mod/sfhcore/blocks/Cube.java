@@ -1,6 +1,7 @@
 package mod.sfhcore.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,22 +26,22 @@ public class Cube extends Block
 		setRegistryName(loc);
 		this.te = te;
 		if(material == Material.GROUND){
-			setSoundType(blockSoundType.GROUND);;
+			setSoundType(SoundType.GROUND);;
 		}
 		if(material == Material.ROCK){
-			setSoundType(blockSoundType.STONE);
+			setSoundType(SoundType.STONE);
 		}
 		if(material == Material.SAND){
-			setSoundType(blockSoundType.SAND);
+			setSoundType(SoundType.SAND);
 		}
 		if(material == Material.GLASS){
-			setSoundType(blockSoundType.GLASS);
+			setSoundType(SoundType.GLASS);
 		}
 		if(material == Material.GRASS){
-			setSoundType(blockSoundType.GROUND);
+			setSoundType(SoundType.GROUND);
 		}
 		if(material == Material.WOOD){
-			setSoundType(blockSoundType.WOOD);
+			setSoundType(SoundType.WOOD);
 		}
 	}
 	
