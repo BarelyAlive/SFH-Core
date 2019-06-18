@@ -8,10 +8,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SFHCoreClientProxy extends SFHCoreProxy{
     
+	private final String INVENTORY = "inventory";
+	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void tryHandleBlockModel(Block block, ResourceLocation loc)
     {
         if (block instanceof IVariantProvider)
@@ -25,11 +30,12 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         }
         else
         {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(loc, "inventory"));
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(loc, INVENTORY));
         }
     }
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void tryHandleBlockModel(ItemBlock block, ResourceLocation loc)
     {
         if (block instanceof IVariantProvider)
@@ -43,11 +49,12 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         }
         else
         {
-			ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(loc, "inventory"));
+			ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(loc, INVENTORY));
         }
     }
 
 	@Override
+	@SideOnly(Side.CLIENT)
     public void tryHandleItemModel(Item item, ResourceLocation loc)
     {
         if (item instanceof IVariantProvider)
@@ -62,7 +69,7 @@ public class SFHCoreClientProxy extends SFHCoreProxy{
         else
         {
             if (!item.getHasSubtypes()) {
-				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
+				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, INVENTORY));
 			}
         }
     }	
