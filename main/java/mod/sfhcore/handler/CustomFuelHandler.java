@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import mod.sfhcore.Config;
 import mod.sfhcore.helper.NotNull;
 import mod.sfhcore.util.ItemInfo;
 import mod.sfhcore.util.LogUtil;
@@ -42,7 +43,7 @@ public class CustomFuelHandler{
 		Item item = stack.getItem();
 		
 		FluidStack f = FluidUtil.getFluidContained(stack);
-		if(f != null)
+		if(f != null &&  Config.useAllLavaContainer)
 		{
 			if (f.getFluid() == FluidRegistry.LAVA && f.amount > 1000) {
 				IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
@@ -56,7 +57,7 @@ public class CustomFuelHandler{
 		try {
 			burnTime = item.getItemBurnTime(stack);
 		} catch (NullPointerException ex) {
-			LogUtil.fatal("SFHCore tried to get the burn time of " + item.getRegistryName() + " and it was NULL!");
+			LogUtil.fatal("SFHCore tried to get the burn time of " + item.getRegistryName() + " and it was NULL! Duh!");
 		}
 						
 		if(burnTime < 0)
