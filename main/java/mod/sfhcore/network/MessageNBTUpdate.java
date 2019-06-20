@@ -1,7 +1,7 @@
 package mod.sfhcore.network;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -46,13 +46,12 @@ public class MessageNBTUpdate implements IMessage {
 
 	public static class MessageNBTUpdateHandler implements IMessageHandler<MessageNBTUpdate, IMessage> {
         @Override
-        @SideOnly(Side.CLIENT)
-        public IMessage onMessage(final MessageNBTUpdate msg, MessageContext ctx) {
-        	ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
+        public IMessage onMessage(final MessageNBTUpdate msg, MessageContext ctx)
+        {
+        	net.minecraft.client.Minecraft.getMinecraft().addScheduledTask(new Runnable() {
                 @Override
-                @SideOnly(Side.CLIENT)
                 public void run() {
-                    TileEntity entity = Minecraft.getMinecraft().player.getEntityWorld().getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
+                    TileEntity entity = net.minecraft.client.Minecraft.getMinecraft().world.getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
 
                     if (entity != null) {
                         entity.readFromNBT(msg.tag);

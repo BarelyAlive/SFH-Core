@@ -1,7 +1,7 @@
 package mod.sfhcore.network;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -61,7 +61,7 @@ public class MessageCheckLight implements IMessage
         {
             BlockPos pos = new BlockPos(message.getX(), message.getY(), message.getZ());
             
-            Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().world.checkLight(pos));
+            net.minecraft.client.Minecraft.getMinecraft().addScheduledTask(() -> net.minecraft.client.Minecraft.getMinecraft().world.checkLight(pos));
             
             return null;
         }
