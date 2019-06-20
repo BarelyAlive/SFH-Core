@@ -48,7 +48,7 @@ public class MessageNBTUpdate implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(final MessageNBTUpdate msg, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+        	ctx.getServerHandler().player.getServerWorld().addScheduledTask(new Runnable() {
                 @Override
                 @SideOnly(Side.CLIENT)
                 public void run() {
