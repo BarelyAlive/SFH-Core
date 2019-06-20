@@ -1,14 +1,13 @@
 package mod.sfhcore;
 
 import java.io.File;
-import java.util.List;
 
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class Config {
 	
 	public static String[] oreDictPreferenceOrder = {"thermalfoundation", "immersiveengineering"};
+	public static boolean useAllLavaContainer = true;
 	
 	public static void loadConfigs()
 	{
@@ -16,6 +15,7 @@ public class Config {
 		config.load();
 		
         oreDictPreferenceOrder = config.getStringList("OreDict preference order", "Compat", oreDictPreferenceOrder, "Coffe has caffeine, you know!");
+        useAllLavaContainer = config.getBoolean("Can every lava container be used as fuel in furnace?", "Tweak", true, "");
         
         config.save();
 	}

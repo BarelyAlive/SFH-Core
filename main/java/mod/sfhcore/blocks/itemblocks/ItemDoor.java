@@ -1,15 +1,11 @@
 package mod.sfhcore.blocks.itemblocks;
 
-import javax.annotation.Nonnull;
-
 import mod.sfhcore.blocks.CustomDoor;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -18,9 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemDoor extends Item
 {
@@ -56,7 +50,7 @@ public class ItemDoor extends Item
             
             if (player.canPlayerEdit(pos, facing, itemstack) && ((CustomDoor) door).canPlaceBlockAt(worldIn, pos))
             {
-                EnumFacing enumfacing = EnumFacing.fromAngle((double)player.rotationYaw);
+                EnumFacing enumfacing = EnumFacing.fromAngle(player.rotationYaw);
                 int i = enumfacing.getFrontOffsetX();
                 int j = enumfacing.getFrontOffsetZ();
                 boolean flag = i < 0 && hitZ < 0.5F || i > 0 && hitZ > 0.5F || j < 0 && hitX > 0.5F || j > 0 && hitX < 0.5F;

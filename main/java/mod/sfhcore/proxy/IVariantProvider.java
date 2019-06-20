@@ -1,8 +1,8 @@
 package mod.sfhcore.proxy;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 public interface IVariantProvider
 {

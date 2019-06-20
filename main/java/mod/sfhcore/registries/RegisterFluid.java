@@ -5,8 +5,8 @@ import java.util.List;
 import mod.sfhcore.fluid.Fluid;
 import mod.sfhcore.helper.NameHelper;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -35,7 +35,7 @@ public class RegisterFluid extends NameHelper
 		
 		Item item = Item.getItemFromBlock(b);
 		if (item != null) {
-			ModelLoader.registerItemVariants(item);
+			ModelBakery.registerItemVariants(item);
 			ModelLoader.setCustomMeshDefinition(item, mapper);
 		}
 		

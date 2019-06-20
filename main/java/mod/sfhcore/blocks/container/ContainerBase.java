@@ -1,19 +1,14 @@
 package mod.sfhcore.blocks.container;
 
+import mod.sfhcore.blocks.tiles.TileInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-
-import mod.sfhcore.blocks.tiles.TileFluidInventory;
-import mod.sfhcore.blocks.tiles.TileInventory;
 
 public class ContainerBase extends Container {
 
@@ -37,7 +32,7 @@ public class ContainerBase extends Container {
         	if(this.inventorySlots.get(i).getStack() == null) {
         		this.inventorySlots.get(i).putStack(ItemStack.EMPTY);
         	}
-            nonnulllist.add(((Slot)this.inventorySlots.get(i)).getStack());
+            nonnulllist.add(this.inventorySlots.get(i).getStack());
         }
 
         return nonnulllist;
@@ -51,7 +46,7 @@ public class ContainerBase extends Container {
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
 		ItemStack previous = ItemStack.EMPTY;
-	    Slot slot = (Slot) this.inventorySlots.get(index);
+	    Slot slot = this.inventorySlots.get(index);
 	    
 	    if (slot.getStack() != ItemStack.EMPTY && slot.getHasStack()) {
 	        ItemStack current = slot.getStack();
@@ -91,7 +86,7 @@ public class ContainerBase extends Container {
 
 	    if (stack.isStackable()) {
 	        while (stack.getCount() > 0 && (!reverseDirection && index < endIndex || reverseDirection && index >= startIndex)) {
-	            slot = (Slot) this.inventorySlots.get(index);
+	            slot = this.inventorySlots.get(index);
 	            stackinslot = slot.getStack();
 
 	            if (!(stackinslot.isEmpty()) && stackinslot.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == stackinslot.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, stackinslot)) {
@@ -127,7 +122,7 @@ public class ContainerBase extends Container {
 	        }
 
 	        while (!reverseDirection && index < endIndex || reverseDirection && index >= startIndex && stack.getCount() > 0) {
-	            slot = (Slot) this.inventorySlots.get(index);
+	            slot = this.inventorySlots.get(index);
 	            stackinslot = slot.getStack();
 
 	            if (stackinslot.isEmpty() && slot.isItemValid(stack)) {

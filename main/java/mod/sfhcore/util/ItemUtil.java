@@ -1,9 +1,5 @@
 package mod.sfhcore.util;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ItemUtil

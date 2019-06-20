@@ -7,7 +7,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import mod.sfhcore.blocks.base.BlockEnum;
-import mod.sfhcore.blocks.base.BlockEnumFalling;
 import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.proxy.IVariantProvider;
 import net.minecraft.block.Block;
@@ -16,7 +15,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.MathHelper;
 
 public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends ItemBlock implements IVariantProvider
 {

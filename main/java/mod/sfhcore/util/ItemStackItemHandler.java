@@ -1,9 +1,9 @@
 package mod.sfhcore.util;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
-
-import javax.annotation.Nonnull;
 
 /**
  * This class wraps an ItemStack in an IItemHandler to allow code to be unified.

@@ -1,6 +1,14 @@
 package mod.sfhcore.json;
 
-import com.google.gson.*;
+import java.lang.reflect.Type;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.init.Items;
@@ -9,8 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
-
-import java.lang.reflect.Type;
 
 public class CustomItemStackJson implements JsonDeserializer<ItemStack>, JsonSerializer<ItemStack>
 {

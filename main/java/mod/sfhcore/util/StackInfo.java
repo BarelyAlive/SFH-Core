@@ -1,15 +1,16 @@
 package mod.sfhcore.util;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import javax.annotation.Nonnull;
-
 public interface StackInfo {
 
-    String toString();
+    @Override
+	String toString();
 
     @Nonnull
     ItemStack getItemStack();
@@ -28,7 +29,8 @@ public interface StackInfo {
 
     NBTTagCompound writeToNBT(NBTTagCompound tag);
 
-    int hashCode();
+    @Override
+	int hashCode();
 
     /**
      * This is used to check if the contents equals the objects, based on what the object is

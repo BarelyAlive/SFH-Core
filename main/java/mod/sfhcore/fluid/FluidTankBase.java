@@ -1,12 +1,11 @@
 package mod.sfhcore.fluid;
 
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-
 import javax.annotation.Nullable;
 
 import mod.sfhcore.blocks.tiles.TileBase;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 
 public class FluidTankBase extends FluidTank {
 

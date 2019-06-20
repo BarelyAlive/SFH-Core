@@ -9,17 +9,14 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import mod.sfhcore.blocks.Cube;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class GuiHandler implements IGuiHandler {
 	
@@ -37,9 +34,9 @@ public class GuiHandler implements IGuiHandler {
 			for(Pair<Class<GuiContainer>, Class<Container>> tc : teco) {
 				if(te1.getClass().equals(tc.getLeft().getClass())){
 					
-					Class<Container> c = (Class<Container>) tc.getRight();
+					Class<Container> c = tc.getRight();
 					try {
-						Constructor<Container> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
+						Constructor<Container> con = c.getConstructor(player.inventory.getClass(), te1.getClass());
 						return con.newInstance(player.inventory, te1);
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -62,7 +59,7 @@ public class GuiHandler implements IGuiHandler {
 				Class<GuiContainer> c = tc.getLeft();
 				
 				try {
-					Constructor<GuiContainer> con = c.getConstructor((Class<InventoryPlayer>) player.inventory.getClass(), (Class<TileEntity>) te1.getClass());
+					Constructor<GuiContainer> con = c.getConstructor(player.inventory.getClass(), te1.getClass());
 				return con.newInstance(player.inventory, te1);
 				} catch (Exception ex) {
 					ex.printStackTrace();

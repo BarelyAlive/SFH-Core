@@ -7,27 +7,19 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.logging.Log;
 
+import mod.sfhcore.Config;
 import mod.sfhcore.helper.NotNull;
 import mod.sfhcore.util.ItemInfo;
 import mod.sfhcore.util.LogUtil;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.FMLContainer;
-import net.minecraftforge.fml.common.FMLModContainer;
-import net.minecraftforge.fml.common.ModContainerFactory;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 
 public class CustomFuelHandler{
 	
@@ -51,7 +43,7 @@ public class CustomFuelHandler{
 		Item item = stack.getItem();
 		
 		FluidStack f = FluidUtil.getFluidContained(stack);
-		if(f != null)
+		if(f != null &&  Config.useAllLavaContainer)
 		{
 			if (f.getFluid() == FluidRegistry.LAVA && f.amount > 1000) {
 				IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
@@ -65,7 +57,7 @@ public class CustomFuelHandler{
 		try {
 			burnTime = item.getItemBurnTime(stack);
 		} catch (NullPointerException ex) {
-			LogUtil.fatal("SFHCore tried to get the burn time of " + item.getRegistryName() + " and it was NULL!");
+			LogUtil.fatal("SFHCore tried to get the burn time of " + item.getRegistryName() + " and it was NULL! Duh!");
 		}
 						
 		if(burnTime < 0)

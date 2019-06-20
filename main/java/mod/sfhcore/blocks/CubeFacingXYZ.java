@@ -38,7 +38,8 @@ public class CubeFacingXYZ  extends Block{
             this.name = name;
         }
 
-        public String toString()
+        @Override
+		public String toString()
         {
             return this.name;
         }
@@ -58,7 +59,8 @@ public class CubeFacingXYZ  extends Block{
             }
         }
 
-        public String getName()
+        @Override
+		public String getName()
         {
             return this.name;
         }
@@ -74,7 +76,8 @@ public class CubeFacingXYZ  extends Block{
      * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
      * IBlockstate
      */
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    @Override
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         return this.getStateFromMeta(meta).withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.fromFacingAxis(facing.getAxis()));
     }
@@ -88,7 +91,7 @@ public class CubeFacingXYZ  extends Block{
     @Override
     public int getMetaFromState(IBlockState state) {
     	
-    	EnumAxis type = (EnumAxis) state.getValue(CUBE_AXIS);
+    	EnumAxis type = state.getValue(CUBE_AXIS);
     	
     	if(type.getName().equals("none")) return 0;
     	if(type.getName().equals("x")) return 1;
@@ -102,14 +105,15 @@ public class CubeFacingXYZ  extends Block{
      * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
      * blockstate.
      */
-    public IBlockState withRotation(IBlockState state, Rotation rot)
+    @Override
+	public IBlockState withRotation(IBlockState state, Rotation rot)
     {
         switch (rot)
         {
             case COUNTERCLOCKWISE_90:
             case CLOCKWISE_90:
 
-                switch ((CubeFacingXYZ.EnumAxis)state.getValue(CUBE_AXIS))
+                switch (state.getValue(CUBE_AXIS))
                 {
                     case X:
                         return state.withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.Z);

@@ -1,6 +1,5 @@
 package mod.sfhcore.registries;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mod.sfhcore.SFHCore;
@@ -8,7 +7,6 @@ import mod.sfhcore.proxy.SFHCoreClientProxy;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;

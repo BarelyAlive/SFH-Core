@@ -1,5 +1,9 @@
 package mod.sfhcore.client.color;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.util.Arrays;
+
 /*
  * Java Color Thief
  * by Sven Woltmann, Fonpit AG
@@ -19,9 +23,6 @@ package mod.sfhcore.client.color;
  */
 
 import javax.annotation.Nullable;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.util.Arrays;
 
 /**
  * original source: https://raw.githubusercontent.com/mezz/JustEnoughItems/1.12/src/main/java/mezz/jei/color/ColorThief.java

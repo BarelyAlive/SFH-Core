@@ -1,5 +1,11 @@
 package mod.sfhcore.client.color;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 /*
  * Java Color Thief
  * by Sven Woltmann, Fonpit AG
@@ -19,7 +25,6 @@ package mod.sfhcore.client.color;
  */
 
 import javax.annotation.Nullable;
-import java.util.*;
 
 /**
  * original source: https://github.com/mezz/JustEnoughItems/blob/1.12/src/main/java/mezz/jei/color/MMCQ.java

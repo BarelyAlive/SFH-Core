@@ -1,7 +1,6 @@
 package mod.sfhcore.client.renderers;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import mod.sfhcore.texturing.*;
 
 public class SpriteColor {
     private TextureAtlasSprite sprite;

@@ -1,15 +1,22 @@
 package mod.sfhcore.util;
 
+import static java.lang.Math.round;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.BiPredicate;
+
+import javax.annotation.Nonnull;
+
+import mod.sfhcore.texturing.Color;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -21,16 +28,6 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-
-import javax.annotation.Nonnull;
-
-import mod.sfhcore.texturing.Color;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.BiPredicate;
-
-import static java.lang.Math.round;
 
 public class Util {
 
