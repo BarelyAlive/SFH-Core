@@ -4,7 +4,7 @@ import mod.sfhcore.items.*;
 import net.minecraft.block.*;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.block.model.*;
-import net.minecraft.client.renderer.color.*;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraftforge.fluids.*;

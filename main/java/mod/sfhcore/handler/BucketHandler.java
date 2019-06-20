@@ -3,11 +3,8 @@ package mod.sfhcore.handler;
 import java.util.*;
 
 import mod.sfhcore.items.CustomBucket;
-import mod.sfhcore.items.model_bucket.FluidCustomBucketColorer;
-import mod.sfhcore.items.model_bucket.ModelDynCustomBucket;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -15,7 +12,6 @@ import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.client.FluidContainerColorer;
 import net.minecraftforge.client.event.*;
-import net.minecraftforge.client.model.ModelDynBucket;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.ForgeModContainer;
@@ -28,6 +24,8 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
 class StringFluid {
@@ -213,6 +211,7 @@ public class BucketHandler {
 
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void registerBucketModels(ModelRegistryEvent registry)
 	{
 		for(CustomBucket item : allBucketList.keySet())
@@ -229,9 +228,9 @@ public class BucketHandler {
 				ResourceLocation liquidLocation = null;
 				ResourceLocation coverLocation = null;
 				Fluid fluid = strfld.f;
-				ModelDynBucket bucketModel = new ModelDynBucket(null, null, null, fluid, false, true);
+				net.minecraftforge.client.model.ModelDynBucket bucketModel = new net.minecraftforge.client.model.ModelDynBucket(null, null, null, fluid, false, true);
 				//bucketModel.LOCATION = new ModelResourceLocation(new ResourceLocation("sfhcore", "bucket"), "inventory");
-				ModelLoaderRegistry.registerLoader(ModelDynBucket.LoaderDynBucket.INSTANCE);
+				ModelLoaderRegistry.registerLoader(net.minecraftforge.client.model.ModelDynBucket.LoaderDynBucket.INSTANCE);
 				ModelLoader.setCustomMeshDefinition(item, stack -> bucketModel.LOCATION);
 				//ModelLoader.setCustomModelResourceLocation(item, 0, bucketModel.LOCATION);
 				ModelBakery.registerItemVariants(item, bucketModel.LOCATION);
@@ -239,6 +238,7 @@ public class BucketHandler {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void registerItemHandlers(net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
 		for(CustomBucket item : allBucketList.keySet())
 		{
@@ -246,7 +246,7 @@ public class BucketHandler {
 			String material = strfld.str;
 			if (item != null && item.getRegistryName() != null)
 			{
-				event.getItemColors().registerItemColorHandler(new FluidCustomBucketColorer(), item);
+				event.getItemColors().registerItemColorHandler(new mod.sfhcore.items.model_bucket.FluidCustomBucketColorer(), item);
 			}
 		}
 	}	

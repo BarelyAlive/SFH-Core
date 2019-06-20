@@ -3,7 +3,6 @@ package mod.sfhcore.registries;
 import java.util.List;
 
 import mod.sfhcore.fluid.Fluid;
-import mod.sfhcore.helper.FluidStateMapper;
 import mod.sfhcore.helper.NameHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -25,15 +24,14 @@ public class RegisterFluid extends NameHelper
 	public static void register(net.minecraftforge.fluids.Fluid f, Block b)
 	{
 		f.setUnlocalizedName(f.getName());
-		initModel((Fluid) f, b);
 		Registry.registerBlock(b);
 		FluidRegistry.addBucketForFluid(f);
 	}
 	
 	@SideOnly(Side.CLIENT)
-	private static void initModel(Fluid f, Block b)
-	{		
-		FluidStateMapper mapper = new FluidStateMapper(getModID(b), f);
+	public static void initModel(Fluid f, Block b)
+	{
+		mod.sfhcore.helper.FluidStateMapper mapper = new mod.sfhcore.helper.FluidStateMapper(getModID(b), f);
 		
 		Item item = Item.getItemFromBlock(b);
 		if (item != null) {

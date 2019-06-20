@@ -78,6 +78,7 @@ public class SFHCore
     	}
     	
     	@SubscribeEvent
+    	@SideOnly(Side.CLIENT)
     	public static void registerModels(ModelRegistryEvent event)
     	{
     		RegisterItems.registerModels();
@@ -95,12 +96,14 @@ public class SFHCore
     	}
     	
         @SubscribeEvent(priority = EventPriority.LOWEST)
+    	@SideOnly(Side.CLIENT)
         public static void registerItemHandlers(ColorHandlerEvent.Item event)
         {
         	BucketHandler.registerItemHandlers(event);
         }
     	
     	@SubscribeEvent(priority = EventPriority.LOWEST)
+    	@SideOnly(Side.CLIENT)
     	public static void registerBucketModels(ModelRegistryEvent event)
     	{
     		BucketHandler.registerBucketModels(event);
