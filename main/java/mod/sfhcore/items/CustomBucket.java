@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import mod.sfhcore.capabilities.CustomBucketCapability;
 import mod.sfhcore.handler.BucketHandler;
+import mod.sfhcore.helper.PlayerInventory;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -243,7 +244,13 @@ public class CustomBucket extends Item implements IFluidHandler{
     					worldIn.setBlockToAir(pos);
     					CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
     					playerIn.inventory.markDirty();
-						return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(new_bucket)) : new ActionResult(EnumActionResult.SUCCESS, held);
+    					
+    					if(!playerIn.capabilities.isCreativeMode)
+    					{
+    						PlayerInventory.tryAddItem(playerIn, new ItemStack(new_bucket));
+    						held.shrink(1);
+    					}
+    					return new ActionResult(EnumActionResult.SUCCESS, held);
     				}
         		}
 			}
@@ -251,14 +258,6 @@ public class CustomBucket extends Item implements IFluidHandler{
         
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, held);
     }
-	
-	/*
-	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		// TODO Auto-generated method stub
-		super.getSubItems(tab, items);
-	}
-	*/
 
     @Override
     public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, @Nullable net.minecraft.nbt.NBTTagCompound nbt) {
