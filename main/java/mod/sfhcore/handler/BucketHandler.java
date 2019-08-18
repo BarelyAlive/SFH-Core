@@ -102,6 +102,26 @@ public class BucketHandler {
 
 		return null;
 	}
+	
+	public static int getMaxTemperaturFromBucket(String material)
+	{
+		for(String item : bucketList.keySet())
+		{
+			if (item != null)
+			{
+				if (item.equals(material))
+				{
+					BucketInfo bi = bucketList.get(item);
+					if (bi != null)
+					{
+						return bi.highest_temperatur;
+					}
+				}
+			}
+		}
+
+		return 0;
+	}
 
 	public static String getMaterialFromBucket(ItemStack stack)
 	{
@@ -132,7 +152,9 @@ public class BucketHandler {
 
 		for(String material : bucketList.keySet())
 		{
+			System.out.println(material);
 			BucketInfo bucket_info = bucketList.get(material);
+			System.out.println(bucket_info.highest_temperatur);
 			bucketName = new ResourceLocation(bucket_info.mod_id, "bucket_" + material);
 			bucket_0 = new CustomBucket(Blocks.AIR, bucketName, ItemStack.EMPTY, bucket_info.tab, bucket_info.color, material);
 			bucket_0.setMaxStackSize(bucket_info.max_stack_size_for_empty_bucket);

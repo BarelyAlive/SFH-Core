@@ -240,10 +240,16 @@ public class CustomBucket extends Item implements IFluidHandler{
     				Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
     				if (fluid_from_block != null)
     				{
-    					worldIn.setBlockToAir(pos);
-    					CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
-    					playerIn.inventory.markDirty();
-						return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(new_bucket)) : new ActionResult(EnumActionResult.SUCCESS, held);
+    					System.out.println(((CustomBucket)held.getItem()).getMaterial());
+    					System.out.println(BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()));
+    					System.out.println(fluid_from_block.getTemperature());
+    					if (BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) == -1 || BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) == 0 || BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) >= fluid_from_block.getTemperature())
+    					{
+    						worldIn.setBlockToAir(pos);
+    						CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
+    						playerIn.inventory.markDirty();
+							return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(new_bucket)) : new ActionResult(EnumActionResult.SUCCESS, held);
+    					}
     				}
         		}
 			}
