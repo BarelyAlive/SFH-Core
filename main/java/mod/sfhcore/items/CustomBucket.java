@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import mod.sfhcore.capabilities.CustomBucketCapability;
 import mod.sfhcore.handler.BucketHandler;
+import mod.sfhcore.helper.PlayerInventory;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -241,15 +242,27 @@ public class CustomBucket extends Item implements IFluidHandler{
     				Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
     				if (fluid_from_block != null)
     				{
-    					System.out.println(((CustomBucket)held.getItem()).getMaterial());
-    					System.out.println(BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()));
-    					System.out.println(fluid_from_block.getTemperature());
     					if (BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) == -1 || BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) == 0 || BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) >= fluid_from_block.getTemperature())
     					{
-    						worldIn.setBlockToAir(pos);
-    						CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
-    						playerIn.inventory.markDirty();
-							return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(new_bucket)) : new ActionResult(EnumActionResult.SUCCESS, held);
+    						if (held.getCount() > 1)
+    						{
+	    						worldIn.setBlockToAir(pos);
+	    						CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
+	    						PlayerInventory.tryAddItem(playerIn, new ItemStack(new_bucket));
+	    						if (!playerIn.capabilities.isCreativeMode)
+	    						{
+	    							held.shrink(1);
+	    						}
+	    						playerIn.inventory.markDirty();
+								return new ActionResult(EnumActionResult.SUCCESS, held);
+    						}
+    						else
+    						{
+	    						worldIn.setBlockToAir(pos);
+	    						CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
+	    						playerIn.inventory.markDirty();
+								return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, new ItemStack(new_bucket)) : new ActionResult(EnumActionResult.SUCCESS, held);
+    						}
     					}
     				}
         		}
