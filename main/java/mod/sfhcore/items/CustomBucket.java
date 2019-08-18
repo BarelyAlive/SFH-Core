@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -285,7 +286,7 @@ public class CustomBucket extends Item implements IFluidHandler{
     @Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
     {
-        if (!worldIn.isRemote) entityLiving.curePotionEffects(stack); // FORGE - move up so stack.shrink does not turn stack into air
+        if (!worldIn.isRemote) entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET)); // FORGE - move up so stack.shrink does not turn stack into air
         
         if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
         {
@@ -299,8 +300,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 	        if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)
 	        {
 	        	CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
-	            stack.shrink(1);
-	            ((EntityPlayer)entityLiving).addItemStackToInventory(new ItemStack(emptyBucket));
+	            ((EntityPlayer)entityLiving).getHeldItem(((EntityPlayer)entityLiving).getActiveHand()).shrink(1);
 	        }
         }
 
