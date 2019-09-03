@@ -172,7 +172,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
         ItemStackHelper.loadAllItems(nbt, machineItemStacks);
-		setWorkTime(nbt.getShort("workTime"));
+		setWorkTime(nbt.getInteger("workTime"));
+		setMaxworkTime(nbt.getInteger("maxWorktime"));
 		pullTick = nbt.getShort("pullTick");
 		pushTick = nbt.getShort("pushTick");
 		super.readFromNBT(nbt);
@@ -181,7 +182,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		ItemStackHelper.saveAllItems(nbt, machineItemStacks);
-		nbt.setShort("workTime", (short)getWorkTime());
+		nbt.setInteger("workTime", getWorkTime());
+		nbt.setInteger("maxWorktime", getMaxworkTime());
 		nbt.setShort("pullTick", (short) pullTick);
 		nbt.setShort("pushTick", (short) pushTick);
 		return super.writeToNBT(nbt);
