@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mod.sfhcore.items.CustomBucket;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
