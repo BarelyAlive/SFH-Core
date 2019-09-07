@@ -9,54 +9,54 @@ import net.minecraftforge.items.IItemHandler;
  * This class wraps an ItemStack in an IItemHandler to allow code to be unified.
  */
 public class ItemStackItemHandler implements IItemHandler {
-    private ItemStack wrappedStack;
+	private ItemStack wrappedStack;
 
-    public ItemStackItemHandler(ItemStack stack){
-        this.wrappedStack = stack;
-    }
+	public ItemStackItemHandler(final ItemStack stack){
+		wrappedStack = stack;
+	}
 
-    @Override
-    public int getSlots() {
-        return 1;
-    }
+	@Override
+	public int getSlots() {
+		return 1;
+	}
 
-    @Nonnull
-    @Override
-    public ItemStack getStackInSlot(int slot) {
-        return slot == 0 ? wrappedStack : ItemStack.EMPTY;
-    }
+	@Nonnull
+	@Override
+	public ItemStack getStackInSlot(final int slot) {
+		return slot == 0 ? wrappedStack : ItemStack.EMPTY;
+	}
 
-    @Nonnull
-    @Override
-    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        if(slot != 0)
-            return stack.copy();
-        ItemStack returnStack = stack.copy();
-        if(ItemUtil.areStacksEquivalent(wrappedStack, returnStack) && wrappedStack.isStackable()){
-            int toAdd = Math.min(returnStack.getCount(), wrappedStack.getMaxStackSize() - wrappedStack.getCount());
-            if(!simulate)
-                wrappedStack.grow(toAdd);
-            returnStack.shrink(toAdd);
-        }
-        return returnStack.getCount() > 0 ? returnStack : ItemStack.EMPTY;
-    }
+	@Nonnull
+	@Override
+	public ItemStack insertItem(final int slot, @Nonnull final ItemStack stack, final boolean simulate) {
+		if(slot != 0)
+			return stack.copy();
+		ItemStack returnStack = stack.copy();
+		if(ItemUtil.areStacksEquivalent(wrappedStack, returnStack) && wrappedStack.isStackable()){
+			int toAdd = Math.min(returnStack.getCount(), wrappedStack.getMaxStackSize() - wrappedStack.getCount());
+			if(!simulate)
+				wrappedStack.grow(toAdd);
+			returnStack.shrink(toAdd);
+		}
+		return returnStack.getCount() > 0 ? returnStack : ItemStack.EMPTY;
+	}
 
-    @Nonnull
-    @Override
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        if(slot!=0 || amount <= 0)
-            return ItemStack.EMPTY;
-        ItemStack returnStack = wrappedStack.copy();
-        returnStack.setCount(Math.min(amount, wrappedStack.getCount()));
-        if(!simulate)
-            wrappedStack.shrink(returnStack.getCount());
-        if(wrappedStack.getCount() == 0)
-            wrappedStack = ItemStack.EMPTY;
-        return returnStack;
-    }
+	@Nonnull
+	@Override
+	public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
+		if(slot!=0 || amount <= 0)
+			return ItemStack.EMPTY;
+		ItemStack returnStack = wrappedStack.copy();
+		returnStack.setCount(Math.min(amount, wrappedStack.getCount()));
+		if(!simulate)
+			wrappedStack.shrink(returnStack.getCount());
+		if(wrappedStack.getCount() == 0)
+			wrappedStack = ItemStack.EMPTY;
+		return returnStack;
+	}
 
-    @Override
-    public int getSlotLimit(int slot) {
-        return wrappedStack.getMaxStackSize();
-    }
+	@Override
+	public int getSlotLimit(final int slot) {
+		return wrappedStack.getMaxStackSize();
+	}
 }

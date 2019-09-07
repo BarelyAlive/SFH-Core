@@ -40,12 +40,12 @@ class BucketInfo {
 }
 
 public class BucketHandler {
-	private static Map<String, BucketInfo> bucketList = new HashMap<String, BucketInfo>();
-	private static Map<CustomBucket, StringFluid> allBucketList = new HashMap<CustomBucket, StringFluid>();
-	private static Map<String, ArrayList<String>> disabledBuckets = new HashMap<String, ArrayList<String>>();
+	private static Map<String, BucketInfo> bucketList = new HashMap<>();
+	private static Map<CustomBucket, StringFluid> allBucketList = new HashMap<>();
+	private static Map<String, ArrayList<String>> disabledBuckets = new HashMap<>();
 
 
-	public static void addBucket(String material, String material_name, int highest_temperatur, int max_stack_size_for_empty_bucket, String mod_id, int bucket_color, CreativeTabs tab)
+	public static void addBucket(final String material, final String material_name, final int highest_temperatur, final int max_stack_size_for_empty_bucket, final String mod_id, final int bucket_color, final CreativeTabs tab)
 	{
 		BucketInfo info = new BucketInfo();
 		info.color = bucket_color;
@@ -57,52 +57,40 @@ public class BucketHandler {
 		bucketList.put(material, info);
 	}
 
-	public static void disabledBucket(String material, String fluid_id)
+	public static void disabledBucket(final String material, final String fluid_id)
 	{
-		if (!(disabledBuckets.containsKey(material)))
-		{
+		if (!disabledBuckets.containsKey(material))
 			disabledBuckets.put(material, new ArrayList<>());
-		}
 
-		if (!(disabledBuckets.get(material).contains(fluid_id)))
-		{
+		if (!disabledBuckets.get(material).contains(fluid_id))
 			disabledBuckets.get(material).add(fluid_id);
-		}
 	}
 
-	public static void registerBuckets(Register<Item> event)
+	public static void registerBuckets(final Register<Item> event)
 	{
 		if(bucketList.size() == 0)
-		{
 			return;
-		}
 		addAllBuckets();
 		registerItem(event.getRegistry());
 	}
 
-	public static CustomBucket getBucketFromFluid(Fluid searchFluid, String material)
+	public static CustomBucket getBucketFromFluid(final Fluid searchFluid, final String material)
 	{
 		for(CustomBucket item : allBucketList.keySet())
-		{
 			if (item != null)
 			{
 				if(item.getFluid() != searchFluid)
-				{
 					continue;
-				}
 				StringFluid fl = allBucketList.get(item);
 				if(!fl.str.contains(material))
-				{
 					continue;
-				}
 				return item;
 			}
-		}
 
 		return null;
 	}
 
-	public static String getMaterialFromBucket(ItemStack stack)
+	public static String getMaterialFromBucket(final ItemStack stack)
 	{
 		if (stack.isEmpty())
 			return "";
@@ -111,7 +99,7 @@ public class BucketHandler {
 		return getMaterialFromBucket((CustomBucket) stack.getItem());
 	}
 
-	public static String getMaterialFromBucket(CustomBucket bucket)
+	public static String getMaterialFromBucket(final CustomBucket bucket)
 	{
 		return bucket.getMaterial();
 	}
@@ -145,7 +133,6 @@ public class BucketHandler {
 			{
 				f = fluids.get(name);
 				if (disabledBuckets.containsKey(material))
-				{
 					if (
 							disabledBuckets.get(material).contains(name)
 							|| disabledBuckets.get(material).contains(f.getName())
@@ -153,31 +140,18 @@ public class BucketHandler {
 							|| disabledBuckets.get(material).contains(f.getLocalizedName(new FluidStack(f, 1000)))
 							|| disabledBuckets.get(material).contains(f.getBlock().getRegistryName().getResourcePath())
 							|| disabledBuckets.get(material).contains(f.getBlock().getRegistryName().getResourcePath() + ":" + f.getBlock().getRegistryName().getResourcePath()))
-					{
 						continue;
-					}
-				}
 
 				if (!( bucket_info.highest_temperatur == -1 || bucket_info.highest_temperatur == 0))
-				{
 					if(f.getTemperature() >= bucket_info.highest_temperatur)
-					{
 						continue;
-					}
-				}
 
 				if (f.getBlock() == null)
-				{
 					continue;
-				}
 				if (f.getBlock().equals(Blocks.AIR))
-				{
 					continue;
-				}
 				if (!(f.getBlock() instanceof BlockFluidBase) && !(f.equals(FluidRegistry.WATER) || f.equals(FluidRegistry.LAVA)))
-				{
 					continue;
-				}
 
 				resource_domain = bucket_0.getRegistryName().getResourceDomain();
 				resource_path = bucket_0.getRegistryName().getResourcePath() + "_" + name;
@@ -196,20 +170,16 @@ public class BucketHandler {
 		}
 	}
 
-	private static void registerItem(IForgeRegistry<Item> registry)
+	private static void registerItem(final IForgeRegistry<Item> registry)
 	{
 		for(CustomBucket item : allBucketList.keySet())
-		{
 			if (item != null && item.getRegistryName() != null)
-			{
 				registry.register(item);
-			}
-		}
 
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static void registerBucketModels(ModelRegistryEvent registry)
+	public static void registerBucketModels(final ModelRegistryEvent registry)
 	{
 		for(CustomBucket item : allBucketList.keySet())
 		{
@@ -228,7 +198,7 @@ public class BucketHandler {
 				net.minecraftforge.client.model.ModelDynBucket bucketModel = new net.minecraftforge.client.model.ModelDynBucket(null, null, null, fluid, false, true);
 				//bucketModel.LOCATION = new ModelResourceLocation(new ResourceLocation("sfhcore", "bucket"), "inventory");
 				ModelLoaderRegistry.registerLoader(net.minecraftforge.client.model.ModelDynBucket.LoaderDynBucket.INSTANCE);
-				ModelLoader.setCustomMeshDefinition(item, stack -> bucketModel.LOCATION);
+				ModelLoader.setCustomMeshDefinition(item, stack -> ModelDynBucket.LOCATION);
 				//ModelLoader.setCustomModelResourceLocation(item, 0, bucketModel.LOCATION);
 				ModelBakery.registerItemVariants(item, ModelDynBucket.LOCATION);
 			}
@@ -236,15 +206,13 @@ public class BucketHandler {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static void registerItemHandlers(net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
+	public static void registerItemHandlers(final net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
 		for(CustomBucket item : allBucketList.keySet())
 		{
 			StringFluid strfld = allBucketList.get(item);
 			String material = strfld.str;
 			if (item != null && item.getRegistryName() != null)
-			{
 				event.getItemColors().registerItemColorHandler(new mod.sfhcore.items.model_bucket.FluidCustomBucketColorer(), item);
-			}
 		}
 	}
 }

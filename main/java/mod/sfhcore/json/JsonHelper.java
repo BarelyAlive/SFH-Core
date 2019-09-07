@@ -4,76 +4,76 @@ import com.google.gson.JsonElement;
 
 public class JsonHelper
 {
-    final JsonElement json;
+	final JsonElement json;
 
-    public JsonHelper(JsonElement json) {
-        this.json = json;
-    }
+	public JsonHelper(final JsonElement json) {
+		this.json = json;
+	}
 
-    public boolean getBoolean(String object) {
-        return json.getAsJsonObject().get(object).getAsBoolean();
-    }
+	public boolean getBoolean(final String object) {
+		return json.getAsJsonObject().get(object).getAsBoolean();
+	}
 
-    public boolean getNullableBoolean(String object, boolean def) {
-        boolean ret = def;
+	public boolean getNullableBoolean(final String object, final boolean def) {
+		boolean ret = def;
 
-        if (json.getAsJsonObject().get(object) != null)
-            ret = json.getAsJsonObject().get(object).getAsBoolean();
+		if (json.getAsJsonObject().get(object) != null)
+			ret = json.getAsJsonObject().get(object).getAsBoolean();
 
-        return ret;
-    }
+		return ret;
+	}
 
-    public boolean getNullableBoolean(String object) {
-        return getNullableBoolean(object, false);
-    }
+	public boolean getNullableBoolean(final String object) {
+		return getNullableBoolean(object, false);
+	}
 
-    public int getInteger(String object) {
-        return json.getAsJsonObject().get(object).getAsInt();
-    }
+	public int getInteger(final String object) {
+		return json.getAsJsonObject().get(object).getAsInt();
+	}
 
-    public int getNullableInteger(String object, int def) {
-        int ret = def;
+	public int getNullableInteger(final String object, final int def) {
+		int ret = def;
 
-        if (json.getAsJsonObject().get(object) != null)
-            ret = json.getAsJsonObject().get(object).getAsInt();
+		if (json.getAsJsonObject().get(object) != null)
+			ret = json.getAsJsonObject().get(object).getAsInt();
 
-        return ret;
-    }
+		return ret;
+	}
 
-    public double getDouble(String object) {
-        return json.getAsJsonObject().get(object).getAsDouble();
-    }
+	public double getDouble(final String object) {
+		return json.getAsJsonObject().get(object).getAsDouble();
+	}
 
-    public double getNullableDouble(String object, double def) {
-        double ret = def;
+	public double getNullableDouble(final String object, final double def) {
+		double ret = def;
 
-        if (json.getAsJsonObject().get(object) != null)
-            ret = json.getAsJsonObject().get(object).getAsDouble();
+		if (json.getAsJsonObject().get(object) != null)
+			ret = json.getAsJsonObject().get(object).getAsDouble();
 
-        return ret;
-    }
+		return ret;
+	}
 
 
-    public float getNullableFloat(String object, float def) {
-        float ret = def;
+	public float getNullableFloat(final String object, final float def) {
+		float ret = def;
 
-        if (json.getAsJsonObject().get(object) != null)
-            ret = json.getAsJsonObject().get(object).getAsFloat();
+		if (json.getAsJsonObject().get(object) != null)
+			ret = json.getAsJsonObject().get(object).getAsFloat();
 
-        return ret;
-    }
+		return ret;
+	}
 
-    public String getString(String object) {
-        return json.getAsJsonObject().get(object).getAsString();
-    }
+	public String getString(final String object) {
+		return json.getAsJsonObject().get(object).getAsString();
+	}
 
-    public String getNullableString(String object, String def) {
-        String ret = def;
+	public String getNullableString(final String object, final String def) {
+		String ret = def;
 
-        if (json.getAsJsonObject().get(object) != null)
-            ret = json.getAsJsonObject().get(object).getAsString();
+		if (json.getAsJsonObject().get(object) != null)
+			ret = json.getAsJsonObject().get(object).getAsString();
 
-        return ret;
-    }
+		return ret;
+	}
 
 }

@@ -5,20 +5,20 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 public class FluidTankSingle extends FluidTank
-{	
+{
 	private final Fluid f;
-	
+
 	public Fluid getF() {
 		return f;
 	}
 
-	public FluidTankSingle(Fluid fluid, int amount, int capacity) {
+	public FluidTankSingle(final Fluid fluid, final int amount, final int capacity) {
 		super(fluid, amount, capacity);
-		this.f = fluid;
+		f = fluid;
 	}
-	
+
 	@Override
-	public boolean canFillFluidType(FluidStack fluid)
+	public boolean canFillFluidType(final FluidStack fluid)
 	{
 		return fluid.getFluid() == f;
 	}

@@ -16,29 +16,29 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RegisterFluid extends NameHelper
 {
 	private static NonNullList<Fluid> fluids = NonNullList.create();
-	
+
 	public static List<Fluid> getBlocks() {
 		return fluids;
 	}
-	
-	public static void register(net.minecraftforge.fluids.Fluid f, Block b)
+
+	public static void register(final net.minecraftforge.fluids.Fluid f, final Block b)
 	{
 		f.setUnlocalizedName(f.getName());
 		Registry.registerBlock(b);
 		FluidRegistry.addBucketForFluid(f);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-	public static void initModel(Fluid f, Block b)
+	public static void initModel(final Fluid f, final Block b)
 	{
 		mod.sfhcore.helper.FluidStateMapper mapper = new mod.sfhcore.helper.FluidStateMapper(getModID(b), f);
-		
+
 		Item item = Item.getItemFromBlock(b);
 		if (item != null) {
 			ModelBakery.registerItemVariants(item);
 			ModelLoader.setCustomMeshDefinition(item, mapper);
 		}
-		
-		ModelLoader.setCustomStateMapper(b, mapper);		
+
+		ModelLoader.setCustomStateMapper(b, mapper);
 	}
 }

@@ -12,10 +12,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterBlocks {
-	
+
 	private static NonNullList<Block> blocks = NonNullList.create();
 	private static NonNullList<ItemBlock> itemblocks = NonNullList.create();
-	
+
 	public static List<Block> getBlocks() {
 		return blocks;
 	}
@@ -24,33 +24,29 @@ public class RegisterBlocks {
 		return itemblocks;
 	}
 
-	public static void registerBlocks(IForgeRegistry<Block> registry)
-	{		
+	public static void registerBlocks(final IForgeRegistry<Block> registry)
+	{
 		for(Block block : blocks)
-		{			
 			registry.register(block);
-		}
 	}
-	
-	public static void registerItemBlocks(IForgeRegistry<Item> registry)
+
+	public static void registerItemBlocks(final IForgeRegistry<Item> registry)
 	{
 		for(ItemBlock block : itemblocks)
-		{						
 			registry.register(block);
-		}
 	}
-	
+
 	public static void registerModels()
 	{
 		ResourceLocation loc;
 		for(Block block : blocks)
-		{			
-        	loc = block.getRegistryName();
+		{
+			loc = block.getRegistryName();
 			((SFHCoreClientProxy)SFHCore.proxy).tryHandleBlockModel(block, loc);
 		}
-		
+
 		for(ItemBlock block : itemblocks)
-		{	
+		{
 			loc = block.getRegistryName();
 			((SFHCoreClientProxy) SFHCore.proxy).tryHandleBlockModel(block, loc);
 		}

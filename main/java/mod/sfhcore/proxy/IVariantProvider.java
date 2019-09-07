@@ -6,5 +6,5 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public interface IVariantProvider
 {
-    List<Pair<Integer, String>> getVariants();
+	List<Pair<Integer, String>> getVariants();
 }

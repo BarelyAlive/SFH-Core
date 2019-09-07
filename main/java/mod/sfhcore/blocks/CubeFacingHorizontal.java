@@ -20,118 +20,108 @@ public class CubeFacingHorizontal extends Block{
 
 	private static final PropertyDirection FACING = BlockHorizontal.FACING;
 
-	protected CubeFacingHorizontal(Material materialIn, ResourceLocation loc) {
+	protected CubeFacingHorizontal(final Material materialIn, final ResourceLocation loc) {
 		super(materialIn);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		setRegistryName(loc);
 	}
-	
+
 	/**
-     * Called by ItemBlocks after a block is set in the world, to allow post-place logic
-     */
-    @Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
-        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
-    }
-    
-  //Block Facing Part
-	
-  	/**
-       * Convert the given metadata into a BlockState for this Block
-       */
-      @Override
-	public IBlockState getStateFromMeta(int meta)
-      {
-          EnumFacing enumfacing = EnumFacing.getFront(meta);
+	 * Called by ItemBlocks after a block is set in the world, to allow post-place logic
+	 */
+	@Override
+	public void onBlockPlacedBy(final World worldIn, final BlockPos pos, final IBlockState state, final EntityLivingBase placer, final ItemStack stack)
+	{
+		worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
+	}
 
-          if (enumfacing.getAxis() == EnumFacing.Axis.Y)
-          {
-              enumfacing = EnumFacing.NORTH;
-          }
+	//Block Facing Part
 
-          return this.getDefaultState().withProperty(FACING, enumfacing);
-      }
+	/**
+	 * Convert the given metadata into a BlockState for this Block
+	 */
+	@Override
+	public IBlockState getStateFromMeta(final int meta)
+	{
+		EnumFacing enumfacing = EnumFacing.getFront(meta);
 
-      /**
-       * Convert the BlockState into the correct metadata value
-       */
-      @Override
-	public int getMetaFromState(IBlockState state)
-      {
-          return state.getValue(FACING).getIndex();
-      }
+		if (enumfacing.getAxis() == EnumFacing.Axis.Y)
+			enumfacing = EnumFacing.NORTH;
 
-      /**
-       * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
-       * blockstate.
-       */
-      @Override
-	public IBlockState withRotation(IBlockState state, Rotation rot)
-      {
-          return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
-      }
+		return getDefaultState().withProperty(FACING, enumfacing);
+	}
 
-      /**
-       * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
-       * blockstate.
-       */
-      @Override
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-      {
-          return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
-      }
-      
-      @Override
-      public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
-      {
-          this.setDefaultFacing(worldIn, pos, state);
-      }
+	/**
+	 * Convert the BlockState into the correct metadata value
+	 */
+	@Override
+	public int getMetaFromState(final IBlockState state)
+	{
+		return state.getValue(FACING).getIndex();
+	}
 
-  	private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
-      {
-          if (!worldIn.isRemote)
-          {
-              IBlockState iblockstate = worldIn.getBlockState(pos.north());
-              IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
-              IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
-              IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
-              EnumFacing enumfacing = state.getValue(FACING);
+	/**
+	 * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
+	 * blockstate.
+	 */
+	@Override
+	public IBlockState withRotation(final IBlockState state, final Rotation rot)
+	{
+		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+	}
 
-              if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())
-              {
-                  enumfacing = EnumFacing.SOUTH;
-              }
-              else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock())
-              {
-                  enumfacing = EnumFacing.NORTH;
-              }
-              else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock())
-              {
-                  enumfacing = EnumFacing.EAST;
-              }
-              else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock())
-              {
-                  enumfacing = EnumFacing.WEST;
-              }
+	/**
+	 * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
+	 * blockstate.
+	 */
+	@Override
+	public IBlockState withMirror(final IBlockState state, final Mirror mirrorIn)
+	{
+		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
+	}
 
-              worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
-          }
-      }
-  	
-  	/**
-       * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
-       * IBlockstate
-       */
-      public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-      {
-          return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
-      }
-      
-      @Override
-      protected BlockStateContainer createBlockState() {
-      	return new BlockStateContainer(this, new IProperty[] { FACING });
-      }
-      
-      //BlockFacinPart ENDE
+	@Override
+	public void onBlockAdded(final World worldIn, final BlockPos pos, final IBlockState state)
+	{
+		setDefaultFacing(worldIn, pos, state);
+	}
+
+	private void setDefaultFacing(final World worldIn, final BlockPos pos, final IBlockState state)
+	{
+		if (!worldIn.isRemote)
+		{
+			IBlockState iblockstate = worldIn.getBlockState(pos.north());
+			IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
+			IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
+			IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
+			EnumFacing enumfacing = state.getValue(FACING);
+
+			if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())
+				enumfacing = EnumFacing.SOUTH;
+			else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock())
+				enumfacing = EnumFacing.NORTH;
+			else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock())
+				enumfacing = EnumFacing.EAST;
+			else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock())
+				enumfacing = EnumFacing.WEST;
+
+			worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
+		}
+	}
+
+	/**
+	 * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
+	 * IBlockstate
+	 */
+	public IBlockState onBlockPlaced(final World worldIn, final BlockPos pos, final EnumFacing facing, final float hitX, final float hitY, final float hitZ, final int meta, final EntityLivingBase placer)
+	{
+		return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] { FACING });
+	}
+
+	//BlockFacinPart ENDE
 }

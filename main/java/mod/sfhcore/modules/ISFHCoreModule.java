@@ -14,35 +14,35 @@ public interface ISFHCoreModule {
 
 	String getMODID();
 
-    default void registerBlocks(IForgeRegistry<Block> registry){}
-    default void registerItems(IForgeRegistry<Item> registry){}
-    default void registerOredicts(){}
+	default void registerBlocks(final IForgeRegistry<Block> registry){}
+	default void registerItems(final IForgeRegistry<Item> registry){}
+	default void registerOredicts(){}
 
-    // Called inside CommonProxy
-    default void preInit(FMLPreInitializationEvent event){}
-    default void init(FMLInitializationEvent event){}
-    default void postInit(FMLPostInitializationEvent event){}
+	// Called inside CommonProxy
+	default void preInit(final FMLPreInitializationEvent event){}
+	default void init(final FMLInitializationEvent event){}
+	default void postInit(final FMLPostInitializationEvent event){}
 
-    // Called inside ClientProxy
-    @SideOnly(Side.CLIENT)
-    default void preInitClient(FMLPreInitializationEvent event){}
-    @SideOnly(Side.CLIENT)
-    default void initClient(FMLInitializationEvent event){}
-    @SideOnly(Side.CLIENT)
-    default void postInitClient(FMLPostInitializationEvent event){}
+	// Called inside ClientProxy
+	@SideOnly(Side.CLIENT)
+	default void preInitClient(final FMLPreInitializationEvent event){}
+	@SideOnly(Side.CLIENT)
+	default void initClient(final FMLInitializationEvent event){}
+	@SideOnly(Side.CLIENT)
+	default void postInitClient(final FMLPostInitializationEvent event){}
 
-    @SideOnly(Side.CLIENT)
-    default void initBlockModels(ModelRegistryEvent e){}
-    @SideOnly(Side.CLIENT)
-    default void initItemModels(ModelRegistryEvent e){}
+	@SideOnly(Side.CLIENT)
+	default void initBlockModels(final ModelRegistryEvent e){}
+	@SideOnly(Side.CLIENT)
+	default void initItemModels(final ModelRegistryEvent e){}
 
-    // Called inside ServerProxy ... unlikely to be used
-    @SideOnly(Side.SERVER)
-    default void preInitServer(FMLPreInitializationEvent event){}
-    @SideOnly(Side.SERVER)
-    default void initServer(FMLInitializationEvent event){}
-    @SideOnly(Side.SERVER)
-    default void postInitServer(FMLPostInitializationEvent event){}
+	// Called inside ServerProxy ... unlikely to be used
+	@SideOnly(Side.SERVER)
+	default void preInitServer(final FMLPreInitializationEvent event){}
+	@SideOnly(Side.SERVER)
+	default void initServer(final FMLInitializationEvent event){}
+	@SideOnly(Side.SERVER)
+	default void postInitServer(final FMLPostInitializationEvent event){}
 
-	
+
 }

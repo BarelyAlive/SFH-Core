@@ -17,114 +17,114 @@ import net.minecraft.world.World;
 public class CubeFacingXYZ  extends Block{
 
 	public static final PropertyEnum<CubeFacingXYZ.EnumAxis> CUBE_AXIS = PropertyEnum.<CubeFacingXYZ.EnumAxis>create("axis", CubeFacingXYZ.EnumAxis.class);
-	
-	public CubeFacingXYZ(Material materialIn, ResourceLocation loc) {
+
+	public CubeFacingXYZ(final Material materialIn, final ResourceLocation loc) {
 		super(materialIn);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.Y));
+		setDefaultState(blockState.getBaseState().withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.Y));
 		setRegistryName(loc);
 	}
-	
-	public static enum EnumAxis implements IStringSerializable
-    {
-        X("x"),
-        Y("y"),
-        Z("z"),
-        NONE("none");
 
-        private final String name;
+	public enum EnumAxis implements IStringSerializable
+	{
+		X("x"),
+		Y("y"),
+		Z("z"),
+		NONE("none");
 
-        private EnumAxis(String name)
-        {
-            this.name = name;
-        }
+		private final String name;
 
-        @Override
+		private EnumAxis(final String name)
+		{
+			this.name = name;
+		}
+
+		@Override
 		public String toString()
-        {
-            return this.name;
-        }
+		{
+			return name;
+		}
 
-        public static CubeFacingXYZ.EnumAxis fromFacingAxis(EnumFacing.Axis axis)
-        {
-            switch (axis)
-            {
-                case X:
-                    return X;
-                case Y:
-                    return Y;
-                case Z:
-                    return Z;
-                default:
-                    return NONE;
-            }
-        }
+		public static CubeFacingXYZ.EnumAxis fromFacingAxis(final EnumFacing.Axis axis)
+		{
+			switch (axis)
+			{
+			case X:
+				return X;
+			case Y:
+				return Y;
+			case Z:
+				return Z;
+			default:
+				return NONE;
+			}
+		}
 
-        @Override
+		@Override
 		public String getName()
-        {
-            return this.name;
-        }
-    }
-	
-	  
-    @Override
-    protected BlockStateContainer createBlockState() {
-    	return new BlockStateContainer(this, new IProperty[] { CUBE_AXIS });
-    }
-    
-    /**
-     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
-     * IBlockstate
-     */
-    @Override
-	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
-        return this.getStateFromMeta(meta).withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.fromFacingAxis(facing.getAxis()));
-    }
-    
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-    	// TODO Auto-generated method stub
-    	return getDefaultState().withProperty(CUBE_AXIS, meta == 1 ? EnumAxis.X : (meta == 2 ? EnumAxis.Y : (meta == 3 ? EnumAxis.Z : EnumAxis.NONE)));
-    }
-    
-    @Override
-    public int getMetaFromState(IBlockState state) {
-    	
-    	EnumAxis type = state.getValue(CUBE_AXIS);
-    	
-    	if(type.getName().equals("none")) return 0;
-    	if(type.getName().equals("x")) return 1;
-    	if(type.getName().equals("y")) return 2;
-    	if(type.getName().equals("z")) return 3;
-    	
-    	return 0;
-    }
-	
+		{
+			return name;
+		}
+	}
+
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] { CUBE_AXIS });
+	}
+
 	/**
-     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
-     * blockstate.
-     */
-    @Override
-	public IBlockState withRotation(IBlockState state, Rotation rot)
-    {
-        switch (rot)
-        {
-            case COUNTERCLOCKWISE_90:
-            case CLOCKWISE_90:
+	 * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
+	 * IBlockstate
+	 */
+	@Override
+	public IBlockState getStateForPlacement(final World worldIn, final BlockPos pos, final EnumFacing facing, final float hitX, final float hitY, final float hitZ, final int meta, final EntityLivingBase placer)
+	{
+		return getStateFromMeta(meta).withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.fromFacingAxis(facing.getAxis()));
+	}
 
-                switch (state.getValue(CUBE_AXIS))
-                {
-                    case X:
-                        return state.withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.Z);
-                    case Z:
-                        return state.withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.X);
-                    default:
-                        return state;
-                }
+	@Override
+	public IBlockState getStateFromMeta(final int meta) {
+		// TODO Auto-generated method stub
+		return getDefaultState().withProperty(CUBE_AXIS, meta == 1 ? EnumAxis.X : meta == 2 ? EnumAxis.Y : meta == 3 ? EnumAxis.Z : EnumAxis.NONE);
+	}
 
-            default:
-                return state;
-        }
-    }
+	@Override
+	public int getMetaFromState(final IBlockState state) {
+
+		EnumAxis type = state.getValue(CUBE_AXIS);
+
+		if(type.getName().equals("none")) return 0;
+		if(type.getName().equals("x")) return 1;
+		if(type.getName().equals("y")) return 2;
+		if(type.getName().equals("z")) return 3;
+
+		return 0;
+	}
+
+	/**
+	 * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
+	 * blockstate.
+	 */
+	@Override
+	public IBlockState withRotation(final IBlockState state, final Rotation rot)
+	{
+		switch (rot)
+		{
+		case COUNTERCLOCKWISE_90:
+		case CLOCKWISE_90:
+
+			switch (state.getValue(CUBE_AXIS))
+			{
+			case X:
+				return state.withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.Z);
+			case Z:
+				return state.withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.X);
+			default:
+				return state;
+			}
+
+		default:
+			return state;
+		}
+	}
 }

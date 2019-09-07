@@ -11,31 +11,28 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterItems {
-	
+
 	private static NonNullList<Item> items = NonNullList.create();
-	
+
 	public static List<Item> getItems() {
 		return items;
 	}
 
-	public static void register(IForgeRegistry<Item> registry)
+	public static void register(final IForgeRegistry<Item> registry)
 	{
 		for(Item item : items)
-		{			
 			registry.register(item);
-		}
 	}
-	
+
 	public static void registerModels()
 	{
 		ResourceLocation loc;
 		for(Item item : items)
-		{			
-        	loc = item.getRegistryName();
-        	
-	        if (!RegisterBlocks.getBlocks().contains(Block.getBlockFromItem(item))) {
+		{
+			loc = item.getRegistryName();
+
+			if (!RegisterBlocks.getBlocks().contains(Block.getBlockFromItem(item)))
 				((SFHCoreClientProxy) SFHCore.proxy).tryHandleItemModel(item, loc);
-			}
 		}
 	}
 }

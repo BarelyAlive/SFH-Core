@@ -15,28 +15,28 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public interface IMeshProvider
 {
-    /**
-     * Gets the custom ItemMeshDefinition to use for the item.
-     * 
-     * @return - the custom ItemMeshDefinition to use for the item.
-     */
-    @SideOnly(Side.CLIENT)
-    ItemMeshDefinition getMeshDefinition();
+	/**
+	 * Gets the custom ItemMeshDefinition to use for the item.
+	 *
+	 * @return - the custom ItemMeshDefinition to use for the item.
+	 */
+	@SideOnly(Side.CLIENT)
+	ItemMeshDefinition getMeshDefinition();
 
-    /**
-     * Gets all possible variants for this item
-     * 
-     * @return - All possible variants for this item
-     */
-    List<String> getVariants();
+	/**
+	 * Gets all possible variants for this item
+	 *
+	 * @return - All possible variants for this item
+	 */
+	List<String> getVariants();
 
-    /**
-     * If a custom ResourceLocation is required, return it here.
-     * 
-     * Can be null if unneeded.
-     * 
-     * @return - The custom ResourceLocation
-     */
-    @Nullable
-    ResourceLocation getCustomLocation();
+	/**
+	 * If a custom ResourceLocation is required, return it here.
+	 *
+	 * Can be null if unneeded.
+	 *
+	 * @return - The custom ResourceLocation
+	 */
+	@Nullable
+	ResourceLocation getCustomLocation();
 }

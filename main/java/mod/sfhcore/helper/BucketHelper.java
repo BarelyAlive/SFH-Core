@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.UniversalBucket;
 
 public class BucketHelper {
 
-	public static boolean isBucketWithFluidMaterial(@Nonnull ItemStack held, Material material)
+	public static boolean isBucketWithFluidMaterial(@Nonnull final ItemStack held, final Material material)
 	{
 		FluidStack f = FluidUtil.getFluidContained(held);
 		if(f == null) return false;
@@ -22,7 +22,7 @@ public class BucketHelper {
 		Material m = blockFluid.getMaterial(blockFluid.getDefaultState());
 		if(!m.equals(material)) return false;
 		if(held.getItem().equals(Items.WATER_BUCKET)) return true;
-		
+
 		return held.getItem() instanceof UniversalBucket || held.getItem() instanceof CustomBucket;
 	}
 }

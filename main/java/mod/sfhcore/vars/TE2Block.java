@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 public class TE2Block {
 	private Block block;
 	private Class te;
-	
+
 	public Block getBlock() {
 		return block;
 	}
@@ -14,13 +14,13 @@ public class TE2Block {
 		return te;
 	}
 
-	public TE2Block(Block b, Class te)
+	public TE2Block(final Block b, final Class te)
 	{
-		this.block = b;
+		block = b;
 		this.te = te;
 	}
-	
-	public TE2Block(Class te, Block b)
+
+	public TE2Block(final Class te, final Block b)
 	{
 		this(b, te);
 	}

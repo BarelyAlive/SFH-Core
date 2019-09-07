@@ -14,16 +14,16 @@ import mod.sfhcore.util.EntityInfo;
 
 public class CustomEntityInfoJson implements JsonDeserializer<EntityInfo>, JsonSerializer<EntityInfo>
 {
-    @Override
-    public JsonElement serialize(EntityInfo src, Type typeOfSrc, JsonSerializationContext context)
-    {
-    	JsonElement prim = new JsonPrimitive((src.getName() == null ? src.toString() : src.getName()));
-        return prim;
-    }
-    
-    @Override
-    public EntityInfo deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
-    {
-            return new EntityInfo(json.getAsString());
-    }
+	@Override
+	public JsonElement serialize(final EntityInfo src, final Type typeOfSrc, final JsonSerializationContext context)
+	{
+		JsonElement prim = new JsonPrimitive(src.getName() == null ? src.toString() : src.getName());
+		return prim;
+	}
+
+	@Override
+	public EntityInfo deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
+	{
+		return new EntityInfo(json.getAsString());
+	}
 }

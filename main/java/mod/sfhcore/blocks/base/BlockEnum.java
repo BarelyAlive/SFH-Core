@@ -24,81 +24,81 @@ import net.minecraft.world.World;
 
 public class BlockEnum<E extends Enum<E> & IStringSerializable> extends Block implements IVariantProvider
 {
-    private final E[] types;
-    private final PropertyEnum<E> property;
-    private final BlockStateContainer realStateContainer;
+	private final E[] types;
+	private final PropertyEnum<E> property;
+	private final BlockStateContainer realStateContainer;
 
-    public BlockEnum(Material material, Class<E> enumClass, String propName, ResourceLocation loc, float resi, float hard, CreativeTabs tab)
-    {
-        super(material);
+	public BlockEnum(final Material material, final Class<E> enumClass, final String propName, final ResourceLocation loc, final float resi, final float hard, final CreativeTabs tab)
+	{
+		super(material);
 
-        this.types = enumClass.getEnumConstants();
-        this.property = PropertyEnum.create(propName, enumClass);
-        this.realStateContainer = createStateContainer();
-        this.setDefaultState(getBlockState().getBaseState());
-        this.setRegistryName(loc);
-        this.setResistance(resi);
-        this.setHardness(hard);
-        this.setCreativeTab(tab);
-    }
-    
-    @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
-    		EntityPlayer player)
-    {
-    	return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
-    }
-    
-    public E[] getTypes(){
-    	return this.types;
-    }
+		this.types = enumClass.getEnumConstants();
+		this.property = PropertyEnum.create(propName, enumClass);
+		this.realStateContainer = createStateContainer();
+		setDefaultState(getBlockState().getBaseState());
+		this.setRegistryName(loc);
+		setResistance(resi);
+		setHardness(hard);
+		setCreativeTab(tab);
+	}
 
-    public BlockEnum(Material material, Class<E> enumClass, ResourceLocation loc, float resi, float hard, CreativeTabs tab)
-    {
-        this(material, enumClass, "type", loc, resi, hard, tab);
-    }
+	@Override
+	public ItemStack getPickBlock(final IBlockState state, final RayTraceResult target, final World world, final BlockPos pos,
+			final EntityPlayer player)
+	{
+		return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
+	}
 
-    @Override
-    protected final BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer.Builder(this).build(); // Blank to avoid crashes
-    }
+	public E[] getTypes(){
+		return this.types;
+	}
 
-    @Override
-    public final BlockStateContainer getBlockState()
-    {
-        return realStateContainer;
-    }
+	public BlockEnum(final Material material, final Class<E> enumClass, final ResourceLocation loc, final float resi, final float hard, final CreativeTabs tab)
+	{
+		this(material, enumClass, "type", loc, resi, hard, tab);
+	}
 
-    @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        return getDefaultState().withProperty(property, types[meta]);
-    }
+	@Override
+	protected final BlockStateContainer createBlockState()
+	{
+		return new BlockStateContainer.Builder(this).build(); // Blank to avoid crashes
+	}
 
-    @Override
-    public int getMetaFromState(IBlockState state)
-    {
-        return state.getValue(property).ordinal();
-    }
+	@Override
+	public final BlockStateContainer getBlockState()
+	{
+		return realStateContainer;
+	}
 
-    @Override
-    public int damageDropped(IBlockState state)
-    {
-        return getMetaFromState(state);
-    }
+	@Override
+	public IBlockState getStateFromMeta(final int meta)
+	{
+		return getDefaultState().withProperty(property, types[meta]);
+	}
 
-    protected BlockStateContainer createStateContainer()
-    {
-        return new BlockStateContainer.Builder(this).add(property).build();
-    }
-    
-    @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < this.getTypes().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getTypes()[i].toString()));
-        return ret;
-    }
+	@Override
+	public int getMetaFromState(final IBlockState state)
+	{
+		return state.getValue(property).ordinal();
+	}
+
+	@Override
+	public int damageDropped(final IBlockState state)
+	{
+		return getMetaFromState(state);
+	}
+
+	protected BlockStateContainer createStateContainer()
+	{
+		return new BlockStateContainer.Builder(this).add(property).build();
+	}
+
+	@Override
+	public List<Pair<Integer, String>> getVariants()
+	{
+		List<Pair<Integer, String>> ret = new ArrayList<>();
+		for (int i = 0; i < this.getTypes().length; i++)
+			ret.add(new ImmutablePair<>(i, "type=" + this.getTypes()[i].toString()));
+		return ret;
+	}
 }

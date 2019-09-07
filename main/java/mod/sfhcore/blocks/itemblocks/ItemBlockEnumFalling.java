@@ -19,60 +19,54 @@ import net.minecraft.util.NonNullList;
 public class ItemBlockEnumFalling<E extends Enum<E> & IStringSerializable> extends ItemBlock implements IVariantProvider
 {
 
-    public ItemBlockEnumFalling(Block block, CreativeTabs tab)
-    {
-        super(block);
+	public ItemBlockEnumFalling(final Block block, final CreativeTabs tab)
+	{
+		super(block);
 
-        setHasSubtypes(true);
-        setRegistryName(((BlockEnumFalling<E>) block).getRegistryName());
-        setCreativeTab(tab);
-    }
-    
-    @Override
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-    	if (tab.equals(this.getCreativeTab())) {
-			for (int i = 0; i < getBlock().getTypes().length; i++) {
+		setHasSubtypes(true);
+		setRegistryName(((BlockEnumFalling<E>) block).getRegistryName());
+		setCreativeTab(tab);
+	}
+
+	@Override
+	public void getSubItems(final CreativeTabs tab, final NonNullList<ItemStack> items) {
+		if (tab.equals(getCreativeTab()))
+			for (int i = 0; i < getBlock().getTypes().length; i++)
 				items.add(new ItemStack(this, 1, i));
-			} 
-		}
-    }
-    
-    @Override
-	public int getItemBurnTime(ItemStack itemStack) {
+	}
+
+	@Override
+	public int getItemBurnTime(final ItemStack itemStack) {
 		for(Pair<ItemStack, Integer> f : CustomFuelHandler.getFuelList())
-		{
 			if(ItemStack.areItemsEqual(itemStack, f.getLeft()))
-			{	
-				return f.getRight();	
-			}
-		}
+				return f.getRight();
 		return 0;
 	}
 
-    @Override
-    public BlockEnumFalling<E> getBlock()
-    {
-        return (BlockEnumFalling<E>) super.getBlock();
-    }
+	@Override
+	public BlockEnumFalling<E> getBlock()
+	{
+		return (BlockEnumFalling<E>) super.getBlock();
+	}
 
-    @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
-        return "item." + getBlock().getRegistryName().getResourcePath() + "_" + getBlock().getTypes()[stack.getItemDamage()].toString();
-    }
+	@Override
+	public String getUnlocalizedName(final ItemStack stack)
+	{
+		return "item." + getBlock().getRegistryName().getResourcePath() + "_" + getBlock().getTypes()[stack.getItemDamage()].toString();
+	}
 
-    @Override
-    public int getMetadata(int damage)
-    {
-        return damage;
-    }
-    
-    @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        for (int i = 0; i < this.getBlock().getTypes().length; i++)
-            ret.add(new ImmutablePair<Integer, String>(i, "type=" + this.getBlock().getTypes()[i]));
-        return ret;
-    }
+	@Override
+	public int getMetadata(final int damage)
+	{
+		return damage;
+	}
+
+	@Override
+	public List<Pair<Integer, String>> getVariants()
+	{
+		List<Pair<Integer, String>> ret = new ArrayList<>();
+		for (int i = 0; i < this.getBlock().getTypes().length; i++)
+			ret.add(new ImmutablePair<>(i, "type=" + this.getBlock().getTypes()[i]));
+		return ret;
+	}
 }

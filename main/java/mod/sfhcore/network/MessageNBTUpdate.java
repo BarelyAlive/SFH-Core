@@ -10,21 +10,21 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageNBTUpdate implements IMessage {
-	
+
 	public MessageNBTUpdate(){}
 
 	private int x, y, z;
 	private NBTTagCompound tag;
-	public MessageNBTUpdate(TileEntity te)
+	public MessageNBTUpdate(final TileEntity te)
 	{
-		this.x = te.getPos().getX();
-		this.y = te.getPos().getY();
-		this.z = te.getPos().getZ();
-		this.tag = te.writeToNBT(new NBTTagCompound());
+		x = te.getPos().getX();
+		y = te.getPos().getY();
+		z = te.getPos().getZ();
+		tag = te.writeToNBT(new NBTTagCompound());
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf)
+	public void toBytes(final ByteBuf buf)
 	{
 		buf.writeInt(x);
 		buf.writeInt(y);
@@ -33,36 +33,32 @@ public class MessageNBTUpdate implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf)
+	public void fromBytes(final ByteBuf buf)
 	{
-		this.x = buf.readInt();
-		this.y = buf.readInt();
-		this.z = buf.readInt();
-		this.tag = ByteBufUtils.readTag(buf);
+		x = buf.readInt();
+		y = buf.readInt();
+		z = buf.readInt();
+		tag = ByteBufUtils.readTag(buf);
 	}
 
 	public static class MessageNBTUpdateHandler implements IMessageHandler<MessageNBTUpdate, IMessage> {
-        @Override
-        public IMessage onMessage(final MessageNBTUpdate msg, MessageContext ctx)
-        {
-        	net.minecraft.client.Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-                @Override
-                public void run() {
-                    TileEntity entity = net.minecraft.client.Minecraft.getMinecraft().world.getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
+		@Override
+		public IMessage onMessage(final MessageNBTUpdate msg, final MessageContext ctx)
+		{
+			net.minecraft.client.Minecraft.getMinecraft().addScheduledTask(() -> {
+				TileEntity entity = net.minecraft.client.Minecraft.getMinecraft().world.getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
 
-                    if (entity != null) {
-                        entity.readFromNBT(msg.tag);
-                    }
-                }
-            });
-            return null;
-        }
+				if (entity != null)
+					entity.readFromNBT(msg.tag);
+			});
+			return null;
+		}
 	}
-		
+
 	/****
-	* Was code bevor.
-	* Used not client-side only code
-	****/
+	 * Was code bevor.
+	 * Used not client-side only code
+	 ****/
 	/*
 	public static class MessageNBTUpdateHandler implements IMessageHandler<MessageNBTUpdate, IMessage> {
         @Override
@@ -82,6 +78,6 @@ public class MessageNBTUpdate implements IMessage {
             return null;
         }
 	}
-	*/
+	 */
 
 }

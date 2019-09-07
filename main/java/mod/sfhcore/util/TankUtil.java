@@ -11,47 +11,45 @@ import net.minecraftforge.fluids.FluidTank;
 
 public class TankUtil
 {
-    public static final ItemStack WATER_BOTTLE;
+	public static final ItemStack WATER_BOTTLE;
 
-    static {
-        NBTTagCompound waterPotion = new NBTTagCompound();
-        waterPotion.setString("Potion", "minecraft:water");
-        WATER_BOTTLE = new ItemStack(Items.POTIONITEM, 1, 0);
-        WATER_BOTTLE.setTagCompound(waterPotion);
-    }
+	static {
+		NBTTagCompound waterPotion = new NBTTagCompound();
+		waterPotion.setString("Potion", "minecraft:water");
+		WATER_BOTTLE = new ItemStack(Items.POTIONITEM, 1, 0);
+		WATER_BOTTLE.setTagCompound(waterPotion);
+	}
 
-    public static boolean drainWaterIntoBottle(TileBase tileEntity, EntityPlayer player, FluidTank tank) {
-        if (player.getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE) {
-            if (tank.getFluid() != null && tank.getFluidAmount() >= 250 && tank.getFluid().getFluid() == FluidRegistry.WATER) {
-                if (!player.isCreative()) {
-                	player.addItemStackToInventory(WATER_BOTTLE.copy());
-                    player.getHeldItemMainhand().shrink(1);
-                }
-                    tank.drain(250, true);
+	public static boolean drainWaterIntoBottle(final TileBase tileEntity, final EntityPlayer player, final FluidTank tank) {
+		if (player.getHeldItemMainhand().getItem() == Items.GLASS_BOTTLE)
+			if (tank.getFluid() != null && tank.getFluidAmount() >= 250 && tank.getFluid().getFluid() == FluidRegistry.WATER) {
+				if (!player.isCreative()) {
+					player.addItemStackToInventory(WATER_BOTTLE.copy());
+					player.getHeldItemMainhand().shrink(1);
+				}
+				tank.drain(250, true);
 
-                    tileEntity.markDirtyClient();
-                    return true;
-            }
-        }
-        return false;
-    }
+				tileEntity.markDirtyClient();
+				return true;
+			}
+		return false;
+	}
 
-    public static boolean drainWaterFromBottle(TileBase tileEntity, EntityPlayer player, FluidTank tank) {
-        if (player.getHeldItemMainhand().getItem() == Items.POTIONITEM && WATER_BOTTLE.getTagCompound().equals(player.getHeldItemMainhand().getTagCompound())) {
-            FluidStack water = new FluidStack(FluidRegistry.WATER, 250);
+	public static boolean drainWaterFromBottle(final TileBase tileEntity, final EntityPlayer player, final FluidTank tank) {
+		if (player.getHeldItemMainhand().getItem() == Items.POTIONITEM && WATER_BOTTLE.getTagCompound().equals(player.getHeldItemMainhand().getTagCompound())) {
+			FluidStack water = new FluidStack(FluidRegistry.WATER, 250);
 
-            if (tank.fill(water, false) == water.amount) {
-                if (player.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) {
+			if (tank.fill(water, false) == water.amount)
+				if (player.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) {
 
-                    if (!player.isCreative())
-                        player.getHeldItemMainhand().shrink(1);
-                    tank.fill(water, true);
+					if (!player.isCreative())
+						player.getHeldItemMainhand().shrink(1);
+					tank.fill(water, true);
 
-                    tileEntity.markDirtyClient();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+					tileEntity.markDirtyClient();
+					return true;
+				}
+		}
+		return false;
+	}
 }
