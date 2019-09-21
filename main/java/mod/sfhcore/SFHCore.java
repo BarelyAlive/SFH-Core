@@ -5,8 +5,7 @@ import java.io.File;
 import mod.sfhcore.handler.BucketHandler;
 import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.network.NetworkHandler;
-import mod.sfhcore.proxy.SFHCoreClientProxy;
-import mod.sfhcore.proxy.SFHCoreProxy;
+import mod.sfhcore.proxy.IProxy;
 import mod.sfhcore.registries.RegisterBlocks;
 import mod.sfhcore.registries.RegisterEnchantments;
 import mod.sfhcore.registries.RegisterItems;
@@ -31,14 +30,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid=Constants.ModIdSFHCORE, name=Constants.ModIdSFHCORE, version=Constants.SFHCoreVersion)
+@Mod(modid=Constants.MODID, name=Constants.MODID, version=Constants.VERSION)
 public class SFHCore
 {
-	@Instance(value=Constants.ModIdSFHCORE)
+	@Instance(value=Constants.MODID)
 	public static SFHCore instance;
 
-	@SidedProxy(clientSide="mod.sfhcore.proxy.SFHCoreClientProxy", serverSide="mod.sfhcore.proxy.SFHCoreProxy")
-	public static SFHCoreProxy proxy;
+	@SidedProxy(clientSide=Constants.CLIENT_PROXY, serverSide=Constants.SERVER_PROXY)
+	public static IProxy proxy;
 
 	public static File configDirectory;
 
@@ -106,15 +105,15 @@ public class SFHCore
 	@Mod.EventHandler
 	public void PreInit(final FMLPreInitializationEvent event)
 	{
-		configDirectory = new File(event.getModConfigurationDirectory(), Constants.ModIdSFHCORE);
+		configDirectory = new File(event.getModConfigurationDirectory(), Constants.MODID);
 		configDirectory.mkdirs();
 
-		LogUtil.setup(Constants.ModIdSFHCORE, configDirectory);
+		LogUtil.setup(Constants.MODID, configDirectory);
 
 		Config.loadConfigs();
 
 		NetworkHandler.initPackets();
-		new SFHCoreClientProxy();
+		proxy.preInit(event);
 	}
 
 	@Mod.EventHandler
