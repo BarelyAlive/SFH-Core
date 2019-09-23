@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 
-public class SFHCoreProxy {
+public class CommonProxy {
 
 	public void tryHandleBlockModel(final Block block, final ResourceLocation loc)
 	{

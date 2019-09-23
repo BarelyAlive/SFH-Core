@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class NetworkHandler
 {
-	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.ModIdSFHCORE);
+	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
 	private static int id = 0;
 
 	public static void registerMessage(final Class messageHandler, final Class message, final Side side)

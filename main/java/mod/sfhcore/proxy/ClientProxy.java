@@ -11,7 +11,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class SFHCoreClientProxy extends SFHCoreProxy{
+public class ClientProxy extends CommonProxy{
 
 	private final String INVENTORY = "inventory";
 

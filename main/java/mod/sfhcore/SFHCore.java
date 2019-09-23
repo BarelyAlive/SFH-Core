@@ -4,16 +4,15 @@ import java.io.File;
 
 import mod.sfhcore.handler.BucketHandler;
 import mod.sfhcore.handler.CustomFuelHandler;
+import mod.sfhcore.helper.NameHelper;
 import mod.sfhcore.network.NetworkHandler;
-import mod.sfhcore.proxy.IProxy;
-import mod.sfhcore.registries.RegisterBlocks;
-import mod.sfhcore.registries.RegisterEnchantments;
-import mod.sfhcore.registries.RegisterItems;
-import mod.sfhcore.registries.RegisterTileEntity;
+import mod.sfhcore.proxy.ClientProxy;
+import mod.sfhcore.proxy.CommonProxy;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -37,45 +36,13 @@ public class SFHCore
 	public static SFHCore instance;
 
 	@SidedProxy(clientSide=Constants.CLIENT_PROXY, serverSide=Constants.SERVER_PROXY)
-	public static IProxy proxy;
+	public static CommonProxy proxy;
 
 	public static File configDirectory;
 
 	static
 	{
 		FluidRegistry.enableUniversalBucket();
-	}
-
-	@Mod.EventBusSubscriber
-	public static class RegistrationHandler
-	{
-		@SubscribeEvent
-		public static void registerBlocks (final RegistryEvent.Register<Block> event)
-		{
-			RegisterBlocks.registerBlocks(event.getRegistry());
-			RegisterTileEntity.register();
-		}
-
-		@SubscribeEvent
-		public static void registerItems (final RegistryEvent.Register<Item> event)
-		{
-			RegisterItems.register(event.getRegistry());
-			RegisterBlocks.registerItemBlocks(event.getRegistry());
-		}
-
-		@SubscribeEvent
-		public static void registerEnchantments(final RegistryEvent.Register<Enchantment> event)
-		{
-			RegisterEnchantments.registerEnchantments(event.getRegistry());
-		}
-
-		@SubscribeEvent
-		@SideOnly(Side.CLIENT)
-		public static void registerModels(final ModelRegistryEvent event)
-		{
-			RegisterItems.registerModels();
-			RegisterBlocks.registerModels();
-		}
 	}
 
 	@Mod.EventBusSubscriber
@@ -113,7 +80,7 @@ public class SFHCore
 		Config.loadConfigs();
 
 		NetworkHandler.initPackets();
-		proxy.preInit(event);
+		new ClientProxy();
 	}
 
 	@Mod.EventHandler
