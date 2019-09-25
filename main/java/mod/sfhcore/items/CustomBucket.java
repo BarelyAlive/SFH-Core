@@ -53,6 +53,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 		localizedName = "";
 		setUnlocalizedName(loc.getResourcePath());
 		this.setRegistryName(loc);
+		setUnlocalizedName(loc.getResourcePath());
 		setCreativeTab(tab);
 		setContainerItem(empty.getItem());
 		//this.setHasSubtypes(true);

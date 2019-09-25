@@ -28,6 +28,7 @@ public class CustomItem extends Item implements IVariantProvider{
 		setMaxStackSize(maxstack);
 		setContainerItem(container);
 		setRegistryName(loc);
+		setUnlocalizedName(loc.getResourcePath());
 		setHasSubtypes(subtypes);
 		sub = subnumber;
 		name = loc.getResourcePath();

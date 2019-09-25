@@ -17,6 +17,7 @@ public class CubeFalling extends BlockFalling{
 		setHardness(hardness);
 		setLightOpacity(0);
 		setRegistryName(loc);
+		setUnlocalizedName(loc.getResourcePath());
 		if(material == Material.GROUND)
 			setSoundType(SoundType.GROUND);
 		if(material == Material.ROCK)

@@ -24,6 +24,7 @@ public class CubeFacingHorizontal extends Block{
 		super(materialIn);
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		setRegistryName(loc);
+		setUnlocalizedName(loc.getResourcePath());
 	}
 
 	/**

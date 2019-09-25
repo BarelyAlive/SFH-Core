@@ -24,6 +24,7 @@ public class CustomBucketMilk extends Item
 		setMaxStackSize(1);
 		setCreativeTab(tab);
 		setRegistryName(loc);
+		setUnlocalizedName(loc.getResourcePath());
 		this.empty = empty != null ? empty : ItemStack.EMPTY;
 	}
 
