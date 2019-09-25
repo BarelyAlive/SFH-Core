@@ -25,9 +25,8 @@ public class Cube extends Block
 		setLightOpacity(0);
 		setRegistryName(loc);
 		this.te = te;
-		if(material == Material.GROUND){
+		if(material == Material.GROUND)
 			setSoundType(SoundType.GROUND);
-		}
 		if(material == Material.ROCK)
 			setSoundType(SoundType.STONE);
 		if(material == Material.SAND)

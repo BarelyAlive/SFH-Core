@@ -4,15 +4,11 @@ import java.io.File;
 
 import mod.sfhcore.handler.BucketHandler;
 import mod.sfhcore.handler.CustomFuelHandler;
-import mod.sfhcore.helper.NameHelper;
 import mod.sfhcore.network.NetworkHandler;
 import mod.sfhcore.proxy.ClientProxy;
 import mod.sfhcore.proxy.CommonProxy;
 import mod.sfhcore.util.LogUtil;
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
