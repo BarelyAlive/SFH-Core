@@ -32,7 +32,16 @@ public class SFHCore
 	public static SFHCore instance;
 
 	@SidedProxy(clientSide=Constants.CLIENT_PROXY, serverSide=Constants.SERVER_PROXY)
-	public static CommonProxy proxy;
+	private static CommonProxy proxy;
+	
+	public static CommonProxy getProxy() {
+		return proxy;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static ClientProxy getClientProxy() {
+		return (ClientProxy) proxy;
+	}
 
 	public static File configDirectory;
 
