@@ -11,8 +11,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.UniversalBucket;
 
-public class BucketHelper {
-
+public class BucketHelper
+{
 	public static boolean isBucketWithFluidMaterial(@Nonnull final ItemStack held, final Material material)
 	{
 		FluidStack f = FluidUtil.getFluidContained(held);

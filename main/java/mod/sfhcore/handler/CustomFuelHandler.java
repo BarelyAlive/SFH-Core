@@ -23,10 +23,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CustomFuelHandler{
 
-	private static List<Pair<ItemStack, Integer>> fuelList = new ArrayList<>();
+	private static final List<Pair<ItemStack, Integer>> FUEL = new ArrayList<>();
 
 	public static List<Pair<ItemStack, Integer>> getFuelList() {
-		return fuelList;
+		return FUEL;
 	}
 
 	@SubscribeEvent
@@ -43,18 +43,17 @@ public class CustomFuelHandler{
 
 		FluidStack f = FluidUtil.getFluidContained(stack);
 		if(f != null &&  Config.useAllLavaContainer)
-			if (f.getFluid() == FluidRegistry.LAVA && f.amount > 1000) {
+			if (f.getFluid() == FluidRegistry.LAVA && f.amount > 1000)
+			{
 				IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
-				boolean success = ifhi.drain(1000, true) != null;
-
-				if(success)
+				if(ifhi.drain(1000, true) != null)
 					return 20000;
 			}
 
 		try {
 			burnTime = item.getItemBurnTime(stack);
 		} catch (NullPointerException ex) {
-			LogUtil.fatal("SFHCore tried to get the burn time of " + item.getRegistryName() + " and it was NULL! Duh!");
+			LogUtil.fatal("[SFHCore] tried to get the burn time of " + item.getRegistryName() + " and it was NULL! Duh!");
 		}
 
 		if(burnTime < 0)
@@ -73,16 +72,16 @@ public class CustomFuelHandler{
 	{
 		if(item.getItemStack().isEmpty())
 		{
-			LogUtil.error("Nice try!");
+			LogUtil.error("[SFHCore tried to add an Itemstack to the Fuelregistry which was empty!");
 			return false;
 		}
 		if(item.getItem().getRegistryName() == null)
 		{
-			LogUtil.warn("SFHCore tried to add an item which has no registry name!");
+			LogUtil.warn("[SFHCore] tried to add an item which has no registry name!");
 			return false;
 		}
 
-		return fuelList.add(new ImmutablePair<>(item.getItemStack(), time));
+		return FUEL.add(new ImmutablePair<>(item.getItemStack(), time));
 	}
 
 }

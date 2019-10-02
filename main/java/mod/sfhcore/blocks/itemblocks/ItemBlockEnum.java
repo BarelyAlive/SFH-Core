@@ -18,7 +18,6 @@ import net.minecraft.util.NonNullList;
 
 public class ItemBlockEnum<E extends Enum<E> & IStringSerializable> extends ItemBlock implements IVariantProvider
 {
-
 	public ItemBlockEnum(final Block block, final CreativeTabs tab)
 	{
 		super(block);

@@ -3,6 +3,7 @@ package mod.sfhcore;
 import java.io.File;
 
 import mod.sfhcore.handler.BucketHandler;
+import mod.sfhcore.handler.BucketRegistrationHandler;
 import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.network.NetworkHandler;
 import mod.sfhcore.proxy.ClientProxy;
@@ -25,11 +26,22 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid=Constants.MODID, name=Constants.MODID, version=Constants.VERSION)
+@Mod(modid=Constants.MODID, name=Constants.MODID, version=Constants.VERSION, acceptedMinecraftVersions=Constants.MC_VERSION)
 public class SFHCore
 {
+	public static File configDirectory;
+	
 	@Instance(value=Constants.MODID)
-	public static SFHCore instance;
+	private static SFHCore instance;
+
+	public static SFHCore getInstance() {
+		return instance;
+	}
+	
+	static
+	{
+		FluidRegistry.enableUniversalBucket();
+	}
 
 	@SidedProxy(clientSide=Constants.CLIENT_PROXY, serverSide=Constants.SERVER_PROXY)
 	private static CommonProxy proxy;
@@ -43,37 +55,6 @@ public class SFHCore
 		return (ClientProxy) proxy;
 	}
 
-	public static File configDirectory;
-
-	static
-	{
-		FluidRegistry.enableUniversalBucket();
-	}
-
-	@Mod.EventBusSubscriber
-	public static class BucketRegistrationHandler
-	{
-		@SubscribeEvent(priority = EventPriority.LOWEST)
-		public static void registerBuckets (final RegistryEvent.Register<Item> event)
-		{
-			BucketHandler.registerBuckets(event);
-		}
-
-		@SubscribeEvent(priority = EventPriority.LOWEST)
-		@SideOnly(Side.CLIENT)
-		public static void registerItemHandlers(final ColorHandlerEvent.Item event)
-		{
-			BucketHandler.registerItemHandlers(event);
-		}
-
-		@SubscribeEvent(priority = EventPriority.LOWEST)
-		@SideOnly(Side.CLIENT)
-		public static void registerBucketModels(final ModelRegistryEvent event)
-		{
-			BucketHandler.registerBucketModels(event);
-		}
-	}
-
 	@Mod.EventHandler
 	public void PreInit(final FMLPreInitializationEvent event)
 	{
@@ -85,7 +66,8 @@ public class SFHCore
 		Config.loadConfigs();
 
 		NetworkHandler.initPackets();
-		new ClientProxy();
+		
+		MinecraftForge.EVENT_BUS.register(new BucketRegistrationHandler());
 	}
 
 	@Mod.EventHandler
@@ -95,8 +77,5 @@ public class SFHCore
 	}
 
 	@Mod.EventHandler
-	public void PostInit(final FMLPostInitializationEvent event)
-	{
-	}
-
+	public void PostInit(final FMLPostInitializationEvent event) {}
 }

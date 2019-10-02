@@ -19,10 +19,10 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
 
-	private static List<Pair<Class<GuiContainer>, Class<Container>>> teco = new ArrayList<>();
+	private static final List<Pair<Class<GuiContainer>, Class<Container>>> TECO = new ArrayList<>();
 
 	public static List<Pair<Class<GuiContainer>, Class<Container>>> getTeco() {
-		return teco;
+		return TECO;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class GuiHandler implements IGuiHandler {
 	{
 		TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
 
-		for(Pair<Class<GuiContainer>, Class<Container>> tc : teco)
+		for(Pair<Class<GuiContainer>, Class<Container>> tc : TECO)
 			if(te1.getClass().equals(tc.getLeft().getClass())){
 
 				Class<Container> c = tc.getRight();
@@ -51,7 +51,7 @@ public class GuiHandler implements IGuiHandler {
 	{
 		TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
 
-		for(Pair<Class<GuiContainer>, Class<Container>> tc : teco)
+		for(Pair<Class<GuiContainer>, Class<Container>> tc : TECO)
 			if(te1.getClass().equals(tc.getLeft().getClass())){
 
 				Class<GuiContainer> c = tc.getLeft();
@@ -75,8 +75,8 @@ public class GuiHandler implements IGuiHandler {
 	 * @return
 	 */
 	public static int addGUIRelation(@Nonnull final Object gui, @Nonnull final Object con) {
-		teco.add(new ImmutablePair<>((Class<GuiContainer>)gui, (Class<Container>)con));
-		return teco.size() - 1;
+		TECO.add(new ImmutablePair<>((Class<GuiContainer>)gui, (Class<Container>)con));
+		return TECO.size() - 1;
 	}
 }
 
