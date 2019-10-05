@@ -10,8 +10,6 @@ public class CustomFood extends ItemFood
 	{
 		super(amount, saturation, isWolfFood);
 		setRegistryName(loc);
-		setUnlocalizedName(loc.getResourcePath());
-		setCreativeTab(tab);
 	}
 
 }

@@ -10,14 +10,12 @@ import net.minecraft.util.ResourceLocation;
 
 public class CubeFalling extends BlockFalling{
 
-	public CubeFalling(final Material material, final float resistance, final float hardness, final CreativeTabs tab, final ResourceLocation loc) {
+	public CubeFalling(final Material material, final float resistance, final float hardness, final ResourceLocation loc) {
 		super();
-		setCreativeTab(tab);
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
 		setRegistryName(loc);
-		setUnlocalizedName(loc.getResourcePath());
 		if(material == Material.GROUND)
 			setSoundType(SoundType.GROUND);
 		if(material == Material.ROCK)

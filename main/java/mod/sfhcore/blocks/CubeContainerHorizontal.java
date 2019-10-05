@@ -34,7 +34,6 @@ public class CubeContainerHorizontal extends BlockContainer{
 		super(materialIn);
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		setRegistryName(loc);
-		setUnlocalizedName(loc.getResourcePath());
 	}
 
 	/**

@@ -19,12 +19,10 @@ import net.minecraft.world.World;
 public class ItemDoor extends Item
 {
 
-	public ItemDoor(final CreativeTabs tab, final ResourceLocation doorItem)
+	public ItemDoor(final ResourceLocation doorItem)
 	{
 		maxStackSize = 1;
-		setCreativeTab(tab);
 		this.setRegistryName(doorItem);
-		setUnlocalizedName(doorItem.getResourcePath());
 	}
 
 	@Override

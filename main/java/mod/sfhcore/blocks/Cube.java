@@ -13,18 +13,16 @@ public class Cube extends Block
 {
 	private TileEntity te;
 
-	public Cube(final Material material, final float resistance, final float hardness, final CreativeTabs tab, final ResourceLocation loc) {
-		this(material, resistance, hardness, tab, loc, null);
+	public Cube(final Material material, final float resistance, final float hardness, final ResourceLocation loc) {
+		this(material, resistance, hardness, loc, null);
 	}
 
-	public Cube(final Material material, final float resistance, final float hardness, final CreativeTabs tab, final ResourceLocation loc, final TileEntity te) {
+	public Cube(final Material material, final float resistance, final float hardness, final ResourceLocation loc, final TileEntity te) {
 		super(material);
-		setCreativeTab(tab);
 		setResistance(resistance);
 		setHardness(hardness);
 		setLightOpacity(0);
 		setRegistryName(loc);
-		setUnlocalizedName(loc.getResourcePath());
 		this.te = te;
 		if(material == Material.GROUND)
 			setSoundType(SoundType.GROUND);

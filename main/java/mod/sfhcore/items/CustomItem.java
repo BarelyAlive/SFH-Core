@@ -15,20 +15,18 @@ import net.minecraft.util.ResourceLocation;
 
 public class CustomItem extends Item
 {
-	public CustomItem(final CreativeTabs tab, final ResourceLocation loc){
-		this(null, 64, tab, false, 1, loc);
+	public CustomItem(final ResourceLocation loc){
+		this(null, 64, false, 1, loc);
 	}
 
-	public CustomItem(final int maxstack, final CreativeTabs tab, final ResourceLocation loc){
-		this(null, maxstack, tab, false, 1, loc);
+	public CustomItem(final int maxstack, final ResourceLocation loc){
+		this(null, maxstack, false, 1, loc);
 	}
 
-	public CustomItem(final Item container, final int maxstack, final CreativeTabs tab, final boolean subtypes, final int subnumber, final ResourceLocation loc){
-		setCreativeTab(tab);
+	public CustomItem(final Item container, final int maxstack, final boolean subtypes, final int subnumber, final ResourceLocation loc){
 		setMaxStackSize(maxstack);
 		setContainerItem(container);
 		setRegistryName(loc);
-		setUnlocalizedName(loc.getResourcePath());
 	}
 
 	@Override
