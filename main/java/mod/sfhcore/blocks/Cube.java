@@ -24,6 +24,7 @@ public class Cube extends Block
 		setHardness(hardness);
 		setLightOpacity(0);
 		setRegistryName(loc);
+		setUnlocalizedName(loc.getResourcePath());
 		this.te = te;
 		if(material == Material.GROUND)
 			setSoundType(SoundType.GROUND);
