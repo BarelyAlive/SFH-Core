@@ -7,15 +7,14 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import mod.sfhcore.handler.CustomFuelHandler;
-import mod.sfhcore.proxy.IVariantProvider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
-public class CustomItem extends Item implements IVariantProvider{
-
+public class CustomItem extends Item
+{
 	private int sub;
 	private String name;
 
@@ -58,20 +57,5 @@ public class CustomItem extends Item implements IVariantProvider{
 	@Override
 	public String getUnlocalizedName(final ItemStack stack) {
 		return "item." + getName(stack);
-	}
-
-	@Override
-	public List<Pair<Integer, String>> getVariants()
-	{
-		List<Pair<Integer, String>> ret = new ArrayList<>();
-
-		if(sub == 1)
-		{
-			ret.add(new ImmutablePair<>(0, "inventory"));
-			return ret;
-		}
-		for (int i = 0; i < sub; i++)
-			ret.add(new ImmutablePair<>(i, "type=" + i));
-		return ret;
 	}
 }
