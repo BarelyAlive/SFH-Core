@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -212,16 +213,19 @@ public class CustomBucket extends Item implements IFluidHandler{
 				Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
 				if (fluid_from_block != null)
 				{
-					worldIn.setBlockToAir(pos);
-					CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
-					playerIn.inventory.markDirty();
-
-					if(!playerIn.capabilities.isCreativeMode)
+					if (BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) == -1 || BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) == 0 || BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) >= fluid_from_block.getTemperature())
 					{
-						PlayerInventory.tryAddItem(playerIn, new ItemStack(new_bucket));
-						held.shrink(1);
+						worldIn.setBlockToAir(pos);
+						CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
+						playerIn.inventory.markDirty();
+	
+						if(!playerIn.capabilities.isCreativeMode)
+						{
+							PlayerInventory.tryAddItem(playerIn, new ItemStack(new_bucket));
+							held.shrink(1);
+						}
+						return new ActionResult(EnumActionResult.SUCCESS, held);
 					}
-					return new ActionResult(EnumActionResult.SUCCESS, held);
 				}
 			}
 		}
@@ -244,7 +248,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 	@Override
 	public ItemStack onItemUseFinish(final ItemStack stack, final World worldIn, final EntityLivingBase entityLiving)
 	{
-		if (!worldIn.isRemote) entityLiving.curePotionEffects(stack); // FORGE - move up so stack.shrink does not turn stack into air
+		if (!worldIn.isRemote) entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET)); // FORGE - move up so stack.shrink does not turn stack into air
 
 		if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
 		{
@@ -257,9 +261,13 @@ public class CustomBucket extends Item implements IFluidHandler{
 
 			if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)
 			{
+				/*
 				CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
 				stack.shrink(1);
 				((EntityPlayer)entityLiving).addItemStackToInventory(new ItemStack(emptyBucket));
+				*/
+				CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
+	            ((EntityPlayer)entityLiving).getHeldItem(((EntityPlayer)entityLiving).getActiveHand()).shrink(1);
 			}
 		}
 

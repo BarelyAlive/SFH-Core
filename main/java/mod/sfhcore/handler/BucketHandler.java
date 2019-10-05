@@ -215,4 +215,23 @@ public class BucketHandler {
 				event.getItemColors().registerItemColorHandler(new mod.sfhcore.items.model_bucket.FluidCustomBucketColorer(), item);
 		}
 	}
+
+	public static int getMaxTemperaturFromBucket(String material) {
+		for(String item : bucketList.keySet())
+		{
+			if (item != null)
+			{
+				if (item.equals(material))
+				{
+					BucketInfo bi = bucketList.get(item);
+					if (bi != null)
+					{
+						return bi.highest_temperatur;
+					}
+				}
+			}
+		}
+
+		return 0;
+	}
 }
