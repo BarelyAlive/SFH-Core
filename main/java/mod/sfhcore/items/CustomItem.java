@@ -15,8 +15,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class CustomItem extends Item
 {
-	private int sub;
-	private String name;
+	public CustomItem(final CreativeTabs tab, final ResourceLocation loc){
+		this(null, 64, tab, false, 1, loc);
+	}
 
 	public CustomItem(final int maxstack, final CreativeTabs tab, final ResourceLocation loc){
 		this(null, maxstack, tab, false, 1, loc);
@@ -28,9 +29,6 @@ public class CustomItem extends Item
 		setContainerItem(container);
 		setRegistryName(loc);
 		setUnlocalizedName(loc.getResourcePath());
-		setHasSubtypes(subtypes);
-		sub = subnumber;
-		name = loc.getResourcePath();
 	}
 
 	@Override
@@ -39,23 +37,5 @@ public class CustomItem extends Item
 			if(ItemStack.areItemsEqual(itemStack, f.getLeft()))
 				return f.getRight();
 		return 0;
-	}
-
-	@Override
-	public void getSubItems(final CreativeTabs tab, final NonNullList<ItemStack> items) {
-		if(tab.equals(getCreativeTab()))
-			for (int i = 0; i < sub; i ++)
-				items.add(new ItemStack(this, 1, i));
-	}
-
-	public String getName(final ItemStack stack) {
-		if(hasSubtypes)
-			return name + "_" + stack.getItemDamage();
-		return name;
-	}
-
-	@Override
-	public String getUnlocalizedName(final ItemStack stack) {
-		return "item." + getName(stack);
 	}
 }
