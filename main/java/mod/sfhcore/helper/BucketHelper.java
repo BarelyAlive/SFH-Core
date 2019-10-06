@@ -18,6 +18,7 @@ public class BucketHelper
 	{
 		FluidStack f = FluidUtil.getFluidContained(held);
 		if(f == null) return false;
+		if(f.getFluid().getBlock() == null) return false;
 		IBlockState blockFluid = f.getFluid().getBlock().getDefaultState();
 		if(blockFluid == null) return false;
 		Material m = blockFluid.getMaterial();
