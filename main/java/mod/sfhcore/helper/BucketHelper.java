@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import mod.sfhcore.items.CustomBucket;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -17,9 +18,9 @@ public class BucketHelper
 	{
 		FluidStack f = FluidUtil.getFluidContained(held);
 		if(f == null) return false;
-		Block blockFluid = f.getFluid().getBlock();
+		IBlockState blockFluid = f.getFluid().getBlock().getDefaultState();
 		if(blockFluid == null) return false;
-		Material m = blockFluid.getMaterial(blockFluid.getDefaultState());
+		Material m = blockFluid.getMaterial();
 		if(!m.equals(material)) return false;
 		if(held.getItem().equals(Items.WATER_BUCKET)) return true;
 
