@@ -2,18 +2,13 @@ package mod.sfhcore;
 
 import java.io.File;
 
-import mod.sfhcore.handler.BucketHandler;
 import mod.sfhcore.handler.BucketRegistrationHandler;
 import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.network.NetworkHandler;
 import mod.sfhcore.proxy.ClientProxy;
 import mod.sfhcore.proxy.CommonProxy;
 import mod.sfhcore.util.LogUtil;
-import net.minecraft.item.Item;
-import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -21,8 +16,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
