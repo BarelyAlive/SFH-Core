@@ -23,11 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CustomFuelHandler{
 
-	private static final List<Pair<ItemStack, Integer>> FUEL = new ArrayList<>();
-
-	public static List<Pair<ItemStack, Integer>> getFuelList() {
-		return FUEL;
-	}
+	public static final List<Pair<ItemStack, Integer>> FUEL = new ArrayList<>();
 
 	@SubscribeEvent
 	public int getBurnTime(final FurnaceFuelBurnTimeEvent e)
@@ -83,5 +79,4 @@ public class CustomFuelHandler{
 
 		return FUEL.add(new ImmutablePair<>(item.getItemStack(), time));
 	}
-
 }

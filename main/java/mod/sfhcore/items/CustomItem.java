@@ -10,14 +10,14 @@ import net.minecraft.util.ResourceLocation;
 public class CustomItem extends Item
 {
 	public CustomItem(final ResourceLocation loc){
-		this(null, 64, false, 1, loc);
+		this(64, loc);
 	}
 
 	public CustomItem(final int maxstack, final ResourceLocation loc){
-		this(null, maxstack, false, 1, loc);
+		this(null, maxstack, loc);
 	}
 
-	public CustomItem(final Item container, final int maxstack, final boolean subtypes, final int subnumber, final ResourceLocation loc){
+	public CustomItem(final Item container, final int maxstack, final ResourceLocation loc){
 		setMaxStackSize(maxstack);
 		setContainerItem(container);
 		setRegistryName(loc);
@@ -25,7 +25,7 @@ public class CustomItem extends Item
 
 	@Override
 	public int getItemBurnTime(final ItemStack itemStack) {
-		for(Pair<ItemStack, Integer> f : CustomFuelHandler.getFuelList())
+		for(Pair<ItemStack, Integer> f : CustomFuelHandler.FUEL)
 			if(ItemStack.areItemsEqual(itemStack, f.getLeft()))
 				return f.getRight();
 		return 0;
