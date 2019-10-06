@@ -19,8 +19,8 @@ public class TileFluidInventory extends TileInventory
 		return tank;
 	}
 
-	public TileFluidInventory(final int invSize, final String machineCustomName, final FluidTankSingle tank) {
-		super(invSize, machineCustomName);
+	public TileFluidInventory(final int invSize, final FluidTankSingle tank) {
+		super(invSize);
 		this.tank = tank;
 	}
 

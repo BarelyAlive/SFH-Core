@@ -52,8 +52,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	protected String machineCustomName;
 
-	public TileInventory(final int invSize, final String machineCustomName) {
-		setCustomInventoryName(machineCustomName);
+	public TileInventory(final int invSize) {
 		machineItemStacks = NonNullList.<ItemStack>withSize(invSize, new ItemStack(Blocks.AIR));
 	}
 
