@@ -35,9 +35,9 @@ public class CustomDoor extends Block
 {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyBool OPEN = PropertyBool.create("open");
-	public static final PropertyEnum<CustomDoor.EnumHingePosition> HINGE = PropertyEnum.<CustomDoor.EnumHingePosition>create("hinge", CustomDoor.EnumHingePosition.class);
+	public static final PropertyEnum<CustomDoor.EnumHingePosition> HINGE = PropertyEnum.create("hinge", CustomDoor.EnumHingePosition.class);
 	public static final PropertyBool POWERED = PropertyBool.create("powered");
-	public static final PropertyEnum<CustomDoor.EnumDoorHalf> HALF = PropertyEnum.<CustomDoor.EnumDoorHalf>create("half", CustomDoor.EnumDoorHalf.class);
+	public static final PropertyEnum<CustomDoor.EnumDoorHalf> HALF = PropertyEnum.create("half", CustomDoor.EnumDoorHalf.class);
 	protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.1875D);
 	protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.8125D, 1.0D, 1.0D, 1.0D);
 	protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.8125D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
@@ -46,7 +46,7 @@ public class CustomDoor extends Block
 	public CustomDoor(final Material mat, final ResourceLocation loc, final float resi, final float hard)
 	{
 		super(mat);
-		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(OPEN, Boolean.valueOf(false)).withProperty(HINGE, CustomDoor.EnumHingePosition.LEFT).withProperty(POWERED, Boolean.valueOf(false)).withProperty(HALF, CustomDoor.EnumDoorHalf.LOWER));
+		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(OPEN, Boolean.FALSE).withProperty(HINGE, CustomDoor.EnumHingePosition.LEFT).withProperty(POWERED, Boolean.FALSE).withProperty(HALF, CustomDoor.EnumDoorHalf.LOWER));
 		setRegistryName(loc);
 		setResistance(resi);
 		setHardness(hard);
@@ -57,7 +57,7 @@ public class CustomDoor extends Block
 	{
 		state = state.getActualState(source, pos);
 		EnumFacing enumfacing = state.getValue(FACING);
-		boolean flag = !state.getValue(OPEN).booleanValue();
+		boolean flag = !state.getValue(OPEN);
 		boolean flag1 = state.getValue(HINGE) == CustomDoor.EnumHingePosition.RIGHT;
 
 		switch (enumfacing)
@@ -119,7 +119,7 @@ public class CustomDoor extends Block
 				state = iblockstate.cycleProperty(OPEN);
 				worldIn.setBlockState(blockpos, state, 10);
 				worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
-				worldIn.playEvent(playerIn, state.getValue(OPEN).booleanValue() ? getOpenSound() : getCloseSound(), pos, 0);
+				worldIn.playEvent(playerIn, state.getValue(OPEN) ? getOpenSound() : getCloseSound(), pos, 0);
 				return true;
 			}
 		}
@@ -134,11 +134,11 @@ public class CustomDoor extends Block
 			BlockPos blockpos = iblockstate.getValue(HALF) == CustomDoor.EnumDoorHalf.LOWER ? pos : pos.down();
 			IBlockState iblockstate1 = pos == blockpos ? iblockstate : worldIn.getBlockState(blockpos);
 
-			if (iblockstate1.getBlock() == this && iblockstate1.getValue(OPEN).booleanValue() != open)
+			if (iblockstate1.getBlock() == this && iblockstate1.getValue(OPEN) != open)
 			{
-				worldIn.setBlockState(blockpos, iblockstate1.withProperty(OPEN, Boolean.valueOf(open)), 10);
+				worldIn.setBlockState(blockpos, iblockstate1.withProperty(OPEN, open), 10);
 				worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
-				worldIn.playEvent((EntityPlayer)null, open ? getOpenSound() : getCloseSound(), pos, 0);
+				worldIn.playEvent(null, open ? getOpenSound() : getCloseSound(), pos, 0);
 			}
 		}
 	}
@@ -186,15 +186,15 @@ public class CustomDoor extends Block
 			{
 				boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(blockpos1);
 
-				if (blockIn != this && (flag || blockIn.getDefaultState().canProvidePower()) && flag != iblockstate1.getValue(POWERED).booleanValue())
+				if (blockIn != this && (flag || blockIn.getDefaultState().canProvidePower()) && flag != iblockstate1.getValue(POWERED))
 				{
-					worldIn.setBlockState(blockpos1, iblockstate1.withProperty(POWERED, Boolean.valueOf(flag)), 2);
+					worldIn.setBlockState(blockpos1, iblockstate1.withProperty(POWERED, flag), 2);
 
-					if (flag != state.getValue(OPEN).booleanValue())
+					if (flag != state.getValue(OPEN))
 					{
-						worldIn.setBlockState(pos, state.withProperty(OPEN, Boolean.valueOf(flag)), 2);
+						worldIn.setBlockState(pos, state.withProperty(OPEN, flag), 2);
 						worldIn.markBlockRangeForRenderUpdate(pos, pos);
-						worldIn.playEvent((EntityPlayer)null, flag ? getOpenSound() : getCloseSound(), pos, 0);
+						worldIn.playEvent(null, flag ? getOpenSound() : getCloseSound(), pos, 0);
 					}
 				}
 			}
@@ -313,7 +313,7 @@ public class CustomDoor extends Block
 	@Override
 	public IBlockState getStateFromMeta(final int meta)
 	{
-		return (meta & 8) > 0 ? getDefaultState().withProperty(HALF, CustomDoor.EnumDoorHalf.UPPER).withProperty(HINGE, (meta & 1) > 0 ? CustomDoor.EnumHingePosition.RIGHT : CustomDoor.EnumHingePosition.LEFT).withProperty(POWERED, Boolean.valueOf((meta & 2) > 0)) : getDefaultState().withProperty(HALF, CustomDoor.EnumDoorHalf.LOWER).withProperty(FACING, EnumFacing.getHorizontal(meta & 3).rotateYCCW()).withProperty(OPEN, Boolean.valueOf((meta & 4) > 0));
+		return (meta & 8) > 0 ? getDefaultState().withProperty(HALF, CustomDoor.EnumDoorHalf.UPPER).withProperty(HINGE, (meta & 1) > 0 ? CustomDoor.EnumHingePosition.RIGHT : CustomDoor.EnumHingePosition.LEFT).withProperty(POWERED, (meta & 2) > 0) : getDefaultState().withProperty(HALF, CustomDoor.EnumDoorHalf.LOWER).withProperty(FACING, EnumFacing.getHorizontal(meta & 3).rotateYCCW()).withProperty(OPEN, (meta & 4) > 0);
 	}
 
 	@Override
@@ -328,14 +328,14 @@ public class CustomDoor extends Block
 			if (state.getValue(HINGE) == CustomDoor.EnumHingePosition.RIGHT)
 				i |= 1;
 
-			if (state.getValue(POWERED).booleanValue())
+			if (state.getValue(POWERED))
 				i |= 2;
 		}
 		else
 		{
 			i = i | state.getValue(FACING).rotateY().getHorizontalIndex();
 
-			if (state.getValue(OPEN).booleanValue())
+			if (state.getValue(OPEN))
 				i |= 4;
 		}
 
@@ -375,7 +375,7 @@ public class CustomDoor extends Block
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		return new BlockStateContainer(this, new IProperty[] {HALF, FACING, OPEN, HINGE, POWERED});
+		return new BlockStateContainer(this, HALF, FACING, OPEN, HINGE, POWERED);
 	}
 
 	@Override

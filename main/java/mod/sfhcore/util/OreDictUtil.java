@@ -6,6 +6,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.Objects;
+
 public class OreDictUtil
 {
 	public static ItemInfo getOreDictEntry(final String oreName)
@@ -17,7 +19,7 @@ public class OreDictUtil
 				continue;
 			NonNullList<ItemStack> possibles = NonNullList.create();
 			for(int i = 0; i < OreDictionary.getOres(oreName).size(); i++)
-				if(OreDictionary.getOres(oreName).get(i).getItem().getRegistryName().getResourceDomain().equals(modid))
+				if(Objects.requireNonNull(OreDictionary.getOres(oreName).get(i).getItem().getRegistryName()).getResourceDomain().equals(modid))
 					possibles.add(OreDictionary.getOres(oreName).get(i));
 			if(!possibles.isEmpty())
 				return new ItemInfo(possibles.get(0));

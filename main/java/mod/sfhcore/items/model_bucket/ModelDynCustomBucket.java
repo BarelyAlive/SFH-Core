@@ -158,7 +158,7 @@ public class ModelDynCustomBucket implements IModel {
 			TextureAtlasSprite cover = bakedTextureGetter.apply(coverLocation);
 			//builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, NORTH_Z_COVER, cover, EnumFacing.NORTH, 0xFFFFFFFF, 2));
 			//builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, SOUTH_Z_COVER, cover, EnumFacing.SOUTH, 0xFFFFFFFF, 2));
-			builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, cover, fluidSprite, NORTH_Z_FLUID, EnumFacing.NORTH, 0xFFFFFFFF, 2));
+			builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, cover, Objects.requireNonNull(fluidSprite), NORTH_Z_FLUID, EnumFacing.NORTH, 0xFFFFFFFF, 2));
 			builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, cover, fluidSprite, SOUTH_Z_FLUID, EnumFacing.SOUTH, 0xFFFFFFFF, 2));
 			if (particleSprite == null)
 				particleSprite = cover;
@@ -206,8 +206,8 @@ public class ModelDynCustomBucket implements IModel {
 		}
 
 
-		/**
-		 * DEBUG Aufruf
+		/*
+		  DEBUG Aufruf
 		 */
 
 		// create new model with correct liquid
@@ -368,8 +368,8 @@ public class ModelDynCustomBucket implements IModel {
 
 			try (
 					IResource empty = LoaderDynCustomBucket.getResource(new ResourceLocation("sfhcore", "items/bucket_fluid"));
-					IResource mask = LoaderDynCustomBucket.getResource(new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask"));
-					) {
+					IResource mask = LoaderDynCustomBucket.getResource(new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask"))
+            ) {
 				// use the alpha mask if it fits, otherwise leave the cover texture blank
 				if (empty != null && mask != null && Objects.equals(empty.getResourcePackName(), mask.getResourcePackName()) &&
 						alphaMask.getIconWidth() == width && alphaMask.getIconHeight() == height)

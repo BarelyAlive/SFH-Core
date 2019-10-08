@@ -15,6 +15,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+import java.util.Objects;
+
 public class CustomBucketMilk extends Item
 {
 	private ItemStack empty;
@@ -40,7 +42,7 @@ public class CustomBucketMilk extends Item
 		{
 			EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
 			CriteriaTriggers.CONSUME_ITEM.trigger(entityplayermp, stack);
-			entityplayermp.addStat(StatList.getObjectUseStats(this));
+			entityplayermp.addStat(Objects.requireNonNull(StatList.getObjectUseStats(this)));
 		}
 
 		if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)

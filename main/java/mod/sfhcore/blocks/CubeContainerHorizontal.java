@@ -1,5 +1,6 @@
 package mod.sfhcore.blocks;
 
+import java.util.Objects;
 import java.util.Random;
 
 import mod.sfhcore.blocks.tiles.TileInventory;
@@ -82,7 +83,7 @@ public class CubeContainerHorizontal extends BlockContainer{
 		for(int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack item = inventory.getStackInSlot(i);
 
-			if(item != null && item.getCount() > 0) {
+			if(item.getCount() > 0) {
 				float rx = rand.nextFloat() *0.8F + 0.1F;
 				float ry = rand.nextFloat() *0.8F + 0.1F;
 				float rz = rand.nextFloat() *0.8F + 0.1F;
@@ -90,7 +91,7 @@ public class CubeContainerHorizontal extends BlockContainer{
 				EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem(), item.getCount(), item.getItemDamage()));
 
 				if(item.hasTagCompound())
-					entityItem.getItem().setTagCompound(item.getTagCompound().copy());
+					entityItem.getItem().setTagCompound(Objects.requireNonNull(item.getTagCompound()).copy());
 
 				float factor = 0.05F;
 				entityItem.motionX = rand.nextGaussian() * factor;
@@ -220,6 +221,6 @@ public class CubeContainerHorizontal extends BlockContainer{
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {FACING});
+		return new BlockStateContainer(this, FACING);
 	}
 }

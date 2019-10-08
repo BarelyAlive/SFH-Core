@@ -17,8 +17,7 @@ public class CustomEntityInfoJson implements JsonDeserializer<EntityInfo>, JsonS
 	@Override
 	public JsonElement serialize(final EntityInfo src, final Type typeOfSrc, final JsonSerializationContext context)
 	{
-		JsonElement prim = new JsonPrimitive(src.getName() == null ? src.toString() : src.getName());
-		return prim;
+        return new JsonPrimitive(src.getName() == null ? src.toString() : src.getName());
 	}
 
 	@Override

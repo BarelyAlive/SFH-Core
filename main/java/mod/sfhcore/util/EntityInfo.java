@@ -41,7 +41,7 @@ public class EntityInfo
 				EntityLiving entityLiving = (EntityLiving) entity;
 
 				if(entityLiving instanceof EntitySlime)
-					((EntitySlime) entityLiving).getEntityData().setInteger("Size", 1);
+					entityLiving.getEntityData().setInteger("Size", 1);
 
 				double dx = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range + 0.5;
 				double dy = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range;

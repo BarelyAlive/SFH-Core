@@ -9,6 +9,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
+import java.util.Objects;
+
 public class TankUtil
 {
 	public static final ItemStack WATER_BOTTLE;
@@ -36,7 +38,7 @@ public class TankUtil
 	}
 
 	public static boolean drainWaterFromBottle(final TileBase tileEntity, final EntityPlayer player, final FluidTank tank) {
-		if (player.getHeldItemMainhand().getItem() == Items.POTIONITEM && WATER_BOTTLE.getTagCompound().equals(player.getHeldItemMainhand().getTagCompound())) {
+		if (player.getHeldItemMainhand().getItem() == Items.POTIONITEM && Objects.equals(WATER_BOTTLE.getTagCompound(), player.getHeldItemMainhand().getTagCompound())) {
 			FluidStack water = new FluidStack(FluidRegistry.WATER, 250);
 
 			if (tank.fill(water, false) == water.amount)

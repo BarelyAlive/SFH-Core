@@ -17,6 +17,8 @@ import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
+import java.util.Objects;
+
 public class CustomBucketCapability implements IFluidHandlerItem, ICapabilityProvider {
 	@Nonnull
 	protected ItemStack container;
@@ -42,9 +44,8 @@ public class CustomBucketCapability implements IFluidHandlerItem, ICapabilityPro
 	@Nullable
 	public FluidStack getFluid()
 	{
-		if (container.getItem() == null)
-			return null;
-		if (((CustomBucket)container.getItem()).getContainedBlock() == null)
+        container.getItem();
+        if (((CustomBucket)container.getItem()).getContainedBlock() == null)
 			return null;
 		if (!((CustomBucket)container.getItem()).getContainedBlock().equals(Blocks.AIR))
 		{
@@ -60,15 +61,15 @@ public class CustomBucketCapability implements IFluidHandlerItem, ICapabilityPro
 	 */
 	 @Deprecated
 	 protected void setFluid(@Nullable final Fluid fluid) {
-		 setFluid(new FluidStack(fluid, Fluid.BUCKET_VOLUME));
+		 setFluid(new FluidStack(Objects.requireNonNull(fluid), Fluid.BUCKET_VOLUME));
 	 }
 
 	 protected void setFluid(@Nullable final FluidStack fluidStack)
 	 {
 		 if (fluidStack == null)
-			 container = new ItemStack(BucketHandler.getBucketFromFluid(null, ((CustomBucket)container.getItem()).getMaterial()));
+			 container = new ItemStack(Objects.requireNonNull(BucketHandler.getBucketFromFluid(null, ((CustomBucket) container.getItem()).getMaterial())));
 		 else
-			 container = new ItemStack(BucketHandler.getBucketFromFluid(fluidStack.getFluid(), ((CustomBucket)container.getItem()).getMaterial()));
+			 container = new ItemStack(Objects.requireNonNull(BucketHandler.getBucketFromFluid(fluidStack.getFluid(), ((CustomBucket) container.getItem()).getMaterial())));
 	 }
 
 	 @Override

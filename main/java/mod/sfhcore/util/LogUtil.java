@@ -15,10 +15,9 @@ import org.apache.logging.log4j.Logger;
 public class LogUtil
 {
 
-	private static File logFile;
-	private static PrintWriter logWriter;
+    private static PrintWriter logWriter;
 	private static String modid;
-	private static Logger logger = LogManager.getLogger(modid);
+	private static Logger logger = LogManager.getLogger((String) null);
 
 	public static void log(final Level level, final Object object)
 	{
@@ -80,10 +79,9 @@ public class LogUtil
 	public static void setup(final String modid, final File f)
 	{
 		LogUtil.modid = modid;
-		File modDir = f;
-		if(!modDir.exists())
-			modDir.mkdirs();
-		File logDir = new File(modDir + "/log/");
+		if(!f.exists())
+			f.mkdirs();
+		File logDir = new File(f + "/log/");
 		if(!logDir.exists())
 			logDir.mkdirs();
 
@@ -92,7 +90,8 @@ public class LogUtil
 		int i = 0;
 
 		// One-liners for the win
-		for (; (logFile = new File(logDir, baseName + ".log")).exists(); i++);
+        File logFile;
+        for (; (logFile = new File(logDir, baseName + ".log")).exists(); i++);
 
 		try
 		{

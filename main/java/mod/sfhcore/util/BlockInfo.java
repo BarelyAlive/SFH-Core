@@ -14,6 +14,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.Objects;
+
 public class BlockInfo implements StackInfo {
 
 	public static final BlockInfo EMPTY = new BlockInfo(ItemStack.EMPTY);
@@ -181,7 +183,7 @@ public class BlockInfo implements StackInfo {
 
 	@Override
 	public NBTTagCompound writeToNBT(final NBTTagCompound tag) {
-		tag.setString("block", ForgeRegistries.BLOCKS.getKey(state.getBlock()).toString());
+		tag.setString("block", Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(state.getBlock())).toString());
 		tag.setInteger("meta", state.getBlock().getMetaFromState(state));
 
 		return tag;

@@ -3,7 +3,6 @@ package mod.sfhcore.helper;
 import javax.annotation.Nonnull;
 
 import mod.sfhcore.items.CustomBucket;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
@@ -20,7 +19,6 @@ public class BucketHelper
 		if(f == null) return false;
 		if(f.getFluid().getBlock() == null) return false;
 		IBlockState blockFluid = f.getFluid().getBlock().getDefaultState();
-		if(blockFluid == null) return false;
 		Material m = blockFluid.getMaterial();
 		if(!m.equals(material)) return false;
 		if(held.getItem().equals(Items.WATER_BUCKET)) return true;

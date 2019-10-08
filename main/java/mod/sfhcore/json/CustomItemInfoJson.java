@@ -1,6 +1,7 @@
 package mod.sfhcore.json;
 
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -23,7 +24,7 @@ public class CustomItemInfoJson implements JsonDeserializer<ItemInfo>, JsonSeria
 	{
 		JsonObject obj = new JsonObject();
 
-		obj.addProperty("name", src.getItem().getRegistryName().toString());
+		obj.addProperty("name", Objects.requireNonNull(src.getItem().getRegistryName()).toString());
 		obj.addProperty("meta", src.getMeta());
 
 		return obj;
@@ -45,6 +46,6 @@ public class CustomItemInfoJson implements JsonDeserializer<ItemInfo>, JsonSeria
 			LogUtil.error("This may result in crashing or other undefined behavior");
 		}
 
-		return new ItemInfo(item, meta);
+		return new ItemInfo(Objects.requireNonNull(item), meta);
 	}
 }

@@ -9,6 +9,8 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Objects;
+
 public class ClientProxy extends CommonProxy{
 
 	private final String INVENTORY = "inventory";
@@ -17,14 +19,12 @@ public class ClientProxy extends CommonProxy{
 	@SideOnly(Side.CLIENT)
 	public void initModel(final Fluid f, final Block b)
 	{
-		FluidStateMapper mapper = new FluidStateMapper(b.getRegistryName().getResourceDomain(), f);
+		FluidStateMapper mapper = new FluidStateMapper(Objects.requireNonNull(b.getRegistryName()).getResourceDomain(), f);
 
 		Item item = Item.getItemFromBlock(b);
-		if (item != null) {
-			ModelBakery.registerItemVariants(item);
-			ModelLoader.setCustomMeshDefinition(item, mapper);
-		}
+        ModelBakery.registerItemVariants(item);
+        ModelLoader.setCustomMeshDefinition(item, mapper);
 
-		ModelLoader.setCustomStateMapper(b, mapper);
+        ModelLoader.setCustomStateMapper(b, mapper);
 	}
 }

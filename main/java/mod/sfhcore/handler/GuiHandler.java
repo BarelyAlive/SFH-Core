@@ -3,6 +3,7 @@ package mod.sfhcore.handler;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
@@ -31,7 +32,7 @@ public class GuiHandler implements IGuiHandler {
 		TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
 
 		for(Pair<Class<GuiContainer>, Class<Container>> tc : TECO)
-			if(te1.getClass().equals(tc.getLeft().getClass())){
+			if(Objects.requireNonNull(te1).getClass().equals(tc.getLeft().getClass())){
 
 				Class<Container> c = tc.getRight();
 				try {

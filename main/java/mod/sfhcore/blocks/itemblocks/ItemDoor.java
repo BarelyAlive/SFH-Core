@@ -41,7 +41,7 @@ public class ItemDoor extends Item
 
 			Block door = Block.REGISTRY.getObject(getRegistryName());
 
-			if (player.canPlayerEdit(pos, facing, itemstack) && ((CustomDoor) door).canPlaceBlockAt(worldIn, pos))
+			if (player.canPlayerEdit(pos, facing, itemstack) && door.canPlaceBlockAt(worldIn, pos))
 			{
 				EnumFacing enumfacing = EnumFacing.fromAngle(player.rotationYaw);
 				int i = enumfacing.getFrontOffsetX();
@@ -76,7 +76,7 @@ public class ItemDoor extends Item
 
 		BlockPos blockpos2 = pos.up();
 		boolean flag2 = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(blockpos2);
-		IBlockState iblockstate = door.getDefaultState().withProperty(CustomDoor.FACING, facing).withProperty(CustomDoor.HINGE, isRightHinge ? CustomDoor.EnumHingePosition.RIGHT : CustomDoor.EnumHingePosition.LEFT).withProperty(CustomDoor.POWERED, Boolean.valueOf(flag2)).withProperty(CustomDoor.OPEN, Boolean.valueOf(flag2));
+		IBlockState iblockstate = door.getDefaultState().withProperty(CustomDoor.FACING, facing).withProperty(CustomDoor.HINGE, isRightHinge ? CustomDoor.EnumHingePosition.RIGHT : CustomDoor.EnumHingePosition.LEFT).withProperty(CustomDoor.POWERED, flag2).withProperty(CustomDoor.OPEN, flag2);
 		worldIn.setBlockState(pos, iblockstate.withProperty(CustomDoor.HALF, CustomDoor.EnumDoorHalf.LOWER), 2);
 		worldIn.setBlockState(blockpos2, iblockstate.withProperty(CustomDoor.HALF, CustomDoor.EnumDoorHalf.UPPER), 2);
 		worldIn.notifyNeighborsOfStateChange(pos, door, false);

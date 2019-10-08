@@ -2,6 +2,7 @@ package mod.sfhcore.handler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
@@ -42,7 +43,7 @@ public class CustomFuelHandler{
 			if (f.getFluid() == FluidRegistry.LAVA && f.amount > 1000)
 			{
 				IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
-				if(ifhi.drain(1000, true) != null)
+				if(Objects.requireNonNull(ifhi).drain(1000, true) != null)
 					return 20000;
 			}
 
@@ -52,8 +53,7 @@ public class CustomFuelHandler{
 			LogUtil.fatal("[SFHCore] tried to get the burn time of " + item.getRegistryName() + " and it was NULL! Duh!");
 		}
 
-		if(burnTime < 0)
-			return 0;
+		return Math.max(burnTime, 0);
 
 		return burnTime;
 	}

@@ -5,6 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import java.util.Objects;
+
 public class NameHelper
 {
 	public static String getName(final Item item)
@@ -37,7 +39,7 @@ public class NameHelper
 	{
 		if(NotNull.checkNotNull(stack))
 			try {
-				return stack.getItem().getRegistryName().getResourcePath();
+				return Objects.requireNonNull(stack.getItem().getRegistryName()).getResourcePath();
 			} catch (NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the name of an ItemStack, but it was null");
 				e.printStackTrace();
@@ -76,7 +78,7 @@ public class NameHelper
 	{
 		if(item != null && item.getRegistryName() != null)
 			try {
-				return Block.getBlockFromItem(item).getRegistryName().getResourcePath();
+				return Objects.requireNonNull(Block.getBlockFromItem(item).getRegistryName()).getResourcePath();
 			} catch (NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the name of an item, but it was null");
 				e.printStackTrace();
@@ -89,7 +91,7 @@ public class NameHelper
 	{
 		if(block != null && block.getRegistryName() != null)
 			try {
-				return Item.getItemFromBlock(block).getRegistryName().getResourcePath();
+				return Objects.requireNonNull(Item.getItemFromBlock(block).getRegistryName()).getResourcePath();
 			} catch (NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the name of a block, but it was null");
 				e.printStackTrace();
@@ -102,7 +104,7 @@ public class NameHelper
 	{
 		if(item != null && item.getRegistryName() != null)
 			try {
-				return Block.getBlockFromItem(item).getRegistryName().getResourceDomain();
+				return Objects.requireNonNull(Block.getBlockFromItem(item).getRegistryName()).getResourceDomain();
 			} catch (NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the mod id of an item, but it was null");
 				e.printStackTrace();
@@ -115,7 +117,7 @@ public class NameHelper
 	{
 		if(block != null && block.getRegistryName() != null)
 			try {
-				return Item.getItemFromBlock(block).getRegistryName().getResourceDomain();
+				return Objects.requireNonNull(Item.getItemFromBlock(block).getRegistryName()).getResourceDomain();
 			} catch (NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the mod id of a block, but it was null");
 				e.printStackTrace();

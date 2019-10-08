@@ -53,7 +53,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	protected String machineCustomName;
 
 	public TileInventory(final int invSize) {
-		machineItemStacks = NonNullList.<ItemStack>withSize(invSize, new ItemStack(Blocks.AIR));
+		machineItemStacks = NonNullList.withSize(invSize, new ItemStack(Blocks.AIR));
 	}
 
 	/**
@@ -236,11 +236,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		int slots = getSizeInventory();
 		int[] slotsArr = new int[slots];
 		switch (side) {
-		case UP:
-			return slotsArr;
-		case DOWN:
-			return slotsArr;
-		default:
+			default:
 			return slotsArr;
 		}
 	}
@@ -248,8 +244,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	public void extractFromInventory(final BlockPos pos, final EnumFacing facing)
 	{
 		TileEntity te = getWorld().getTileEntity(pos);
-		ItemStack stack= ItemStack.EMPTY;
-		IInventory inventory = null;
+		ItemStack stack;
+		IInventory inventory;
 		if(te == null) return;
 		if(!(te instanceof IInventory)) return;
 		inventory = (IInventory)te;
@@ -301,8 +297,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	public void insertToInventory(final BlockPos pos, final EnumFacing facing)
 	{
 		TileEntity te = getWorld().getTileEntity(pos);
-		ItemStack stack= ItemStack.EMPTY;
-		IInventory inventory = null;
+		ItemStack stack;
+		IInventory inventory;
 		if(te == null) return;
 		if(!(te instanceof IInventory)) return;
 		inventory = (IInventory)te;

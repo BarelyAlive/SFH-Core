@@ -25,14 +25,13 @@ public class ContainerBase extends Container {
 	@Override
 	public NonNullList<ItemStack> getInventory()
 	{
-		NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>create();
+		NonNullList<ItemStack> nonnulllist = NonNullList.create();
 
-		for (int i = 0; i < inventorySlots.size(); ++i)
-		{
-			if(inventorySlots.get(i).getStack() == null)
-				inventorySlots.get(i).putStack(ItemStack.EMPTY);
-			nonnulllist.add(inventorySlots.get(i).getStack());
-		}
+        for (Slot inventorySlot : inventorySlots) {
+            if (inventorySlot.getStack() == null)
+                inventorySlot.putStack(ItemStack.EMPTY);
+            nonnulllist.add(inventorySlot.getStack());
+        }
 
 		return nonnulllist;
 	}

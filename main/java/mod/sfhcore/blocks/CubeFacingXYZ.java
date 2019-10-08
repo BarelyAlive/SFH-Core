@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class CubeFacingXYZ  extends Block{
 
-	public static final PropertyEnum<CubeFacingXYZ.EnumAxis> CUBE_AXIS = PropertyEnum.<CubeFacingXYZ.EnumAxis>create("axis", CubeFacingXYZ.EnumAxis.class);
+	public static final PropertyEnum<CubeFacingXYZ.EnumAxis> CUBE_AXIS = PropertyEnum.create("axis", CubeFacingXYZ.EnumAxis.class);
 
 	public CubeFacingXYZ(final Material materialIn, final ResourceLocation loc) {
 		super(materialIn);
@@ -33,7 +33,7 @@ public class CubeFacingXYZ  extends Block{
 
 		private final String name;
 
-		private EnumAxis(final String name)
+		EnumAxis(final String name)
 		{
 			this.name = name;
 		}
@@ -69,7 +69,7 @@ public class CubeFacingXYZ  extends Block{
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { CUBE_AXIS });
+		return new BlockStateContainer(this, CUBE_AXIS);
 	}
 
 	/**

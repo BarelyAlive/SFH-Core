@@ -3,6 +3,7 @@ package mod.sfhcore.handler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import mod.sfhcore.items.CustomBucket;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -138,7 +139,7 @@ public class BucketHandler {
 							|| DISABLED_BUCKETS.get(material).contains(f.getName())
 							|| DISABLED_BUCKETS.get(material).contains(f.getUnlocalizedName())
 							|| DISABLED_BUCKETS.get(material).contains(f.getLocalizedName(new FluidStack(f, 1000)))
-							|| DISABLED_BUCKETS.get(material).contains(f.getBlock().getRegistryName().getResourcePath())
+							|| DISABLED_BUCKETS.get(material).contains(Objects.requireNonNull(f.getBlock().getRegistryName()).getResourcePath())
 							|| DISABLED_BUCKETS.get(material).contains(f.getBlock().getRegistryName().getResourcePath() + ":" + f.getBlock().getRegistryName().getResourcePath()))
 						continue;
 
@@ -153,7 +154,7 @@ public class BucketHandler {
 				if (!(f.getBlock() instanceof BlockFluidBase) && !(f.equals(FluidRegistry.WATER) || f.equals(FluidRegistry.LAVA)))
 					continue;
 
-				resource_domain = bucket_0.getRegistryName().getResourceDomain();
+				resource_domain = Objects.requireNonNull(bucket_0.getRegistryName()).getResourceDomain();
 				resource_path = bucket_0.getRegistryName().getResourcePath() + "_" + name;
 				res_loc = new ResourceLocation(resource_domain, resource_path);
 
@@ -189,7 +190,6 @@ public class BucketHandler {
 			if (item != null && item.getRegistryName() != null)
 			{
 				String name = "bucket_";
-				name += material;
 				String domain = item.getRegistryName().getResourceDomain();
 				ResourceLocation baseLocation = null;
 				ResourceLocation liquidLocation = null;
