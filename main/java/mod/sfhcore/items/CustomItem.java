@@ -9,18 +9,17 @@ import net.minecraft.util.ResourceLocation;
 
 public class CustomItem extends Item
 {
-	public CustomItem(final ResourceLocation loc){
-		this(64, loc);
+	public CustomItem(){
+		this(64);
 	}
 
-	public CustomItem(final int maxstack, final ResourceLocation loc){
-		this(null, maxstack, loc);
+	public CustomItem(final int maxstack){
+		this(null, maxstack);
 	}
 
-	public CustomItem(final Item container, final int maxstack, final ResourceLocation loc){
+	public CustomItem(final Item container, final int maxstack){
 		setMaxStackSize(maxstack);
 		setContainerItem(container);
-		setRegistryName(loc);
 	}
 
 	@Override

@@ -31,10 +31,9 @@ public class CubeContainerHorizontal extends BlockContainer{
 	private static final PropertyDirection FACING = BlockHorizontal.FACING;
 	private static boolean keepInventory;
 
-	protected CubeContainerHorizontal(final Material materialIn, final ResourceLocation loc) {
+	protected CubeContainerHorizontal(final Material materialIn) {
 		super(materialIn);
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		setRegistryName(loc);
 	}
 
 	/**

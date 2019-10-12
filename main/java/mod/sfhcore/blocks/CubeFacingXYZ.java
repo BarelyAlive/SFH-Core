@@ -18,10 +18,9 @@ public class CubeFacingXYZ  extends Block{
 
 	public static final PropertyEnum<CubeFacingXYZ.EnumAxis> CUBE_AXIS = PropertyEnum.create("axis", CubeFacingXYZ.EnumAxis.class);
 
-	public CubeFacingXYZ(final Material materialIn, final ResourceLocation loc) {
+	public CubeFacingXYZ(final Material materialIn) {
 		super(materialIn);
 		setDefaultState(blockState.getBaseState().withProperty(CUBE_AXIS, CubeFacingXYZ.EnumAxis.Y));
-		setRegistryName(loc);
 	}
 
 	public enum EnumAxis implements IStringSerializable

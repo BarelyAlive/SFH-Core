@@ -8,8 +8,8 @@ import net.minecraft.world.IBlockAccess;
 
 public class CubeFireResistant extends Cube{
 
-	public CubeFireResistant(Material material, float resistance, float hardness, ResourceLocation loc) {
-		super(material, resistance, hardness, loc);
+	public CubeFireResistant(Material material, float resistance, float hardness) {
+		super(material, resistance, hardness);
 	}
 
 	@Override

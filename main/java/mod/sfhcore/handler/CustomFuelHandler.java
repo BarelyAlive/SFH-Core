@@ -54,8 +54,6 @@ public class CustomFuelHandler{
 		}
 
 		return Math.max(burnTime, 0);
-
-		return burnTime;
 	}
 
 	/**

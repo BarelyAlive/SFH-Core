@@ -12,13 +12,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CubeTransparent extends Cube{
 
-	public CubeTransparent(final Material material, final float resistance, final float hardness, final ResourceLocation loc) {
-		super(material, resistance, hardness, loc);
+	public CubeTransparent(final Material material, final float resistance, final float hardness) {
+		super(material, resistance, hardness);
 		setLightOpacity(15);
 	}
 
-	public CubeTransparent(final Material material, final float resistance, final float hardness, final ResourceLocation loc, final TileEntity te) {
-		super(material, resistance, hardness, loc, te);
+	public CubeTransparent(final Material material, final float resistance, final float hardness, final TileEntity te) {
+		super(material, resistance, hardness);
 		setLightOpacity(15);
 	}
 
