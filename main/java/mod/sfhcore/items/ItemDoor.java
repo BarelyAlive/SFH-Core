@@ -1,4 +1,4 @@
-package mod.sfhcore.blocks.itemblocks;
+package mod.sfhcore.items;
 
 import mod.sfhcore.blocks.CustomDoor;
 import net.minecraft.block.Block;
@@ -18,10 +18,9 @@ import net.minecraft.world.World;
 public class ItemDoor extends Item
 {
 
-	public ItemDoor(final ResourceLocation doorItem)
+	public ItemDoor()
 	{
 		maxStackSize = 1;
-		this.setRegistryName(doorItem);
 	}
 
 	@Override

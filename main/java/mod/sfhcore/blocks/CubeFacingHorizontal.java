@@ -20,10 +20,9 @@ public class CubeFacingHorizontal extends Block{
 
 	private static final PropertyDirection FACING = BlockHorizontal.FACING;
 
-	protected CubeFacingHorizontal(final Material materialIn, final ResourceLocation loc) {
+	protected CubeFacingHorizontal(final Material materialIn) {
 		super(materialIn);
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		setRegistryName(loc);
 	}
 
 	/**
