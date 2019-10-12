@@ -1,12 +1,12 @@
 package mod.sfhcore.util;
 
+import java.util.Objects;
+
 import mod.sfhcore.Config;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.Objects;
 
 public class OreDictUtil
 {

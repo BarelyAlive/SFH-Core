@@ -1,5 +1,7 @@
 package mod.sfhcore.util;
 
+import java.util.Objects;
+
 import mod.sfhcore.blocks.tiles.TileBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -8,8 +10,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-
-import java.util.Objects;
 
 public class TankUtil
 {

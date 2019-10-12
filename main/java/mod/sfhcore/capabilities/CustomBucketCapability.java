@@ -1,5 +1,7 @@
 package mod.sfhcore.capabilities;
 
+import java.util.Objects;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -16,8 +18,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-
-import java.util.Objects;
 
 public class CustomBucketCapability implements IFluidHandlerItem, ICapabilityProvider {
 	@Nonnull

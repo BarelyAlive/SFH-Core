@@ -5,7 +5,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import mod.sfhcore.handler.CustomFuelHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class CustomItem extends Item
 {
