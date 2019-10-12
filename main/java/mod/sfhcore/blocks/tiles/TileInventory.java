@@ -24,7 +24,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 {
 	protected NonNullList<ItemStack> machineItemStacks;
 	private int maxworkTime = 0;
-	
+
 	private int pullTick = 0;
 	private int pushTick = 0;
 
@@ -32,7 +32,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		return maxworkTime;
 	}
 
-	public void setMaxworkTime(int maxworkTime) {
+	public void setMaxworkTime(final int maxworkTime) {
 		this.maxworkTime = maxworkTime;
 	}
 
@@ -46,32 +46,31 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		return workTime;
 	}
 
-	public void setWorkTime(int workTime) {
+	public void setWorkTime(final int workTime) {
 		this.workTime = workTime;
 	}
 
 	protected String machineCustomName;
 
-	public TileInventory(int invSize, String machineCustomName) {
-		setCustomInventoryName(machineCustomName);
-		machineItemStacks = NonNullList.<ItemStack>withSize(invSize, new ItemStack(Blocks.AIR));
+	public TileInventory(final int invSize) {
+		machineItemStacks = NonNullList.withSize(invSize, new ItemStack(Blocks.AIR));
 	}
 
-    /**
-     * Machine is working
-     */
-    public boolean isWorking()
-    {
-        return getWorkTime() > 0;
-    }
+	/**
+	 * Machine is working
+	 */
+	public boolean isWorking()
+	{
+		return getWorkTime() > 0;
+	}
 
-    @SideOnly(Side.CLIENT)
-    public static boolean isWorking(TileInventory inventory)
-    {
-        return inventory.getWorkTime() > 0;
-    }
-    
-    public int getWorkTimeRemainingScaled(int i) {
+	@SideOnly(Side.CLIENT)
+	public static boolean isWorking(final TileInventory inventory)
+	{
+		return inventory.getWorkTime() > 0;
+	}
+
+	public int getWorkTimeRemainingScaled(final int i) {
 		return getWorkTime() * i / getMaxworkTime();
 	}
 
@@ -79,74 +78,74 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	public void update() {}
 
 	/**
-     * Returns the number of slots in the inventory.
-     */
+	 * Returns the number of slots in the inventory.
+	 */
 	@Override
-    public int getSizeInventory()
-    {
-        return machineItemStacks.size();
-    }
+	public int getSizeInventory()
+	{
+		return machineItemStacks.size();
+	}
 
-    @Override
-    public boolean isEmpty()
-    {
-        for (ItemStack itemstack : machineItemStacks)
-            if(!itemstack.isEmpty())
-                return false;
+	@Override
+	public boolean isEmpty()
+	{
+		for (ItemStack itemstack : machineItemStacks)
+			if(!itemstack.isEmpty())
+				return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-     */
-    @Override
-    public ItemStack decrStackSize(int index, int count)
-    {
-    	return ItemStackHelper.getAndSplit(machineItemStacks, index, count);
-    }
+	/**
+	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+	 */
+	@Override
+	public ItemStack decrStackSize(final int index, final int count)
+	{
+		return ItemStackHelper.getAndSplit(machineItemStacks, index, count);
+	}
 
-    public void setCustomInventoryName(String name)
-    {
-        machineCustomName = name;
-    }
+	public void setCustomInventoryName(final String name)
+	{
+		machineCustomName = name;
+	}
 
-    /**
-     * Removes a stack from the given slot and returns it.
-     */
-    @Override
-    public ItemStack removeStackFromSlot(int index)
-    {
-        return ItemStackHelper.getAndRemove(machineItemStacks, index);
-    }
+	/**
+	 * Removes a stack from the given slot and returns it.
+	 */
+	@Override
+	public ItemStack removeStackFromSlot(final int index)
+	{
+		return ItemStackHelper.getAndRemove(machineItemStacks, index);
+	}
 
-    /**
-     * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-     */
-    @Override
-    public void setInventorySlotContents(int index, @Nonnull ItemStack input)
-    {
-        machineItemStacks.set(index, input);
-        this.markDirty();
-    }
+	/**
+	 * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+	 */
+	@Override
+	public void setInventorySlotContents(final int index, @Nonnull final ItemStack input)
+	{
+		machineItemStacks.set(index, input);
+		markDirty();
+	}
 
-    /**
-     * Get the name of this object. For players this returns their username
-     */
-    @Override
-    public String getName()
-    {
-        return machineCustomName;
-    }
+	/**
+	 * Get the name of this object. For players this returns their username
+	 */
+	@Override
+	public String getName()
+	{
+		return machineCustomName;
+	}
 
-    /**
-     * Returns true if this thing is named
-     */
-    @Override
-    public boolean hasCustomName()
-    {
-        return machineCustomName != null && !machineCustomName.isEmpty();
-    }
+	/**
+	 * Returns true if this thing is named
+	 */
+	@Override
+	public boolean hasCustomName()
+	{
+		return machineCustomName != null && !machineCustomName.isEmpty();
+	}
 
 	@Override
 	public int getInventoryStackLimit() {
@@ -154,70 +153,72 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	}
 
 	@Override
-	public boolean isUsableByPlayer(EntityPlayer player) {
+	public boolean isUsableByPlayer(final EntityPlayer player) {
 		if(!(world.getTileEntity(pos) instanceof TileInventory)) return false;
-        return player.getDistanceSq(
-        		pos.getX() + 0.5D,
-        		pos.getY() + 0.5D,
-        		pos.getZ() + 0.5D) <= 64.0D;
+		return player.getDistanceSq(
+				pos.getX() + 0.5D,
+				pos.getY() + 0.5D,
+				pos.getZ() + 0.5D) <= 64.0D;
 	}
 
 	//Networking & NBT
 
 	@Override
-    public void handleUpdateTag(NBTTagCompound tag) {
-        super.handleUpdateTag(tag);
+	public void handleUpdateTag(final NBTTagCompound tag) {
+		super.handleUpdateTag(tag);
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-        ItemStackHelper.loadAllItems(nbt, machineItemStacks);
-		setWorkTime(nbt.getShort("workTime"));
+	public void readFromNBT(final NBTTagCompound nbt) {
+		ItemStackHelper.loadAllItems(nbt, machineItemStacks);
+		setWorkTime(nbt.getInteger("workTime"));
+		setMaxworkTime(nbt.getInteger("maxWorktime"));
 		pullTick = nbt.getShort("pullTick");
 		pushTick = nbt.getShort("pushTick");
 		super.readFromNBT(nbt);
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
+	public NBTTagCompound writeToNBT(final NBTTagCompound nbt){
 		ItemStackHelper.saveAllItems(nbt, machineItemStacks);
-		nbt.setShort("workTime", (short)getWorkTime());
+		nbt.setInteger("workTime", getWorkTime());
+		nbt.setInteger("maxWorktime", getMaxworkTime());
 		nbt.setShort("pullTick", (short) pullTick);
 		nbt.setShort("pushTick", (short) pushTick);
 		return super.writeToNBT(nbt);
 	}
 
 	//ggggg
-	
+
 	@Override
-	public ItemStack getStackInSlot(int index) {
+	public ItemStack getStackInSlot(final int index) {
 		return machineItemStacks.get(index);
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {}
+	public void openInventory(final EntityPlayer player) {}
 
 	@Override
-	public void closeInventory(EntityPlayer player) {}
+	public void closeInventory(final EntityPlayer player) {}
 
 	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack) {
+	public boolean isItemValidForSlot(final int index, final ItemStack stack) {
 		return true;
 	}
 
-	public boolean isItemValidForSlotToExtract(int index, ItemStack itemStack) {
+	public boolean isItemValidForSlotToExtract(final int index, final ItemStack itemStack) {
 		return true;
 	}
 
 	@Override
-	public int getField(int id){
-		if (id == 0) return this.getWorkTime();
+	public int getField(final int id){
+		if (id == 0) return getWorkTime();
 		return 0;
 	}
 
 	@Override
-	public void setField(int id, int value) {
-		if (id == 0) this.setWorkTime(value);
+	public void setField(final int id, final int value) {
+		if (id == 0) setWorkTime(value);
 	}
 
 	@Override
@@ -231,30 +232,26 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	}
 
 	@Override
-	public int[] getSlotsForFace(EnumFacing side) {
+	public int[] getSlotsForFace(final EnumFacing side) {
 		int slots = getSizeInventory();
 		int[] slotsArr = new int[slots];
 		switch (side) {
-			case UP:
-	            return slotsArr;
-	        case DOWN:
-	            return slotsArr;
-	        default:
-	            return slotsArr;
+			default:
+			return slotsArr;
 		}
 	}
 
-	public void extractFromInventory(BlockPos pos, EnumFacing facing)
+	public void extractFromInventory(final BlockPos pos, final EnumFacing facing)
 	{
 		TileEntity te = getWorld().getTileEntity(pos);
-		ItemStack stack= ItemStack.EMPTY;
-		IInventory inventory = null;
+		ItemStack stack;
+		IInventory inventory;
 		if(te == null) return;
 		if(!(te instanceof IInventory)) return;
-		inventory = ((IInventory)te);
+		inventory = (IInventory)te;
 
 		pullTick++;
-		
+
 		if (pullTick == 20) {
 			for (int i = 0; i < inventory.getSizeInventory(); i++) {
 				stack = inventory.getStackInSlot(i);
@@ -292,22 +289,22 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		}
 	}
 
-	public boolean canExtractFromInventory(int index, ItemStack stack)
+	public boolean canExtractFromInventory(final int index, final ItemStack stack)
 	{
 		return true;
 	}
 
-	public void insertToInventory(BlockPos pos, EnumFacing facing)
+	public void insertToInventory(final BlockPos pos, final EnumFacing facing)
 	{
 		TileEntity te = getWorld().getTileEntity(pos);
-		ItemStack stack= ItemStack.EMPTY;
-		IInventory inventory = null;
+		ItemStack stack;
+		IInventory inventory;
 		if(te == null) return;
 		if(!(te instanceof IInventory)) return;
-		inventory = ((IInventory)te);
+		inventory = (IInventory)te;
 
 		pushTick++;
-		
+
 		if (pushTick == 20) {
 			for (int i = 0; i < getSizeInventory(); i++) {
 				stack = getStackInSlot(i).copy();
@@ -332,16 +329,14 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 						if (!ItemStack.areItemsEqual(stack, inventory_stack))
 							continue;
 						inventory_stack.setCount(inventory_stack.getCount() + stack.getCount());
-						if (inventory_stack.getCount() > inventory_stack.getMaxStackSize()) {
+						if (inventory_stack.getCount() > inventory_stack.getMaxStackSize())
 							stack.setCount(inventory_stack.getCount() - inventory_stack.getMaxStackSize());
-						} else {
+						else
 							stack = ItemStack.EMPTY;
-						}
 						inventory.setInventorySlotContents(j, inventory_stack);
 						setInventorySlotContents(i, stack);
-						if (stack == ItemStack.EMPTY) {
+						if (stack == ItemStack.EMPTY)
 							j = getSizeInventory();
-						}
 					}
 				}
 			}
@@ -349,34 +344,34 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 		}
 	}
 
-	public boolean canInsertToInventory(int index, ItemStack stack)
+	public boolean canInsertToInventory(final int index, final ItemStack stack)
 	{
 		return true;
 	}
 
 	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+	public boolean canInsertItem(final int index, final ItemStack itemStackIn, final EnumFacing direction) {
 		int[] valid_slot = getSlotsForFace(direction);
-		for (int i = 0; i < valid_slot.length; i++)
-			if(valid_slot[i] == index)
+		for (int element : valid_slot)
+			if(element == index)
 				return isItemValidForSlot(index, itemStackIn);
 
 		return false;
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
+	public boolean canExtractItem(final int index, final ItemStack stack, final EnumFacing direction)
 	{
 		int[] valid_slot = getSlotsForFace(direction);
-		for (int i = 0; i < valid_slot.length; i++)
-			if(valid_slot[i] == index)
+		for (int element : valid_slot)
+			if(element == index)
 				return isItemValidForSlotToExtract(index, stack);
 
 		return false;
 	}
 
 	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
+	public Container createContainer(final InventoryPlayer playerInventory, final EntityPlayer playerIn) {
 		return null;
 	}
 

@@ -9,34 +9,34 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public interface StackInfo {
 
-    @Override
+	@Override
 	String toString();
 
-    @Nonnull
-    ItemStack getItemStack();
+	@Nonnull
+	ItemStack getItemStack();
 
-    boolean hasBlock();
+	boolean hasBlock();
 
-    @Nonnull
-    Block getBlock();
+	@Nonnull
+	Block getBlock();
 
-    int getMeta();
+	int getMeta();
 
-    @Nonnull
-    IBlockState getBlockState();
+	@Nonnull
+	IBlockState getBlockState();
 
-    boolean isValid();
+	boolean isValid();
 
-    NBTTagCompound writeToNBT(NBTTagCompound tag);
+	NBTTagCompound writeToNBT(NBTTagCompound tag);
 
-    @Override
+	@Override
 	int hashCode();
 
-    /**
-     * This is used to check if the contents equals the objects, based on what the object is
-     * @param obj The object to check
-     * @return Returns true if the output ItemStacks match
-     */
-    @Override
-    boolean equals(Object obj);
+	/**
+	 * This is used to check if the contents equals the objects, based on what the object is
+	 * @param obj The object to check
+	 * @return Returns true if the output ItemStacks match
+	 */
+	@Override
+	boolean equals(Object obj);
 }

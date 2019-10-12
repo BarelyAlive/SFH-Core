@@ -12,24 +12,22 @@ import net.minecraftforge.fluids.Fluid;
 
 public class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {
 
-	private final Fluid fluid;
-	private final ModelResourceLocation location;
+    private final ModelResourceLocation location;
 
-	public FluidStateMapper(String modid, Fluid fluid) {
-		this.fluid = fluid;
+	public FluidStateMapper(final String modid, final Fluid fluid) {
 
-		this.location = new ModelResourceLocation(new ResourceLocation(modid, fluid.getName()), fluid.getName());
+        location = new ModelResourceLocation(new ResourceLocation(modid, fluid.getName()), fluid.getName());
 	}
 
 	@Nonnull
 	@Override
-	protected ModelResourceLocation getModelResourceLocation(@Nonnull IBlockState state) {
+	protected ModelResourceLocation getModelResourceLocation(@Nonnull final IBlockState state) {
 		return location;
 	}
 
 	@Nonnull
 	@Override
-	public ModelResourceLocation getModelLocation(@Nonnull ItemStack stack) {
+	public ModelResourceLocation getModelLocation(@Nonnull final ItemStack stack) {
 		return location;
 	}
 }

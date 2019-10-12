@@ -14,35 +14,35 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileBase extends TileEntity {
 
-    public void markDirtyClient() {
-        markDirty();
-        NetworkHandler.sendNBTUpdate(this);
-    }
+	public void markDirtyClient() {
+		markDirty();
+		NetworkHandler.sendNBTUpdate(this);
+	}
 
-    public void markDirtyChunk() {
-        markDirty();
-        IBlockState state = getWorld().getBlockState(getPos());
-        getWorld().notifyBlockUpdate(getPos(), state, state, 3);
-        NetworkHandler.sendNBTUpdate(this);
-    }
+	public void markDirtyChunk() {
+		markDirty();
+		IBlockState state = getWorld().getBlockState(getPos());
+		getWorld().notifyBlockUpdate(getPos(), state, state, 3);
+		NetworkHandler.sendNBTUpdate(this);
+	}
 
-    @Nullable
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
-    }
+	@Nullable
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+	}
 
-    @Override
-    @Nonnull
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
-    }
+	@Override
+	@Nonnull
+	public NBTTagCompound getUpdateTag() {
+		return writeToNBT(new NBTTagCompound());
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        readFromNBT(pkt.getNbtCompound());
-        IBlockState state = world.getBlockState(pos);
-        world.notifyBlockUpdate(pos, state, state, 3);
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void onDataPacket(final NetworkManager net, final SPacketUpdateTileEntity pkt) {
+		readFromNBT(pkt.getNbtCompound());
+		IBlockState state = world.getBlockState(pos);
+		world.notifyBlockUpdate(pos, state, state, 3);
+	}
 }

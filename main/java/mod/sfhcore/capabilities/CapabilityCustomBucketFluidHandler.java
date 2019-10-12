@@ -18,52 +18,48 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 public class CapabilityCustomBucketFluidHandler {
-    @CapabilityInject(IFluidHandler.class)
-    public static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY = null;
-    @CapabilityInject(IFluidHandlerItem.class)
-    public static Capability<IFluidHandlerItem> FLUID_HANDLER_ITEM_CAPABILITY = null;
-    @CapabilityInject(String.class)
-    public static Capability<String> BUCKET_MATERIAL_CAPABILITY = null;
-    @CapabilityInject(Integer.class)
-    public static Capability<Integer> BUCKET_COLOR_CAPABILITY = null;
+	@CapabilityInject(IFluidHandler.class)
+	public static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY = null;
+	@CapabilityInject(IFluidHandlerItem.class)
+	public static Capability<IFluidHandlerItem> FLUID_HANDLER_ITEM_CAPABILITY = null;
+	@CapabilityInject(String.class)
+	public static Capability<String> BUCKET_MATERIAL_CAPABILITY = null;
+	@CapabilityInject(Integer.class)
+	public static Capability<Integer> BUCKET_COLOR_CAPABILITY = null;
 
-    public static void register()
-    {
-        CapabilityManager.INSTANCE.register(IFluidHandler.class, new DefaultFluidHandlerStorage<>(), () -> new FluidTank(Fluid.BUCKET_VOLUME));
+	public static void register()
+	{
+		CapabilityManager.INSTANCE.register(IFluidHandler.class, new DefaultFluidHandlerStorage<>(), () -> new FluidTank(Fluid.BUCKET_VOLUME));
 
-        CapabilityManager.INSTANCE.register(IFluidHandlerItem.class, new DefaultFluidHandlerStorage<>(), () -> new FluidHandlerItemStack(new ItemStack(new CustomBucket(null, null, null, null, 0, null)), Fluid.BUCKET_VOLUME));
-    }
+		CapabilityManager.INSTANCE.register(IFluidHandlerItem.class, new DefaultFluidHandlerStorage<>(), () -> new FluidHandlerItemStack(new ItemStack(new CustomBucket(null, null, null, null, 0, null)), Fluid.BUCKET_VOLUME));
+	}
 
-    private static class DefaultFluidHandlerStorage<T extends IFluidHandler> implements Capability.IStorage<T> {
-        @Override
-		public NBTBase writeNBT(Capability<T> capability, T instance, EnumFacing side)
+	private static class DefaultFluidHandlerStorage<T extends IFluidHandler> implements Capability.IStorage<T> {
+		@Override
+		public NBTBase writeNBT(final Capability<T> capability, final T instance, final EnumFacing side)
 		{
-        	System.out.println("writeNBT");
-        	System.out.println(instance);
+			System.out.println("writeNBT");
+			System.out.println(instance);
 			if (instance instanceof CustomBucket)
 			{
 				NBTTagCompound nbt = new NBTTagCompound();
 				CustomBucket tank = (CustomBucket) instance;
 				FluidStack fluid = tank.drain(Integer.MAX_VALUE, false);
 				if (fluid != null)
-				{
-			        nbt.setString("FluidName", FluidRegistry.getFluidName(fluid));
-				}
+					nbt.setString("FluidName", FluidRegistry.getFluidName(fluid));
 				else
-				{
 					nbt.setString("Empty", "");
-				}
 				nbt.setString("Material", tank.getMaterial());
 				return nbt;
 			}
 			return new NBTTagCompound();
 		}
 
-        @Override
-		public void readNBT(Capability<T> capability, T instance, EnumFacing side, NBTBase nbt)
+		@Override
+		public void readNBT(final Capability<T> capability, T instance, final EnumFacing side, final NBTBase nbt)
 		{
-        	System.out.println("readNBT");
-        	System.out.println(instance);
+			System.out.println("readNBT");
+			System.out.println(instance);
 			if (instance instanceof CustomBucket)
 			{
 				NBTTagCompound tags = (NBTTagCompound) nbt;
@@ -74,5 +70,5 @@ public class CapabilityCustomBucketFluidHandler {
 					instance = (T) BucketHandler.getBucketFromFluid(FluidRegistry.getFluid(tags.getString("FluidName")), tags.getString("Material"));
 			}
 		}
-    }
+	}
 }
