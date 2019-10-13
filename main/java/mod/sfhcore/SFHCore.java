@@ -19,12 +19,12 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid=Constants.MODID, name=Constants.MODID, version=Constants.VERSION, acceptedMinecraftVersions=Constants.MC_VERSION)
+@Mod(modid=Constants.MOD_ID, name=Constants.MOD_ID, version=Constants.VERSION, acceptedMinecraftVersions=Constants.MC_VERSION)
 public class SFHCore
 {
 	public static File configDirectory;
 	
-	@Instance(value=Constants.MODID)
+	@Instance(value=Constants.MOD_ID)
 	private static SFHCore instance;
 
 	public static SFHCore getInstance() {
@@ -51,10 +51,10 @@ public class SFHCore
 	@Mod.EventHandler
 	public void PreInit(final FMLPreInitializationEvent event)
 	{
-		configDirectory = new File(event.getModConfigurationDirectory(), Constants.MODID);
+		configDirectory = new File(event.getModConfigurationDirectory(), Constants.MOD_ID);
 		configDirectory.mkdirs();
 
-		LogUtil.setup(Constants.MODID, configDirectory);
+		LogUtil.setup(Constants.MOD_ID, configDirectory);
 
 		Config.loadConfigs();
 

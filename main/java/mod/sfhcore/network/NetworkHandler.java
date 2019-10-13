@@ -7,29 +7,26 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class NetworkHandler
 {
-	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID);
-	private static int id = 1;
+	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MOD_ID);
+	
+	// Start the IDs at 1 so any unregistered messages (ID 0) throw a more obvious exception when received
+	private static int messageID = 1;
 
-	public static void registerMessage(final Class messageHandler, final Class message, final Side side)
-	{
-		try {
-			INSTANCE.registerMessage(messageHandler, message, id++, side);
-		} catch (IllegalArgumentException e) {
-			LogUtil.error("SFHCore tried to register a message with illegal arguments!");
-			e.printStackTrace();
-		}
-	}
+	public static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(final Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, final Class<REQ> requestMessageType, final Side receivingSide) {
+        NetworkHandler.INSTANCE.registerMessage(messageHandler, requestMessageType, messageID++, receivingSide);
+    }
 
 	public static void initPackets()
 	{
 		//CLIENT
-		INSTANCE.registerMessage(MessageNBTUpdate.MessageNBTUpdateHandler.class, MessageNBTUpdate.class, id++, Side.CLIENT);
-		INSTANCE.registerMessage(MessageCheckLight.MessageCheckLightHandler.class, MessageCheckLight.class, id++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageNBTUpdate.MessageNBTUpdateHandler.class, MessageNBTUpdate.class, messageID++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageCheckLight.MessageCheckLightHandler.class, MessageCheckLight.class, messageID++, Side.CLIENT);
 	}
 
 	public static void sendToAllAround(final IMessage message, final TileEntity te, final int range)
