@@ -7,6 +7,7 @@ import mod.sfhcore.handler.CustomFuelHandler;
 import mod.sfhcore.network.NetworkHandler;
 import mod.sfhcore.proxy.ClientProxy;
 import mod.sfhcore.proxy.CommonProxy;
+import mod.sfhcore.proxy.IProxy;
 import mod.sfhcore.util.LogUtil;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -37,16 +38,7 @@ public class SFHCore
 	}
 
 	@SidedProxy(clientSide=Constants.CLIENT_PROXY, serverSide=Constants.SERVER_PROXY)
-	private static CommonProxy proxy;
-	
-	public static CommonProxy getProxy() {
-		return proxy;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public static ClientProxy getClientProxy() {
-		return (ClientProxy) proxy;
-	}
+	public static IProxy proxy;
 
 	@Mod.EventHandler
 	public void PreInit(final FMLPreInitializationEvent event)
