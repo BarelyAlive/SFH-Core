@@ -75,6 +75,8 @@ public class CustomFuelHandler{
 
 	/**
 	 * Use this method to register your Fuel-Item with it's burn time.
+	 * Has to be called after PreInit, so all Items and Blocks are registered.
+	 * Otherwise blocks won't work.
 	 * @param fuel
 	 * @param time
 	 * @return
