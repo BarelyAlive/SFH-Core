@@ -41,7 +41,7 @@ public class CustomFuelHandler{
 		for(Pair<ItemStack, Integer> fuel : FUEL)
 		{
 			if(ItemStack.areItemsEqual(stack, fuel.getLeft()))
-				return fuel.getRight();
+				return Math.max(fuel.getRight(), 0);
 		}
 
 		FluidStack f = FluidUtil.getFluidContained(stack);
