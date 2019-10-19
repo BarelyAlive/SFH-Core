@@ -66,12 +66,12 @@ public class CustomFuelHandler{
 	{
 		if(item.getItemStack().isEmpty())
 		{
-			LogUtil.error("[SFHCore tried to add an Itemstack to the Fuelregistry which was empty!");
+			LogUtil.error("[SFHCore] tried to add an Itemstack to the Fuelregistry which was empty!");
 			return false;
 		}
 		if(item.getItem().getRegistryName() == null)
 		{
-			LogUtil.warn("[SFHCore] tried to add an item which has no registry name!");
+			LogUtil.warn("[SFHCore] tried to add an item to the Fuelregistry which has no registry name!");
 			return false;
 		}
 
