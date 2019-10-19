@@ -33,7 +33,10 @@ public class CustomFuelHandler{
 
 		//have to do this to prevent crashes
 		if (e.getItemStack().isEmpty())
+		{
+			e.setBurnTime(0);
 			return 0;
+		}
 
 		ItemStack stack = e.getItemStack();
 		Item item = stack.getItem();
@@ -41,25 +44,34 @@ public class CustomFuelHandler{
 		for(Pair<ItemStack, Integer> fuel : FUEL)
 		{
 			if(ItemStack.areItemsEqual(stack, fuel.getLeft()))
+			{
+				e.setBurnTime(fuel.getRight());
 				return Math.max(fuel.getRight(), 0);
+			}
 		}
 
 		FluidStack f = FluidUtil.getFluidContained(stack);
 		if(f != null &&  Config.useAllLavaContainer)
-			if (f.getFluid() == FluidRegistry.LAVA && f.amount > 1000)
+			if (f.getFluid() == FluidRegistry.LAVA && f.amount == 1000)
 			{
 				IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
 				if(Objects.requireNonNull(ifhi).drain(1000, true) != null)
+				{
+					e.setBurnTime(20000);
 					return 20000;
+				}
 			}
 
 		try {
 			burnTime = item.getItemBurnTime(stack);
 		} catch (NullPointerException ex) {
-			LogUtil.fatal("[SFHCore] tried to get the burn time of " + item.getRegistryName() + " and it was NULL! Duh!");
+			LogUtil.fatal("[SFHCore] tried to get the burn time of " + item.getRegistryName() + " and it was NULL!");
 		}
+		
+		burnTime = Math.max(burnTime, 0);
 
-		return Math.max(burnTime, 0);
+		e.setBurnTime(burnTime);
+		return burnTime;
 	}
 
 	/**
