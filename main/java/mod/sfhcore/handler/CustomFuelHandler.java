@@ -32,7 +32,7 @@ public class CustomFuelHandler{
 		int burnTime = 0;
 
 		//have to do this to prevent crashes
-		if (NotNull.checkNotNull(e.getItemStack()))
+		if (e.getItemStack().isEmpty())
 			return 0;
 
 		ItemStack stack = e.getItemStack();
