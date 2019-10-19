@@ -37,6 +37,12 @@ public class CustomFuelHandler{
 
 		ItemStack stack = e.getItemStack();
 		Item item = stack.getItem();
+		
+		for(Pair<ItemStack, Integer> fuel : FUEL)
+		{
+			if(ItemStack.areItemsEqual(stack, fuel.getLeft()))
+				return fuel.getRight();
+		}
 
 		FluidStack f = FluidUtil.getFluidContained(stack);
 		if(f != null &&  Config.useAllLavaContainer)
@@ -66,7 +72,7 @@ public class CustomFuelHandler{
 	{
 		if(item.getItemStack().isEmpty())
 		{
-			LogUtil.error("[SFHCore] tried to add an Itemstack to the Fuelregistry which was empty!");
+			LogUtil.error("[SFHCore] tried to add an Itemstack to the Fuelregistry which was empty!" + " " + time);
 			return false;
 		}
 		if(item.getItem().getRegistryName() == null)
