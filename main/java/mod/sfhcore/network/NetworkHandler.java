@@ -1,7 +1,6 @@
 package mod.sfhcore.network;
 
 import mod.sfhcore.Constants;
-import mod.sfhcore.util.LogUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;

@@ -10,7 +10,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import mod.sfhcore.Config;
-import mod.sfhcore.helper.NotNull;
 import mod.sfhcore.util.ItemInfo;
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.item.Item;
