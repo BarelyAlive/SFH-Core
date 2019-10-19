@@ -85,7 +85,7 @@ public class CustomFuelHandler{
 	{
 		if(item.getItemStack().isEmpty())
 		{
-			LogUtil.error("[SFHCore] tried to add an Itemstack to the Fuelregistry which was empty!" + " " + time);
+			LogUtil.error("[SFHCore] tried to add an Itemstack to the Fuelregistry which was empty!");
 			return false;
 		}
 		if(item.getItem().getRegistryName() == null)
