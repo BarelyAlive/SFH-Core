@@ -50,26 +50,6 @@ public class ModFuelHandler{
 			}
 		}
 
-		FluidStack f = FluidUtil.getFluidContained(stack);
-		if(f != null &&  Config.useAllLavaContainer)
-			if (f.getFluid() == FluidRegistry.LAVA && f.amount == 1000)
-			{
-				IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
-				
-				//Stelle (hoffentlich) sicher dass es ein Bucket ist
-				if(ifhi.fill(new FluidStack(FluidRegistry.LAVA, 1), false) > 0 &&
-						ifhi.drain(new FluidStack(FluidRegistry.LAVA, 999), false) != null) {
-					e.setBurnTime(0);
-					return 0;
-				}
-				
-				if(Objects.requireNonNull(ifhi).drain(1000, true) != null)
-				{
-					e.setBurnTime(20000);
-					return 20000;
-				}
-			}
-
 		try {
 			burnTime = item.getItemBurnTime(stack);
 		} catch (NullPointerException ex) {
