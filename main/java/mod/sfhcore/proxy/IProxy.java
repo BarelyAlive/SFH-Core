@@ -3,7 +3,7 @@ package mod.sfhcore.proxy;
 import net.minecraft.block.Block;
 import net.minecraftforge.fluids.Fluid;
 
-public class CommonProxy implements IProxy{
+public interface IProxy {
 
-	public void initModel(final Fluid f, final Block b) {}
+	default void initModel(final Fluid f, final Block b) {}
 }

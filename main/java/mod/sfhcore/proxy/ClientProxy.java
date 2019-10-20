@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ClientProxy extends CommonProxy{
+public class ClientProxy implements IProxy{
 
 	private final String INVENTORY = "inventory";
 	
