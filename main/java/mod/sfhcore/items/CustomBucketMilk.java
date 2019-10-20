@@ -1,5 +1,7 @@
 package mod.sfhcore.items;
 
+import java.util.Objects;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,8 +16,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-
-import java.util.Objects;
 
 public class CustomBucketMilk extends Item
 {

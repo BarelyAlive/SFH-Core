@@ -1,11 +1,11 @@
 package mod.sfhcore.helper;
 
+import java.util.Objects;
+
 import mod.sfhcore.util.LogUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
-import java.util.Objects;
 
 public class NameHelper
 {

@@ -1,5 +1,7 @@
 package mod.sfhcore.util;
 
+import java.util.Objects;
+
 import javax.annotation.Nonnull;
 
 import net.minecraft.block.Block;
@@ -13,8 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.Objects;
 
 public class BlockInfo implements StackInfo {
 

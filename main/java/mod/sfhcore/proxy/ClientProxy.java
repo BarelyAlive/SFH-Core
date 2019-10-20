@@ -1,5 +1,7 @@
 package mod.sfhcore.proxy;
 
+import java.util.Objects;
+
 import mod.sfhcore.helper.FluidStateMapper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -8,8 +10,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Objects;
 
 public class ClientProxy extends CommonProxy{
 
