@@ -201,8 +201,11 @@ public class CustomBucket extends Item implements IFluidHandler{
 						}
 					}
 				}
-			} else if (!playerIn.canPlayerEdit(pos, raytraceresult.sideHit, held))
+			}
+			else if (!playerIn.canPlayerEdit(pos, raytraceresult.sideHit, held))
+			{
 				return new ActionResult<>(EnumActionResult.FAIL, held);
+			}
 			else
 			{
 				boolean flag1 = worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos);
@@ -232,68 +235,67 @@ public class CustomBucket extends Item implements IFluidHandler{
 		return new ActionResult<>(EnumActionResult.FAIL, held);
 	}
 
-	@Override
-	public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(final ItemStack stack, @Nullable final net.minecraft.nbt.NBTTagCompound nbt) {
-		if (this.getClass() == CustomBucket.class)
-			return new CustomBucketCapability(stack);
-		else
-			return super.initCapabilities(stack, nbt);
-	}
+    @Override
+    public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, @Nullable net.minecraft.nbt.NBTTagCompound nbt) {
+        if (this.getClass() == CustomBucket.class)
+        {
+            return new CustomBucketCapability(stack);
+        }
+        else
+        {
+            return super.initCapabilities(stack, nbt);
+        }
+    }
 
-	/**
-	 * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
-	 * the Item before the action is complete.
-	 */
-	@Override
-	public ItemStack onItemUseFinish(final ItemStack stack, final World worldIn, final EntityLivingBase entityLiving)
-	{
-		if (!worldIn.isRemote) entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET)); // FORGE - move up so stack.shrink does not turn stack into air
-
-		if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
-		{
-			if (entityLiving instanceof EntityPlayerMP)
-			{
-				EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
-				CriteriaTriggers.CONSUME_ITEM.trigger(entityplayermp, stack);
-				entityplayermp.addStat(StatList.getObjectUseStats(this));
-			}
-
-			if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)
-			{
-				/*
-				CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
-				stack.shrink(1);
-				((EntityPlayer)entityLiving).addItemStackToInventory(new ItemStack(emptyBucket));
-				*/
-				CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
+    /**
+     * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
+     * the Item before the action is complete.
+     */
+    @Override
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
+    {
+        if (!worldIn.isRemote) entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET)); // FORGE - move up so stack.shrink does not turn stack into air
+        
+        if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
+        {
+	        if (entityLiving instanceof EntityPlayerMP)
+	        {
+	            EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
+	            CriteriaTriggers.CONSUME_ITEM.trigger(entityplayermp, stack);
+	            entityplayermp.addStat(StatList.getObjectUseStats(this));
+	        }
+	
+	        if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)
+	        {
+	        	CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
 	            ((EntityPlayer)entityLiving).getHeldItem(((EntityPlayer)entityLiving).getActiveHand()).shrink(1);
-			}
-		}
+	        }
+        }
 
-		return stack.isEmpty() ? empty : stack;
-	}
+        return stack.isEmpty() ? empty : stack;
+    }
 
-	/**
-	 * How long it takes to use or consume an item
-	 */
-	@Override
-	public int getMaxItemUseDuration(final ItemStack stack)
-	{
-		if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
-			return 32;
-		return 0;
-	}
+    /**
+     * How long it takes to use or consume an item
+     */
+    @Override
+	public int getMaxItemUseDuration(ItemStack stack)
+    {
+    	if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
+    		return 32;
+    	return 0;
+    }
 
-	/**
-	 * returns the action that specifies what animation to play when the items is being used
-	 */
-	@Override
-	public EnumAction getItemUseAction(final ItemStack stack)
-	{
-		if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
-			return EnumAction.DRINK;
-		return EnumAction.NONE;
-	}
+    /**
+     * returns the action that specifies what animation to play when the items is being used
+     */
+    @Override
+	public EnumAction getItemUseAction(ItemStack stack)
+    {
+    	if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
+    		return EnumAction.DRINK;
+        return EnumAction.NONE;
+    }
 
 	@Override
 	public IFluidTankProperties[] getTankProperties() {

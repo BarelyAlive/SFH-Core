@@ -90,6 +90,26 @@ public class BucketHandler {
 
 		return null;
 	}
+	
+	public static int getMaxTemperaturFromBucket(String material)
+	{
+		for(String item : BUCKET_LIST.keySet())
+		{
+			if (item != null)
+			{
+				if (item.equals(material))
+				{
+					BucketInfo bi = BUCKET_LIST.get(item);
+					if (bi != null)
+					{
+						return bi.highest_temperatur;
+					}
+				}
+			}
+		}
+
+		return 0;
+	}
 
 	public static String getMaterialFromBucket(final ItemStack stack)
 	{
@@ -214,24 +234,5 @@ public class BucketHandler {
 			if (item != null && item.getRegistryName() != null)
 				event.getItemColors().registerItemColorHandler(new mod.sfhcore.items.model_bucket.FluidCustomBucketColorer(), item);
 		}
-	}
-
-	public static int getMaxTemperaturFromBucket(String material) {
-		for(String item : BUCKET_LIST.keySet())
-		{
-			if (item != null)
-			{
-				if (item.equals(material))
-				{
-					BucketInfo bi = BUCKET_LIST.get(item);
-					if (bi != null)
-					{
-						return bi.highest_temperatur;
-					}
-				}
-			}
-		}
-
-		return 0;
 	}
 }
