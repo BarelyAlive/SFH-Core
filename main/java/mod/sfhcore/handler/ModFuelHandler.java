@@ -19,9 +19,10 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class CustomFuelHandler{
+public class ModFuelHandler{
 
 	public static final List<Pair<ItemStack, Integer>> FUEL = new ArrayList<>();
 
@@ -29,15 +30,15 @@ public class CustomFuelHandler{
 	public int getBurnTime(final FurnaceFuelBurnTimeEvent e)
 	{
 		int burnTime = 0;
+		ItemStack stack = e.getItemStack();
 
 		//have to do this to prevent crashes
-		if (e.getItemStack().isEmpty())
+		if (stack.isEmpty())
 		{
 			e.setBurnTime(0);
 			return 0;
 		}
-
-		ItemStack stack = e.getItemStack();
+		
 		Item item = stack.getItem();
 		
 		for(Pair<ItemStack, Integer> fuel : FUEL)
@@ -54,6 +55,14 @@ public class CustomFuelHandler{
 			if (f.getFluid() == FluidRegistry.LAVA && f.amount == 1000)
 			{
 				IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
+				
+				//Stelle (hoffentlich) sicher dass es ein Bucket ist
+				if(ifhi.fill(new FluidStack(FluidRegistry.LAVA, 1), false) > 0 &&
+						ifhi.drain(new FluidStack(FluidRegistry.LAVA, 999), false) != null) {
+					e.setBurnTime(0);
+					return 0;
+				}
+				
 				if(Objects.requireNonNull(ifhi).drain(1000, true) != null)
 				{
 					e.setBurnTime(20000);
