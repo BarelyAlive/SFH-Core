@@ -66,7 +66,7 @@ public class ModFuelHandler{
 				{
 					if(ifhi.drain(1000, true) != null)
 					{
-						int temp = (int)(18000f * ((float)f.getTemperature() / (float)FluidRegistry.LAVA.getTemperature()));
+						int temp = (int)(20000 * ((float)f.getTemperature() / (float)FluidRegistry.LAVA.getTemperature()));
 						
 						e.setBurnTime(temp);
 						return temp;
