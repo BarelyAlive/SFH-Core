@@ -122,7 +122,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 		Fluid f = FluidRegistry.lookupFluidForBlock(containedBlock);
 		if(f != null)
 			if(f.getTemperature() >= FluidRegistry.LAVA.getTemperature())
-				return 18000 * (f.getTemperature() / FluidRegistry.LAVA.getTemperature());
+				return (int)(18000f * ((float)f.getTemperature() / (float)FluidRegistry.LAVA.getTemperature()));
 		return 0;
 	}
 

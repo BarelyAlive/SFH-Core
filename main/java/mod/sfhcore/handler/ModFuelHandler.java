@@ -15,6 +15,7 @@ import mod.sfhcore.util.LogUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -47,6 +48,30 @@ public class ModFuelHandler{
 			{
 				e.setBurnTime(fuel.getRight());
 				return Math.max(fuel.getRight(), 0);
+			}
+		}
+		
+		//Buckets
+		
+		FluidStack fs = FluidUtil.getFluidContained(stack);
+		IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
+		if(Config.useAllLavaContainer || fs != null || ifhi != null)
+		{
+			Fluid f = fs.getFluid();
+			if(f.getTemperature() >= FluidRegistry.LAVA.getTemperature() && fs.amount == 1000)
+			{
+				//Stelle (hoffentlich) sicher dass es ein Bucket ist
+				if(ifhi.fill(new FluidStack(FluidRegistry.LAVA, 1), false) == 0 &&
+						ifhi.drain(new FluidStack(FluidRegistry.LAVA, 999), false) == null)
+				{
+					if(ifhi.drain(1000, true) != null)
+					{
+						int temp = (int)(18000f * ((float)f.getTemperature() / (float)FluidRegistry.LAVA.getTemperature()));
+						
+						e.setBurnTime(temp);
+						return temp;
+					}
+				}
 			}
 		}
 
