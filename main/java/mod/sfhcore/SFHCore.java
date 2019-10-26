@@ -3,7 +3,7 @@ package mod.sfhcore;
 import java.io.File;
 
 import mod.sfhcore.handler.BucketRegistrationHandler;
-import mod.sfhcore.handler.CustomFuelHandler;
+import mod.sfhcore.handler.ModFuelHandler;
 import mod.sfhcore.network.NetworkHandler;
 import mod.sfhcore.proxy.IProxy;
 import mod.sfhcore.util.LogUtil;
@@ -54,7 +54,7 @@ public class SFHCore
 	@Mod.EventHandler
 	public void load(final FMLInitializationEvent event)
 	{
-		MinecraftForge.EVENT_BUS.register(new CustomFuelHandler());
+		MinecraftForge.EVENT_BUS.register(new ModFuelHandler());
 	}
 
 	@Mod.EventHandler
