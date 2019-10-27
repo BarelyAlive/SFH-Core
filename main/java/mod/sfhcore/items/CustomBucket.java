@@ -140,6 +140,12 @@ public class CustomBucket extends Item implements IFluidHandler{
 	{
 		return containedBlock == Blocks.AIR;
 	}
+	
+	private boolean isMilk()
+	{
+		return !this.isAir() && this.getContainedBlock() != null &&
+    		FluidRegistry.lookupFluidForBlock(this.getContainedBlock()) == FluidRegistry.getFluid("milk");
+	}
 
 	/**
 	 * Called when the equipped item is right clicked.
@@ -157,7 +163,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 		ItemStack held = playerIn.getHeldItem(handIn);
 		RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, flag);
 
-		if (FluidRegistry.lookupFluidForBlock(((CustomBucket) held.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
+		if (this.isMilk())
 		{
 			playerIn.setActiveHand(handIn);
 			return new ActionResult<>(EnumActionResult.SUCCESS, held);
@@ -254,23 +260,26 @@ public class CustomBucket extends Item implements IFluidHandler{
     @Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
     {
-        if (!worldIn.isRemote) entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET)); // FORGE - move up so stack.shrink does not turn stack into air
-        
-        if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
-        {
-	        if (entityLiving instanceof EntityPlayerMP)
+        if (!worldIn.isRemote)
+        	if(this.isMilk())
+        		entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET)); // FORGE - move up so stack.shrink does not turn stack into air
+       
+        if(this.isAir() && this.getContainedBlock() != null)
+	        if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
 	        {
-	            EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
-	            CriteriaTriggers.CONSUME_ITEM.trigger(entityplayermp, stack);
-	            entityplayermp.addStat(StatList.getObjectUseStats(this));
+		        if (entityLiving instanceof EntityPlayerMP)
+		        {
+		            EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
+		            CriteriaTriggers.CONSUME_ITEM.trigger(entityplayermp, stack);
+		            entityplayermp.addStat(StatList.getObjectUseStats(this));
+		        }
+		
+		        if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)
+		        {
+		        	CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
+		            ((EntityPlayer)entityLiving).getHeldItem(((EntityPlayer)entityLiving).getActiveHand()).shrink(1);
+		        }
 	        }
-	
-	        if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)
-	        {
-	        	CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
-	            ((EntityPlayer)entityLiving).getHeldItem(((EntityPlayer)entityLiving).getActiveHand()).shrink(1);
-	        }
-        }
 
         return stack.isEmpty() ? empty : stack;
     }
@@ -281,8 +290,8 @@ public class CustomBucket extends Item implements IFluidHandler{
     @Override
 	public int getMaxItemUseDuration(ItemStack stack)
     {
-    	if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
-    		return 32;
+    	if(this.isMilk())
+	    	return 32;
     	return 0;
     }
 
@@ -292,8 +301,8 @@ public class CustomBucket extends Item implements IFluidHandler{
     @Override
 	public EnumAction getItemUseAction(ItemStack stack)
     {
-    	if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
-    		return EnumAction.DRINK;
+    	if(this.isMilk())
+    			return EnumAction.DRINK;
         return EnumAction.NONE;
     }
 
