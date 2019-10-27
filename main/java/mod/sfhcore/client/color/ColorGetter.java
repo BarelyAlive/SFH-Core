@@ -96,7 +96,6 @@ public final class ColorGetter {
 		return getColors(textureAtlasSprite, renderColor, colorCount);
 	}
 
-	@SuppressWarnings("deprecation")
 	private static List<Color> getBlockColors(final ItemStack itemStack, final Block block, final int colorCount) {
 		final int meta = itemStack.getMetadata();
 		IBlockState blockState;

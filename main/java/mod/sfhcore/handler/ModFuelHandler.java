@@ -23,46 +23,46 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ModFuelHandler{
-
+public class ModFuelHandler
+{
 	public static final List<Pair<ItemStack, Integer>> FUEL = new ArrayList<>();
 
 	@SubscribeEvent
 	public int getBurnTime(final FurnaceFuelBurnTimeEvent e)
 	{
-		int burnTime = 0;
+		int burnTime = -1;
 		ItemStack stack = e.getItemStack();
 
 		//have to do this to prevent crashes
-		if (stack.isEmpty())
+		if (stack.isEmpty() || stack.getItem().getRegistryName() == null)
 		{
-			e.setBurnTime(0);
-			return 0;
+			e.setBurnTime(burnTime);
+			return burnTime;
 		}
 		
 		Item item = stack.getItem();
 		
+		//Try FUEL list
 		for(Pair<ItemStack, Integer> fuel : FUEL)
 		{
 			if(ItemStack.areItemsEqual(stack, fuel.getLeft()))
 			{
 				e.setBurnTime(fuel.getRight());
-				return Math.max(fuel.getRight(), 0);
+				return fuel.getRight();
 			}
 		}
 		
 		//Buckets
-		
 		FluidStack fs = FluidUtil.getFluidContained(stack);
 		IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
-		if(Config.useAllLavaContainer || fs != null || ifhi != null)
+		if(Config.useAllHotFluidContainer && fs != null && ifhi != null)
 		{
 			Fluid f = fs.getFluid();
 			if(f.getTemperature() >= FluidRegistry.LAVA.getTemperature() && fs.amount == 1000)
 			{
 				//Stelle (hoffentlich) sicher dass es ein Bucket ist
-				if(ifhi.fill(new FluidStack(FluidRegistry.LAVA, 1), false) == 0 &&
-						ifhi.drain(new FluidStack(FluidRegistry.LAVA, 999), false) == null)
+				if(ifhi.fill(new FluidStack(f, 1), false) == 0 &&
+						ifhi.drain(new FluidStack(f, 999), false) == null)
 				{
 					if(ifhi.drain(1000, true) != null)
 					{
@@ -75,13 +75,15 @@ public class ModFuelHandler{
 			}
 		}
 
+		//Try to get the built-in burntime
 		try {
 			burnTime = item.getItemBurnTime(stack);
 		} catch (NullPointerException ex) {
 			LogUtil.fatal("[SFHCore] tried to get the burn time of " + item.getRegistryName() + " and it was NULL!");
 		}
 		
-		burnTime = Math.max(burnTime, 0);
+		//ENDE
+		burnTime = Math.max(burnTime, -1);
 
 		e.setBurnTime(burnTime);
 		return burnTime;
@@ -105,6 +107,11 @@ public class ModFuelHandler{
 		if(item.getItem().getRegistryName() == null)
 		{
 			LogUtil.warn("[SFHCore] tried to add an item to the Fuelregistry which has no registry name!");
+			return false;
+		}
+		if(time < 1)
+		{
+			LogUtil.warn("[SFHCore] can't add " + item.getItem().getRegistryName() + " with burntime " + time + " !");
 			return false;
 		}
 

@@ -6,14 +6,14 @@ import net.minecraftforge.common.config.Configuration;
 
 public class Config {
 
-	public static boolean useAllLavaContainer = true;
+	public static boolean useAllHotFluidContainer = true;
 
 	public static void loadConfigs()
 	{
 		Configuration config = new Configuration(new File(SFHCore.configDirectory, "NetherTweaksMod.cfg"));
 		config.load();
 
-		useAllLavaContainer = config.getBoolean("Can every lava container be used as fuel in furnace?", "Tweak", true, "");
+		useAllHotFluidContainer = config.getBoolean("Can every bucket containing a hot fluid (hotter than lava) be used as fuel in furnace?", "Tweak", true, "");
 
 		config.save();
 	}
