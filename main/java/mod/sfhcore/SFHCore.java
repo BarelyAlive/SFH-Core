@@ -3,10 +3,12 @@ package mod.sfhcore;
 import java.io.File;
 
 import mod.sfhcore.handler.BucketRegistrationHandler;
+import mod.sfhcore.handler.ModFluids;
 import mod.sfhcore.handler.ModFuelHandler;
 import mod.sfhcore.network.NetworkHandler;
 import mod.sfhcore.proxy.IProxy;
 import mod.sfhcore.util.LogUtil;
+import mod.sfhcore.world.EventHook;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -34,7 +36,11 @@ public class SFHCore
 	}
 
 	@SidedProxy(clientSide=Constants.CLIENT_PROXY, serverSide=Constants.SERVER_PROXY)
-	public static IProxy proxy;
+	private static IProxy proxy;
+
+	public static IProxy getProxy() {
+		return proxy;
+	}
 
 	@Mod.EventHandler
 	public void PreInit(final FMLPreInitializationEvent event)
@@ -48,14 +54,14 @@ public class SFHCore
 
 		NetworkHandler.initPackets();
 		
+		MinecraftForge.EVENT_BUS.register(new ModFluids());
 		MinecraftForge.EVENT_BUS.register(new BucketRegistrationHandler());
+		MinecraftForge.EVENT_BUS.register(new ModFuelHandler());
+		MinecraftForge.EVENT_BUS.register(new EventHook());
 	}
 
 	@Mod.EventHandler
-	public void load(final FMLInitializationEvent event)
-	{
-		MinecraftForge.EVENT_BUS.register(new ModFuelHandler());
-	}
+	public void load(final FMLInitializationEvent event) {}
 
 	@Mod.EventHandler
 	public void PostInit(final FMLPostInitializationEvent event) {}

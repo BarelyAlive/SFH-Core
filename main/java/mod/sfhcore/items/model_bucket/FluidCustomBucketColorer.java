@@ -33,14 +33,16 @@ public class FluidCustomBucketColorer implements IItemColor
 				else
 				{
 					IBakedModel res = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(new ItemStack(b));
-					return res.getParticleTexture().getFrameTextureData(0)[0][0] & 0xFFFFFF | 0xFF000000;
+					for(int i = 0; i < res.getParticleTexture().getFrameCount(); i++)
+						if(res.getParticleTexture().getFrameTextureData(0)[i].length == 256)
+							return res.getParticleTexture().getFrameTextureData(0)[i][0] & 0xFFFFFF | 0xFF000000;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				return pixel;
 			}
 		}
-		//return 0xFF000000;
+		return 0xFF000000;
 	}
 
 }

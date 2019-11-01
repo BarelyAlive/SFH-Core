@@ -163,14 +163,14 @@ public class CustomBucket extends Item implements IFluidHandler{
 		ItemStack held = playerIn.getHeldItem(handIn);
 		RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, flag);
 
-		if (this.isMilk())
-		{
-			playerIn.setActiveHand(handIn);
-			return new ActionResult<>(EnumActionResult.SUCCESS, held);
-		}
-
 		if (raytraceresult == null)
-			return new ActionResult<>(EnumActionResult.PASS, held);
+			if (this.isMilk())
+			{
+				playerIn.setActiveHand(handIn);
+				return new ActionResult<>(EnumActionResult.SUCCESS, held);
+			}
+			else
+				return new ActionResult<>(EnumActionResult.PASS, held);
 
 		if(raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK)
 		{
@@ -262,7 +262,11 @@ public class CustomBucket extends Item implements IFluidHandler{
     {
         if (!worldIn.isRemote)
         	if(this.isMilk())
+        	{
         		entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET)); // FORGE - move up so stack.shrink does not turn stack into air
+        		
+        		stack = this.getContainerItem(stack);
+        	}
        
         if(this.isAir() && this.getContainedBlock() != null)
 	        if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
