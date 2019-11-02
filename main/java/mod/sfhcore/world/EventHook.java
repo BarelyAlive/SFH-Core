@@ -42,17 +42,14 @@ public class EventHook
 				Item item = stack.getItem();
 				String material = "";
 				
-				try {
+				if(item instanceof CustomBucket)
+				{
 					material = ((CustomBucket) item).getMaterial();
-				} catch (Exception e) {
-					e.printStackTrace();
-					LogUtil.fatal(e.toString());
-					return;
-				}
-				
-				if (!material.isEmpty() && item == BucketHandler.getBucketFromFluid(null, material)) {
-					stack.shrink(1);
-					PlayerInventory.tryAddItem(player, new ItemStack(BucketHandler.getBucketFromFluid(FluidRegistry.getFluid(Constants.MILK), material)));
+					
+					if (!material.isEmpty() && item == BucketHandler.getBucketFromFluid(null, material)) {
+						stack.shrink(1);
+						PlayerInventory.tryAddItem(player, new ItemStack(BucketHandler.getBucketFromFluid(FluidRegistry.getFluid(Constants.MILK), material)));
+					}
 				}
 			}
 		}
