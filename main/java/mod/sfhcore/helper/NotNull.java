@@ -15,6 +15,7 @@ public class NotNull
 	public static boolean checkNotNull(final Object o)
 	{
 		if(o == null) return false;
+		TileEntity te;
 		
 		if(o instanceof Block)
 		{
@@ -48,7 +49,9 @@ public class NotNull
 						return false;
                     return !item.getItem().getRegistryName().toString().isEmpty();
 				}
-				else if(o instanceof TileEntity)TileEntity te = (TileEntity) o;else
+				else if(o instanceof TileEntity)
+					te = (TileEntity) o;
+				else
 					if(o instanceof Enchantment)
 					{
 						final Enchantment chant = (Enchantment) o;
