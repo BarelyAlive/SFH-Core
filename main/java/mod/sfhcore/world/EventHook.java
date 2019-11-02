@@ -1,5 +1,7 @@
 package mod.sfhcore.world;
 
+import org.lwjgl.input.Keyboard;
+
 import mod.sfhcore.Constants;
 import mod.sfhcore.handler.BucketHandler;
 import mod.sfhcore.handler.ModFluids;
@@ -92,21 +94,22 @@ public class EventHook
 				break;
 			}
 			
-			stack.shrink(1);
-			player.addItemStackToInventory(new ItemStack(Items.BUCKET));
-							
-			if(world.provider.doesWaterVaporize())
-			{
-				int l = pos.getX();
-                int i = pos.getY();
-                int j = pos.getZ();
-                world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+			if (!player.isSneaking()) {
+				stack.shrink(1);
+				player.addItemStackToInventory(new ItemStack(Items.BUCKET));
+				if (world.provider.doesWaterVaporize()) {
+					int l = pos.getX();
+					int i = pos.getY();
+					int j = pos.getZ();
+					world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F,
+							2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 
-                for (int k = 0; k < 8; ++k)
-                    world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)l + Math.random(), (double)i + Math.random(), (double)j + Math.random(), 0.0D, 0.0D, 0.0D);
+					for (int k = 0; k < 8; ++k)
+						world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) l + Math.random(),
+								(double) i + Math.random(), (double) j + Math.random(), 0.0D, 0.0D, 0.0D);
+				} else
+					world.setBlockState(pos, ModFluids.BLOCK_MILK.getDefaultState());
 			}
-			else
-				world.setBlockState(pos, ModFluids.BLOCK_MILK.getDefaultState());
 		}
 	}
 }

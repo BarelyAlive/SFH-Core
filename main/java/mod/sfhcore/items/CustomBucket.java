@@ -201,7 +201,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 								worldIn.setBlockState(pos1, Blocks.FLOWING_WATER.getDefaultState());
 							else if (containedBlock.equals(Blocks.LAVA))
 								worldIn.setBlockState(pos1, Blocks.FLOWING_LAVA.getDefaultState());
-							else
+							else if(!playerIn.isSneaking())
 								worldIn.setBlockState(pos1, containedBlock.getDefaultState());
 							return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, held.getItem().getContainerItem(held)) : new ActionResult(EnumActionResult.SUCCESS, held);
 						}
