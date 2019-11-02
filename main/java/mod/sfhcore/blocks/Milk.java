@@ -4,6 +4,7 @@ import mod.sfhcore.Constants;
 import mod.sfhcore.handler.ModFluids;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -15,6 +16,7 @@ public class Milk extends BlockFluidClassic{
 		setRegistryName(Constants.MOD_ID, Constants.MILK);
 		setUnlocalizedName(Constants.MILK);
 		setLightLevel(0);
+		setLightOpacity(255);
 		setTemperature(FluidRegistry.WATER.getTemperature());
 		setDensity(FluidRegistry.WATER.getDensity());
 	}
