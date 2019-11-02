@@ -77,7 +77,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 	private FluidStack getFluidContained()
 	{
 		if(!isAir()) {
-			Fluid f = FluidRegistry.lookupFluidForBlock(containedBlock);
+			final Fluid f = FluidRegistry.lookupFluidForBlock(containedBlock);
 			return new FluidStack(f, 1000);
 		}
 		return null;
@@ -119,7 +119,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 	@Override
 	public int getItemBurnTime(final ItemStack itemStack)
 	{
-		Fluid f = FluidRegistry.lookupFluidForBlock(containedBlock);
+		final Fluid f = FluidRegistry.lookupFluidForBlock(containedBlock);
 		if(f != null)
 			if(f.getTemperature() >= FluidRegistry.LAVA.getTemperature())
 				return (int)(20000 * ((float)f.getTemperature() / (float)FluidRegistry.LAVA.getTemperature()));
@@ -143,8 +143,8 @@ public class CustomBucket extends Item implements IFluidHandler{
 	
 	private boolean isMilk()
 	{
-		return !this.isAir() && this.getContainedBlock() != null &&
-    		FluidRegistry.lookupFluidForBlock(this.getContainedBlock()) == FluidRegistry.getFluid("milk");
+		return !isAir() && getContainedBlock() != null &&
+    		FluidRegistry.lookupFluidForBlock(getContainedBlock()) == FluidRegistry.getFluid("milk");
 	}
 
 	/**
@@ -159,12 +159,12 @@ public class CustomBucket extends Item implements IFluidHandler{
 	        return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(handIn));
 		}
 		 */
-		boolean flag = isAir();
-		ItemStack held = playerIn.getHeldItem(handIn);
-		RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, flag);
+		final boolean flag = isAir();
+		final ItemStack held = playerIn.getHeldItem(handIn);
+		final RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, flag);
 
 		if (raytraceresult == null)
-			if (this.isMilk())
+			if (isMilk())
 			{
 				playerIn.setActiveHand(handIn);
 				return new ActionResult<>(EnumActionResult.SUCCESS, held);
@@ -174,22 +174,22 @@ public class CustomBucket extends Item implements IFluidHandler{
 
 		if(raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK)
 		{
-			BlockPos pos = raytraceresult.getBlockPos();
+			final BlockPos pos = raytraceresult.getBlockPos();
 			if (!flag && containedBlock != null)
 			{
 				if (!playerIn.canPlayerEdit(pos.offset(raytraceresult.sideHit), raytraceresult.sideHit, held))
 					return new ActionResult<>(EnumActionResult.FAIL, held);
 				else
 				{
-					boolean flag1 = worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos);
-					BlockPos pos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP ? pos : pos.offset(raytraceresult.sideHit);
+					final boolean flag1 = worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos);
+					final BlockPos pos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP ? pos : pos.offset(raytraceresult.sideHit);
 
 					if (!playerIn.canPlayerEdit(pos1, raytraceresult.sideHit, held))
 						return new ActionResult<>(EnumActionResult.FAIL, held);
 					else
 					{
 
-						Block block = worldIn.getBlockState(pos1).getBlock();
+						final Block block = worldIn.getBlockState(pos1).getBlock();
 						Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
 
 						fluid_from_block = FluidRegistry.lookupFluidForBlock(containedBlock);
@@ -209,22 +209,19 @@ public class CustomBucket extends Item implements IFluidHandler{
 				}
 			}
 			else if (!playerIn.canPlayerEdit(pos, raytraceresult.sideHit, held))
-			{
 				return new ActionResult<>(EnumActionResult.FAIL, held);
-			}
 			else
 			{
-				boolean flag1 = worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos);
+				final boolean flag1 = worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos);
 				//BlockPos pos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP ? pos : pos.offset(raytraceresult.sideHit);
 
-				Block block = worldIn.getBlockState(pos).getBlock();
-				Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
+				final Block block = worldIn.getBlockState(pos).getBlock();
+				final Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
 				if (fluid_from_block != null)
-				{
 					if (BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) == -1 || BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) == 0 || BucketHandler.getMaxTemperaturFromBucket(((CustomBucket)held.getItem()).getMaterial()) >= fluid_from_block.getTemperature())
 					{
 						worldIn.setBlockToAir(pos);
-						CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
+						final CustomBucket new_bucket = BucketHandler.getBucketFromFluid(fluid_from_block, ((CustomBucket)held.getItem()).getMaterial());
 						playerIn.inventory.markDirty();
 	
 						if(!playerIn.capabilities.isCreativeMode)
@@ -234,7 +231,6 @@ public class CustomBucket extends Item implements IFluidHandler{
 						}
 						return new ActionResult(EnumActionResult.SUCCESS, held);
 					}
-				}
 			}
 		}
 
@@ -242,15 +238,11 @@ public class CustomBucket extends Item implements IFluidHandler{
 	}
 
     @Override
-    public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, @Nullable net.minecraft.nbt.NBTTagCompound nbt) {
+    public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(final ItemStack stack, @Nullable final net.minecraft.nbt.NBTTagCompound nbt) {
         if (this.getClass() == CustomBucket.class)
-        {
-            return new CustomBucketCapability(stack);
-        }
-        else
-        {
-            return super.initCapabilities(stack, nbt);
-        }
+			return new CustomBucketCapability(stack);
+		else
+			return super.initCapabilities(stack, nbt);
     }
 
     /**
@@ -258,29 +250,29 @@ public class CustomBucket extends Item implements IFluidHandler{
      * the Item before the action is complete.
      */
     @Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
+	public ItemStack onItemUseFinish(ItemStack stack, final World worldIn, final EntityLivingBase entityLiving)
     {
         if (!worldIn.isRemote)
-        	if(this.isMilk())
+        	if(isMilk())
         	{
         		entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET)); // FORGE - move up so stack.shrink does not turn stack into air
         		
         		stack = this.getContainerItem(stack);
         	}
        
-        if(this.isAir() && this.getContainedBlock() != null)
+        if(isAir() && getContainedBlock() != null)
 	        if (FluidRegistry.lookupFluidForBlock(((CustomBucket)stack.getItem()).getContainedBlock()) == FluidRegistry.getFluid("milk"))
 	        {
 		        if (entityLiving instanceof EntityPlayerMP)
 		        {
-		            EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
+		            final EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
 		            CriteriaTriggers.CONSUME_ITEM.trigger(entityplayermp, stack);
 		            entityplayermp.addStat(StatList.getObjectUseStats(this));
 		        }
 		
 		        if (entityLiving instanceof EntityPlayer && !((EntityPlayer)entityLiving).capabilities.isCreativeMode)
 		        {
-		        	CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
+		        	final CustomBucket emptyBucket = BucketHandler.getBucketFromFluid(null, ((CustomBucket)stack.getItem()).getMaterial());
 		            ((EntityPlayer)entityLiving).getHeldItem(((EntityPlayer)entityLiving).getActiveHand()).shrink(1);
 		        }
 	        }
@@ -292,9 +284,9 @@ public class CustomBucket extends Item implements IFluidHandler{
      * How long it takes to use or consume an item
      */
     @Override
-	public int getMaxItemUseDuration(ItemStack stack)
+	public int getMaxItemUseDuration(final ItemStack stack)
     {
-    	if(this.isMilk())
+    	if(isMilk())
 	    	return 32;
     	return 0;
     }
@@ -303,9 +295,9 @@ public class CustomBucket extends Item implements IFluidHandler{
      * returns the action that specifies what animation to play when the items is being used
      */
     @Override
-	public EnumAction getItemUseAction(ItemStack stack)
+	public EnumAction getItemUseAction(final ItemStack stack)
     {
-    	if(this.isMilk())
+    	if(isMilk())
     			return EnumAction.DRINK;
         return EnumAction.NONE;
     }

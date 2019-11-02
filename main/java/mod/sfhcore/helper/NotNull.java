@@ -11,14 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class NotNull
-{	
+{
 	public static boolean checkNotNull(final Object o)
 	{
 		if(o == null) return false;
 		
 		if(o instanceof Block)
 		{
-			Block block = (Block) o;
+			final Block block = (Block) o;
 			if(Objects.requireNonNull(block.getRegistryName()).toString().isEmpty())
 			{
 				LogUtil.warn("SFHCore tried to register a block, which has no name!");
@@ -28,7 +28,7 @@ public class NotNull
 		else
 			if(o instanceof Item)
 			{
-				Item item = (Item) o;
+				final Item item = (Item) o;
 				if(item.equals(Items.AIR))
 				{
 					LogUtil.warn("SFHCore tried to register an item which is NULL!");
@@ -43,19 +43,15 @@ public class NotNull
 			else
 				if(o instanceof ItemStack)
 				{
-					ItemStack item = (ItemStack) o;
+					final ItemStack item = (ItemStack) o;
 					if(item.isEmpty())
 						return false;
                     return !item.getItem().getRegistryName().toString().isEmpty();
 				}
-				else if(o instanceof TileEntity)
-				{
-					TileEntity te = (TileEntity) o;
-				}
-				else
+				else if(o instanceof TileEntity)TileEntity te = (TileEntity) o;else
 					if(o instanceof Enchantment)
 					{
-						Enchantment chant = (Enchantment) o;
+						final Enchantment chant = (Enchantment) o;
 						if(Objects.requireNonNull(chant.getRegistryName()).toString().isEmpty())
 						{
 							LogUtil.warn("SFHCore tried to register an enchantment, which has no name!");

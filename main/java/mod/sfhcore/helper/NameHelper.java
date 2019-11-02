@@ -14,7 +14,7 @@ public class NameHelper
 		if(item != null && item.getRegistryName() != null)
 			try {
 				return item.getRegistryName().getResourcePath();
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the name of an item, but it was null");
 				e.printStackTrace();
 			}
@@ -27,7 +27,7 @@ public class NameHelper
 		if(block != null && block.getRegistryName() != null)
 			try {
 				return block.getRegistryName().getResourcePath();
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the name of a block, but it was null");
 				e.printStackTrace();
 			}
@@ -40,7 +40,7 @@ public class NameHelper
 		if(NotNull.checkNotNull(stack))
 			try {
 				return Objects.requireNonNull(stack.getItem().getRegistryName()).getResourcePath();
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the name of an ItemStack, but it was null");
 				e.printStackTrace();
 			}
@@ -53,7 +53,7 @@ public class NameHelper
 		if(item != null && item.getRegistryName() != null)
 			try {
 				return item.getRegistryName().getResourceDomain();
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the mod id of an item, but it was null");
 				e.printStackTrace();
 			}
@@ -66,7 +66,7 @@ public class NameHelper
 		if(block != null && block.getRegistryName() != null)
 			try {
 				return block.getRegistryName().getResourceDomain();
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the mod id of a block, but it was null");
 				e.printStackTrace();
 			}
@@ -79,7 +79,7 @@ public class NameHelper
 		if(item != null && item.getRegistryName() != null)
 			try {
 				return Objects.requireNonNull(Block.getBlockFromItem(item).getRegistryName()).getResourcePath();
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the name of an item, but it was null");
 				e.printStackTrace();
 			}
@@ -92,7 +92,7 @@ public class NameHelper
 		if(block != null && block.getRegistryName() != null)
 			try {
 				return Objects.requireNonNull(Item.getItemFromBlock(block).getRegistryName()).getResourcePath();
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the name of a block, but it was null");
 				e.printStackTrace();
 			}
@@ -105,7 +105,7 @@ public class NameHelper
 		if(item != null && item.getRegistryName() != null)
 			try {
 				return Objects.requireNonNull(Block.getBlockFromItem(item).getRegistryName()).getResourceDomain();
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the mod id of an item, but it was null");
 				e.printStackTrace();
 			}
@@ -118,7 +118,7 @@ public class NameHelper
 		if(block != null && block.getRegistryName() != null)
 			try {
 				return Objects.requireNonNull(Item.getItemFromBlock(block).getRegistryName()).getResourceDomain();
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				LogUtil.fatal("[SFHCore] tried to get the mod id of a block, but it was null");
 				e.printStackTrace();
 			}

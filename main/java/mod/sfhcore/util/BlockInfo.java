@@ -62,7 +62,7 @@ public class BlockInfo implements StackInfo {
 			isWildcard = true;
 			return;
 		}
-		String[] split = string.split(":");
+		final String[] split = string.split(":");
 
 		Block block;
 		int meta = 0;
@@ -75,10 +75,10 @@ public class BlockInfo implements StackInfo {
 			try {
 				meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
 				block = Block.getBlockFromName("minecraft:" + split[0]);
-			} catch (NumberFormatException e) {
+			} catch (final NumberFormatException e) {
 				meta = 0;
 				block = Block.getBlockFromName(split[0] + ":" + split[1]);
-			} catch (NullPointerException e) {
+			} catch (final NullPointerException e) {
 				state = Blocks.AIR.getDefaultState();
 				isWildcard = true;
 				return;
@@ -115,8 +115,8 @@ public class BlockInfo implements StackInfo {
 	}
 
 	public static BlockInfo readFromNBT(final NBTTagCompound tag) {
-		Block item = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(tag.getString("block")));
-		int meta = tag.getInteger("meta");
+		final Block item = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(tag.getString("block")));
+		final int meta = tag.getInteger("meta");
 
 		return item == null ? EMPTY : new BlockInfo(item, meta);
 	}
@@ -131,7 +131,7 @@ public class BlockInfo implements StackInfo {
 		try {
 			//noinspection deprecation
 			return block.getStateFromMeta(meta);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return block.getDefaultState();
 		}
 	}
@@ -148,14 +148,14 @@ public class BlockInfo implements StackInfo {
 
 	@Override
 	public String toString() {
-		int meta = getMeta();
+		final int meta = getMeta();
 		return ForgeRegistries.BLOCKS.getKey(state.getBlock()) + (meta == 0 ? "" : ":" + meta);
 	}
 
 	@Nonnull
 	@Override
 	public ItemStack getItemStack() {
-		Item item = Item.getItemFromBlock(state.getBlock());
+		final Item item = Item.getItemFromBlock(state.getBlock());
 		return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, 1, getMeta());
 	}
 

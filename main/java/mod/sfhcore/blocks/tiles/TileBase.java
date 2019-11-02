@@ -21,7 +21,7 @@ public class TileBase extends TileEntity {
 
 	public void markDirtyChunk() {
 		markDirty();
-		IBlockState state = getWorld().getBlockState(getPos());
+		final IBlockState state = getWorld().getBlockState(getPos());
 		getWorld().notifyBlockUpdate(getPos(), state, state, 3);
 		NetworkHandler.sendNBTUpdate(this);
 	}
@@ -42,7 +42,7 @@ public class TileBase extends TileEntity {
 	@SideOnly(Side.CLIENT)
 	public void onDataPacket(final NetworkManager net, final SPacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
-		IBlockState state = world.getBlockState(pos);
+		final IBlockState state = world.getBlockState(pos);
 		world.notifyBlockUpdate(pos, state, state, 3);
 	}
 }

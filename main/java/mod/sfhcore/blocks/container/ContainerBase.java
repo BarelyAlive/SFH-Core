@@ -25,9 +25,9 @@ public class ContainerBase extends Container {
 	@Override
 	public NonNullList<ItemStack> getInventory()
 	{
-		NonNullList<ItemStack> nonnulllist = NonNullList.create();
+		final NonNullList<ItemStack> nonnulllist = NonNullList.create();
 
-        for (Slot inventorySlot : inventorySlots) {
+        for (final Slot inventorySlot : inventorySlots) {
             if (inventorySlot.getStack() == null)
                 inventorySlot.putStack(ItemStack.EMPTY);
             nonnulllist.add(inventorySlot.getStack());
@@ -44,10 +44,10 @@ public class ContainerBase extends Container {
 	@Override
 	public ItemStack transferStackInSlot(final EntityPlayer player, final int index) {
 		ItemStack previous = ItemStack.EMPTY;
-		Slot slot = inventorySlots.get(index);
+		final Slot slot = inventorySlots.get(index);
 
 		if (slot.getStack() != ItemStack.EMPTY && slot.getHasStack()) {
-			ItemStack current = slot.getStack();
+			final ItemStack current = slot.getStack();
 			previous = current.copy();
 
 			if (index < tileentity.getSizeInventory()) {
@@ -86,8 +86,8 @@ public class ContainerBase extends Container {
 				stackinslot = slot.getStack();
 
 				if (!stackinslot.isEmpty() && stackinslot.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == stackinslot.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, stackinslot)) {
-					int l = stackinslot.getCount() + stack.getCount();
-					int maxsize = Math.min(stack.getMaxStackSize(), slot.getItemStackLimit(stack));
+					final int l = stackinslot.getCount() + stack.getCount();
+					final int maxsize = Math.min(stack.getMaxStackSize(), slot.getItemStackLimit(stack));
 
 					if (l <= maxsize) {
 						stack.setCount(0);
@@ -125,7 +125,7 @@ public class ContainerBase extends Container {
 						success = true;
 						break;
 					} else {
-						ItemStack newstack = stack.copy();
+						final ItemStack newstack = stack.copy();
 						newstack.setCount(slot.getItemStackLimit(stack));
 						slot.putStack(newstack);
 						stack.setCount(stack.getCount() - slot.getItemStackLimit(stack));

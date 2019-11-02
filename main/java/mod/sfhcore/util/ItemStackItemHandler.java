@@ -31,9 +31,9 @@ public class ItemStackItemHandler implements IItemHandler {
 	public ItemStack insertItem(final int slot, @Nonnull final ItemStack stack, final boolean simulate) {
 		if(slot != 0)
 			return stack.copy();
-		ItemStack returnStack = stack.copy();
+		final ItemStack returnStack = stack.copy();
 		if(ItemUtil.areStacksEquivalent(wrappedStack, returnStack) && wrappedStack.isStackable()){
-			int toAdd = Math.min(returnStack.getCount(), wrappedStack.getMaxStackSize() - wrappedStack.getCount());
+			final int toAdd = Math.min(returnStack.getCount(), wrappedStack.getMaxStackSize() - wrappedStack.getCount());
 			if(!simulate)
 				wrappedStack.grow(toAdd);
 			returnStack.shrink(toAdd);
@@ -46,7 +46,7 @@ public class ItemStackItemHandler implements IItemHandler {
 	public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
 		if(slot!=0 || amount <= 0)
 			return ItemStack.EMPTY;
-		ItemStack returnStack = wrappedStack.copy();
+		final ItemStack returnStack = wrappedStack.copy();
 		returnStack.setCount(Math.min(amount, wrappedStack.getCount()));
 		if(!simulate)
 			wrappedStack.shrink(returnStack.getCount());

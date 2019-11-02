@@ -15,11 +15,11 @@ public class BucketHelper
 {
 	public static boolean isBucketWithFluidMaterial(@Nonnull final ItemStack held, final Material material)
 	{
-		FluidStack f = FluidUtil.getFluidContained(held);
+		final FluidStack f = FluidUtil.getFluidContained(held);
 		if(f == null) return false;
 		if(f.getFluid().getBlock() == null) return false;
-		IBlockState blockFluid = f.getFluid().getBlock().getDefaultState();
-		Material m = blockFluid.getMaterial();
+		final IBlockState blockFluid = f.getFluid().getBlock().getDefaultState();
+		final Material m = blockFluid.getMaterial();
 		if(!m.equals(material)) return false;
 		if(held.getItem().equals(Items.WATER_BUCKET)) return true;
 

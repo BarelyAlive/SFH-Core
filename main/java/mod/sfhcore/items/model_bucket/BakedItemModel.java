@@ -39,7 +39,7 @@ public class BakedItemModel implements IBakedModel {
 
 	private static boolean hasGuiIdentity(final ImmutableMap<TransformType, TRSRTransformation> transforms)
 	{
-		TRSRTransformation guiTransform = transforms.get(TransformType.GUI);
+		final TRSRTransformation guiTransform = transforms.get(TransformType.GUI);
 		return guiTransform == null || guiTransform.isIdentity();
 	}
 
@@ -72,8 +72,8 @@ public class BakedItemModel implements IBakedModel {
 		public BakedGuiItemModel(final T originalModel)
 		{
 			super(originalModel);
-			ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
-			for (BakedQuad quad : originalModel.quads)
+			final ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
+			for (final BakedQuad quad : originalModel.quads)
 				if (quad.getFace() == EnumFacing.SOUTH)
 					builder.add(quad);
 			this.quads = builder.build();

@@ -43,10 +43,10 @@ public class MMCQ implements Cloneable {
 	private static final int MAX_ITERATIONS = 1000;
 	private static final Comparator<VBox> COMPARATOR_COUNT = (a, b) -> a.count(false) - b.count(false);
 	private static final Comparator<VBox> COMPARATOR_PRODUCT = (a, b) -> {
-		int aCount = a.count(false);
-		int bCount = b.count(false);
-		int aVolume = a.volume(false);
-		int bVolume = b.volume(false);
+		final int aCount = a.count(false);
+		final int bCount = b.count(false);
+		final int aVolume = a.volume(false);
+		final int bVolume = b.volume(false);
 
 		// If count is 0 for both (or the same), sort by volume
 		if (aCount == bCount)
@@ -73,12 +73,12 @@ public class MMCQ implements Cloneable {
 	 * color space), or null on error.
 	 */
 	private static int[] getHisto(final int[][] pixels) {
-		int[] histo = new int[HISTOSIZE];
+		final int[] histo = new int[HISTOSIZE];
 		int index, rval, gval, bval;
 
-		int numPixels = pixels.length;
+		final int numPixels = pixels.length;
 		for (int i = 0; i < numPixels; i++) {
-			int[] pixel = pixels[i];
+			final int[] pixel = pixels[i];
 			rval = pixel[0] >> RSHIFT;
 		gval = pixel[1] >> RSHIFT;
 		bval = pixel[2] >> RSHIFT;
@@ -96,9 +96,9 @@ public class MMCQ implements Cloneable {
 		int rval, gval, bval;
 
 		// find min/max
-		int numPixels = pixels.length;
+		final int numPixels = pixels.length;
 		for (int i = 0; i < numPixels; i++) {
-			int[] pixel = pixels[i];
+			final int[] pixel = pixels[i];
 			rval = pixel[0] >> RSHIFT;
 		gval = pixel[1] >> RSHIFT;
 	bval = pixel[2] >> RSHIFT;
@@ -130,16 +130,16 @@ public class MMCQ implements Cloneable {
 		if (vbox.count(false) == 1)
 			return new VBox[]{vbox.clone(), null};
 
-		int rw = vbox.r2 - vbox.r1 + 1;
-		int gw = vbox.g2 - vbox.g1 + 1;
-		int bw = vbox.b2 - vbox.b1 + 1;
-		int maxw = Math.max(Math.max(rw, gw), bw);
+		final int rw = vbox.r2 - vbox.r1 + 1;
+		final int gw = vbox.g2 - vbox.g1 + 1;
+		final int bw = vbox.b2 - vbox.b1 + 1;
+		final int maxw = Math.max(Math.max(rw, gw), bw);
 
 		// Find the partial sum arrays along the selected axis.
 		int total = 0;
-		int[] partialsum = new int[VBOX_LENGTH];
+		final int[] partialsum = new int[VBOX_LENGTH];
 		Arrays.fill(partialsum, -1); // -1 = not set / 0 = 0
-		int[] lookaheadsum = new int[VBOX_LENGTH];
+		final int[] lookaheadsum = new int[VBOX_LENGTH];
 		Arrays.fill(lookaheadsum, -1); // -1 = not set / 0 = 0
 		int i, j, k, sum, index;
 
@@ -254,15 +254,15 @@ public class MMCQ implements Cloneable {
 		if (pixels.length == 0 || maxcolors < 1 || maxcolors > 256)
 			return null;
 
-		int[] histo = getHisto(pixels);
+		final int[] histo = getHisto(pixels);
 
 		// get the beginning vbox from the colors
-		VBox vbox = vboxFromPixels(pixels, histo);
-		ArrayList<VBox> pq = new ArrayList<>();
+		final VBox vbox = vboxFromPixels(pixels, histo);
+		final ArrayList<VBox> pq = new ArrayList<>();
 		pq.add(vbox);
 
 		// Round up to have the same behaviour as in JavaScript
-		int target = (int) Math.ceil(FRACT_BY_POPULATION * maxcolors);
+		final int target = (int) Math.ceil(FRACT_BY_POPULATION * maxcolors);
 
 		// first set of colors, sorted by population
 		iter(pq, COMPARATOR_COUNT, target, histo);
@@ -278,8 +278,8 @@ public class MMCQ implements Cloneable {
 		Collections.reverse(pq);
 
 		// calculate the actual colors
-		CMap cmap = new CMap();
-		for (VBox vb : pq)
+		final CMap cmap = new CMap();
+		for (final VBox vb : pq)
 			cmap.push(vb);
 
 		return cmap;
@@ -303,9 +303,9 @@ public class MMCQ implements Cloneable {
 			lh.remove(lh.size() - 1);
 
 			// do the cut
-			VBox[] vboxes = medianCutApply(histo, vbox);
-			VBox vbox1 = vboxes[0];
-			VBox vbox2 = vboxes[1];
+			final VBox[] vboxes = medianCutApply(histo, vbox);
+			final VBox vbox1 = vboxes[0];
+			final VBox vbox2 = vboxes[1];
 
 			if (vbox1 == null)
 				throw new RuntimeException(
@@ -421,9 +421,9 @@ public class MMCQ implements Cloneable {
 		}
 
 		public boolean contains(final int[] pixel) {
-			int rval = pixel[0] >> RSHIFT;
-					int gval = pixel[1] >> RSHIFT;
-						int bval = pixel[2] >> RSHIFT;
+			final int rval = pixel[0] >> RSHIFT;
+					final int gval = pixel[1] >> RSHIFT;
+						final int bval = pixel[2] >> RSHIFT;
 
 				return rval >= r1 && rval <= r2 && gval >= g1 && gval <= g2
 						&& bval >= b1 && bval <= b2;
@@ -443,8 +443,8 @@ public class MMCQ implements Cloneable {
 		}
 
 		public int[][] palette() {
-			int numVBoxes = vboxes.size();
-			int[][] palette = new int[numVBoxes][];
+			final int numVBoxes = vboxes.size();
+			final int[][] palette = new int[numVBoxes][];
 			for (int i = 0; i < numVBoxes; i++)
 				palette[i] = vboxes.get(i).avg(false);
 			return palette;
@@ -456,9 +456,9 @@ public class MMCQ implements Cloneable {
 
 		@Nullable
 		public int[] map(final int[] color) {
-			int numVBoxes = vboxes.size();
+			final int numVBoxes = vboxes.size();
 			for (int i = 0; i < numVBoxes; i++) {
-				VBox vbox = vboxes.get(i);
+				final VBox vbox = vboxes.get(i);
 				if (vbox.contains(color))
 					return vbox.avg(false);
 			}
@@ -471,9 +471,9 @@ public class MMCQ implements Cloneable {
 			double d2;
 			int[] pColor = null;
 
-			int numVBoxes = vboxes.size();
+			final int numVBoxes = vboxes.size();
 			for (int i = 0; i < numVBoxes; i++) {
-				int[] vbColor = vboxes.get(i).avg(false);
+				final int[] vbColor = vboxes.get(i).avg(false);
 				d2 = ColorUtil.fastPerceptualColorDistanceSquared(color, vbColor);
 				if (d2 < d1) {
 					d1 = d2;

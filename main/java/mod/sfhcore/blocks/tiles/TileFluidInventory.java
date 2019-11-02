@@ -29,7 +29,7 @@ public class TileFluidInventory extends TileInventory
 
 	public int emptyRoom()
 	{
-		int a = tank.getFluidAmount();
+		final int a = tank.getFluidAmount();
 		return tank.getCapacity() - a;
 	}
 

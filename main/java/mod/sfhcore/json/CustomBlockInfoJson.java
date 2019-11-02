@@ -22,7 +22,7 @@ public class CustomBlockInfoJson implements JsonDeserializer<BlockInfo>, JsonSer
 	@Override
 	public JsonElement serialize(final BlockInfo src, final Type typeOfSrc, final JsonSerializationContext context)
 	{
-		JsonObject obj = new JsonObject();
+		final JsonObject obj = new JsonObject();
 
 		obj.addProperty("name", Objects.requireNonNull(src.getBlock().getRegistryName()).toString());
 		obj.addProperty("meta", src.getMeta());
@@ -33,12 +33,12 @@ public class CustomBlockInfoJson implements JsonDeserializer<BlockInfo>, JsonSer
 	@Override
 	public BlockInfo deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
 	{
-		JsonHelper helper = new JsonHelper(json);
+		final JsonHelper helper = new JsonHelper(json);
 
-		String name = helper.getString("name");
-		int meta = helper.getNullableInteger("meta", 0);
+		final String name = helper.getString("name");
+		final int meta = helper.getNullableInteger("meta", 0);
 
-		Block block = Block.getBlockFromName(name);
+		final Block block = Block.getBlockFromName(name);
 
 		if(block == null)
 		{

@@ -19,9 +19,9 @@ public class ClientProxy implements IProxy{
 	@SideOnly(Side.CLIENT)
 	public void initModel(final Fluid f, final Block b)
 	{
-		FluidStateMapper mapper = new FluidStateMapper(Objects.requireNonNull(b.getRegistryName()).getResourceDomain(), f);
+		final FluidStateMapper mapper = new FluidStateMapper(Objects.requireNonNull(b.getRegistryName()).getResourceDomain(), f);
 
-		Item item = Item.getItemFromBlock(b);
+		final Item item = Item.getItemFromBlock(b);
         ModelBakery.registerItemVariants(item);
         ModelLoader.setCustomMeshDefinition(item, mapper);
 

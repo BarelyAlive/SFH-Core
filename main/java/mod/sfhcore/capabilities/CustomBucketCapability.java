@@ -37,7 +37,7 @@ public class CustomBucketCapability implements IFluidHandlerItem, ICapabilityPro
 
 	public boolean canFillFluidType(final FluidStack fluidStack)
 	{
-		Fluid fluid = fluidStack.getFluid();
+		final Fluid fluid = fluidStack.getFluid();
 		return BucketHandler.getBucketFromFluid(fluid, ((CustomBucket)container.getItem()).getMaterial()) != null;
 	}
 
@@ -97,7 +97,7 @@ public class CustomBucketCapability implements IFluidHandlerItem, ICapabilityPro
 		 if (container.getCount() != 1 || resource == null || resource.amount < Fluid.BUCKET_VOLUME)
 			 return null;
 
-		 FluidStack fluidStack = getFluid();
+		 final FluidStack fluidStack = getFluid();
 		 if (fluidStack != null && fluidStack.isFluidEqual(resource))
 		 {
 			 if (doDrain)
@@ -115,7 +115,7 @@ public class CustomBucketCapability implements IFluidHandlerItem, ICapabilityPro
 		 if (container.getCount() != 1 || maxDrain < Fluid.BUCKET_VOLUME)
 			 return null;
 
-		 FluidStack fluidStack = getFluid();
+		 final FluidStack fluidStack = getFluid();
 		 if (fluidStack != null)
 		 {
 			 if (doDrain)

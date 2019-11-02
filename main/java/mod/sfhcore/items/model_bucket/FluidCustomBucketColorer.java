@@ -13,15 +13,15 @@ public class FluidCustomBucketColorer implements IItemColor
 
 	@Override
 	public int colorMultiplier(final ItemStack stack, final int tintIndex) {
-		int pixel = 0xFFFFFFFF;
+		final int pixel = 0xFFFFFFFF;
 		if (!(stack.getItem() instanceof CustomBucket))
 			return pixel;
-		CustomBucket bucket = (CustomBucket) stack.getItem();
+		final CustomBucket bucket = (CustomBucket) stack.getItem();
 		if (tintIndex == 2)
 			return bucket.getColor();
 		else
 		{
-			Block b = bucket.getContainedBlock();
+			final Block b = bucket.getContainedBlock();
 			if (b == Blocks.AIR)
 				return bucket.getColor();
 			try {
@@ -32,12 +32,12 @@ public class FluidCustomBucketColorer implements IItemColor
 					return 0xFF354FF4;
 				else
 				{
-					IBakedModel res = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(new ItemStack(b));
+					final IBakedModel res = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(new ItemStack(b));
 					for(int i = 0; i < res.getParticleTexture().getFrameCount(); i++)
 						if(res.getParticleTexture().getFrameTextureData(0)[i].length == 256)
 							return res.getParticleTexture().getFrameTextureData(0)[i][0] & 0xFFFFFF | 0xFF000000;
 				}
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				e.printStackTrace();
 				return pixel;
 			}

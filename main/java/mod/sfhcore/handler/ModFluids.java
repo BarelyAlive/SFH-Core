@@ -20,13 +20,13 @@ public class ModFluids
     }
 	
 	@SubscribeEvent
-	public void registerBlocks(RegistryEvent.Register<Block> e)
+	public void registerBlocks(final RegistryEvent.Register<Block> e)
 	{
 		e.getRegistry().register(BLOCK_MILK);
 	}
 	
 	@SubscribeEvent
-	public void registerModels(ModelRegistryEvent e)
+	public void registerModels(final ModelRegistryEvent e)
 	{
 		initModels();
 	}

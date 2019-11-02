@@ -43,13 +43,13 @@ public class Color {
 	}
 
 	public static Color average(final Color colorA, final Color colorB, final float percentage) {
-		float opposite = 1 - percentage;
+		final float opposite = 1 - percentage;
 		//Gamma correction
 
-		float averageR = (float) Math.sqrt(colorA.r * colorA.r * opposite + colorB.r * colorB.r * percentage);
-		float averageG = (float) Math.sqrt(colorA.g * colorA.g * opposite + colorB.r * colorB.g * percentage);
-		float averageB = (float) Math.sqrt(colorA.b * colorA.b * opposite + colorB.r * colorB.b * percentage);
-		float averageA = colorA.a * opposite + colorB.a * percentage;
+		final float averageR = (float) Math.sqrt(colorA.r * colorA.r * opposite + colorB.r * colorB.r * percentage);
+		final float averageG = (float) Math.sqrt(colorA.g * colorA.g * opposite + colorB.r * colorB.g * percentage);
+		final float averageB = (float) Math.sqrt(colorA.b * colorA.b * opposite + colorB.r * colorB.b * percentage);
+		final float averageA = colorA.a * opposite + colorB.a * percentage;
 
 		return new Color(averageR, averageG, averageB, averageA);
 	}
@@ -79,7 +79,7 @@ public class Color {
 	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Color color = (Color) o;
+		final Color color = (Color) o;
 		return Float.compare(color.r, r) == 0 &&
 				Float.compare(color.g, g) == 0 &&
 				Float.compare(color.b, b) == 0 &&

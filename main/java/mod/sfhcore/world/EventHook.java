@@ -3,14 +3,10 @@ package mod.sfhcore.world;
 import mod.sfhcore.Constants;
 import mod.sfhcore.handler.BucketHandler;
 import mod.sfhcore.handler.ModFluids;
-import mod.sfhcore.helper.BucketHelper;
 import mod.sfhcore.helper.NotNull;
 import mod.sfhcore.helper.PlayerInventory;
 import mod.sfhcore.items.CustomBucket;
-import mod.sfhcore.util.LogUtil;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -21,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHook
@@ -30,16 +25,16 @@ public class EventHook
 	@SubscribeEvent
 	public void getMilk(final PlayerInteractEvent.EntityInteract event)
 	{
-		ItemStack stack = event.getItemStack();
-		EntityPlayer player = event.getEntityPlayer();
+		final ItemStack stack = event.getItemStack();
+		final EntityPlayer player = event.getEntityPlayer();
 				
 		if(event.getTarget() instanceof EntityCow && event.getTarget().getName().equals("Cow"))
 		{
-			EntityCow cow = (EntityCow) event.getTarget();
+			final EntityCow cow = (EntityCow) event.getTarget();
 			
 			if (!cow.isChild() && NotNull.checkNotNull(stack))
 			{
-				Item item = stack.getItem();
+				final Item item = stack.getItem();
 				String material = "";
 				
 				if(item instanceof CustomBucket)
@@ -59,19 +54,17 @@ public class EventHook
 	public void pourMilk(final PlayerInteractEvent.RightClickBlock event)
 	{
 		BlockPos pos = event.getPos();
-		World world = event.getWorld();
-		IBlockState state = world.getBlockState(pos);
-		boolean vaporize = world.provider.doesWaterVaporize();
-		EntityPlayer player = event.getEntityPlayer();
-		ItemStack stack = event.getItemStack();
+		final World world = event.getWorld();
+		final IBlockState state = world.getBlockState(pos);
+		final boolean vaporize = world.provider.doesWaterVaporize();
+		final EntityPlayer player = event.getEntityPlayer();
+		final ItemStack stack = event.getItemStack();
 
 		if (player == null
 				|| stack.getItem() != Items.MILK_BUCKET) return;
 
 		if (state.getBlock().onBlockActivated(world, pos, state, player, event.getHand(), event.getFace(), (float)event.getHitVec().x, (float)event.getHitVec().y, (float)event.getHitVec().z))
-		{
 			event.setCanceled(true);
-		}
 		else
 		{
 			pos.add(0.5D, 0.5D, 0.5D);

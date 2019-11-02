@@ -23,7 +23,7 @@ public class CustomItem extends Item
 
 	@Override
 	public int getItemBurnTime(final ItemStack itemStack) {
-		for(Pair<ItemStack, Integer> f : ModFuelHandler.FUEL)
+		for(final Pair<ItemStack, Integer> f : ModFuelHandler.FUEL)
 			if(ItemStack.areItemsEqual(itemStack, f.getLeft()))
 				return f.getRight();
 		return 0;

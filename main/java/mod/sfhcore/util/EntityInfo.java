@@ -36,21 +36,21 @@ public class EntityInfo
 			return false;
 
 		if(!worldIn.isRemote && worldIn.getDifficulty() != EnumDifficulty.PEACEFUL){
-			Entity entity = EntityList.newEntity(entityClass, worldIn);
+			final Entity entity = EntityList.newEntity(entityClass, worldIn);
 			if(entity instanceof EntityLiving){
-				EntityLiving entityLiving = (EntityLiving) entity;
+				final EntityLiving entityLiving = (EntityLiving) entity;
 
 				if(entityLiving instanceof EntitySlime)
 					entityLiving.getEntityData().setInteger("Size", 1);
 
-				double dx = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range + 0.5;
-				double dy = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range;
-				double dz = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range + 0.5;
-				BlockPos spawnPos = new BlockPos(pos.getX()+dx, pos.getY()+dy, pos.getZ()+dz);
+				final double dx = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range + 0.5;
+				final double dy = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range;
+				final double dz = (worldIn.rand.nextDouble() - worldIn.rand.nextDouble())*range + 0.5;
+				final BlockPos spawnPos = new BlockPos(pos.getX()+dx, pos.getY()+dy, pos.getZ()+dz);
 
 				entityLiving.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 
-				boolean canSpawn = worldIn.getCollisionBoxes(entityLiving, entityLiving.getEntityBoundingBox()).isEmpty();
+				final boolean canSpawn = worldIn.getCollisionBoxes(entityLiving, entityLiving.getEntityBoundingBox()).isEmpty();
 				if(canSpawn) {
 					worldIn.spawnEntity(entityLiving);
 					worldIn.playEvent(2004, pos, 0);

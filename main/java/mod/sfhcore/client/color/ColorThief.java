@@ -44,7 +44,7 @@ public class ColorThief {
 	 */
 	@Nullable
 	public static int[] getColor(final BufferedImage sourceImage) {
-		int[][] palette = getPalette(sourceImage, 5);
+		final int[][] palette = getPalette(sourceImage, 5);
 		if (palette == null)
 			return null;
 		return palette[0];
@@ -65,7 +65,7 @@ public class ColorThief {
 	 */
 	@Nullable
 	public static int[] getColor(final BufferedImage sourceImage, final int quality, final boolean ignoreWhite) {
-		int[][] palette = getPalette(sourceImage, 5, quality, ignoreWhite);
+		final int[][] palette = getPalette(sourceImage, 5, quality, ignoreWhite);
 		if (palette == null)
 			return null;
 		return palette[0];
@@ -80,7 +80,7 @@ public class ColorThief {
 	 */
 	@Nullable
 	public static int[][] getPalette(final BufferedImage sourceImage, final int colorCount) {
-		MMCQ.CMap cmap = getColorMap(sourceImage, colorCount);
+		final MMCQ.CMap cmap = getColorMap(sourceImage, colorCount);
 		if (cmap == null)
 			return null;
 		return cmap.palette();
@@ -100,7 +100,7 @@ public class ColorThief {
 	 */
 	@Nullable
 	public static int[][] getPalette(final BufferedImage sourceImage, final int colorCount, final int quality, final boolean ignoreWhite) {
-		MMCQ.CMap cmap = getColorMap(sourceImage, colorCount, quality, ignoreWhite);
+		final MMCQ.CMap cmap = getColorMap(sourceImage, colorCount, quality, ignoreWhite);
 		if (cmap == null)
 			return null;
 		return cmap.palette();
@@ -163,14 +163,14 @@ public class ColorThief {
 	 * @return an array of pixels (each an RGB int array)
 	 */
 	private static int[][] getPixelsFast(final BufferedImage sourceImage, final int quality, final boolean ignoreWhite) {
-		DataBufferByte imageData = (DataBufferByte) sourceImage
+		final DataBufferByte imageData = (DataBufferByte) sourceImage
 				.getRaster()
 				.getDataBuffer();
-		byte[] pixels = imageData.getData();
-		int pixelCount = sourceImage.getWidth() * sourceImage.getHeight();
+		final byte[] pixels = imageData.getData();
+		final int pixelCount = sourceImage.getWidth() * sourceImage.getHeight();
 
 		int colorDepth;
-		int type = sourceImage.getType();
+		final int type = sourceImage.getType();
 		switch (type) {
 		case BufferedImage.TYPE_3BYTE_BGR:
 			colorDepth = 3;
@@ -184,7 +184,7 @@ public class ColorThief {
 			throw new IllegalArgumentException("Unhandled type: " + type);
 		}
 
-		int expectedDataLength = pixelCount * colorDepth;
+		final int expectedDataLength = pixelCount * colorDepth;
 		if (expectedDataLength != pixels.length)
 			throw new IllegalArgumentException("(expectedDataLength = "
 					+ expectedDataLength + ") != (pixels.length = "
@@ -195,10 +195,10 @@ public class ColorThief {
 
 		// numRegardedPixels must be rounded up to avoid an
 		// ArrayIndexOutOfBoundsException if all pixels are good.
-		int numRegardedPixels = (pixelCount + quality - 1) / quality;
+		final int numRegardedPixels = (pixelCount + quality - 1) / quality;
 
 		int numUsedPixels = 0;
-		int[][] pixelArray = new int[numRegardedPixels][];
+		final int[][] pixelArray = new int[numRegardedPixels][];
 		int offset, r, g, b, a;
 
 		// Do the switch outside of the loop, that's much faster
@@ -255,24 +255,24 @@ public class ColorThief {
 	 * @return an array of pixels (each an RGB int array)
 	 */
 	private static int[][] getPixelsSlow(final BufferedImage sourceImage, final int quality, final boolean ignoreWhite) {
-		int width = sourceImage.getWidth();
-		int height = sourceImage.getHeight();
+		final int width = sourceImage.getWidth();
+		final int height = sourceImage.getHeight();
 
-		int pixelCount = width * height;
+		final int pixelCount = width * height;
 
 		// numRegardedPixels must be rounded up to avoid an
 		// ArrayIndexOutOfBoundsException if all pixels are good.
-		int numRegardedPixels = (pixelCount + quality - 1) / quality;
+		final int numRegardedPixels = (pixelCount + quality - 1) / quality;
 
 		int numUsedPixels = 0;
 
-		int[][] res = new int[numRegardedPixels][];
+		final int[][] res = new int[numRegardedPixels][];
 		int r, g, b;
 
 		for (int i = 0; i < pixelCount; i += quality) {
-			int row = i / width;
-			int col = i % width;
-			int rgb = sourceImage.getRGB(col, row);
+			final int row = i / width;
+			final int col = i % width;
+			final int rgb = sourceImage.getRGB(col, row);
 
 			r = rgb >> 16 & 0xFF;
 		g = rgb >> 8 & 0xFF;

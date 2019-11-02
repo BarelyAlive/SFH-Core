@@ -16,7 +16,7 @@ public class TankUtil
 	public static final ItemStack WATER_BOTTLE;
 
 	static {
-		NBTTagCompound waterPotion = new NBTTagCompound();
+		final NBTTagCompound waterPotion = new NBTTagCompound();
 		waterPotion.setString("Potion", "minecraft:water");
 		WATER_BOTTLE = new ItemStack(Items.POTIONITEM, 1, 0);
 		WATER_BOTTLE.setTagCompound(waterPotion);
@@ -39,7 +39,7 @@ public class TankUtil
 
 	public static boolean drainWaterFromBottle(final TileBase tileEntity, final EntityPlayer player, final FluidTank tank) {
 		if (player.getHeldItemMainhand().getItem() == Items.POTIONITEM && Objects.equals(WATER_BOTTLE.getTagCompound(), player.getHeldItemMainhand().getTagCompound())) {
-			FluidStack water = new FluidStack(FluidRegistry.WATER, 250);
+			final FluidStack water = new FluidStack(FluidRegistry.WATER, 250);
 
 			if (tank.fill(water, false) == water.amount)
 				if (player.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE))) {

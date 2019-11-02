@@ -29,7 +29,7 @@ public class ModFuelHandler
 	public int getBurnTime(final FurnaceFuelBurnTimeEvent e)
 	{
 		int burnTime = -1;
-		ItemStack stack = e.getItemStack();
+		final ItemStack stack = e.getItemStack();
 
 		//have to do this to prevent crashes
 		if (stack.isEmpty() || stack.getItem().getRegistryName() == null)
@@ -38,45 +38,39 @@ public class ModFuelHandler
 			return burnTime;
 		}
 		
-		Item item = stack.getItem();
+		final Item item = stack.getItem();
 		
 		//Try FUEL list
-		for(Pair<ItemStack, Integer> fuel : FUEL)
-		{
+		for(final Pair<ItemStack, Integer> fuel : FUEL)
 			if(ItemStack.areItemsEqual(stack, fuel.getLeft()))
 			{
 				e.setBurnTime(fuel.getRight());
 				return fuel.getRight();
 			}
-		}
 		
 		//Buckets
-		FluidStack fs = FluidUtil.getFluidContained(stack);
-		IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
+		final FluidStack fs = FluidUtil.getFluidContained(stack);
+		final IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
 		if(Config.useAllHotFluidContainer && fs != null && ifhi != null)
 		{
-			Fluid f = fs.getFluid();
+			final Fluid f = fs.getFluid();
 			if(f.getTemperature() >= FluidRegistry.LAVA.getTemperature() && fs.amount == 1000)
-			{
 				//Stelle (hoffentlich) sicher dass es ein Bucket ist
 				if(ifhi.fill(new FluidStack(f, 1), false) == 0 &&
 						ifhi.drain(new FluidStack(f, 999), false) == null)
-				{
 					if(ifhi.drain(1000, true) != null)
 					{
-						int temp = (int)(20000 * ((float)f.getTemperature() / (float)FluidRegistry.LAVA.getTemperature()));
+						final int temp = (int)(20000 * ((float)f.getTemperature() / (float)FluidRegistry.LAVA.getTemperature()));
 						
 						e.setBurnTime(temp);
 						return temp;
 					}
-				}
-			}
 		}
 
 		//Try to get the built-in burntime
 		try {
 			burnTime = item.getItemBurnTime(stack);
-		} catch (NullPointerException ex) {
+		} catch (final NullPointerException ex) {
 			LogUtil.fatal("[SFHCore] tried to get the burn time of " + item.getRegistryName() + " and it was NULL!");
 		}
 		

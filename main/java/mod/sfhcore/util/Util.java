@@ -39,7 +39,7 @@ public class Util {
 		if (stack == null || stack.isEmpty())
 			return;
 
-		int hitOrientation = player == null ? 0 : MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+		final int hitOrientation = player == null ? 0 : MathHelper.floor(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 		double stackCoordX = 0.0D, stackCoordY = 0.0D, stackCoordZ = 0.0D;
 
 		switch (hitOrientation) {
@@ -67,15 +67,15 @@ public class Util {
 			break;
 		}
 
-		EntityItem droppedEntity = new EntityItem(source.getWorld(), stackCoordX, stackCoordY, stackCoordZ, stack);
+		final EntityItem droppedEntity = new EntityItem(source.getWorld(), stackCoordX, stackCoordY, stackCoordZ, stack);
 
 		if (player != null) {
-			Vec3d motion = new Vec3d(player.posX - stackCoordX, player.posY - stackCoordY, player.posZ - stackCoordZ);
+			final Vec3d motion = new Vec3d(player.posX - stackCoordX, player.posY - stackCoordY, player.posZ - stackCoordZ);
 			motion.normalize();
 			droppedEntity.motionX = motion.x;
 			droppedEntity.motionY = motion.y;
 			droppedEntity.motionZ = motion.z;
-			double offset = 0.25D;
+			final double offset = 0.25D;
 			droppedEntity.move(MoverType.SELF, motion.x * offset, motion.y * offset, motion.z * offset);
 		}
 
@@ -127,11 +127,11 @@ public class Util {
 	}
 
 	public static boolean isSurroundingBlocksAtLeastOneOf(final BlockInfo[] blocks, final BlockPos pos, final World world, final int radius) {
-		ArrayList<BlockInfo> blockList = new ArrayList<>(Arrays.asList(blocks));
+		final ArrayList<BlockInfo> blockList = new ArrayList<>(Arrays.asList(blocks));
 		for (int xShift = -1 * radius; xShift <= radius; xShift++)
 			for (int zShift = -1 * radius; zShift <= radius; zShift++) {
-				BlockPos checkPos = pos.add(xShift, 0, zShift);
-				BlockInfo checkBlock = new BlockInfo(world.getBlockState(checkPos));
+				final BlockPos checkPos = pos.add(xShift, 0, zShift);
+				final BlockInfo checkBlock = new BlockInfo(world.getBlockState(checkPos));
 				if (blockList.contains(checkBlock))
 					return true;
 			}
@@ -142,11 +142,11 @@ public class Util {
 	public static int getNumSurroundingBlocksAtLeastOneOf(final BlockInfo[] blocks, final BlockPos pos, final World world) {
 
 		int ret = 0;
-		ArrayList<BlockInfo> blockList = new ArrayList<>(Arrays.asList(blocks));
+		final ArrayList<BlockInfo> blockList = new ArrayList<>(Arrays.asList(blocks));
 		for (int xShift = -2; xShift <= 2; xShift++)
 			for (int zShift = -2; zShift <= 2; zShift++) {
-				BlockPos checkPos = pos.add(xShift, 0, zShift);
-				BlockInfo checkBlock = new BlockInfo(world.getBlockState(checkPos));
+				final BlockPos checkPos = pos.add(xShift, 0, zShift);
+				final BlockInfo checkBlock = new BlockInfo(world.getBlockState(checkPos));
 				if (blockList.contains(checkBlock))
 					ret++;
 			}
@@ -183,7 +183,7 @@ public class Util {
 	}
 
 	public static boolean isLeaves(final IBlockState state) {
-		ItemStack itemStack = new ItemStack(state.getBlock());
+		final ItemStack itemStack = new ItemStack(state.getBlock());
 		return OreDictionary.getOres("treeLeaves").stream().anyMatch(stack1 -> Util.compareItemStack(stack1, itemStack));
 	}
 
@@ -194,13 +194,13 @@ public class Util {
 		if (a==null || a2==null)
 			return false;
 
-		int length = a.length;
+		final int length = a.length;
 		if (a2.length != length)
 			return false;
 
 		for (int i=0; i<length; i++) {
-			T o1 = a[i];
-			U o2 = a2[i];
+			final T o1 = a[i];
+			final U o2 = a2[i];
 
 			if (!(o1==null ? o2==null : predicate.test(o1, o2)))
 				return false;

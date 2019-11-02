@@ -10,7 +10,7 @@ public class Config {
 
 	public static void loadConfigs()
 	{
-		Configuration config = new Configuration(new File(SFHCore.configDirectory, "NetherTweaksMod.cfg"));
+		final Configuration config = new Configuration(new File(SFHCore.configDirectory, "NetherTweaksMod.cfg"));
 		config.load();
 
 		useAllHotFluidContainer = config.getBoolean("Can every bucket containing a hot fluid (hotter than lava) be used as fuel in furnace?", "Tweak", true, "");

@@ -46,15 +46,15 @@ public final class ColorGetter {
 
 	public static mod.sfhcore.texturing.Color getColor(final ItemStack stack) {
 		if (stack.isEmpty()) return mod.sfhcore.texturing.Color.INVALID_COLOR;
-		ItemInfo info = new ItemInfo(stack);
+		final ItemInfo info = new ItemInfo(stack);
 
 		if (colorCache.containsKey(info))
 			return colorCache.get(info);
 		else {
-			List<java.awt.Color> color = ColorGetter.getColors(stack, 1);
+			final List<java.awt.Color> color = ColorGetter.getColors(stack, 1);
 			if (color.size() > 0) {
-				java.awt.Color domColor = color.get(0);
-				mod.sfhcore.texturing.Color exColor = new mod.sfhcore.texturing.Color(domColor.getRGB());
+				final java.awt.Color domColor = color.get(0);
+				final mod.sfhcore.texturing.Color exColor = new mod.sfhcore.texturing.Color(domColor.getRGB());
 				colorCache.put(info, exColor);
 
 				return exColor;
@@ -120,14 +120,14 @@ public final class ColorGetter {
 		final List<Color> colors = new ArrayList<>(colorCount);
 		final int[][] palette = ColorThief.getPalette(bufferedImage, colorCount);
 		if (palette != null)
-			for (int[] colorInt : palette) {
+			for (final int[] colorInt : palette) {
 				int red = (int) ((colorInt[0] - 1) * (float) (renderColor >> 16 & 255) / 255.0F);
 				int green = (int) ((colorInt[1] - 1) * (float) (renderColor >> 8 & 255) / 255.0F);
 				int blue = (int) ((colorInt[2] - 1) * (float) (renderColor & 255) / 255.0F);
 				red = MathHelper.clamp(red, 0, 255);
 				green = MathHelper.clamp(green, 0, 255);
 				blue = MathHelper.clamp(blue, 0, 255);
-				Color color = new Color(red, green, blue);
+				final Color color = new Color(red, green, blue);
 				colors.add(color);
 			}
 		return colors;
@@ -141,10 +141,10 @@ public final class ColorGetter {
 		if (iconWidth <= 0 || iconHeight <= 0 || frameCount <= 0)
 			return null;
 
-		BufferedImage bufferedImage = new BufferedImage(iconWidth, iconHeight * frameCount, BufferedImage.TYPE_4BYTE_ABGR);
+		final BufferedImage bufferedImage = new BufferedImage(iconWidth, iconHeight * frameCount, BufferedImage.TYPE_4BYTE_ABGR);
 		for (int i = 0; i < frameCount; i++) {
-			int[][] frameTextureData = textureAtlasSprite.getFrameTextureData(i);
-			int[] largestMipMapTextureData = frameTextureData[0];
+			final int[][] frameTextureData = textureAtlasSprite.getFrameTextureData(i);
+			final int[] largestMipMapTextureData = frameTextureData[0];
 			bufferedImage.setRGB(0, i * iconHeight, iconWidth, iconHeight, largestMipMapTextureData, 0, iconWidth);
 		}
 
@@ -153,10 +153,10 @@ public final class ColorGetter {
 
 	@Nullable
 	private static TextureAtlasSprite getTextureAtlasSprite(final IBlockState blockState) {
-		Minecraft minecraft = Minecraft.getMinecraft();
-		BlockRendererDispatcher blockRendererDispatcher = minecraft.getBlockRendererDispatcher();
-		BlockModelShapes blockModelShapes = blockRendererDispatcher.getBlockModelShapes();
-		TextureAtlasSprite textureAtlasSprite = blockModelShapes.getTexture(blockState);
+		final Minecraft minecraft = Minecraft.getMinecraft();
+		final BlockRendererDispatcher blockRendererDispatcher = minecraft.getBlockRendererDispatcher();
+		final BlockModelShapes blockModelShapes = blockRendererDispatcher.getBlockModelShapes();
+		final TextureAtlasSprite textureAtlasSprite = blockModelShapes.getTexture(blockState);
 		if (textureAtlasSprite == minecraft.getTextureMapBlocks().getMissingSprite())
 			return null;
 		return textureAtlasSprite;
@@ -164,9 +164,9 @@ public final class ColorGetter {
 
 	@Nonnull
 	private static TextureAtlasSprite getTextureAtlasSprite(final ItemStack itemStack) {
-		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-		ItemModelMesher itemModelMesher = renderItem.getItemModelMesher();
-		IBakedModel itemModel = itemModelMesher.getItemModel(itemStack);
+		final RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+		final ItemModelMesher itemModelMesher = renderItem.getItemModelMesher();
+		final IBakedModel itemModel = itemModelMesher.getItemModel(itemStack);
 		return itemModel.getParticleTexture();
 	}
 }

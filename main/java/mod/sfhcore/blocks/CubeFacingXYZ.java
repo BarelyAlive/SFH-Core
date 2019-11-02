@@ -88,7 +88,7 @@ public class CubeFacingXYZ  extends Block{
 	@Override
 	public int getMetaFromState(final IBlockState state) {
 
-		EnumAxis type = state.getValue(CUBE_AXIS);
+		final EnumAxis type = state.getValue(CUBE_AXIS);
 
 		if(type.getName().equals("none")) return 0;
 		if(type.getName().equals("x")) return 1;

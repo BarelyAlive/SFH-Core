@@ -87,10 +87,10 @@ public class CubeFacingHorizontal extends Block{
 	{
 		if (!worldIn.isRemote)
 		{
-			IBlockState iblockstate = worldIn.getBlockState(pos.north());
-			IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
-			IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
-			IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
+			final IBlockState iblockstate = worldIn.getBlockState(pos.north());
+			final IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
+			final IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
+			final IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
 			EnumFacing enumfacing = state.getValue(FACING);
 
 			if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())

@@ -42,9 +42,9 @@ public class CapabilityCustomBucketFluidHandler {
 			System.out.println(instance);
 			if (instance instanceof CustomBucket)
 			{
-				NBTTagCompound nbt = new NBTTagCompound();
-				CustomBucket tank = (CustomBucket) instance;
-				FluidStack fluid = tank.drain(Integer.MAX_VALUE, false);
+				final NBTTagCompound nbt = new NBTTagCompound();
+				final CustomBucket tank = (CustomBucket) instance;
+				final FluidStack fluid = tank.drain(Integer.MAX_VALUE, false);
 				if (fluid != null)
 					nbt.setString("FluidName", FluidRegistry.getFluidName(fluid));
 				else
@@ -62,8 +62,8 @@ public class CapabilityCustomBucketFluidHandler {
 			System.out.println(instance);
 			if (instance instanceof CustomBucket)
 			{
-				NBTTagCompound tags = (NBTTagCompound) nbt;
-				CustomBucket bucket = (CustomBucket) instance;
+				final NBTTagCompound tags = (NBTTagCompound) nbt;
+				final CustomBucket bucket = (CustomBucket) instance;
 				if (tags.hasKey("Empty"))
 					instance = (T) BucketHandler.getBucketFromFluid(null, tags.getString("Material"));
 				else

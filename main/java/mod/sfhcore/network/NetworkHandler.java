@@ -30,7 +30,7 @@ public class NetworkHandler
 
 	public static void sendToAllAround(final IMessage message, final TileEntity te, final int range)
 	{
-		BlockPos pos = te.getPos();
+		final BlockPos pos = te.getPos();
 		INSTANCE.sendToAllAround(message, new TargetPoint(te.getWorld().provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), range));
 	}
 

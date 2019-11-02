@@ -21,11 +21,11 @@ public class LogUtil
 
 	public static void log(final Level level, final Object object)
 	{
-		String message = object == null ? "null" : object.toString();
+		final String message = object == null ? "null" : object.toString();
 
-		String preLine = new SimpleDateFormat("[HH:mm:ss]").format(new Date()) + " [" + level.name() + "] ";
+		final String preLine = new SimpleDateFormat("[HH:mm:ss]").format(new Date()) + " [" + level.name() + "] ";
 
-		for(String line : message.split("\\n"))
+		for(final String line : message.split("\\n"))
 		{
 			logger.log(level, line);
 			logWriter.println(preLine + line);
@@ -81,11 +81,11 @@ public class LogUtil
 		LogUtil.modid = modid;
 		if(!f.exists())
 			f.mkdirs();
-		File logDir = new File(f + "/log/");
+		final File logDir = new File(f + "/log/");
 		if(!logDir.exists())
 			logDir.mkdirs();
 
-		String baseName = new SimpleDateFormat("yyyy-MM-dd_hh.mm.ss").format(new Date());
+		final String baseName = new SimpleDateFormat("yyyy-MM-dd_hh.mm.ss").format(new Date());
 
 		int i = 0;
 
@@ -98,7 +98,7 @@ public class LogUtil
 			logFile.createNewFile();
 			logWriter = new PrintWriter(new FileWriter(logFile));
 		}
-		catch (IOException e)
+		catch (final IOException e)
 		{
 			e.printStackTrace();
 		}

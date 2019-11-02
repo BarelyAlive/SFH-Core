@@ -29,16 +29,16 @@ public class GuiHandler implements IGuiHandler {
 	@Override
 	public Container getServerGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z)
 	{
-		TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
+		final TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
 
-		for(Pair<Class<GuiContainer>, Class<Container>> tc : TECO)
+		for(final Pair<Class<GuiContainer>, Class<Container>> tc : TECO)
 			if(Objects.requireNonNull(te1).getClass().equals(tc.getLeft().getClass())){
 
-				Class<Container> c = tc.getRight();
+				final Class<Container> c = tc.getRight();
 				try {
-					Constructor<Container> con = c.getConstructor(player.inventory.getClass(), te1.getClass());
+					final Constructor<Container> con = c.getConstructor(player.inventory.getClass(), te1.getClass());
 					return con.newInstance(player.inventory, te1);
-				} catch (Exception ex) {
+				} catch (final Exception ex) {
 					ex.printStackTrace();
 				}
 
@@ -50,17 +50,17 @@ public class GuiHandler implements IGuiHandler {
 	@Override
 	public GuiContainer getClientGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z)
 	{
-		TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
+		final TileEntity te1 = world.getTileEntity(new BlockPos(x, y, z));
 
-		for(Pair<Class<GuiContainer>, Class<Container>> tc : TECO)
+		for(final Pair<Class<GuiContainer>, Class<Container>> tc : TECO)
 			if(te1.getClass().equals(tc.getLeft().getClass())){
 
-				Class<GuiContainer> c = tc.getLeft();
+				final Class<GuiContainer> c = tc.getLeft();
 
 				try {
-					Constructor<GuiContainer> con = c.getConstructor(player.inventory.getClass(), te1.getClass());
+					final Constructor<GuiContainer> con = c.getConstructor(player.inventory.getClass(), te1.getClass());
 					return con.newInstance(player.inventory, te1);
-				} catch (Exception ex) {
+				} catch (final Exception ex) {
 					ex.printStackTrace();
 				}
 

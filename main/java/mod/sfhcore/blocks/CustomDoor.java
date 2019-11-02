@@ -53,9 +53,9 @@ public class CustomDoor extends Block
 	public AxisAlignedBB getBoundingBox(IBlockState state, final IBlockAccess source, final BlockPos pos)
 	{
 		state = state.getActualState(source, pos);
-		EnumFacing enumfacing = state.getValue(FACING);
-		boolean flag = !state.getValue(OPEN);
-		boolean flag1 = state.getValue(HINGE) == CustomDoor.EnumHingePosition.RIGHT;
+		final EnumFacing enumfacing = state.getValue(FACING);
+		final boolean flag = !state.getValue(OPEN);
+		final boolean flag1 = state.getValue(HINGE) == CustomDoor.EnumHingePosition.RIGHT;
 
 		switch (enumfacing)
 		{
@@ -106,8 +106,8 @@ public class CustomDoor extends Block
 			return false;
 		else
 		{
-			BlockPos blockpos = state.getValue(HALF) == CustomDoor.EnumDoorHalf.LOWER ? pos : pos.down();
-			IBlockState iblockstate = pos.equals(blockpos) ? state : worldIn.getBlockState(blockpos);
+			final BlockPos blockpos = state.getValue(HALF) == CustomDoor.EnumDoorHalf.LOWER ? pos : pos.down();
+			final IBlockState iblockstate = pos.equals(blockpos) ? state : worldIn.getBlockState(blockpos);
 
 			if (iblockstate.getBlock() != this)
 				return false;
@@ -124,12 +124,12 @@ public class CustomDoor extends Block
 
 	public void toggleDoor(final World worldIn, final BlockPos pos, final boolean open)
 	{
-		IBlockState iblockstate = worldIn.getBlockState(pos);
+		final IBlockState iblockstate = worldIn.getBlockState(pos);
 
 		if (iblockstate.getBlock() == this)
 		{
-			BlockPos blockpos = iblockstate.getValue(HALF) == CustomDoor.EnumDoorHalf.LOWER ? pos : pos.down();
-			IBlockState iblockstate1 = pos == blockpos ? iblockstate : worldIn.getBlockState(blockpos);
+			final BlockPos blockpos = iblockstate.getValue(HALF) == CustomDoor.EnumDoorHalf.LOWER ? pos : pos.down();
+			final IBlockState iblockstate1 = pos == blockpos ? iblockstate : worldIn.getBlockState(blockpos);
 
 			if (iblockstate1.getBlock() == this && iblockstate1.getValue(OPEN) != open)
 			{
@@ -145,8 +145,8 @@ public class CustomDoor extends Block
 	{
 		if (state.getValue(HALF) == CustomDoor.EnumDoorHalf.UPPER)
 		{
-			BlockPos blockpos = pos.down();
-			IBlockState iblockstate = worldIn.getBlockState(blockpos);
+			final BlockPos blockpos = pos.down();
+			final IBlockState iblockstate = worldIn.getBlockState(blockpos);
 
 			if (iblockstate.getBlock() != this)
 				worldIn.setBlockToAir(pos);
@@ -156,8 +156,8 @@ public class CustomDoor extends Block
 		else
 		{
 			boolean flag1 = false;
-			BlockPos blockpos1 = pos.up();
-			IBlockState iblockstate1 = worldIn.getBlockState(blockpos1);
+			final BlockPos blockpos1 = pos.up();
+			final IBlockState iblockstate1 = worldIn.getBlockState(blockpos1);
 
 			if (iblockstate1.getBlock() != this)
 			{
@@ -181,7 +181,7 @@ public class CustomDoor extends Block
 			}
 			else
 			{
-				boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(blockpos1);
+				final boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(blockpos1);
 
 				if (blockIn != this && (flag || blockIn.getDefaultState().canProvidePower()) && flag != iblockstate1.getValue(POWERED))
 				{
@@ -211,7 +211,7 @@ public class CustomDoor extends Block
 			return false;
 		else
 		{
-			IBlockState state = worldIn.getBlockState(pos.down());
+			final IBlockState state = worldIn.getBlockState(pos.down());
 			return (state.isTopSolid() || state.getBlockFaceShape(worldIn, pos.down(), EnumFacing.UP) == BlockFaceShape.SOLID) && super.canPlaceBlockAt(worldIn, pos) && super.canPlaceBlockAt(worldIn, pos.up());
 		}
 	}
@@ -224,17 +224,17 @@ public class CustomDoor extends Block
 
 	public static int combineMetadata(final IBlockAccess worldIn, final BlockPos pos)
 	{
-		IBlockState iblockstate = worldIn.getBlockState(pos);
-		int i = iblockstate.getBlock().getMetaFromState(iblockstate);
-		boolean flag = isTop(i);
-		IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
-		int j = iblockstate1.getBlock().getMetaFromState(iblockstate1);
-		int k = flag ? j : i;
-		IBlockState iblockstate2 = worldIn.getBlockState(pos.up());
-		int l = iblockstate2.getBlock().getMetaFromState(iblockstate2);
-		int i1 = flag ? i : l;
-		boolean flag1 = (i1 & 1) != 0;
-		boolean flag2 = (i1 & 2) != 0;
+		final IBlockState iblockstate = worldIn.getBlockState(pos);
+		final int i = iblockstate.getBlock().getMetaFromState(iblockstate);
+		final boolean flag = isTop(i);
+		final IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
+		final int j = iblockstate1.getBlock().getMetaFromState(iblockstate1);
+		final int k = flag ? j : i;
+		final IBlockState iblockstate2 = worldIn.getBlockState(pos.up());
+		final int l = iblockstate2.getBlock().getMetaFromState(iblockstate2);
+		final int i1 = flag ? i : l;
+		final boolean flag1 = (i1 & 1) != 0;
+		final boolean flag2 = (i1 & 2) != 0;
 		return removeHalfBit(k) | (flag ? 8 : 0) | (flag1 ? 16 : 0) | (flag2 ? 32 : 0);
 	}
 
@@ -252,8 +252,8 @@ public class CustomDoor extends Block
 	@Override
 	public void onBlockHarvested(final World worldIn, final BlockPos pos, final IBlockState state, final EntityPlayer player)
 	{
-		BlockPos blockpos = pos.down();
-		BlockPos blockpos1 = pos.up();
+		final BlockPos blockpos = pos.down();
+		final BlockPos blockpos1 = pos.up();
 
 		if (player.capabilities.isCreativeMode && state.getValue(HALF) == CustomDoor.EnumDoorHalf.UPPER && worldIn.getBlockState(blockpos).getBlock() == this)
 			worldIn.setBlockToAir(blockpos);
@@ -279,14 +279,14 @@ public class CustomDoor extends Block
 	{
 		if (state.getValue(HALF) == CustomDoor.EnumDoorHalf.LOWER)
 		{
-			IBlockState iblockstate = worldIn.getBlockState(pos.up());
+			final IBlockState iblockstate = worldIn.getBlockState(pos.up());
 
 			if (iblockstate.getBlock() == this)
 				state = state.withProperty(HINGE, iblockstate.getValue(HINGE)).withProperty(POWERED, iblockstate.getValue(POWERED));
 		}
 		else
 		{
-			IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
+			final IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
 
 			if (iblockstate1.getBlock() == this)
 				state = state.withProperty(FACING, iblockstate1.getValue(FACING)).withProperty(OPEN, iblockstate1.getValue(OPEN));

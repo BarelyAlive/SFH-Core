@@ -103,7 +103,7 @@ public class ModelDynCustomBucket implements IModel {
 	@Override
 	public Collection<ResourceLocation> getTextures()
 	{
-		ImmutableSet.Builder<ResourceLocation> builder = ImmutableSet.builder();
+		final ImmutableSet.Builder<ResourceLocation> builder = ImmutableSet.builder();
 
 		if (baseLocation != null)
 			builder.add(baseLocation);
@@ -122,16 +122,16 @@ public class ModelDynCustomBucket implements IModel {
 			final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
 	{
 
-		ImmutableMap<TransformType, TRSRTransformation> transformMap = PerspectiveMapWrapper.getTransforms(state);
+		final ImmutableMap<TransformType, TRSRTransformation> transformMap = PerspectiveMapWrapper.getTransforms(state);
 
 		// if the fluid is lighter than air, will manipulate the initial state to be rotated 180? to turn it upside down
 		if (flipGas && fluid != null && fluid.isLighterThanAir())
 			state = new ModelStateComposition(state, TRSRTransformation.blockCenterToCorner(new TRSRTransformation(null, new Quat4f(0, 0, 1, 0), null, null)));
 
-		TRSRTransformation transform = state.apply(Optional.empty()).orElse(TRSRTransformation.identity());
+		final TRSRTransformation transform = state.apply(Optional.empty()).orElse(TRSRTransformation.identity());
 		TextureAtlasSprite fluidSprite = null;
 		TextureAtlasSprite particleSprite = null;
-		ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
+		final ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
 		if(fluid != null)
 			fluidSprite = bakedTextureGetter.apply(fluid.getStill());
@@ -139,13 +139,13 @@ public class ModelDynCustomBucket implements IModel {
 		if (baseLocation != null)
 		{
 			// build base (insidest)
-			IBakedModel model = new ItemLayerModel(ImmutableList.of(baseLocation)).bake(state, format, bakedTextureGetter);
+			final IBakedModel model = new ItemLayerModel(ImmutableList.of(baseLocation)).bake(state, format, bakedTextureGetter);
 			builder.addAll(model.getQuads(null, null, 0));
 			particleSprite = model.getParticleTexture();
 		}
 		if (liquidLocation != null && fluidSprite != null)
 		{
-			TextureAtlasSprite liquid = bakedTextureGetter.apply(liquidLocation);
+			final TextureAtlasSprite liquid = bakedTextureGetter.apply(liquidLocation);
 			fluidSprite = liquid;
 			// build liquid layer (inside)
 			builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, liquid, fluidSprite, NORTH_Z_FLUID, EnumFacing.NORTH, 0, 1));
@@ -155,7 +155,7 @@ public class ModelDynCustomBucket implements IModel {
 		if (coverLocation != null)
 		{
 			// cover (the actual item around the other two)
-			TextureAtlasSprite cover = bakedTextureGetter.apply(coverLocation);
+			final TextureAtlasSprite cover = bakedTextureGetter.apply(coverLocation);
 			//builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, NORTH_Z_COVER, cover, EnumFacing.NORTH, 0xFFFFFFFF, 2));
 			//builder.add(ItemTextureQuadConverter.genQuad(format, transform, 0, 0, 16, 16, SOUTH_Z_COVER, cover, EnumFacing.SOUTH, 0xFFFFFFFF, 2));
 			builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, cover, Objects.requireNonNull(fluidSprite), NORTH_Z_FLUID, EnumFacing.NORTH, 0xFFFFFFFF, 2));
@@ -178,7 +178,7 @@ public class ModelDynCustomBucket implements IModel {
 	@Override
 	public ModelDynCustomBucket process(final ImmutableMap<String, String> customData)
 	{
-		String fluidName = customData.get("fluid");
+		final String fluidName = customData.get("fluid");
 		Fluid fluid = FluidRegistry.getFluid(fluidName);
 
 		if (fluid == null) fluid = this.fluid;
@@ -186,7 +186,7 @@ public class ModelDynCustomBucket implements IModel {
 		boolean flip = flipGas;
 		if (customData.containsKey("flipGas"))
 		{
-			String flipStr = customData.get("flipGas");
+			final String flipStr = customData.get("flipGas");
 			if (flipStr.equals("true")) flip = true;
 			else if (flipStr.equals("false")) flip = false;
 			else
@@ -196,7 +196,7 @@ public class ModelDynCustomBucket implements IModel {
 		boolean tint = this.tint;
 		if (customData.containsKey("applyTint"))
 		{
-			String string = customData.get("applyTint");
+			final String string = customData.get("applyTint");
 			switch (string)
 			{
 			case "true":  tint = true;  break;
@@ -268,15 +268,15 @@ public class ModelDynCustomBucket implements IModel {
 
 			if (getResource(new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask")) == null)
 			{
-				ResourceLocation bucketCover = new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask");
-				CustomBucketCoverSprite bucketCoverSprite = new CustomBucketCoverSprite(bucketCover);
+				final ResourceLocation bucketCover = new ResourceLocation("sfhcore", "items/vanilla_bucket_cover_mask");
+				final CustomBucketCoverSprite bucketCoverSprite = new CustomBucketCoverSprite(bucketCover);
 				map.setTextureEntry(bucketCoverSprite);
 			}
 
 			if (getResource(new ResourceLocation("sfhcore", "items/bucket_empty")) == null)
 			{
-				ResourceLocation bucketBase = new ResourceLocation("sfhcore", "items/bucket_empty");
-				CustomBucketBaseSprite bucketBaseSprite = new CustomBucketBaseSprite(bucketBase);
+				final ResourceLocation bucketBase = new ResourceLocation("sfhcore", "items/bucket_empty");
+				final CustomBucketBaseSprite bucketBaseSprite = new CustomBucketBaseSprite(bucketBase);
 				map.setTextureEntry(bucketBaseSprite);
 			}
 		}
@@ -288,7 +288,7 @@ public class ModelDynCustomBucket implements IModel {
 			{
 				return Minecraft.getMinecraft().getResourceManager().getResource(resourceLocation);
 			}
-			catch (IOException ignored)
+			catch (final IOException ignored)
 			{
 				return null;
 			}
@@ -387,7 +387,7 @@ public class ModelDynCustomBucket implements IModel {
 					}
 				}
 			}
-			catch (IOException e)
+			catch (final IOException e)
 			{
 				FMLLog.log.error("Failed to close resource", e);
 			}
@@ -412,26 +412,26 @@ public class ModelDynCustomBucket implements IModel {
 			if (!(stack.getItem() instanceof CustomBucket))
 				return originalModel;
 
-			CustomBucket bucket = (CustomBucket) stack.getItem();
+			final CustomBucket bucket = (CustomBucket) stack.getItem();
 
-			Fluid fluid = bucket.getFluid();
+			final Fluid fluid = bucket.getFluid();
 
 			// not a fluid item apparently
 			if (fluid == null)
 				// empty bucket
 				return originalModel;
 
-			BakedDynCustomBucket model = (BakedDynCustomBucket)originalModel;
+			final BakedDynCustomBucket model = (BakedDynCustomBucket)originalModel;
 
-			String name = fluid.getName();
+			final String name = fluid.getName();
 
 			if (!model.cache.containsKey(name))
 			{
-				IModel parent = model.parent.process(ImmutableMap.of("fluid", name));
+				final IModel parent = model.parent.process(ImmutableMap.of("fluid", name));
 				Function<ResourceLocation, TextureAtlasSprite> textureGetter;
 				textureGetter = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
 
-				IBakedModel bakedModel = parent.bake(new SimpleModelState(model.transforms), model.format, textureGetter);
+				final IBakedModel bakedModel = parent.bake(new SimpleModelState(model.transforms), model.format, textureGetter);
 				model.cache.put(name, bakedModel);
 				return bakedModel;
 			}

@@ -89,7 +89,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	@Override
 	public boolean isEmpty()
 	{
-		for (ItemStack itemstack : machineItemStacks)
+		for (final ItemStack itemstack : machineItemStacks)
 			if(!itemstack.isEmpty())
 				return false;
 
@@ -233,8 +233,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	@Override
 	public int[] getSlotsForFace(final EnumFacing side) {
-		int slots = getSizeInventory();
-		int[] slotsArr = new int[slots];
+		final int slots = getSizeInventory();
+		final int[] slotsArr = new int[slots];
 		switch (side) {
 			default:
 			return slotsArr;
@@ -243,7 +243,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	public void extractFromInventory(final BlockPos pos, final EnumFacing facing)
 	{
-		TileEntity te = getWorld().getTileEntity(pos);
+		final TileEntity te = getWorld().getTileEntity(pos);
 		ItemStack stack;
 		IInventory inventory;
 		if(te == null) return;
@@ -296,7 +296,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	public void insertToInventory(final BlockPos pos, final EnumFacing facing)
 	{
-		TileEntity te = getWorld().getTileEntity(pos);
+		final TileEntity te = getWorld().getTileEntity(pos);
 		ItemStack stack;
 		IInventory inventory;
 		if(te == null) return;
@@ -316,7 +316,7 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 				if (!canInsertToInventory(i, stack))
 					continue;
 				for (int j = 0; j < inventory.getSizeInventory(); j++) {
-					ItemStack inventory_stack = inventory.getStackInSlot(j);
+					final ItemStack inventory_stack = inventory.getStackInSlot(j);
 					if (!inventory.isItemValidForSlot(j, stack))
 						continue;
 					if (inventory_stack.isEmpty()) {
@@ -351,8 +351,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 
 	@Override
 	public boolean canInsertItem(final int index, final ItemStack itemStackIn, final EnumFacing direction) {
-		int[] valid_slot = getSlotsForFace(direction);
-		for (int element : valid_slot)
+		final int[] valid_slot = getSlotsForFace(direction);
+		for (final int element : valid_slot)
 			if(element == index)
 				return isItemValidForSlot(index, itemStackIn);
 
@@ -362,8 +362,8 @@ public class TileInventory extends TileBase implements ISidedInventory, ITickabl
 	@Override
 	public boolean canExtractItem(final int index, final ItemStack stack, final EnumFacing direction)
 	{
-		int[] valid_slot = getSlotsForFace(direction);
-		for (int element : valid_slot)
+		final int[] valid_slot = getSlotsForFace(direction);
+		for (final int element : valid_slot)
 			if(element == index)
 				return isItemValidForSlotToExtract(index, stack);
 

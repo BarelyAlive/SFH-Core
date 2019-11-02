@@ -46,7 +46,7 @@ public class MessageNBTUpdate implements IMessage {
 		public IMessage onMessage(final MessageNBTUpdate msg, final MessageContext ctx)
 		{
 			net.minecraft.client.Minecraft.getMinecraft().addScheduledTask(() -> {
-				TileEntity entity = net.minecraft.client.Minecraft.getMinecraft().world.getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
+				final TileEntity entity = net.minecraft.client.Minecraft.getMinecraft().world.getTileEntity(new BlockPos(msg.x, msg.y, msg.z));
 
 				if (entity != null)
 					entity.readFromNBT(msg.tag);

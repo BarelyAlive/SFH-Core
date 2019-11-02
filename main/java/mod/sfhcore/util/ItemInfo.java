@@ -98,7 +98,7 @@ public class ItemInfo implements StackInfo {
 		}
 		try {
 			nbt = JsonToNBT.getTagFromJson(tag);
-		} catch (NBTException e) {
+		} catch (final NBTException e) {
 			LogUtil.error("Could not parse NBTTag: " + tag);
 			nbt = new NBTTagCompound();
 		}
@@ -110,7 +110,7 @@ public class ItemInfo implements StackInfo {
 			isWildcard = true;
 			return;
 		}
-		String[] split = string.split(":");
+		final String[] split = string.split(":");
 
 		Item item = null;
 		int meta = 0;
@@ -123,7 +123,7 @@ public class ItemInfo implements StackInfo {
 			try {
 				meta = split[1].equals("*") ? -1 : Integer.parseInt(split[1]);
 				item = Item.getByNameOrId("minecraft:" + split[0]);
-			} catch (NumberFormatException e) {
+			} catch (final NumberFormatException e) {
 				isWildcard = true;
 				meta = 0;
 				item = Item.getByNameOrId(split[0] + ":" + split[1]);
@@ -133,7 +133,7 @@ public class ItemInfo implements StackInfo {
 			try {
 				meta = split[2].equals("*") ? -1 : Integer.parseInt(split[2]);
 				item = Item.getByNameOrId(split[0] + ":" + split[1]);
-			} catch (NumberFormatException e) {
+			} catch (final NumberFormatException e) {
 				meta = 0;
 				isWildcard = true;
 			}
@@ -164,8 +164,8 @@ public class ItemInfo implements StackInfo {
 	}
 
 	public static ItemInfo readFromNBT(final NBTTagCompound tag) {
-		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
-		int meta = tag.getInteger("meta");
+		final Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(tag.getString("item")));
+		final int meta = tag.getInteger("meta");
 		if (tag.hasKey("nbt"))
 			return item == null ? EMPTY : new ItemInfo(item, meta, tag.getCompoundTag("nbt"));
 		return item == null ? EMPTY : new ItemInfo(item, meta);
@@ -176,7 +176,7 @@ public class ItemInfo implements StackInfo {
 		// This checks if the item has sub items or not.
 		// If not, accept any item that matches this, otherwise
 		// Only accept items with meta 0
-		NonNullList<ItemStack> subItems = NonNullList.create();
+		final NonNullList<ItemStack> subItems = NonNullList.create();
         item.getSubItems(item.getCreativeTab() == null ? CreativeTabs.SEARCH : item.getCreativeTab(), subItems);
 		if (subItems.size() <= 1)
 			isWildcard = true;
@@ -194,7 +194,7 @@ public class ItemInfo implements StackInfo {
 	public ItemStack getItemStack() {
 		if (item == Items.AIR)
 			return ItemStack.EMPTY;
-		ItemStack stack = new ItemStack(item, 1, meta);
+		final ItemStack stack = new ItemStack(item, 1, meta);
 		if (nbt != null)
 			stack.setTagCompound(nbt);
 
@@ -220,7 +220,7 @@ public class ItemInfo implements StackInfo {
 		try {
 			//noinspection deprecation
 			return Block.getBlockFromItem(item).getStateFromMeta(meta);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return Block.getBlockFromItem(item).getDefaultState();
 		}
 	}
@@ -232,7 +232,7 @@ public class ItemInfo implements StackInfo {
 
 	@Override
 	public NBTTagCompound writeToNBT(final NBTTagCompound tag) {
-		ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
+		final ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
 		tag.setString("item", key == null ? "" : key.toString());
 		tag.setInteger("meta", meta);
 		if (nbt != null && !nbt.hasNoTags())
@@ -260,10 +260,10 @@ public class ItemInfo implements StackInfo {
 			else if (obj instanceof BlockInfo)
 				return ItemStack.areItemsEqualIgnoreDurability(((BlockInfo) obj).getItemStack(), getItemStack());
 			else if (obj instanceof Block) {
-				BlockInfo block = new BlockInfo((Block) obj);
+				final BlockInfo block = new BlockInfo((Block) obj);
 				return ItemStack.areItemsEqualIgnoreDurability(block.getItemStack(), getItemStack());
 			} else if (obj instanceof Item) {
-				ItemInfo item = new ItemInfo((Item) obj);
+				final ItemInfo item = new ItemInfo((Item) obj);
 				return ItemStack.areItemsEqualIgnoreDurability(item.getItemStack(), getItemStack());
 			}
 		} else if (obj instanceof ItemInfo)
@@ -273,10 +273,10 @@ public class ItemInfo implements StackInfo {
 		else if (obj instanceof BlockInfo)
 			return ItemStack.areItemStacksEqual(((BlockInfo) obj).getItemStack(), getItemStack());
 		else if (obj instanceof Block) {
-			BlockInfo block = new BlockInfo((Block) obj);
+			final BlockInfo block = new BlockInfo((Block) obj);
 			return ItemStack.areItemStacksEqual(block.getItemStack(), getItemStack());
 		} else if (obj instanceof Item) {
-			ItemInfo item = new ItemInfo((Item) obj);
+			final ItemInfo item = new ItemInfo((Item) obj);
 			return ItemStack.areItemStacksEqual(item.getItemStack(), getItemStack());
 		}
 		return false;
@@ -294,7 +294,7 @@ public class ItemInfo implements StackInfo {
 
 	public ItemInfo copy()
 	{
-		ItemInfo info = new ItemInfo(item, meta, nbt);
+		final ItemInfo info = new ItemInfo(item, meta, nbt);
 		info.isWildcard = isWildcard;
 		return info;
 	}

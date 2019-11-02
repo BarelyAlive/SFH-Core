@@ -18,14 +18,14 @@ public class RenderUtils {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void renderModelTESRFast(final List<BakedQuad> quads, final BufferBuilder renderer, final World world, final BlockPos pos) {
-		int brightness = world.getCombinedLight(pos, 0);
-		int l1 = brightness >> 0x10 & 0xFFFF;
-		int l2 = brightness & 0xFFFF;
-		for (BakedQuad quad : quads) {
-			int[] vData = quad.getVertexData();
-			VertexFormat format = quad.getFormat();
-			int size = format.getIntegerSize();
-			int uv = format.getUvOffsetById(0) / 4;
+		final int brightness = world.getCombinedLight(pos, 0);
+		final int l1 = brightness >> 0x10 & 0xFFFF;
+		final int l2 = brightness & 0xFFFF;
+		for (final BakedQuad quad : quads) {
+			final int[] vData = quad.getVertexData();
+			final VertexFormat format = quad.getFormat();
+			final int size = format.getIntegerSize();
+			final int uv = format.getUvOffsetById(0) / 4;
 			for (int i = 0; i < 4; ++i)
 				renderer
 				.pos(Float.intBitsToFloat(vData[size * i]),

@@ -10,7 +10,7 @@ public class PlayerInventory
 	{
 		if (player != null)
 			if (!player.inventory.addItemStackToInventory(stack.copy()) && !player.world.isRemote) {
-				EntityItem item = new EntityItem(player.world, player.getPosition().getX(), player.getPosition().getY(),
+				final EntityItem item = new EntityItem(player.world, player.getPosition().getX(), player.getPosition().getY(),
 						player.getPosition().getZ(), stack.copy());
 				player.world.spawnEntity(item);
 				return false;

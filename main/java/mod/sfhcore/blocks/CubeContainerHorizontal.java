@@ -44,7 +44,7 @@ public class CubeContainerHorizontal extends BlockContainer{
 
 		if (stack.hasDisplayName())
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			final TileEntity tileentity = worldIn.getTileEntity(pos);
 
 			if (tileentity instanceof TileInventory)
 				((TileInventory)tileentity).setCustomInventoryName(stack.getDisplayName());
@@ -56,7 +56,7 @@ public class CubeContainerHorizontal extends BlockContainer{
 	{
 		if (!keepInventory)
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			final TileEntity tileentity = worldIn.getTileEntity(pos);
 
 			if (tileentity instanceof TileInventory)
 			{
@@ -69,28 +69,28 @@ public class CubeContainerHorizontal extends BlockContainer{
 	}
 
 	private void dropItems(final World world, final int x, final int y, final int z) {
-		Random rand = new Random();
+		final Random rand = new Random();
 
-		TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+		final TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 		if(!(tileEntity instanceof IInventory))
 			return;
 
-		IInventory inventory = (IInventory) tileEntity;
+		final IInventory inventory = (IInventory) tileEntity;
 
 		for(int i = 0; i < inventory.getSizeInventory(); i++) {
-			ItemStack item = inventory.getStackInSlot(i);
+			final ItemStack item = inventory.getStackInSlot(i);
 
 			if(item.getCount() > 0) {
-				float rx = rand.nextFloat() *0.8F + 0.1F;
-				float ry = rand.nextFloat() *0.8F + 0.1F;
-				float rz = rand.nextFloat() *0.8F + 0.1F;
+				final float rx = rand.nextFloat() *0.8F + 0.1F;
+				final float ry = rand.nextFloat() *0.8F + 0.1F;
+				final float rz = rand.nextFloat() *0.8F + 0.1F;
 
-				EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem(), item.getCount(), item.getItemDamage()));
+				final EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem(), item.getCount(), item.getItemDamage()));
 
 				if(item.hasTagCompound())
 					entityItem.getItem().setTagCompound(Objects.requireNonNull(item.getTagCompound()).copy());
 
-				float factor = 0.05F;
+				final float factor = 0.05F;
 				entityItem.motionX = rand.nextGaussian() * factor;
 				entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
 				entityItem.motionZ = rand.nextGaussian() * factor;
@@ -167,10 +167,10 @@ public class CubeContainerHorizontal extends BlockContainer{
 	{
 		if (!worldIn.isRemote)
 		{
-			IBlockState iblockstate = worldIn.getBlockState(pos.north());
-			IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
-			IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
-			IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
+			final IBlockState iblockstate = worldIn.getBlockState(pos.north());
+			final IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
+			final IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
+			final IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
 			EnumFacing enumfacing = state.getValue(FACING);
 
 			if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())

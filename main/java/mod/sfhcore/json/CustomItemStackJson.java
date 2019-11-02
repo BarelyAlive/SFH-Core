@@ -23,11 +23,11 @@ public class CustomItemStackJson implements JsonDeserializer<ItemStack>, JsonSer
 	@Override
 	public ItemStack deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
 	{
-		JsonHelper helper = new JsonHelper(json);
+		final JsonHelper helper = new JsonHelper(json);
 
-		String name = helper.getString("name");
-		int amount = helper.getNullableInteger("amount", 1);
-		int meta = helper.getNullableInteger("meta", 0);
+		final String name = helper.getString("name");
+		final int amount = helper.getNullableInteger("amount", 1);
+		final int meta = helper.getNullableInteger("meta", 0);
 
 		Item item = Item.getByNameOrId(name);
 		if(item == null){
@@ -37,14 +37,14 @@ public class CustomItemStackJson implements JsonDeserializer<ItemStack>, JsonSer
 			item = Items.AIR;
 		}
 
-		ItemStack stack = new ItemStack(item, amount, meta);
+		final ItemStack stack = new ItemStack(item, amount, meta);
 
 		if (json.getAsJsonObject().has("nbt"))
 			try
 		{
 				stack.setTagCompound(JsonToNBT.getTagFromJson(json.getAsJsonObject().get("nbt").getAsString()));
 		}
-		catch (NBTException e)
+		catch (final NBTException e)
 		{
 			LogUtil.error("Could not convert JSON to NBT: " + json.getAsJsonObject().get("nbt").getAsString());
 			e.printStackTrace();
@@ -56,13 +56,13 @@ public class CustomItemStackJson implements JsonDeserializer<ItemStack>, JsonSer
 	@Override
 	public JsonElement serialize(final ItemStack src,final Type typeOfSrc, final JsonSerializationContext context)
 	{
-		JsonObject jsonObject = new JsonObject();
+		final JsonObject jsonObject = new JsonObject();
 
 		jsonObject.addProperty("name", src.getItem().getRegistryName() == null ?  "" : src.getItem().getRegistryName().toString());
 		jsonObject.addProperty("amount", src.getCount());
 		jsonObject.addProperty("meta", src.getItemDamage());
 
-		NBTTagCompound nbt = src.getTagCompound();
+		final NBTTagCompound nbt = src.getTagCompound();
 		if (nbt != null && !nbt.hasNoTags())
 			jsonObject.addProperty("nbt", nbt.toString());
 
