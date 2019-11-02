@@ -24,7 +24,7 @@ public class FluidMilk extends Fluid
 	public FluidMilk() {
 		super(Constants.MILK, STILL, FLOW);
 		setDensity(FluidRegistry.WATER.getDensity());
-		setLuminosity(FluidRegistry.WATER.getLuminosity());
+		setLuminosity(0);
 		setTemperature(FluidRegistry.WATER.getTemperature());
 		setViscosity(FluidRegistry.WATER.getViscosity());
 		
