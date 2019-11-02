@@ -188,7 +188,6 @@ public class CustomBucket extends Item implements IFluidHandler{
 						return new ActionResult<>(EnumActionResult.FAIL, held);
 					else
 					{
-
 						final Block block = worldIn.getBlockState(pos1).getBlock();
 						Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
 
