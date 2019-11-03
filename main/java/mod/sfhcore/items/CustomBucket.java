@@ -56,7 +56,6 @@ public class CustomBucket extends Item implements IFluidHandler{
 		setUnlocalizedName(loc.getResourcePath());
 		setCreativeTab(tab);
 		setContainerItem(empty.getItem());
-		//this.setHasSubtypes(true);
 	}
 
 	public int getColor()
@@ -153,12 +152,6 @@ public class CustomBucket extends Item implements IFluidHandler{
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(final World worldIn, final EntityPlayer playerIn, final EnumHand handIn)
 	{
-		/*
-		if(!worldIn.isRemote)
-		{
-	        return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(handIn));
-		}
-		 */
 		final boolean flag = isAir();
 		final ItemStack held = playerIn.getHeldItem(handIn);
 		final RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, flag);
@@ -218,7 +211,6 @@ public class CustomBucket extends Item implements IFluidHandler{
 			else
 			{
 				final boolean flag1 = worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos);
-				//BlockPos pos1 = flag1 && raytraceresult.sideHit == EnumFacing.UP ? pos : pos.offset(raytraceresult.sideHit);
 
 				final Block block = worldIn.getBlockState(pos).getBlock();
 				final Fluid fluid_from_block = FluidRegistry.lookupFluidForBlock(block);
