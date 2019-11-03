@@ -1,23 +1,21 @@
 package mod.sfhcore;
 
-import java.io.File;
-import java.util.List;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class Config {
 	
-	public static String[] oreDictPreferenceOrder = {"thermalfoundation", "immersiveengineering"};
-	
-	public static void loadConfigs()
-	{
-		Configuration config = new Configuration(new File(SFHCore.configDirectory, "NetherTweaksMod.cfg"));
-		config.load();
-		
-        oreDictPreferenceOrder = config.getStringList("OreDict preference order", "Compat", oreDictPreferenceOrder, "Coffe has caffeine, you know!");
-        
-        config.save();
-	}
+	//int
+	public static int nethDim;
+	public static int endDim;
 
+	public static void loadConfigs(FMLPreInitializationEvent event){
+		Configuration Config = new Configuration(event.getSuggestedConfigurationFile());
+        Config.load();
+	    //Dimension Travel
+	    nethDim = 			Config.get("World", "To which dimension shall the nether portal send you back?", 0).getInt();
+	    endDim = 			Config.get("World", "To which Dimension shall an end portal send you back?", 0).getInt();
+	    
+	    Config.save();
+	}
 }
