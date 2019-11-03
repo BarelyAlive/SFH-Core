@@ -163,7 +163,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 		final ItemStack held = playerIn.getHeldItem(handIn);
 		final RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, flag);
 
-		if (raytraceresult == null)
+		if (raytraceresult == null)	
 			if (isMilk())
 			{
 				playerIn.setActiveHand(handIn);
@@ -176,7 +176,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 		{
 			final BlockPos pos = raytraceresult.getBlockPos();
 			if (!flag && containedBlock != null)
-			{
+			{				
 				if (!playerIn.canPlayerEdit(pos.offset(raytraceresult.sideHit), raytraceresult.sideHit, held))
 					return new ActionResult<>(EnumActionResult.FAIL, held);
 				else
@@ -194,7 +194,12 @@ public class CustomBucket extends Item implements IFluidHandler{
 						fluid_from_block = FluidRegistry.lookupFluidForBlock(containedBlock);
 						if (block.isReplaceable(worldIn, pos1) && fluid_from_block != null)
 						{
-							if(fluid_from_block.doesVaporize(new FluidStack(fluid_from_block, 1000)) && worldIn.provider.doesWaterVaporize())
+							if(this.isMilk() && playerIn.isSneaking())
+							{
+								playerIn.setActiveHand(handIn);
+								return new ActionResult<>(EnumActionResult.SUCCESS, held);
+							}
+							else if(fluid_from_block.doesVaporize(new FluidStack(fluid_from_block, 1000)) && worldIn.provider.doesWaterVaporize())
 								fluid_from_block.vaporize(playerIn, worldIn, pos1, getFluidContained());
 							else if (containedBlock.equals(Blocks.WATER))
 								worldIn.setBlockState(pos1, Blocks.FLOWING_WATER.getDefaultState());
@@ -202,6 +207,7 @@ public class CustomBucket extends Item implements IFluidHandler{
 								worldIn.setBlockState(pos1, Blocks.FLOWING_LAVA.getDefaultState());
 							else if(!playerIn.isSneaking())
 								worldIn.setBlockState(pos1, containedBlock.getDefaultState());
+								
 							return !playerIn.capabilities.isCreativeMode ? new ActionResult(EnumActionResult.SUCCESS, held.getItem().getContainerItem(held)) : new ActionResult(EnumActionResult.SUCCESS, held);
 						}
 					}
@@ -256,7 +262,11 @@ public class CustomBucket extends Item implements IFluidHandler{
         	{
         		entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET)); // FORGE - move up so stack.shrink does not turn stack into air
         		
-        		stack = this.getContainerItem(stack);
+        		if (!((EntityPlayer)entityLiving).capabilities.isCreativeMode) {
+					ItemStack copy = stack.copy();
+					stack.shrink(1);
+					((EntityPlayer) entityLiving).addItemStackToInventory(this.getContainerItem(copy));
+				}
         	}
        
         if(isAir() && getContainedBlock() != null)
