@@ -51,9 +51,11 @@ public class ModFuelHandler
 		//Buckets
 		final FluidStack fs = FluidUtil.getFluidContained(stack);
 		final IFluidHandlerItem ifhi = FluidUtil.getFluidHandler(stack);
+		
 		if(Config.useAllHotFluidContainer && fs != null && ifhi != null)
 		{
 			final Fluid f = fs.getFluid();
+			
 			if(f.getTemperature() >= FluidRegistry.LAVA.getTemperature() && fs.amount == 1000)
 				//Stelle (hoffentlich) sicher dass es ein Bucket ist
 				if(ifhi.fill(new FluidStack(f, 1), false) == 0 &&
@@ -103,7 +105,7 @@ public class ModFuelHandler
 		}
 		if(time < 1)
 		{
-			LogUtil.warn("[SFHCore] can't add " + item.getItem().getRegistryName() + " with burntime " + time + " !");
+			LogUtil.warn("[SFHCore] can't add " + item.getItem().getRegistryName() + " with a burntime of " + time + " ticks!");
 			return false;
 		}
 
