@@ -43,7 +43,7 @@ public class SFHCore
 	}
 
 	@Mod.EventHandler
-	public void PreInit(final FMLPreInitializationEvent event)
+	public void preInit(final FMLPreInitializationEvent event)
 	{
 		configDirectory = new File(event.getModConfigurationDirectory(), Constants.MOD_ID);
 		configDirectory.mkdirs();
@@ -58,11 +58,19 @@ public class SFHCore
 		MinecraftForge.EVENT_BUS.register(new BucketRegistrationHandler());
 		MinecraftForge.EVENT_BUS.register(new ModFuelHandler());
 		MinecraftForge.EVENT_BUS.register(new EventHook());
+		
+		getProxy().preInit();
 	}
 
 	@Mod.EventHandler
-	public void load(final FMLInitializationEvent event) {}
+	public void init(final FMLInitializationEvent event)
+	{
+		getProxy().init();
+	}
 
 	@Mod.EventHandler
-	public void PostInit(final FMLPostInitializationEvent event) {}
+	public void postInit(final FMLPostInitializationEvent event)
+	{
+		getProxy().postInit();
+	}
 }

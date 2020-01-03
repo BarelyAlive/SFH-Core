@@ -15,6 +15,10 @@ public class ClientProxy implements IProxy{
 
 	private final String INVENTORY = "inventory";
 	
+	public void preInit() {}
+	public void init() {}
+	public void postInit() {}
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void initModel(final Fluid f, final Block b)
