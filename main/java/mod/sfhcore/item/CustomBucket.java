@@ -1,4 +1,4 @@
-package mod.sfhcore.items;
+package mod.sfhcore.item;
 
 import javax.annotation.Nullable;
 

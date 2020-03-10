@@ -1,6 +1,6 @@
-package mod.sfhcore.blocks.container;
+package mod.sfhcore.block.container;
 
-import mod.sfhcore.blocks.tiles.TileInventory;
+import mod.sfhcore.block.tile.TileInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;

@@ -1,4 +1,4 @@
-package mod.sfhcore.items;
+package mod.sfhcore.item;
 
 import org.apache.commons.lang3.tuple.Pair;
 

@@ -2,7 +2,7 @@ package mod.sfhcore.util;
 
 import java.util.Objects;
 
-import mod.sfhcore.blocks.tiles.TileBase;
+import mod.sfhcore.block.tile.TileBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

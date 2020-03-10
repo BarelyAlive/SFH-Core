@@ -1,4 +1,4 @@
-package mod.sfhcore.blocks;
+package mod.sfhcore.block;
 
 import mod.sfhcore.Constants;
 import mod.sfhcore.handler.ModFluids;

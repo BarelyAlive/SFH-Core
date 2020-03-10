@@ -2,7 +2,7 @@ package mod.sfhcore.helper;
 
 import javax.annotation.Nonnull;
 
-import mod.sfhcore.items.CustomBucket;
+import mod.sfhcore.item.CustomBucket;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;

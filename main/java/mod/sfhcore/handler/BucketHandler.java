@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import mod.sfhcore.items.CustomBucket;
+import mod.sfhcore.item.CustomBucket;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -226,7 +226,7 @@ public class BucketHandler {
 			final StringFluid strfld = ALL_BUCKET_LIST.get(item);
 			final String material = strfld.str;
 			if (item != null && item.getRegistryName() != null)
-				event.getItemColors().registerItemColorHandler(new mod.sfhcore.items.model_bucket.FluidCustomBucketColorer(), item);
+				event.getItemColors().registerItemColorHandler(new mod.sfhcore.item.model_bucket.FluidCustomBucketColorer(), item);
 		}
 	}
 }

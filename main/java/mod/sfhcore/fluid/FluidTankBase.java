@@ -2,7 +2,7 @@ package mod.sfhcore.fluid;
 
 import javax.annotation.Nullable;
 
-import mod.sfhcore.blocks.tiles.TileBase;
+import mod.sfhcore.block.tile.TileBase;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;

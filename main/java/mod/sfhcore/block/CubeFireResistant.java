@@ -1,4 +1,4 @@
-package mod.sfhcore.blocks;
+package mod.sfhcore.block;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.util.EnumFacing;

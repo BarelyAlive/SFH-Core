@@ -1,4 +1,4 @@
-package mod.sfhcore.blocks.container;
+package mod.sfhcore.block.container;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

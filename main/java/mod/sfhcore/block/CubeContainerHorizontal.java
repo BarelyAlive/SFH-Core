@@ -1,9 +1,9 @@
-package mod.sfhcore.blocks;
+package mod.sfhcore.block;
 
 import java.util.Objects;
 import java.util.Random;
 
-import mod.sfhcore.blocks.tiles.TileInventory;
+import mod.sfhcore.block.tile.TileInventory;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;

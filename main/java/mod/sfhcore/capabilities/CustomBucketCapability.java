@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import mod.sfhcore.handler.BucketHandler;
-import mod.sfhcore.items.CustomBucket;
+import mod.sfhcore.item.CustomBucket;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;

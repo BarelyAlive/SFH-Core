@@ -1,6 +1,6 @@
-package mod.sfhcore.items.model_bucket;
+package mod.sfhcore.item.model_bucket;
 
-import mod.sfhcore.items.CustomBucket;
+import mod.sfhcore.item.CustomBucket;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;

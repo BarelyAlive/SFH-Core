@@ -1,6 +1,6 @@
-package mod.sfhcore.items;
+package mod.sfhcore.item;
 
-import mod.sfhcore.blocks.CustomDoor;
+import mod.sfhcore.block.CustomDoor;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;

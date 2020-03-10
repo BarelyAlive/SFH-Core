@@ -1,4 +1,4 @@
-package mod.sfhcore.blocks;
+package mod.sfhcore.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

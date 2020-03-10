@@ -1,4 +1,4 @@
-package mod.sfhcore.blocks.tiles;
+package mod.sfhcore.block.tile;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

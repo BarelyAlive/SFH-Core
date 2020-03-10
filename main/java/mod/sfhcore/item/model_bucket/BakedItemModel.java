@@ -1,4 +1,4 @@
-package mod.sfhcore.items.model_bucket;
+package mod.sfhcore.item.model_bucket;
 
 import java.util.List;
 

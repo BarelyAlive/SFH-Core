@@ -7,7 +7,7 @@ import mod.sfhcore.handler.BucketHandler;
 import mod.sfhcore.handler.ModFluids;
 import mod.sfhcore.helper.NotNull;
 import mod.sfhcore.helper.PlayerInventory;
-import mod.sfhcore.items.CustomBucket;
+import mod.sfhcore.item.CustomBucket;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,4 +1,4 @@
-package mod.sfhcore.items.model_bucket;
+package mod.sfhcore.item.model_bucket;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -16,7 +16,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 
-import mod.sfhcore.items.CustomBucket;
+import mod.sfhcore.item.CustomBucket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;

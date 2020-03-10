@@ -1,4 +1,4 @@
-package mod.sfhcore.client.renderers;
+package mod.sfhcore.client.renderer;
 
 import net.minecraft.util.EnumFacing;
 

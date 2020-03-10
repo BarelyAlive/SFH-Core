@@ -1,6 +1,6 @@
 package mod.sfhcore.handler;
 
-import mod.sfhcore.blocks.Milk;
+import mod.sfhcore.block.Milk;
 import mod.sfhcore.fluid.FluidMilk;
 import net.minecraft.block.Block;
 import net.minecraftforge.client.event.ModelRegistryEvent;
